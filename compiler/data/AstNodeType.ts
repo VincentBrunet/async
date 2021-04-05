@@ -8,4 +8,6 @@ export enum AstNodeType {
   Function = "function",
   FunctionParam = "function-param",
   Type = "type",
+  String = "string",
+  Number = "number",
 }

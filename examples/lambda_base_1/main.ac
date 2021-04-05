@@ -1,0 +1,16 @@
+
+const num = 42
+
+const dudu = "id"
+
+fn hello() {
+  const f = fn {
+    log(dudu)
+  }
+  f()
+}
+
+const world = hello
+
+world()
+

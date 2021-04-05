@@ -1,9 +1,0 @@
-
-fn hello() {
-  const f = fn {
-
-  }   
-}
-
-const world = hello
-

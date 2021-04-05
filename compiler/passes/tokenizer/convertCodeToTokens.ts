@@ -1,7 +1,7 @@
 import { Token } from "../../data/Token.ts";
 import { TokenType } from "../../data/TokenType.ts";
 
-const invalidArray = ["\a", "\v", "\b", "\f",];
+const invalidArray = ["a", "\v", "\b", "\f"];
 const whitespaceArray = [" ", "\t", "\n", "\r", "\0"];
 const specialArray = [
   "-",
