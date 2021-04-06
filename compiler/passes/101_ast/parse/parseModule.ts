@@ -3,7 +3,7 @@ import { AstStatement } from "../data/AstStatement.ts";
 import { TokenStack } from "../util/TokenStack.ts";
 import { parseStatement } from "./parseStatement.ts";
 
-export function parseModule(stack: TokenStack): AstModule | undefined {
+export function parseModule(stack: TokenStack): AstModule {
   const statements: AstStatement[] = [];
   while (true) {
     if (stack.ended()) {

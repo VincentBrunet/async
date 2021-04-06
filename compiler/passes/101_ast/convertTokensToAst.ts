@@ -3,7 +3,7 @@ import { AstModule } from "./data/AstModule.ts";
 import { parseModule } from "./parse/parseModule.ts";
 import { TokenStack } from "./util/TokenStack.ts";
 
-export function convertTokensToAst(tokens: Token[]): AstModule | undefined {
+export function convertTokensToAst(tokens: Token[]): AstModule {
   const stack = new TokenStack(tokens);
   return parseModule(stack);
 }
