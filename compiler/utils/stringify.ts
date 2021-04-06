@@ -1,68 +1,70 @@
-
 function pad(ident: number) {
-  const parts = []
+  const parts = [];
   for (let i = 0; i < ident; i++) {
     parts.push("  ");
   }
-  return parts.join("")
+  return parts.join("");
 }
 
 function contentJoin(values: string[], ident: number) {
   if (values.length <= 0) {
     return "";
   }
-  const pad0 = pad(ident)
-  const pad1 = pad(ident + 1)
+  const minimal = values.join(" ");
+  if (minimal.length <= 64) {
+    return " " + minimal + " ";
+  }
+  const pad0 = pad(ident);
+  const pad1 = pad(ident + 1);
   return "\n" + pad1 + values.join("\n" + pad1) + "\n" + pad0;
 }
 
 export function stringify(v: any, id?: number): string {
-  const ident = id ?? 0
+  const ident = id ?? 0;
 
-  const tab0 = pad(ident)
-  const tab1 = pad(ident + 1)
+  const tab0 = pad(ident);
+  const tab1 = pad(ident + 1);
 
   if (v === undefined) {
-    return "undefined"
+    return "undefined";
   }
   if (v === null) {
-    return "null"
+    return "null";
   }
 
   const type = typeof v;
   if (type === "boolean") {
-    return v ? "true" : "false"
+    return v ? "true" : "false";
   }
   if (type === "number") {
-    return v.toString()
+    return v.toString();
   }
   if (type === "string") {
     return v;
   }
 
   if (Array.isArray(v)) {
-    const content = v.map(item => {
-      return stringify(item, ident + 1) + ","
-    })
-    return "[" + contentJoin(content, ident) + "]"
+    const content = v.map((item) => {
+      return stringify(item, ident + 1) + ",";
+    });
+    return "[" + contentJoin(content, ident) + "]";
   }
 
   if (v instanceof Map) {
-    const keys = [...v.keys()]
-    const content = keys.map(key => {
-      return key + ": " + stringify(v.get(key), ident + 1) + ","
-    })
-    return "Map<{" + contentJoin(content, ident) + "}>"
+    const keys = [...v.keys()];
+    const content = keys.map((key) => {
+      return key + ": " + stringify(v.get(key), ident + 1) + ",";
+    });
+    return "Map<{" + contentJoin(content, ident) + "}>";
   }
 
   if (type === "object") {
-    const keys = Object.keys(v)
-    const content = keys.map(key => {
-      return key + ": " + stringify(v[key], ident + 1) + ", "
-    })
-    return "{" + contentJoin(content, ident) + "}"
+    const keys = Object.keys(v);
+    const content = keys.map((key) => {
+      return key + ": " + stringify(v[key], ident + 1) + ",";
+    });
+    return "{" + contentJoin(content, ident) + "}";
   }
 
-  return v.toString()
-
+  return v.toString();
 }

@@ -1,6 +1,7 @@
 
 typedef struct lambda_inner_closure {
   void *dudu;
+  int (*functionPtr)(int,int);
 } lambda_inner_closure;
 void lambda_inner_logic(lambda_inner_closure* closure) {
   // log(dudu)

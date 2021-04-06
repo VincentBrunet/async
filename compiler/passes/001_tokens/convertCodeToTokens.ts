@@ -1,43 +1,22 @@
-import { Token } from "../../data/Token.ts";
-import { TokenType } from "../../data/TokenType.ts";
+import { Token } from "./data/Token.ts";
+import { TokenType } from "./data/TokenType.ts";
 
-const invalidArray = ["a", "\v", "\b", "\f"];
-const whitespaceArray = [" ", "\t", "\n", "\r", "\0"];
-const specialArray = [
-  "-",
-  "+",
-  "!",
-  "=",
-  "?",
-  ",",
-  ";",
-  ".",
-  ":",
-  "%",
-  "*",
-  "|",
-  "&",
-  "/",
-  "\\",
-  "@",
-  "~",
-  "#",
-  "^",
-  "'",
-  '"',
-  "<",
-  ">",
-  "{",
-  "}",
-  "(",
-  ")",
-  "[",
-  "]",
-];
-
+const invalidArray = ["\v", "\b", "\f"];
 const invalidSet = new Set(invalidArray);
+
+const whitespaceArray = [" ", "\t", "\n", "\r", "\0"];
 const whitespaceSet = new Set(whitespaceArray);
-const specialSet = new Set(specialArray);
+
+const specialPairsArray = ["<", ">", "{", "}", "(", ")", "[", "]", "'", '"'];
+const specialMathsArray = ["-", "+", "%", "*", "|", "&", "=", "^"];
+const specialPonctArray = [",", ";", ".", ":", "!", "?"];
+const specialMiscArray = ["/", "\\", "@", "~", "#"];
+const specialSet = new Set([
+  ...specialPairsArray,
+  ...specialMathsArray,
+  ...specialPonctArray,
+  ...specialMiscArray,
+]);
 
 interface PartialToken {
   type: TokenType;
@@ -55,12 +34,12 @@ export function convertCodeToTokens(code: string): Token[] {
     } else if (whitespaceSet.has(char)) {
       type = TokenType.Whitespace;
     } else if (specialSet.has(char)) {
-      type = TokenType.Symbol;
+      type = TokenType.Special;
     } else {
       type = TokenType.Identifier;
     }
     if (currentToken !== undefined) {
-      if (currentToken.type !== type || type === TokenType.Symbol) {
+      if (currentToken.type !== type || type === TokenType.Special) {
         tokens.push({
           type: currentToken.type,
           str: currentToken.chars.join(""),
