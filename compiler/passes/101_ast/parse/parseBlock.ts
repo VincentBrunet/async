@@ -10,7 +10,6 @@ export function parseBlock(stack: TokenStack): AstBlock | undefined {
     return undefined;
   }
   stack.consume();
-
   // statements
   const statements: AstStatement[] = [];
   while (true) {
@@ -28,7 +27,6 @@ export function parseBlock(stack: TokenStack): AstBlock | undefined {
       statements.push(astStatement);
     }
   }
-
   // done
   return {
     statements: statements,

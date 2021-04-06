@@ -28,3 +28,6 @@ console.log("firstAst", stringify(firstAst));
 const firstOutputCode = convertAstToOutputCode(firstAst);
 
 console.log("firstOutputCode", stringify(firstOutputCode));
+
+Deno.writeTextFile(files[0] + ".compiled.h", firstOutputCode.getHeader());
+Deno.writeTextFile(files[0] + ".compiled.c", firstOutputCode.getSource());

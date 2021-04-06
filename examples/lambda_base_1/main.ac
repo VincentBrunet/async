@@ -1,5 +1,5 @@
 
-const num = 42
+const num = 4 * (42 + 2)
 
 fn hello() {
   const f = fn {

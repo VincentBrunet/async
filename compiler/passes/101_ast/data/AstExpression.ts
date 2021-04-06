@@ -4,6 +4,7 @@ export enum AstExpressionType {
   Identifier = "identifier",
   Function = "function",
   Call = "call",
+  Math = "math",
 }
 
 export interface AstExpressionIdentifier {
@@ -19,7 +20,17 @@ export interface AstExpressionCall {
   params: AstExpression[];
 }
 
+export interface AstExpressionMath {
+  operator: string;
+  left: AstExpression;
+  right: AstExpression;
+}
+
 export interface AstExpression {
   type: AstExpressionType;
-  value: AstExpressionCall | AstExpressionIdentifier | AstExpressionFunction;
+  value:
+    | AstExpressionCall
+    | AstExpressionIdentifier
+    | AstExpressionFunction
+    | AstExpressionMath;
 }
