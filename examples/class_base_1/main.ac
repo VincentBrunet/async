@@ -1,12 +1,16 @@
 
-const cl = class {
+const toto = 42
+
+const cl = class <T> {
+
+  const l: T = toto;
 
   mutable t = 42
 
-  fun hello() {
+  fn hello() {
 
   }
 
+  const lol = fn {}
+
 }
-
-
