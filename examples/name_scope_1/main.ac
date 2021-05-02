@@ -1,0 +1,9 @@
+
+fn hello {
+  dudu()
+}
+
+hello()
+
+fn dudu {
+}
