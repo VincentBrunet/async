@@ -10,6 +10,6 @@ export enum Keyword {
   OperatorMultiplication = "*",
   OperatorDivision = "/",
   OperatorModulo = "%",
-  BinaryAnd = "&",
-  BinaryOr = "|",
+  OperatorBinaryAnd = "&",
+  OperatorBinaryOr = "|",
 }
