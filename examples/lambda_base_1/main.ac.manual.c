@@ -55,6 +55,6 @@ void module_load() {
   value_function_call(world);
 }
 
-int main() {
+int main() { // FOR TESING ONLY
   module_load();
 }

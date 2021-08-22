@@ -9,15 +9,16 @@ import {
 
 import { OutputCode } from "../util/OutputCode.ts";
 import { writeFunction } from "./writeFunction.ts";
+import { OutputSection } from "../util/OutputSection.ts";
 
 export function writeExpression(
   output: OutputCode,
-  astExpression: AstExpression
+  astExpression: AstExpression,
 ) {
   switch (astExpression.type) {
     case AstExpressionType.Identifier: {
       const astValue = astExpression.value as AstExpressionIdentifier;
-      output.writeToSource(astValue.name);
+      output.writeToSource(OutputSection.Module, astValue.name);
       break;
     }
     case AstExpressionType.Function: {
@@ -28,16 +29,16 @@ export function writeExpression(
     case AstExpressionType.Call: {
       const astValue = astExpression.value as AstExpressionCall;
       writeExpression(output, astValue.callee);
-      output.writeToSource("()");
+      output.writeToSource(OutputSection.Module, "()");
       break;
     }
     case AstExpressionType.Math: {
       const astValue = astExpression.value as AstExpressionMath;
-      output.writeToSource("(");
+      output.writeToSource(OutputSection.Module, "(");
       writeExpression(output, astValue.left);
-      output.writeToSource(astValue.operator);
+      output.writeToSource(OutputSection.Module, astValue.operator);
       writeExpression(output, astValue.right);
-      output.writeToSource(")");
+      output.writeToSource(OutputSection.Module, ")");
       break;
     }
   }

@@ -1,4 +1,4 @@
 export enum OutputSection {
-  Functions = 1,
-  Module = 2,
+  Functions = "functions",
+  Module = "module",
 }

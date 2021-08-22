@@ -1,7 +1,7 @@
 import { AstModule } from "../../101_ast/data/AstModule.ts";
 
 import { OutputCode } from "../util/OutputCode.ts";
-import { OutputSection } from "../util/OutputSection";
+import { OutputSection } from "../util/OutputSection.ts";
 import { writeStatement } from "./writeStatement.ts";
 
 export function writeModule(output: OutputCode, astModule: AstModule) {

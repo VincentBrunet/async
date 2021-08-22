@@ -1,13 +1,13 @@
-import { Keyword } from "../../../config/Keyword.ts";
+import { Keyword } from "../../../constants/Keyword.ts";
 import { TokenType } from "../../001_tokens/data/TokenType.ts";
 import { AstFunction } from "../data/AstFunction.ts";
 import { AstType } from "../data/AstType.ts";
-import { TokenStack } from "../util/TokenStack.ts";
+import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { parseBlock } from "./parseBlock.ts";
 import { parseIdentifier } from "./parseIdentifier.ts";
 import { parseType } from "./parseType.ts";
 
-export function parseFunction(stack: TokenStack): AstFunction | undefined {
+export function parseFunction(stack: TokenBrowser): AstFunction | undefined {
   const astFunction: AstFunction = {
     params: [],
   };

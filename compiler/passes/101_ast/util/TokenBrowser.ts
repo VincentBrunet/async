@@ -1,7 +1,7 @@
 import { Token } from "../../001_tokens/data/Token.ts";
 import { TokenType } from "../../001_tokens/data/TokenType.ts";
 
-export class TokenStack {
+export class TokenBrowser {
   private tokens: Token[];
   private indexes: number[] = [];
 
@@ -19,7 +19,7 @@ export class TokenStack {
     this.fastForward();
   }
 
-  parse<T>(parser: (stack: TokenStack) => T | undefined): T | undefined {
+  parse<T>(parser: (stack: TokenBrowser) => T | undefined): T | undefined {
     this.indexes.push(this.getCurrentIndex());
     const ast = parser(this);
     const after = this.indexes.pop();
@@ -31,8 +31,8 @@ export class TokenStack {
 
   error(message: string) {
     console.log(
-      "token",
-      this.tokens.slice(this.getCurrentIndex(), this.getCurrentIndex() + 4)
+      "token around fail",
+      this.tokens.slice(this.getCurrentIndex() - 4, this.getCurrentIndex() + 4),
     );
     throw new Error(message + " -> " + this.peek().str);
   }

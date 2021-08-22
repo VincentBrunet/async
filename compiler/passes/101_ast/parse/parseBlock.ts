@@ -1,9 +1,9 @@
 import { AstBlock } from "../data/AstBlock.ts";
 import { AstStatement } from "../data/AstStatement.ts";
-import { TokenStack } from "../util/TokenStack.ts";
+import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { parseStatement } from "./parseStatement.ts";
 
-export function parseBlock(stack: TokenStack): AstBlock | undefined {
+export function parseBlock(stack: TokenBrowser): AstBlock | undefined {
   // open
   const open = stack.peek();
   if (open.str !== "{") {

@@ -2,15 +2,19 @@ import { AstStatement } from "../../101_ast/data/AstStatement.ts";
 
 import { OutputCode } from "../util/OutputCode.ts";
 import { writeExpression } from "./writeExpression.ts";
+import { OutputSection } from "../util/OutputSection.ts";
 
 export function writeStatement(output: OutputCode, astStatement: AstStatement) {
   const astVariable = astStatement.variable;
   if (astVariable) {
-    output.writeToSource("void *" + astVariable.name + ";");
+    output.writeToSource(
+      OutputSection.Module,
+      "void *" + astVariable.name + ";",
+    );
     if (astVariable.value) {
-      output.writeToSource(astVariable.name + "=");
+      output.writeToSource(OutputSection.Module, astVariable.name + "=");
       writeExpression(output, astVariable.value);
-      output.writeToSource(";");
+      output.writeToSource(OutputSection.Module, ";");
     }
     return;
   }
@@ -18,6 +22,6 @@ export function writeStatement(output: OutputCode, astStatement: AstStatement) {
   const astExpression = astStatement.expression;
   if (astExpression) {
     writeExpression(output, astExpression);
-    output.writeToSource(";");
+    output.writeToSource(OutputSection.Module, ";");
   }
 }

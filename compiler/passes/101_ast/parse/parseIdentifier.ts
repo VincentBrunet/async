@@ -1,7 +1,7 @@
 import { TokenType } from "../../001_tokens/data/TokenType.ts";
-import { TokenStack } from "../util/TokenStack.ts";
+import { TokenBrowser } from "../util/TokenBrowser.ts";
 
-export function parseIdentifier(stack: TokenStack): string | undefined {
+export function parseIdentifier(stack: TokenBrowser): string | undefined {
   const token = stack.peek();
   if (token.type === TokenType.Identifier) {
     stack.consume();

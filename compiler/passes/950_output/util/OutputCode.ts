@@ -1,14 +1,15 @@
 import { MapArray } from "../../../utils/data/MapArray.ts";
+import { OutputSection } from "./OutputSection.ts";
 
 export class OutputCode {
-  private header = new MapArray<number, string>();
-  private source = new MapArray<number, string>();
+  private header = new MapArray<OutputSection, string>();
+  private source = new MapArray<OutputSection, string>();
 
-  writeToHeader(priority: number, line: string) {
-    this.header.push(priority, line);
+  writeToHeader(section: OutputSection, line: string) {
+    this.header.push(section, line);
   }
-  writeToSource(priority: number, line: string) {
-    this.source.push(priority, line);
+  writeToSource(section: OutputSection, line: string) {
+    this.source.push(section, line);
   }
 
   getHeader(): string {
@@ -18,12 +19,17 @@ export class OutputCode {
     return this.toContent(this.source);
   }
 
-  private toContent(container: MapArray<number, string>): string {
+  private toContent(container: MapArray<OutputSection, string>): string {
     const sortedKeys = [...container.keys()].sort();
     const sortedLines: string[] = [];
     for (const sortedKey of sortedKeys) {
-      sortedLines.push((container.list(sortedKey) ?? []).join("\n"));
+      sortedLines.push("");
+      sortedLines.push("/// SECTION - " + sortedKey);
+      sortedLines.push("");
+      for (const line of container.list(sortedKey) ?? []) {
+        sortedLines.push(line);
+      }
     }
-    return sortedLines.join("\n\n/// SECTION \n\n");
+    return sortedLines.join("\n");
   }
 }

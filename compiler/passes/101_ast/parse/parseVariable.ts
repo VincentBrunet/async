@@ -1,11 +1,11 @@
-import { Keyword } from "../../../config/Keyword.ts";
+import { Keyword } from "../../../constants/Keyword.ts";
 import { TokenType } from "../../001_tokens/data/TokenType.ts";
 import { AstVariable } from "../data/AstVariable.ts";
-import { TokenStack } from "../util/TokenStack.ts";
+import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { parseExpression } from "./parseExpression.ts";
 import { parseType } from "./parseType.ts";
 
-export function parseVariable(stack: TokenStack): AstVariable | undefined {
+export function parseVariable(stack: TokenBrowser): AstVariable | undefined {
   const astVariable: AstVariable = {
     mutable: false,
     name: "????",

@@ -1,9 +1,9 @@
 import { AstStatement } from "../data/AstStatement.ts";
-import { TokenStack } from "../util/TokenStack.ts";
+import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { parseExpression } from "./parseExpression.ts";
 import { parseVariable } from "./parseVariable.ts";
 
-export function parseStatement(stack: TokenStack): AstStatement | undefined {
+export function parseStatement(stack: TokenBrowser): AstStatement | undefined {
   // const hello = expresion
   const astVariable = stack.parse(parseVariable);
   if (astVariable !== undefined) {

@@ -1,7 +1,7 @@
 function pad(ident: number) {
   const parts = [];
   for (let i = 0; i < ident; i++) {
-    parts.push("  ");
+    parts.push(" ");
   }
   return parts.join("");
 }
@@ -22,9 +22,6 @@ function contentJoin(values: string[], ident: number) {
 export function stringify(v: any, id?: number): string {
   const ident = id ?? 0;
 
-  const tab0 = pad(ident);
-  const tab1 = pad(ident + 1);
-
   if (v === undefined) {
     return "undefined";
   }
@@ -40,7 +37,7 @@ export function stringify(v: any, id?: number): string {
     return v.toString();
   }
   if (type === "string") {
-    return v;
+    return '"' + v.replace(/[\n]/g, "\n") + '"';
   }
 
   if (Array.isArray(v)) {

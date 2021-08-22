@@ -1,11 +1,11 @@
-import { Operator } from "../../../config/Operator.ts";
+import { Operator } from "../../../constants/Operator.ts";
 import { AstExpression, AstExpressionType } from "../data/AstExpression.ts";
-import { TokenStack } from "../util/TokenStack.ts";
+import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { parseFunction } from "./parseFunction.ts";
 import { parseIdentifier } from "./parseIdentifier.ts";
 
 function parseExpressionIdentifier(
-  stack: TokenStack
+  stack: TokenBrowser,
 ): AstExpression | undefined {
   // parenthesis
   const parenthesisOpen = stack.peek();
@@ -38,7 +38,7 @@ function parseExpressionIdentifier(
   return undefined;
 }
 
-function parseExpressionCall(stack: TokenStack): AstExpression | undefined {
+function parseExpressionCall(stack: TokenBrowser): AstExpression | undefined {
   // callee
   const astCallee = stack.parse(parseExpressionIdentifier);
   if (astCallee === undefined) {
@@ -77,7 +77,7 @@ function parseExpressionCall(stack: TokenStack): AstExpression | undefined {
   };
 }
 
-function parseExpressionMath(stack: TokenStack): AstExpression | undefined {
+function parseExpressionMath(stack: TokenBrowser): AstExpression | undefined {
   // left
   const astExpressionLeft = stack.parse(parseExpressionCall);
   if (astExpressionLeft === undefined) {
@@ -112,7 +112,9 @@ function parseExpressionMath(stack: TokenStack): AstExpression | undefined {
   }
 }
 
-function parseExpressionFunction(stack: TokenStack): AstExpression | undefined {
+function parseExpressionFunction(
+  stack: TokenBrowser,
+): AstExpression | undefined {
   // function declaration
   const astFunction = stack.parse(parseFunction);
   if (astFunction !== undefined) {
@@ -127,7 +129,9 @@ function parseExpressionFunction(stack: TokenStack): AstExpression | undefined {
   return stack.parse(parseExpressionMath);
 }
 
-export function parseExpression(stack: TokenStack): AstExpression | undefined {
+export function parseExpression(
+  stack: TokenBrowser,
+): AstExpression | undefined {
   // root
   return stack.parse(parseExpressionFunction);
 }

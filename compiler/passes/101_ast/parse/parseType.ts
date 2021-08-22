@@ -1,6 +1,6 @@
 import { AstType } from "../data/AstType.ts";
-import { TokenStack } from "../util/TokenStack.ts";
+import { TokenBrowser } from "../util/TokenBrowser.ts";
 
-export function parseType(stack: TokenStack): AstType | undefined {
+export function parseType(stack: TokenBrowser): AstType | undefined {
   return undefined;
 }
