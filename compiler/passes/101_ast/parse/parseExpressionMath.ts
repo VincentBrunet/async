@@ -11,7 +11,7 @@ export function parseExpressionMath(
   // left (required)
   const astExpressionLeft = browser.recurse(parseExpressionCall);
   if (astExpressionLeft instanceof TokenImpasse) {
-    return browser.impasse("Not an expression", astExpressionLeft);
+    return browser.impasse("Not an expression", [astExpressionLeft]);
   }
   // operator (required)
   const operator = browser.peek();
@@ -29,7 +29,7 @@ export function parseExpressionMath(
   // right
   const astExpressionRight = browser.recurse(parseExpression);
   if (astExpressionRight instanceof TokenImpasse) {
-    return browser.impasse("Expression (right side)", astExpressionRight);
+    return browser.impasse("Expression (right side)", [astExpressionRight]);
   }
   return {
     type: AstExpressionType.Math,

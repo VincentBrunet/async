@@ -22,22 +22,15 @@ export function parseFunction(
   }
   browser.consume();
 
-  // name (optional)
-  const name = browser.peek();
-  if (name.type === TokenType.Identifier) {
-    browser.consume();
-    astFunction.name = name.str;
-  }
-
   // return type (optional)
   const delimType = browser.peek();
   if (delimType.str === ":") {
     browser.consume();
-    const astType = browser.recurse(parseType);
-    if (astType instanceof TokenImpasse) {
-      return browser.impasse("Type", astType);
+    const astReturn = browser.recurse(parseType);
+    if (astReturn instanceof TokenImpasse) {
+      return browser.impasse("Type", [astReturn]);
     }
-    astFunction.type = astType;
+    astFunction.return = astReturn;
   }
 
   // params - open (optional)

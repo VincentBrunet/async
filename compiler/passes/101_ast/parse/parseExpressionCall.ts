@@ -5,12 +5,12 @@ import { parseExpression } from "./parseExpression.ts";
 import { parseExpressionIdentifier } from "./parseExpressionIdentifier.ts";
 
 export function parseExpressionCall(
-  browser: TokenBrowser
+  browser: TokenBrowser,
 ): AstExpression | TokenImpasse {
   // callee
   const astCallee = browser.recurse(parseExpressionIdentifier);
   if (astCallee instanceof TokenImpasse) {
-    return browser.impasse("Expression as function call callee", astCallee);
+    return browser.impasse("Expression as function call callee", [astCallee]);
   }
   // param - open
   const delimParamOpen = browser.peek();
@@ -30,7 +30,9 @@ export function parseExpressionCall(
     // param - content
     const astParam = browser.recurse(parseExpression);
     if (astParam instanceof TokenImpasse) {
-      return browser.impasse("Expression as function call parameter", astParam);
+      return browser.impasse("Expression as function call parameter", [
+        astParam,
+      ]);
     } else {
       astParams.push(astParam);
     }

@@ -12,7 +12,7 @@ export function parseModule(browser: TokenBrowser): AstModule | TokenImpasse {
     }
     const astStatement = browser.recurse(parseStatement);
     if (astStatement instanceof TokenImpasse) {
-      return browser.impasse("Invalid statement", astStatement);
+      return browser.impasse("Invalid statement", [astStatement]);
     } else {
       statements.push(astStatement);
     }

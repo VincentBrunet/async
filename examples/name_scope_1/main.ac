@@ -1,9 +1,11 @@
 
-fn hello {
+mutable dudu
+
+const hello = fn {
   dudu()
 }
 
 hello()
 
-fn dudu {
+fn {
 }

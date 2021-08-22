@@ -5,7 +5,7 @@ import { parseExpression } from "./parseExpression.ts";
 import { parseVariable } from "./parseVariable.ts";
 
 export function parseStatement(
-  browser: TokenBrowser
+  browser: TokenBrowser,
 ): AstStatement | TokenImpasse {
   // const hello = expresion
   const astVariable = browser.recurse(parseVariable);
@@ -22,5 +22,5 @@ export function parseStatement(
     };
   }
   // unknown
-  return browser.impasse("Not a valid statement");
+  return browser.impasse("Not a valid statement", [astVariable, astExpression]);
 }

@@ -39,7 +39,7 @@ export function parseVariable(
     browser.consume();
     const astType = browser.recurse(parseType);
     if (astType instanceof TokenImpasse) {
-      return browser.impasse("Type", astType);
+      return browser.impasse("Type", [astType]);
     }
     astVariable.type = astType;
   }
@@ -50,7 +50,7 @@ export function parseVariable(
     browser.consume();
     const astValue = browser.recurse(parseExpression);
     if (astValue instanceof TokenImpasse) {
-      return browser.impasse("Expression", astValue);
+      return browser.impasse("Expression", [astValue]);
     }
     astVariable.value = astValue;
   }

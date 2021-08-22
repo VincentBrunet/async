@@ -12,7 +12,7 @@ export function parseExpressionParenthesis(
     browser.consume();
     const astExpression = browser.recurse(parseExpression);
     if (astExpression instanceof TokenImpasse) {
-      return browser.impasse("Expression", astExpression);
+      return browser.impasse("Expression", [astExpression]);
     }
     const parenthesisClose = browser.peek();
     if (parenthesisClose.str === ")") {

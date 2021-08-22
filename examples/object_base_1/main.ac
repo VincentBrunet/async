@@ -7,7 +7,7 @@ const cl = object {
 
   mutable t = 42
 
-  fn hello() {
+  const hello = fn () {
 
   }
 

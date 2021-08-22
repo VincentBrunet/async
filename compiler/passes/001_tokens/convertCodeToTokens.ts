@@ -39,7 +39,11 @@ export function convertCodeToTokens(code: string): Token[] {
       type = TokenType.Identifier;
     }
     if (currentToken !== undefined) {
-      if (currentToken.type !== type || type === TokenType.Special) {
+      if (
+        currentToken.type !== type ||
+        type === TokenType.Special ||
+        char === "\n"
+      ) {
         tokens.push({
           type: currentToken.type,
           str: currentToken.chars.join(""),

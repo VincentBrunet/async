@@ -1,4 +1,4 @@
-import { clamp } from "../../../utils/maths/clamp.ts";
+import { clamp } from "../../../utils/numbers/clamp.ts";
 import { repeat } from "../../../utils/strings/repeat.ts";
 import { Token } from "../../001_tokens/data/Token.ts";
 import { TokenType } from "../../001_tokens/data/TokenType.ts";
@@ -23,7 +23,7 @@ export class TokenBrowser {
   }
 
   recurse<T>(
-    recurser: (stack: TokenBrowser) => T | TokenImpasse
+    recurser: (stack: TokenBrowser) => T | TokenImpasse,
   ): T | TokenImpasse {
     this.indexes.push(this.getCurrentIndex());
     const ast = recurser(this);
@@ -57,8 +57,8 @@ export class TokenBrowser {
   }
   */
 
-  impasse(message: string, origin?: TokenImpasse) {
-    return new TokenImpasse(this.getCurrentIndex(), message, origin);
+  impasse(message: string, children?: TokenImpasse[]) {
+    return new TokenImpasse(this.getCurrentIndex(), message, children);
   }
 
   ended() {
@@ -96,9 +96,5 @@ export class TokenBrowser {
         return;
       }
     }
-  }
-
-  private tokenString(tokens: Token[]) {
-    return tokens.map((token) => token.str).join("");
   }
 }
