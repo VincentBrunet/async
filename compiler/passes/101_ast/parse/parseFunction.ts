@@ -1,6 +1,6 @@
 import { Keyword } from "../../../constants/Keyword.ts";
 import { TokenType } from "../../001_tokens/data/TokenType.ts";
-import { AstFunction } from "../data/AstFunction.ts";
+import { AstFunction, AstFunctionParam } from "../data/AstFunction.ts";
 import { AstType } from "../data/AstType.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { parseBlock } from "./parseBlock.ts";
@@ -12,7 +12,7 @@ export function parseFunction(stack: TokenBrowser): AstFunction | undefined {
     params: [],
   };
 
-  // fn (required)
+  // keyword (required)
   const first = stack.peek();
   if (first.str !== Keyword.Function) {
     return undefined;
@@ -26,7 +26,7 @@ export function parseFunction(stack: TokenBrowser): AstFunction | undefined {
     astFunction.name = name.str;
   }
 
-  // return type
+  // return type (optional)
   const delimType = stack.peek();
   if (delimType.str === ":") {
     stack.consume();
@@ -37,7 +37,7 @@ export function parseFunction(stack: TokenBrowser): AstFunction | undefined {
     astFunction.type = astType;
   }
 
-  // params - open
+  // params - open (optional)
   const delimParamOpen = stack.peek();
   if (delimParamOpen.str === "(") {
     stack.consume();
@@ -50,23 +50,21 @@ export function parseFunction(stack: TokenBrowser): AstFunction | undefined {
         break;
       }
 
+      // ast repr
+      const astFunctionParam: AstFunctionParam = {};
+
       // params - optional name
-      const name = stack.parse(parseIdentifier);
-      let astType: AstType | undefined;
+      astFunctionParam.name = stack.parse(parseIdentifier);
 
       // params - optional type
       const delimParamType = stack.peek();
       if (delimParamType.str === ":") {
         stack.consume();
-
-        astType = stack.parse(parseType);
+        astFunctionParam.type = stack.parse(parseType);
       }
 
       // param - validated
-      astFunction.params?.push({
-        name: name,
-        type: astType,
-      });
+      astFunction.params.push(astFunctionParam);
 
       // params - separator, end
       const delimParamSep = stack.peek();

@@ -11,7 +11,7 @@ export function parseVariable(stack: TokenBrowser): AstVariable | undefined {
     name: "????",
   };
 
-  // const/mutable (required)
+  // keyword const/mutable (required)
   const first = stack.peek();
   if (first.str === Keyword.VariableConstant) {
     astVariable.mutable = false;

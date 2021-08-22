@@ -8,7 +8,7 @@ export interface AstFunctionParam {
 
 export interface AstFunction {
   name?: string;
-  params?: AstFunctionParam[];
+  params: AstFunctionParam[];
   type?: AstType;
   block?: AstBlock;
 }

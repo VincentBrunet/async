@@ -1,6 +1,7 @@
 import { AstBlock } from "./AstBlock.ts";
+import { AstType } from "./AstType.ts";
 
 export interface AstObject {
-  name?: string;
+  type?: AstType;
   block?: AstBlock;
 }
