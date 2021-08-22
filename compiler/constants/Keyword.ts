@@ -1,5 +1,15 @@
 export enum Keyword {
   Function = "fn",
+  Object = "object",
   VariableConstant = "const",
   VariableMutable = "mutable",
+  BooleanTrue = "true",
+  BooleanFalse = "false",
+  OperatorAddition = "+",
+  OperatorSubstraction = "-",
+  OperatorMultiplication = "*",
+  OperatorDivision = "/",
+  OperatorModulo = "%",
+  BinaryAnd = "&",
+  BinaryOr = "|",
 }

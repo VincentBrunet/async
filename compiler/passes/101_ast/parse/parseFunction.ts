@@ -12,14 +12,14 @@ export function parseFunction(stack: TokenBrowser): AstFunction | undefined {
     params: [],
   };
 
-  // fn
+  // fn (required)
   const first = stack.peek();
   if (first.str !== Keyword.Function) {
     return undefined;
   }
   stack.consume();
 
-  // name
+  // name (optional)
   const name = stack.peek();
   if (name.type === TokenType.Identifier) {
     stack.consume();
@@ -81,7 +81,7 @@ export function parseFunction(stack: TokenBrowser): AstFunction | undefined {
     }
   }
 
-  // block
+  // block (optional)
   const astBlock = stack.parse(parseBlock);
   astFunction.block = astBlock;
 

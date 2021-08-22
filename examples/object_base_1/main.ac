@@ -1,9 +1,9 @@
 
 const toto = 42
 
-const cl = class <T> {
+const cl = object {
 
-  const l: T = toto;
+  const l = toto;
 
   mutable t = 42
 
@@ -14,3 +14,5 @@ const cl = class <T> {
   const lol = fn {}
 
 }
+
+const obj = cl.l

@@ -11,7 +11,7 @@ export function parseVariable(stack: TokenBrowser): AstVariable | undefined {
     name: "????",
   };
 
-  // const/mutable
+  // const/mutable (required)
   const first = stack.peek();
   if (first.str === Keyword.VariableConstant) {
     astVariable.mutable = false;
@@ -22,7 +22,7 @@ export function parseVariable(stack: TokenBrowser): AstVariable | undefined {
   }
   stack.consume();
 
-  // name
+  // name (required)
   const name = stack.peek();
   if (name.type !== TokenType.Identifier) {
     stack.error("Expected an identifier as variable name");
@@ -30,7 +30,7 @@ export function parseVariable(stack: TokenBrowser): AstVariable | undefined {
   astVariable.name = name.str;
   stack.consume();
 
-  // type
+  // type (optional)
   const delimType = stack.peek();
   if (delimType.str === ":") {
     stack.consume();
@@ -41,7 +41,7 @@ export function parseVariable(stack: TokenBrowser): AstVariable | undefined {
     astVariable.type = astType;
   }
 
-  // value
+  // value (optional)
   const delimValue = stack.peek();
   if (delimValue.str === "=") {
     stack.consume();

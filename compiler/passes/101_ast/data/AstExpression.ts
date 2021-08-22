@@ -1,8 +1,10 @@
+import { AstObject } from "./AstObject.ts";
 import { AstFunction } from "./AstFunction.ts";
 
 export enum AstExpressionType {
   Identifier = "identifier",
   Function = "function",
+  Object = "object",
   Call = "call",
   Math = "math",
 }
@@ -13,6 +15,10 @@ export interface AstExpressionIdentifier {
 
 export interface AstExpressionFunction {
   function: AstFunction;
+}
+
+export interface AstExpressionObject {
+  object: AstObject;
 }
 
 export interface AstExpressionCall {
@@ -32,5 +38,6 @@ export interface AstExpression {
     | AstExpressionCall
     | AstExpressionIdentifier
     | AstExpressionFunction
+    | AstExpressionObject
     | AstExpressionMath;
 }
