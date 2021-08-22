@@ -1,10 +1,4 @@
-function pad(ident: number) {
-  const parts = [];
-  for (let i = 0; i < ident; i++) {
-    parts.push(" ");
-  }
-  return parts.join("");
-}
+import { repeat } from "./strings/repeat.ts";
 
 function contentJoin(values: string[], ident: number) {
   if (values.length <= 0) {
@@ -14,8 +8,8 @@ function contentJoin(values: string[], ident: number) {
   if (minimal.length <= 64) {
     return " " + minimal + " ";
   }
-  const pad0 = pad(ident);
-  const pad1 = pad(ident + 1);
+  const pad0 = repeat(' ', ident);
+  const pad1 = repeat(' ', ident + 1);
   return "\n" + pad1 + values.join("\n" + pad1) + "\n" + pad0;
 }
 

@@ -8,10 +8,7 @@ import { convertAstToOutputCode } from "./passes/950_output/convertAstToOutputCo
 
 const files = (await getConfig()).files;
 
-//const firstUrl = new URL(files[0])
-
 console.log("first", files[0]);
-//console.log("firstUrl", firstUrl);
 
 const firstCode = await Deno.readTextFile(files[0]);
 

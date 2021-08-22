@@ -1,3 +1,5 @@
+import { clamp } from "../../../utils/maths/clamp.ts";
+import { repeat } from "../../../utils/strings/repeat.ts";
 import { Token } from "../../001_tokens/data/Token.ts";
 import { TokenType } from "../../001_tokens/data/TokenType.ts";
 
@@ -30,11 +32,27 @@ export class TokenBrowser {
   }
 
   error(message: string) {
-    console.log(
-      "token around fail",
-      this.tokens.slice(this.getCurrentIndex() - 4, this.getCurrentIndex() + 4),
-    );
-    throw new Error(message + " -> " + this.peek().str);
+    const indexCurrent = this.getCurrentIndex();
+    const indexMin = clamp(indexCurrent - 4, 0, this.tokens.length)
+    const indexMid = clamp(indexCurrent, 0, this.tokens.length);
+    const indexMax = clamp(indexCurrent + 4, 0, this.tokens.length)
+    
+    const before = this.desc(this.tokens.slice(indexMin, indexMid));
+    const center = this.tokens[indexMid].str;
+    const after = this.desc(this.tokens.slice(indexMid + 1, indexMax));
+
+    const lines = [];
+    lines.push(message);
+    lines.push(repeat("-", before.length + center.length + after.length));
+    lines.push(before + center + after);
+    lines.push(repeat(" ", before.length) + "^");
+    lines.push(repeat("-", before.length + center.length + after.length));
+
+    throw new Error(lines.join("\n"));
+  }
+
+  desc(tokens: Token[]) {
+    return tokens.map(token => token.str).join("")
   }
 
   ended() {
