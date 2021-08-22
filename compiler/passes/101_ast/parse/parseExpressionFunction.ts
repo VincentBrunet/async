@@ -1,13 +1,15 @@
-import { AstExpression,AstExpressionType } from "../data/AstExpression.ts";
+import { AstExpression, AstExpressionType } from "../data/AstExpression.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
+import { TokenImpasse } from "../util/TokenImpasse.ts";
+import { parseExpressionMath } from "./parseExpressionMath.ts";
 import { parseFunction } from "./parseFunction.ts";
 
 export function parseExpressionFunction(
-  stack: TokenBrowser,
-): AstExpression | undefined {
+  browse: TokenBrowser,
+): AstExpression | TokenImpasse {
   // function declaration
-  const astFunction = stack.parse(parseFunction);
-  if (astFunction !== undefined) {
+  const astFunction = browse.recurse(parseFunction);
+  if (!(astFunction instanceof TokenImpasse)) {
     return {
       type: AstExpressionType.Function,
       value: {
@@ -16,5 +18,5 @@ export function parseExpressionFunction(
     };
   }
   // next
-  return stack.parse(parseExpressionMath);
+  return browse.recurse(parseExpressionMath);
 }

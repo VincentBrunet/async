@@ -2,52 +2,55 @@ import { Keyword } from "../../../constants/Keyword.ts";
 import { TokenType } from "../../001_tokens/data/TokenType.ts";
 import { AstVariable } from "../data/AstVariable.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
+import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseExpression } from "./parseExpression.ts";
 import { parseType } from "./parseType.ts";
 
-export function parseVariable(stack: TokenBrowser): AstVariable | undefined {
+export function parseVariable(
+  browser: TokenBrowser,
+): AstVariable | TokenImpasse {
   const astVariable: AstVariable = {
     mutable: false,
     name: "????",
   };
 
   // keyword const/mutable (required)
-  const first = stack.peek();
+  const first = browser.peek();
   if (first.str === Keyword.VariableConstant) {
     astVariable.mutable = false;
   } else if (first.str === Keyword.VariableMutable) {
     astVariable.mutable = true;
   } else {
-    return undefined;
+    return browser.impasse("Variable declaration");
   }
-  stack.consume();
+  browser.consume();
 
   // name (required)
-  const name = stack.peek();
+  const name = browser.peek();
   if (name.type !== TokenType.Identifier) {
-    stack.error("Expected an identifier as variable name");
+    return browser.impasse("Identifier for variable name");
   }
   astVariable.name = name.str;
-  stack.consume();
+  browser.consume();
 
   // type (optional)
-  const delimType = stack.peek();
+  const delimType = browser.peek();
   if (delimType.str === ":") {
-    stack.consume();
-    const astType = stack.parse(parseType);
-    if (astType === undefined) {
-      stack.error("Expected a type");
+    browser.consume();
+    const astType = browser.recurse(parseType);
+    if (astType instanceof TokenImpasse) {
+      return browser.impasse("Type", astType);
     }
     astVariable.type = astType;
   }
 
   // value (optional)
-  const delimValue = stack.peek();
+  const delimValue = browser.peek();
   if (delimValue.str === "=") {
-    stack.consume();
-    const astValue = stack.parse(parseExpression);
-    if (astValue === undefined) {
-      stack.error("Expected a value");
+    browser.consume();
+    const astValue = browser.recurse(parseExpression);
+    if (astValue instanceof TokenImpasse) {
+      return browser.impasse("Expression", astValue);
     }
     astVariable.value = astValue;
   }

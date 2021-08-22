@@ -1,7 +1,8 @@
 import { AstType } from "../data/AstType.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
+import { TokenImpasse } from "../util/TokenImpasse.ts";
 
-export function parseType(stack: TokenBrowser): AstType | undefined {
+export function parseType(browser: TokenBrowser): AstType | TokenImpasse {
   // TODO
-  return undefined;
+  return browser.impasse("Type not implemented yet");
 }

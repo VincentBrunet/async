@@ -1,17 +1,18 @@
 import { AstModule } from "../data/AstModule.ts";
 import { AstStatement } from "../data/AstStatement.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
+import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseStatement } from "./parseStatement.ts";
 
-export function parseModule(stack: TokenBrowser): AstModule {
+export function parseModule(browser: TokenBrowser): AstModule | TokenImpasse {
   const statements: AstStatement[] = [];
   while (true) {
-    if (stack.ended()) {
+    if (browser.ended()) {
       break;
     }
-    const astStatement = stack.parse(parseStatement);
-    if (astStatement === undefined) {
-      stack.error("Invalid statement");
+    const astStatement = browser.recurse(parseStatement);
+    if (astStatement instanceof TokenImpasse) {
+      return browser.impasse("Invalid statement", astStatement);
     } else {
       statements.push(astStatement);
     }

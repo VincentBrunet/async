@@ -1,26 +1,27 @@
-import { AstExpression,AstExpressionType } from "../data/AstExpression.ts";
+import { AstExpression, AstExpressionType } from "../data/AstExpression.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
+import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseExpression } from "./parseExpression.ts";
 
 export function parseExpressionParenthesis(
-  stack: TokenBrowser,
-): AstExpression | undefined {
+  browser: TokenBrowser,
+): AstExpression | TokenImpasse {
   // parenthesis
-  const parenthesisOpen = stack.peek();
+  const parenthesisOpen = browser.peek();
   if (parenthesisOpen.str === "(") {
-    stack.consume();
-    const astExpression = stack.parse(parseExpression);
-    if (astExpression === undefined) {
-      stack.error("Expecting an expression");
+    browser.consume();
+    const astExpression = browser.recurse(parseExpression);
+    if (astExpression instanceof TokenImpasse) {
+      return browser.impasse("Expression", astExpression);
     }
-    const parenthesisClose = stack.peek();
+    const parenthesisClose = browser.peek();
     if (parenthesisClose.str === ")") {
-      stack.consume();
+      browser.consume();
       return astExpression;
     } else {
-      stack.error("Expecting a closing parenthesis");
+      return browser.impasse("Closing parenthesis");
     }
   }
   // Some other kind
-  return undefined;
+  return browser.impasse("Not a parenthesis expression");
 }

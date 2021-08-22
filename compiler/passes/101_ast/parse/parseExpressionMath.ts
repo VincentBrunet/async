@@ -1,16 +1,20 @@
 import { Operator } from "../../../constants/Operator.ts";
 import { AstExpression, AstExpressionType } from "../data/AstExpression.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
+import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseExpression } from "./parseExpression.ts";
+import { parseExpressionCall } from "./parseExpressionCall.ts";
 
-function parseExpressionMath(stack: TokenBrowser): AstExpression | undefined {
-  // left
-  const astExpressionLeft = stack.parse(parseExpressionCall);
-  if (astExpressionLeft === undefined) {
-    return undefined;
+export function parseExpressionMath(
+  browser: TokenBrowser,
+): AstExpression | TokenImpasse {
+  // left (required)
+  const astExpressionLeft = browser.recurse(parseExpressionCall);
+  if (astExpressionLeft instanceof TokenImpasse) {
+    return browser.impasse("Not an expression", astExpressionLeft);
   }
-  // operator
-  const operator = stack.peek();
+  // operator (required)
+  const operator = browser.peek();
   if (
     operator.str === Operator.MathAddition ||
     operator.str === Operator.MathSubstraction ||
@@ -18,22 +22,21 @@ function parseExpressionMath(stack: TokenBrowser): AstExpression | undefined {
     operator.str === Operator.MathDivision || // TODO - priority must differ
     operator.str === Operator.MathModulo
   ) {
-    stack.consume();
+    browser.consume();
   } else {
     return astExpressionLeft;
   }
   // right
-  const astExpressionRight = stack.parse(parseExpression);
-  if (astExpressionRight === undefined) {
-    stack.error("Expected an expression");
-  } else {
-    return {
-      type: AstExpressionType.Math,
-      value: {
-        operator: operator.str,
-        left: astExpressionLeft,
-        right: astExpressionRight,
-      },
-    };
+  const astExpressionRight = browser.recurse(parseExpression);
+  if (astExpressionRight instanceof TokenImpasse) {
+    return browser.impasse("Expression (right side)", astExpressionRight);
   }
+  return {
+    type: AstExpressionType.Math,
+    value: {
+      operator: operator.str,
+      left: astExpressionLeft,
+      right: astExpressionRight,
+    },
+  };
 }

@@ -1,32 +1,36 @@
-import { AstExpression,AstExpressionType } from "../data/AstExpression.ts";
+import { AstExpression, AstExpressionType } from "../data/AstExpression.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
+import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseExpression } from "./parseExpression.ts";
+import { parseExpressionIdentifier } from "./parseExpressionIdentifier.ts";
 
-export function parseExpressionCall(stack: TokenBrowser): AstExpression | undefined {
+export function parseExpressionCall(
+  browser: TokenBrowser
+): AstExpression | TokenImpasse {
   // callee
-  const astCallee = stack.parse(parseExpressionIdentifier);
-  if (astCallee === undefined) {
-    return undefined;
+  const astCallee = browser.recurse(parseExpressionIdentifier);
+  if (astCallee instanceof TokenImpasse) {
+    return browser.impasse("Expression as function call callee", astCallee);
   }
   // param - open
-  const delimParamOpen = stack.peek();
+  const delimParamOpen = browser.peek();
   if (delimParamOpen.str !== "(") {
     return astCallee;
   }
-  stack.consume();
+  browser.consume();
   // param - loop
   const astParams = [];
   while (true) {
     // param - close
-    const delimParamClose = stack.peek();
+    const delimParamClose = browser.peek();
     if (delimParamClose.str === ")") {
-      stack.consume();
+      browser.consume();
       break;
     }
     // param - content
-    const astParam = stack.parse(parseExpression);
-    if (astParam === undefined) {
-      stack.error("Expected an expression");
+    const astParam = browser.recurse(parseExpression);
+    if (astParam instanceof TokenImpasse) {
+      return browser.impasse("Expression as function call parameter", astParam);
     } else {
       astParams.push(astParam);
     }

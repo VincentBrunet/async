@@ -2,20 +2,21 @@ import { Keyword } from "../../../constants/Keyword.ts";
 import { AstObject } from "../data/AstObject.ts";
 import { AstType } from "../data/AstType.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
+import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseBlock } from "./parseBlock.ts";
 
-export function parseObject(stack: TokenBrowser): AstType | undefined {
+export function parseObject(browser: TokenBrowser): AstType | TokenImpasse {
   const astObject: AstObject = {};
 
   // keyword (required)
-  const first = stack.peek();
+  const first = browser.peek();
   if (first.str !== Keyword.Object) {
-    return undefined;
+    return browser.impasse("Cannot be an object declaration");
   }
-  stack.consume();
+  browser.consume();
 
   // block (optional)
-  const astBlock = stack.parse(parseBlock);
+  const astBlock = browser.recurse(parseBlock);
   astObject.block = astBlock;
 
   return astObject;

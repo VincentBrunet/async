@@ -1,31 +1,31 @@
 import { AstBlock } from "../data/AstBlock.ts";
 import { AstStatement } from "../data/AstStatement.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
+import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseStatement } from "./parseStatement.ts";
 
-export function parseBlock(stack: TokenBrowser): AstBlock | undefined {
-  // open
-  const open = stack.peek();
+export function parseBlock(browser: TokenBrowser): AstBlock | TokenImpasse {
+  // open bracket (required)
+  const open = browser.peek();
   if (open.str !== "{") {
-    return undefined;
+    return browser.impasse("Block");
   }
-  stack.consume();
+  browser.consume();
   // statements
   const statements: AstStatement[] = [];
   while (true) {
     // close
-    const close = stack.peek();
+    const close = browser.peek();
     if (close.str === "}") {
-      stack.consume();
+      browser.consume();
       break;
     }
     // statement
-    const astStatement = stack.parse(parseStatement);
-    if (astStatement === undefined) {
-      stack.error("Expecting a statement");
-    } else {
-      statements.push(astStatement);
+    const astStatement = browser.recurse(parseStatement);
+    if (astStatement instanceof TokenImpasse) {
+      return browser.impasse("Statement", astStatement);
     }
+    statements.push(astStatement);
   }
   // done
   return {

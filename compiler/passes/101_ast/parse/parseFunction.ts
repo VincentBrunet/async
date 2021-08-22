@@ -3,50 +3,53 @@ import { TokenType } from "../../001_tokens/data/TokenType.ts";
 import { AstFunction, AstFunctionParam } from "../data/AstFunction.ts";
 import { AstType } from "../data/AstType.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
+import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseBlock } from "./parseBlock.ts";
 import { parseIdentifier } from "./parseIdentifier.ts";
 import { parseType } from "./parseType.ts";
 
-export function parseFunction(stack: TokenBrowser): AstFunction | undefined {
+export function parseFunction(
+  browser: TokenBrowser,
+): AstFunction | TokenImpasse {
   const astFunction: AstFunction = {
     params: [],
   };
 
   // keyword (required)
-  const first = stack.peek();
+  const first = browser.peek();
   if (first.str !== Keyword.Function) {
-    return undefined;
+    return browser.impasse("Function (fn)");
   }
-  stack.consume();
+  browser.consume();
 
   // name (optional)
-  const name = stack.peek();
+  const name = browser.peek();
   if (name.type === TokenType.Identifier) {
-    stack.consume();
+    browser.consume();
     astFunction.name = name.str;
   }
 
   // return type (optional)
-  const delimType = stack.peek();
+  const delimType = browser.peek();
   if (delimType.str === ":") {
-    stack.consume();
-    const astType = stack.parse(parseType);
-    if (astType === undefined) {
-      stack.error("Expected a type");
+    browser.consume();
+    const astType = browser.recurse(parseType);
+    if (astType instanceof TokenImpasse) {
+      return browser.impasse("Type", astType);
     }
     astFunction.type = astType;
   }
 
   // params - open (optional)
-  const delimParamOpen = stack.peek();
+  const delimParamOpen = browser.peek();
   if (delimParamOpen.str === "(") {
-    stack.consume();
+    browser.consume();
 
     while (true) {
       // params - close
-      const delimParamClose = stack.peek();
+      const delimParamClose = browser.peek();
       if (delimParamClose.str === ")") {
-        stack.consume();
+        browser.consume();
         break;
       }
 
@@ -54,34 +57,42 @@ export function parseFunction(stack: TokenBrowser): AstFunction | undefined {
       const astFunctionParam: AstFunctionParam = {};
 
       // params - optional name
-      astFunctionParam.name = stack.parse(parseIdentifier);
+      const astFunctionParamName = browser.recurse(parseIdentifier);
+      if (!(astFunctionParamName instanceof TokenImpasse)) {
+        astFunctionParam.name = astFunctionParamName;
+      }
 
       // params - optional type
-      const delimParamType = stack.peek();
+      const delimParamType = browser.peek();
       if (delimParamType.str === ":") {
-        stack.consume();
-        astFunctionParam.type = stack.parse(parseType);
+        browser.consume();
+        const astFunctionParamType = browser.recurse(parseType);
+        if (!(astFunctionParamType instanceof TokenImpasse)) {
+          astFunctionParam.type = astFunctionParamType;
+        }
       }
 
       // param - validated
       astFunction.params.push(astFunctionParam);
 
       // params - separator, end
-      const delimParamSep = stack.peek();
+      const delimParamSep = browser.peek();
       if (delimParamSep.str === ",") {
-        stack.consume();
+        browser.consume();
       } else if (delimParamSep.str === ")") {
-        stack.consume();
+        browser.consume();
         break;
       } else {
-        stack.error("Expected separator between function parameters");
+        return browser.impasse("Function parameters separator");
       }
     }
   }
 
   // block (optional)
-  const astBlock = stack.parse(parseBlock);
-  astFunction.block = astBlock;
+  const astBlock = browser.recurse(parseBlock);
+  if (!(astBlock instanceof TokenImpasse)) {
+    astFunction.block = astBlock;
+  }
 
   return astFunction;
 }

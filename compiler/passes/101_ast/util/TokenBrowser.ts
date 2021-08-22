@@ -2,6 +2,7 @@ import { clamp } from "../../../utils/maths/clamp.ts";
 import { repeat } from "../../../utils/strings/repeat.ts";
 import { Token } from "../../001_tokens/data/Token.ts";
 import { TokenType } from "../../001_tokens/data/TokenType.ts";
+import { TokenImpasse } from "./TokenImpasse.ts";
 
 export class TokenBrowser {
   private tokens: Token[];
@@ -21,9 +22,11 @@ export class TokenBrowser {
     this.fastForward();
   }
 
-  parse<T>(parser: (stack: TokenBrowser) => T | undefined): T | undefined {
+  recurse<T>(
+    recurser: (stack: TokenBrowser) => T | TokenImpasse
+  ): T | TokenImpasse {
     this.indexes.push(this.getCurrentIndex());
-    const ast = parser(this);
+    const ast = recurser(this);
     const after = this.indexes.pop();
     if (ast !== undefined && after !== undefined) {
       this.indexes[this.getCurrentHeight()] = after;
@@ -31,15 +34,17 @@ export class TokenBrowser {
     return ast;
   }
 
-  error(message: string) {
+  /*
+  error(message: string, origin?: TokenImpasse) {
+    // TODO - remove in favor of impasse?
     const indexCurrent = this.getCurrentIndex();
-    const indexMin = clamp(indexCurrent - 4, 0, this.tokens.length)
+    const indexMin = clamp(indexCurrent - 4, 0, this.tokens.length);
     const indexMid = clamp(indexCurrent, 0, this.tokens.length);
-    const indexMax = clamp(indexCurrent + 4, 0, this.tokens.length)
-    
-    const before = this.desc(this.tokens.slice(indexMin, indexMid));
+    const indexMax = clamp(indexCurrent + 4, 0, this.tokens.length);
+
+    const before = this.tokenString(this.tokens.slice(indexMin, indexMid));
     const center = this.tokens[indexMid].str;
-    const after = this.desc(this.tokens.slice(indexMid + 1, indexMax));
+    const after = this.tokenString(this.tokens.slice(indexMid + 1, indexMax));
 
     const lines = [];
     lines.push(message);
@@ -50,9 +55,10 @@ export class TokenBrowser {
 
     throw new Error(lines.join("\n"));
   }
+  */
 
-  desc(tokens: Token[]) {
-    return tokens.map(token => token.str).join("")
+  impasse(message: string, origin?: TokenImpasse) {
+    return new TokenImpasse(this.getCurrentIndex(), message, origin);
   }
 
   ended() {
@@ -90,5 +96,9 @@ export class TokenBrowser {
         return;
       }
     }
+  }
+
+  private tokenString(tokens: Token[]) {
+    return tokens.map((token) => token.str).join("");
   }
 }

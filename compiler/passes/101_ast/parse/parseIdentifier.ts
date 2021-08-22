@@ -1,11 +1,12 @@
 import { TokenType } from "../../001_tokens/data/TokenType.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
+import { TokenImpasse } from "../util/TokenImpasse.ts";
 
-export function parseIdentifier(stack: TokenBrowser): string | undefined {
-  const token = stack.peek();
+export function parseIdentifier(browser: TokenBrowser): string | TokenImpasse {
+  const token = browser.peek();
   if (token.type === TokenType.Identifier) {
-    stack.consume();
+    browser.consume();
     return token.str;
   }
-  return undefined;
+  return browser.impasse("Is not an identifier");
 }
