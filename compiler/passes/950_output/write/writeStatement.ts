@@ -1,8 +1,6 @@
 import { AstStatement } from "../../101_ast/data/AstStatement.ts";
-
 import { OutputCode } from "../util/OutputCode.ts";
 import { writeExpression } from "./writeExpression.ts";
-import { OutputSection } from "../util/OutputSection.ts";
 
 export function writeStatement(output: OutputCode, astStatement: AstStatement) {
   const astVariable = astStatement.variable;

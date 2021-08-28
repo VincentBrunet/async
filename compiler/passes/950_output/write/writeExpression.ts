@@ -9,7 +9,6 @@ import {
 
 import { OutputCode } from "../util/OutputCode.ts";
 import { writeFunction } from "./writeFunction.ts";
-import { OutputSection } from "../util/OutputSection.ts";
 
 export function writeExpression(
   output: OutputCode,

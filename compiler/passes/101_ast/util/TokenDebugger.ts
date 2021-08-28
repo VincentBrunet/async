@@ -13,7 +13,7 @@ export class TokenDebugger {
 
   private errorRec(impasse: TokenImpasse, depth: number) {
     const indent = repeat("  ", depth);
-    console.log(indent, impasse.message, " ->" + this.smallContext(impasse));
+    console.log(indent, impasse.message, "->", this.smallContext(impasse));
 
     if (impasse.children) {
       for (const child of impasse.children) {
@@ -25,11 +25,11 @@ export class TokenDebugger {
   private smallContext(impasse: TokenImpasse) {
     const idx = impasse.index;
 
-    const before = this.tokenString(this.slice(idx - 10, idx - 1));
+    const before = this.tokenString(this.slice(idx - 10, idx));
     const middle = this.tokenString(this.slice(idx, idx));
     const after = this.tokenString(this.slice(idx + 1, idx + 10));
 
-    return before + middle + after;
+    return [before, middle, after, this.tokenString(this.slice(idx - 10, idx + 10))];
   }
 
   private tokenString(tokens: Token[]) {

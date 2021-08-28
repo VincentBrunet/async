@@ -1,0 +1,11 @@
+
+const a = fn () {
+  assert(true)
+}
+
+const b = fn {
+  assert(true)
+}
+
+a()
+b()

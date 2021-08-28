@@ -1,0 +1,4 @@
+
+/// SECTION - module
+
+void *getModule();

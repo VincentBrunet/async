@@ -7,10 +7,10 @@ import { parseExpressionIdentifier } from "./parseExpressionIdentifier.ts";
 export function parseExpressionCall(
   browser: TokenBrowser,
 ): AstExpression | TokenImpasse {
-  // callee
+  // callee // TODO
   const astCallee = browser.recurse(parseExpressionIdentifier);
   if (astCallee instanceof TokenImpasse) {
-    return browser.impasse("Expression as function call callee", [astCallee]);
+    return browser.impasse("ExpressionCall.Callee", [astCallee]);
   }
   // param - open
   const delimParamOpen = browser.peek();

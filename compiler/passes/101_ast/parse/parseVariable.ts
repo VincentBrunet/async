@@ -21,7 +21,7 @@ export function parseVariable(
   } else if (first.str === Keyword.VariableMutable) {
     astVariable.mutable = true;
   } else {
-    return browser.impasse("Variable declaration");
+    return browser.impasse("Variable declaration: " + first.str);
   }
   browser.consume();
 
@@ -50,7 +50,7 @@ export function parseVariable(
     browser.consume();
     const astValue = browser.recurse(parseExpression);
     if (astValue instanceof TokenImpasse) {
-      return browser.impasse("Expression", [astValue]);
+      return browser.impasse("Variable's Expression", [astValue]);
     }
     astVariable.value = astValue;
   }

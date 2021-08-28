@@ -1,9 +1,18 @@
 import { MapArray } from "../../../utils/data/MapArray.ts";
-import { OutputSection } from "./OutputSection.ts";
 
 export class OutputCode {
   private header = new MapArray<OutputSection, string>();
   private source = new MapArray<OutputSection, string>();
+
+  private _id = 0;
+
+  private functions = new MapArray<string, string>();
+
+  pushFunction() {
+    const id = _id++;
+  }
+  popFunction() {
+  }
 
   writeToHeader(section: OutputSection, line: string) {
     this.header.push(section, line);

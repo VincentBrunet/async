@@ -14,5 +14,12 @@
   },
   "[json]": {
     "editor.formatOnSave": true
+  },
+  "files.associations": {
+    "__nullptr": "cpp",
+    "cstddef": "cpp",
+    "type_traits": "cpp",
+    "cstdlib": "c",
+    "stdio.h": "c"
   }
 }

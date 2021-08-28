@@ -22,5 +22,5 @@ export function parseStatement(
     };
   }
   // unknown
-  return browser.impasse("Not a valid statement", [astVariable, astExpression]);
+  return browser.impasse("Statement", [astVariable, astExpression]);
 }
