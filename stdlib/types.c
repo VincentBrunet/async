@@ -1,9 +1,7 @@
-#include <stdlib.h>
-
 #include "types.h"
 
 /**
- * Types memory
+ * Global native types
  */
 
 t_type *type_u8 = NULL;
@@ -23,7 +21,7 @@ t_type *type_f128 = NULL;
 t_type *type_string = NULL;
 
 /**
- * Types factories
+ * Utils
  */
 t_type *type_factory(t_u32 parents) {
   t_type *value = malloc(sizeof(t_type));

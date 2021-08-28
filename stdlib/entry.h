@@ -1,7 +1,7 @@
+#include "types.h"
+
 #ifndef __ENTRY_H
 #define __ENTRY_H
-
-#include "types.h"
 
 /**
  * Entrypoint

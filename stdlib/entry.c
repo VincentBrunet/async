@@ -1,7 +1,5 @@
-
 #include "entry.h"
 
-#include <stdlib.h>
 #include <stdio.h>
 
 /**
@@ -74,8 +72,8 @@ t_object *lal_module() {
   b->value = value_number_factory_i32(20);
   b->value = value_number_factory_i32(10);
 
-  printf("a: %ld\n", a->value->data.i32);
-  printf("b: %ld\n", b->value->data.i32);
+  printf("a: %d\n", a->value->data.i32);
+  printf("b: %d\n", b->value->data.i32);
   return NULL;
 }
 t_object *(*main_module)() = lal_module;
