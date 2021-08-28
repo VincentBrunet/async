@@ -84,8 +84,20 @@ typedef struct t_variable {
  * Global native types
  */
 
+extern t_type *type_u8;
+extern t_type *type_u16;
+extern t_type *type_u32;
+extern t_type *type_u64;
+
+extern t_type *type_i8;
+extern t_type *type_i16;
 extern t_type *type_i32;
 extern t_type *type_i64;
+
+extern t_type *type_f32;
+extern t_type *type_f64;
+extern t_type *type_f128;
+
 extern t_type *type_string;
 
 /**

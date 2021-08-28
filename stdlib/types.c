@@ -6,9 +6,21 @@
  * Types memory
  */
 
-t_type *type_i32 = 0;
-t_type *type_i64 = 0;
-t_type *type_string = 0;
+t_type *type_u8 = NULL;
+t_type *type_u16 = NULL;
+t_type *type_u32 = NULL;
+t_type *type_u64 = NULL;
+
+t_type *type_i8 = NULL;
+t_type *type_i16 = NULL;
+t_type *type_i32 = NULL;
+t_type *type_i64 = NULL;
+
+t_type *type_f32 = NULL;
+t_type *type_f64 = NULL;
+t_type *type_f128 = NULL;
+
+t_type *type_string = NULL;
 
 /**
  * Types factories
