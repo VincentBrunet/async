@@ -1,10 +1,10 @@
 
 const a = fn () {
-  assert(true)
+  stdout(true)
 }
 
 const b = fn {
-  assert(true)
+  stdout(true)
 }
 
 a()

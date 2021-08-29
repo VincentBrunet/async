@@ -8,6 +8,7 @@ import {
 } from "../../101_ast/data/AstExpression.ts";
 
 import { OutputCode } from "../util/OutputCode.ts";
+
 import { writeFunction } from "./writeFunction.ts";
 
 export function writeExpression(
@@ -17,7 +18,7 @@ export function writeExpression(
   switch (astExpression.type) {
     case AstExpressionType.Identifier: {
       const astValue = astExpression.value as AstExpressionIdentifier;
-      output.writeToSource(OutputSection.Module, astValue.name);
+      output.addContent(astValue.name);
       break;
     }
     case AstExpressionType.Function: {
@@ -27,17 +28,19 @@ export function writeExpression(
     }
     case AstExpressionType.Call: {
       const astValue = astExpression.value as AstExpressionCall;
+      output.addContent("(");
       writeExpression(output, astValue.callee);
-      output.writeToSource(OutputSection.Module, "()");
+      output.addContent(")");
+      output.addContent("()");
       break;
     }
     case AstExpressionType.Math: {
       const astValue = astExpression.value as AstExpressionMath;
-      output.writeToSource(OutputSection.Module, "(");
+      output.addContent("(");
       writeExpression(output, astValue.left);
-      output.writeToSource(OutputSection.Module, astValue.operator);
+      output.addContent(astValue.operator);
       writeExpression(output, astValue.right);
-      output.writeToSource(OutputSection.Module, ")");
+      output.addContent(")");
       break;
     }
   }

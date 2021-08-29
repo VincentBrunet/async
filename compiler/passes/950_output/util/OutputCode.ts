@@ -1,44 +1,67 @@
 import { MapArray } from "../../../utils/data/MapArray.ts";
 
+class OutputFunction {
+  name: string = "";
+  variables = new Set<string>();
+  contents: string[] = []
+}
+
 export class OutputCode {
-  private header = new MapArray<OutputSection, string>();
-  private source = new MapArray<OutputSection, string>();
 
-  private _id = 0;
+  private functions_stack: OutputFunction[] = [];
+  private functions_list: OutputFunction[] = [];
+  private functions_top?: OutputFunction = undefined;
 
-  private functions = new MapArray<string, string>();
-
-  pushFunction() {
-    const id = _id++;
+  pushFunction(name: string) {
+    const fn = new OutputFunction()
+    fn.name = name;
+    this.functions_stack.push(fn)
+    this.functions_list.push(fn);
+    this.functions_top = fn;
   }
   popFunction() {
+    this.functions_stack.pop();
+    this.functions_top = this.functions_stack[this.functions_stack.length - 1];
   }
 
-  writeToHeader(section: OutputSection, line: string) {
-    this.header.push(section, line);
+  addVariable(variable: string) {
+    this.functions_top?.variables?.add(variable);
   }
-  writeToSource(section: OutputSection, line: string) {
-    this.source.push(section, line);
+  addContent(content: string) {
+    this.functions_top?.contents?.push(content);
   }
 
   getHeader(): string {
-    return this.toContent(this.header);
+    const parts: string[] = [];
+    parts.push("#include \"types.h\";\n");
+    parts.push("\n");
+    for (const fn of this.functions_list) {
+      parts.push("void ");
+      parts.push(fn.name);
+      parts.push("();");
+      parts.push("\n");
+    }
+    return parts.join("");
   }
   getSource(): string {
-    return this.toContent(this.source);
-  }
-
-  private toContent(container: MapArray<OutputSection, string>): string {
-    const sortedKeys = [...container.keys()].sort();
-    const sortedLines: string[] = [];
-    for (const sortedKey of sortedKeys) {
-      sortedLines.push("");
-      sortedLines.push("/// SECTION - " + sortedKey);
-      sortedLines.push("");
-      for (const line of container.list(sortedKey) ?? []) {
-        sortedLines.push(line);
+    const parts: string[] = [];
+    parts.push("#include \"types.h\";\n");
+    parts.push("\n");
+    for (const fn of this.functions_list) {
+      parts.push("void ");
+      parts.push(fn.name);
+      parts.push("()");
+      parts.push("{\n");
+      for (const variable of fn.variables) {
+        parts.push("t_variable ");
+        parts.push(variable);
+        parts.push(";\n");
       }
+      for (const content of fn.contents) {
+        parts.push(content);
+      }
+      parts.push("}\n");
     }
-    return sortedLines.join("\n");
+    return parts.join("");
   }
 }

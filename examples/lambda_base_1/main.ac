@@ -1,7 +1,7 @@
 
 const num = 42
 
-fn hello() {
+fn () {
 
   const f = fn {
     log(num)

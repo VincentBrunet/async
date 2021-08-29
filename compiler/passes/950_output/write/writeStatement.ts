@@ -3,23 +3,22 @@ import { OutputCode } from "../util/OutputCode.ts";
 import { writeExpression } from "./writeExpression.ts";
 
 export function writeStatement(output: OutputCode, astStatement: AstStatement) {
+  output.addContent("  ");
+
   const astVariable = astStatement.variable;
   if (astVariable) {
-    output.writeToSource(
-      OutputSection.Module,
-      "void *" + astVariable.name + ";",
-    );
+    output.addVariable(astVariable.name);
     if (astVariable.value) {
-      output.writeToSource(OutputSection.Module, astVariable.name + "=");
+      output.addContent(astVariable.name);
+      output.addContent(" = ");
       writeExpression(output, astVariable.value);
-      output.writeToSource(OutputSection.Module, ";");
     }
-    return;
   }
 
   const astExpression = astStatement.expression;
   if (astExpression) {
     writeExpression(output, astExpression);
-    output.writeToSource(OutputSection.Module, ";");
   }
+
+  output.addContent(";\n");
 }
