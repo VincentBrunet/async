@@ -1,5 +1,8 @@
-#include "types.h";
+#include "types.h"
 
-void module_load();
-void f_0x0();
-void f_0x1();
+
+t_value *module_load();
+
+t_value *f_0x0();
+
+t_value *f_0x1();

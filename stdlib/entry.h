@@ -1,11 +1,11 @@
-#include "types.h"
-
 #ifndef __ENTRY_H
 #define __ENTRY_H
+
+#include "runtime.h"
 
 /**
  * Entrypoint
  */
-extern t_object *(*main_module)();
+extern t_value *(*main_module)();
 
 #endif

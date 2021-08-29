@@ -1,22 +1,16 @@
-#include "entry.h"
-
 #include <stdio.h>
 
-/**
- * Utils
- */
-t_value *value_number_factory_i32(t_i32 number) {
-  t_value *value = calloc(1, sizeof(t_value));
-  value->type = type_i32;
-  value->content.i32 = number;
-  return value;
-}
+#include "entry.h"
+
+#include "values.h"
 
 /**
  * Entrypoint
  */
 int main() {
-  type_init();
+  types_init();
+  values_init();
+  scopes_init();
 
   printf(" -- interfaces -- \n");
   printf("type_i32: %p\n", (void*)type_i32);
@@ -53,6 +47,13 @@ int main() {
   printf("sizeof(t_scope): %ld\n", sizeof(t_scope));
   printf("sizeof(t_variable): %ld\n", sizeof(t_variable));
 
+  printf(" -- type hierachy -- \n");
+  printf("type_is(type_object, type_value): %hhu\n", type_is(type_object, type_value));
+  printf("type_is(type_boolean, type_value): %hhu\n", type_is(type_boolean, type_value));
+  printf("type_is(type_null, type_value): %hhu\n", type_is(type_null, type_value));
+  printf("type_is(type_null, type_string): %hhu\n", type_is(type_null, type_string));
+
+  printf(" -- main module -- \n");
   if (main_module != NULL) {
     main_module();
   }
@@ -61,25 +62,25 @@ int main() {
 /**
  * TestModule
  */
-t_object *lal_module() {
+t_value *lal_module() {
   // module header
   t_object *self = calloc(1, sizeof(t_object));
   self->fields.size = 2;
-  self->fields.variables = calloc(2, sizeof(t_value));
-  // variables
-  t_variable *a = &self->fields.variables[0];
-  t_variable *b = &self->fields.variables[1];
+  self->fields.items = calloc(2, sizeof(t_value));
+  // items
+  t_variable *a = &self->fields.items[0].variable;
+  t_variable *b = &self->fields.items[1].variable;
 
-  a->value = value_number_factory_i32(42);
+  a->value = value_factory_i32(42);
 
-  b->value = value_number_factory_i32(20);
-  b->value = value_number_factory_i32(10);
+  b->value = value_factory_i32(20);
+  b->value = value_factory_i32(10);
 
-  self->fields.variables[0].value = value_number_factory_i32(32);
+  self->fields.items[0].variable.value = value_factory_i32(32);
 
   printf("a: %d\n", a->value->content.i32);
   printf("b: %d\n", b->value->content.i32);
   return NULL;
 }
-t_object *(*main_module)() = lal_module;
+t_value *(*main_module)() = lal_module;
 

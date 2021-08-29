@@ -33,10 +33,10 @@ export class OutputCode {
 
   getHeader(): string {
     const parts: string[] = [];
-    parts.push("#include \"types.h\";\n");
+    parts.push("#include \"types.h\"\n");
     parts.push("\n");
     for (const fn of this.functions_list) {
-      parts.push("void ");
+      parts.push("\nt_value *");
       parts.push(fn.name);
       parts.push("();");
       parts.push("\n");
@@ -45,15 +45,14 @@ export class OutputCode {
   }
   getSource(): string {
     const parts: string[] = [];
-    parts.push("#include \"types.h\";\n");
-    parts.push("\n");
+    parts.push("#include \"types.h\"\n");
     for (const fn of this.functions_list) {
-      parts.push("void ");
+      parts.push("\nt_value *");
       parts.push(fn.name);
       parts.push("()");
       parts.push("{\n");
       for (const variable of fn.variables) {
-        parts.push("t_variable ");
+        parts.push("  t_variable *");
         parts.push(variable);
         parts.push(";\n");
       }
