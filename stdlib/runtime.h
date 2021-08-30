@@ -5,6 +5,6 @@
 #include "types.h"
 #include "values.h"
 #include "entry.h"
-#include "scopes.h"
+#include "objects.h"
 
 #endif

@@ -29,8 +29,6 @@ typedef uint8_t t_boolean;
  * Typedefs internal types, forward declaration
  */
 
-typedef struct t_scope t_scope;
-
 typedef struct t_object t_object;
 typedef struct t_function t_function;
 typedef struct t_string t_string;
@@ -41,23 +39,18 @@ typedef struct t_type t_type;
 typedef struct t_value t_value;
 
 typedef struct t_variable t_variable;
-typedef struct t_named t_named;
 
 /**
  * Typedefs internal types, actual declaration
  */
 
-typedef struct t_scope {
-  t_named *items;
-  t_u32 size;
-} t_scope;
-
 typedef struct t_object {
-  t_scope fields;
+  t_u32 size;
+  t_variable *fields;
 } t_object;
 
 typedef struct t_function {
-  t_scope closure;
+  t_object closure;
   void* callable;
 } t_function;
 
@@ -96,11 +89,7 @@ typedef struct t_value {
 
 typedef struct t_variable {
   t_value *value;
+  t_u32 key;
 } t_variable;
-
-typedef struct t_named {
-  t_variable variable;
-  t_u32 name;
-} t_named;
 
 #endif

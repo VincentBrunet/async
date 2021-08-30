@@ -10,7 +10,8 @@
 int main() {
   types_init();
   values_init();
-  scopes_init();
+  objects_init();
+  objects_init();
 
   printf(" -- interfaces -- \n");
   printf("type_i32: %p\n", (void*)type_i32);
@@ -44,7 +45,7 @@ int main() {
   printf("sizeof(t_value): %ld\n", sizeof(t_value));
 
   printf(" -- runtime type -- \n");
-  printf("sizeof(t_scope): %ld\n", sizeof(t_scope));
+  printf("sizeof(t_object): %ld\n", sizeof(t_object));
   printf("sizeof(t_variable): %ld\n", sizeof(t_variable));
 
   printf(" -- type hierachy -- \n");
@@ -62,25 +63,40 @@ int main() {
 /**
  * TestModule
  */
-t_value *lal_module() {
-  // module header
-  t_object *self = calloc(1, sizeof(t_object));
-  self->fields.size = 2;
-  self->fields.items = calloc(2, sizeof(t_value));
-  // items
-  t_variable *a = &self->fields.items[0].variable;
-  t_variable *b = &self->fields.items[1].variable;
+void f_block(t_object *stack) {
 
-  a->value = value_factory_i32(42);
+}
 
-  b->value = value_factory_i32(20);
-  b->value = value_factory_i32(10);
+t_value *f_lambda(t_object *closure) {
+  return object_get(closure, 0x001);
+}
 
-  self->fields.items[0].variable.value = value_factory_i32(32);
+t_value *hello_lambda(t_object *closure) {
+  // object prep
+  return value_null;
+}
 
-  printf("a: %d\n", a->value->content.i32);
-  printf("b: %d\n", b->value->content.i32);
-  return NULL;
+t_value *lal_module(t_object *module) {
+  // module prep
+  t_value *__module_value = value_factory_object(3);
+  t_object *__module_object = (t_object *)__module_value;
+  object_key(__module_object, 0, 0x000); // world
+  object_key(__module_object, 1, 0x001); // num
+  object_key(__module_object, 2, 0x002); // hello
+  // statements
+  object_set(__module_object, 0x001, value_factory_i32(42));
+  object_set(__module_object, 0x002, value_factory_i32(22)); // TODO (should be a function alloc)
+  object_set(__module_object, 0x000, object_get(__module_object, 0x002));
+
+  printf("world key: %d\n", __module_object->fields[0].key);
+  printf("world value: %d\n", __module_object->fields[0].value->content.i32);
+  printf("num key: %d\n", __module_object->fields[1].key);
+  printf("num value: %d\n", __module_object->fields[1].value->content.i32);
+  printf("hello key: %d\n", __module_object->fields[2].key);
+  printf("hello value: %d\n", __module_object->fields[2].value->content.i32);
+
+  printf("returned value: %d\n", f_lambda(__module_object)->content.i32);
+  return __module_value;
 }
 t_value *(*main_module)() = lal_module;
 

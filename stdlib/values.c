@@ -1,4 +1,5 @@
 #include "values.h"
+#include "objects.h"
 
 /**
  * Global native values
@@ -30,8 +31,8 @@ void values_init() {
   value_empty_string->content.string.chars = NULL;
 
   value_empty_object = value_factory(type_object);
-  value_empty_object->content.object.fields.size = 0;
-  value_empty_object->content.object.fields.items = NULL;
+  value_empty_object->content.object.size = 0;
+  value_empty_object->content.object.fields = NULL;
 }
 
 t_value *value_factory(t_type *type) {
@@ -43,5 +44,11 @@ t_value *value_factory(t_type *type) {
 t_value *value_factory_i32(t_i32 number) {
   t_value *value = value_factory(type_i32);
   value->content.i32 = number;
+  return value;
+}
+
+t_value *value_factory_object(t_u32 size) {
+  t_value *value = value_factory(type_object);
+  object_init((t_object *)value, size);
   return value;
 }

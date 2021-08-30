@@ -25,4 +25,6 @@ t_value *value_factory(t_type *type);
 
 t_value *value_factory_i32(t_i32 number);
 
+t_value *value_factory_object(t_u32 size);
+
 #endif

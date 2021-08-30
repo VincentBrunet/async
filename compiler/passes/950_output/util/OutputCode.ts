@@ -34,7 +34,6 @@ export class OutputCode {
   getHeader(): string {
     const parts: string[] = [];
     parts.push("#include \"types.h\"\n");
-    parts.push("\n");
     for (const fn of this.functions_list) {
       parts.push("\nt_value *");
       parts.push(fn.name);

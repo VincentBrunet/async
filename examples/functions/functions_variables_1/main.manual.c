@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+#include "runtime.h"
+
 void __0x22221()
 {
   printf("1\n");
@@ -24,4 +26,8 @@ void module() {
 
 int main() {
   module();
+}
+
+t_object *module_0x333() {
+
 }

@@ -67,6 +67,7 @@ t_type *type_factory_value(t_u32 parents) {
   return type;
 }
 
+/*
 int type_sort_compare(const void* a, const void *b) {
   return (uintptr_t)a - (uintptr_t)b;
 }
@@ -93,10 +94,23 @@ t_boolean type_find_recursor(t_type **haystack, t_type *needle, t_u32 start, t_u
     return type_find_recursor(haystack, needle, mid + 1, end);
   }
 }
+*/
+
+t_i32 type_bsearch(const void *a, const void *b) {
+  return (uintptr_t)a - (uintptr_t)b;
+}
+
 t_boolean type_is(t_type *type, t_type *other) {
-  t_u32 count = type->parent_count;
-  if (count <= 0) {
+  void *result = bsearch(
+    other,
+    type->parent_array,
+    type->parent_count,
+    sizeof(t_type *),
+    type_bsearch
+  );
+  if (result == NULL) {
     return FALSE;
+  } else {
+    return TRUE;
   }
-  return type_find_recursor(type->parent_array, other, 0, count - 1);
 }
