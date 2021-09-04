@@ -1,21 +1,25 @@
 import { AstFunction } from "../../101_ast/data/AstFunction.ts";
-
-import { OutputCode } from "../util/OutputCode.ts";
-
+import { OutputBlock } from "../util/OutputBlock.ts";
+import { OutputModule } from "../util/OutputModule.ts";
+import { OutputStatement } from "../util/OutputStatement.ts";
 import { writeBlock } from "./writeBlock.ts";
 
 let _id = 0;
 
-export function writeFunction(output: OutputCode, astFunction: AstFunction) {
+export function writeFunction(
+  module: OutputModule,
+  statement: OutputStatement,
+  astFunction: AstFunction,
+) {
   const name = "f_0x" + (_id++).toString(16);
 
-  output.addContent("(t_function)");
-  output.addContent(name);
+  statement.pushPart("(t_function)(");
+  statement.pushPart(name);
+  statement.pushPart(")");
 
-  output.pushFunction(name)
+  const block = new OutputBlock(name);
   if (astFunction.block) {
-    writeBlock(output, astFunction.block);
+    writeBlock(module, block, astFunction.block);
   }
-  output.popFunction()
-
+  module.pushBlock(block);
 }

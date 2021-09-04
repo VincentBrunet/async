@@ -1,12 +1,12 @@
 import { AstModule } from "../../101_ast/data/AstModule.ts";
-
-import { OutputCode } from "../util/OutputCode.ts";
+import { OutputBlock } from "../util/OutputBlock.ts";
+import { OutputModule } from "../util/OutputModule.ts";
 import { writeStatement } from "./writeStatement.ts";
 
-export function writeModule(output: OutputCode, astModule: AstModule) {
-  output.pushFunction("module_load");
-  for (const statement of astModule.statements) {
-    writeStatement(output, statement);
+export function writeModule(module: OutputModule, astModule: AstModule) {
+  const block = new OutputBlock("module_load");
+  for (const astStatement of astModule.statements) {
+    writeStatement(module, block, astStatement);
   }
-  output.popFunction();
+  module.pushBlock(block);
 }

@@ -1,7 +1,5 @@
 {
   "deno.enable": true,
-  "deno.lint": true,
-  "deno.unstable": true,
   "editor.tabSize": 2,
   "editor.insertSpaces": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
@@ -33,5 +31,7 @@
     "unordered_map": "c",
     "utility": "c",
     "vector": "c"
-  }
+  },
+  "deno.lint": true,
+  "deno.unstable": true
 }

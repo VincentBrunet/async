@@ -1,10 +1,8 @@
-import { getConfig } from "./wrappers/getConfig.ts";
-
-import { stringify } from "./utils/stringify.ts";
-
 import { convertCodeToTokens } from "./passes/001_tokens/convertCodeToTokens.ts";
 import { convertTokensToAst } from "./passes/101_ast/convertTokensToAst.ts";
-import { convertAstToOutputCode } from "./passes/950_output/convertAstToOutputCode.ts";
+import { convertAstToOutputModule } from "./passes/950_output/convertAstToOutputModule.ts";
+import { stringify } from "./utils/stringify.ts";
+import { getConfig } from "./wrappers/getConfig.ts";
 
 const files = (await getConfig()).files;
 
@@ -22,9 +20,15 @@ const firstAst = convertTokensToAst(firstTokens);
 
 console.log("firstAst", stringify(firstAst));
 
-const firstOutputCode = convertAstToOutputCode(firstAst);
+const firstOutputModule = convertAstToOutputModule(firstAst);
 
-console.log("firstOutputCode", stringify(firstOutputCode));
+console.log("firstOutputModule", stringify(firstOutputModule));
 
-Deno.writeTextFile(files[0] + ".compiled.h", firstOutputCode.getHeader());
-Deno.writeTextFile(files[0] + ".compiled.c", firstOutputCode.getSource());
+Deno.writeTextFile(
+  files[0] + ".compiled.h",
+  firstOutputModule.generateHeader(),
+);
+Deno.writeTextFile(
+  files[0] + ".compiled.c",
+  firstOutputModule.generateSource(),
+);

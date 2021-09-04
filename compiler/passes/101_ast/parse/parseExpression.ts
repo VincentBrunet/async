@@ -1,9 +1,10 @@
-import { AstExpression, AstExpressionType } from "../data/AstExpression.ts";
+import { AstExpression } from "../data/AstExpression.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
-import { parseExpressionIdentifier } from "./parseExpressionIdentifier.ts";
-import { parseExpressionFunction } from "./parseExpressionFunction.ts";
 import { parseExpressionCall } from "./parseExpressionCall.ts";
+import { parseExpressionFunction } from "./parseExpressionFunction.ts";
+import { parseExpressionIdentifier } from "./parseExpressionIdentifier.ts";
+import { parseExpressionLiteral } from "./parseExpressionLiteral.ts";
 
 export function parseExpression(
   browser: TokenBrowser,
@@ -17,9 +18,17 @@ export function parseExpression(
   if (!(astExpressionCall instanceof TokenImpasse)) {
     return astExpressionCall;
   }
+  const astExpressionLiteral = browser.recurse(parseExpressionLiteral);
+  if (!(astExpressionLiteral instanceof TokenImpasse)) {
+    return astExpressionLiteral;
+  }
   const astExpressionIdentifier = browser.recurse(parseExpressionIdentifier);
   if (!(astExpressionIdentifier instanceof TokenImpasse)) {
     return astExpressionIdentifier;
   }
-  return browser.impasse("Expression", [astExpressionFunction, astExpressionCall, astExpressionIdentifier])
+  return browser.impasse("Expression", [
+    astExpressionFunction,
+    astExpressionCall,
+    astExpressionIdentifier,
+  ]);
 }

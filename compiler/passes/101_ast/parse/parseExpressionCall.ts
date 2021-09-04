@@ -40,7 +40,7 @@ export function parseExpressionCall(
   // done
   return {
     type: AstExpressionType.Call,
-    value: {
+    data: {
       callee: astCallee,
       params: astParams,
     },

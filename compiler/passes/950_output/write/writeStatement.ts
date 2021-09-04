@@ -1,24 +1,24 @@
 import { AstStatement } from "../../101_ast/data/AstStatement.ts";
-import { OutputCode } from "../util/OutputCode.ts";
+import { OutputBlock } from "../util/OutputBlock.ts";
+import { OutputModule } from "../util/OutputModule.ts";
+import { OutputOrder } from "../util/OutputOrder.ts";
+import { OutputStatement } from "../util/OutputStatement.ts";
 import { writeExpression } from "./writeExpression.ts";
+import { writeVariable } from "./writeVariable.ts";
 
-export function writeStatement(output: OutputCode, astStatement: AstStatement) {
-  output.addContent("  ");
-
+export function writeStatement(
+  module: OutputModule,
+  block: OutputBlock,
+  astStatement: AstStatement,
+) {
   const astVariable = astStatement.variable;
   if (astVariable) {
-    output.addVariable(astVariable.name);
-    if (astVariable.value) {
-      output.addContent(astVariable.name);
-      output.addContent(" = ");
-      writeExpression(output, astVariable.value);
-    }
+    writeVariable(module, block, astVariable);
   }
-
   const astExpression = astStatement.expression;
   if (astExpression) {
-    writeExpression(output, astExpression);
+    const statement = new OutputStatement();
+    writeExpression(module, statement, astExpression);
+    block.pushStatement(OutputOrder.Logic, statement);
   }
-
-  output.addContent(";\n");
 }

@@ -33,7 +33,7 @@ export function parseExpressionMath(
   }
   return {
     type: AstExpressionType.Math,
-    value: {
+    data: {
       operator: operator.str,
       left: astExpressionLeft,
       right: astExpressionRight,

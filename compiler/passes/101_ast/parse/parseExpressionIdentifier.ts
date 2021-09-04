@@ -12,7 +12,7 @@ export function parseExpressionIdentifier(
   }
   return {
     type: AstExpressionType.Identifier,
-    value: {
+    data: {
       name: identifier,
     },
   };

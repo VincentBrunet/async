@@ -17,7 +17,9 @@ export function parseObject(browser: TokenBrowser): AstType | TokenImpasse {
 
   // block (optional)
   const astBlock = browser.recurse(parseBlock);
+  if (astBlock instanceof TokenImpasse) {
+    return browser.impasse("Object", [astBlock]);
+  }
   astObject.block = astBlock;
-
   return astObject;
 }

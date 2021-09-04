@@ -12,7 +12,7 @@ export function parseExpressionFunction(
   }
   return {
     type: AstExpressionType.Function,
-    value: {
+    data: {
       function: astFunction,
     },
   };

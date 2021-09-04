@@ -3,44 +3,52 @@ import {
   AstExpressionCall,
   AstExpressionFunction,
   AstExpressionIdentifier,
+  AstExpressionLiteral,
   AstExpressionMath,
   AstExpressionType,
 } from "../../101_ast/data/AstExpression.ts";
-
-import { OutputCode } from "../util/OutputCode.ts";
-
+import { OutputModule } from "../util/OutputModule.ts";
+import { OutputStatement } from "../util/OutputStatement.ts";
 import { writeFunction } from "./writeFunction.ts";
 
 export function writeExpression(
-  output: OutputCode,
+  module: OutputModule,
+  statement: OutputStatement,
   astExpression: AstExpression,
 ) {
   switch (astExpression.type) {
     case AstExpressionType.Identifier: {
-      const astValue = astExpression.value as AstExpressionIdentifier;
-      output.addContent(astValue.name);
+      const astData = astExpression.data as AstExpressionIdentifier;
+      statement.pushPart(astData.name);
+      break;
+    }
+    case AstExpressionType.Literal: {
+      const astData = astExpression.data as AstExpressionLiteral;
+      statement.pushPart("value_factory_i32(");
+      statement.pushPart(astData.value);
+      statement.pushPart(")");
       break;
     }
     case AstExpressionType.Function: {
-      const astValue = astExpression.value as AstExpressionFunction;
-      writeFunction(output, astValue.function);
+      const astData = astExpression.data as AstExpressionFunction;
+      writeFunction(module, statement, astData.function);
       break;
     }
     case AstExpressionType.Call: {
-      const astValue = astExpression.value as AstExpressionCall;
-      output.addContent("(");
-      writeExpression(output, astValue.callee);
-      output.addContent(")");
-      output.addContent("()");
+      const astData = astExpression.data as AstExpressionCall;
+      statement.pushPart("(");
+      writeExpression(module, statement, astData.callee);
+      statement.pushPart(")");
+      statement.pushPart("()");
       break;
     }
     case AstExpressionType.Math: {
-      const astValue = astExpression.value as AstExpressionMath;
-      output.addContent("(");
-      writeExpression(output, astValue.left);
-      output.addContent(astValue.operator);
-      writeExpression(output, astValue.right);
-      output.addContent(")");
+      const astData = astExpression.data as AstExpressionMath;
+      statement.pushPart("(");
+      writeExpression(module, statement, astData.left);
+      statement.pushPart(astData.operator);
+      writeExpression(module, statement, astData.right);
+      statement.pushPart(")");
       break;
     }
   }
