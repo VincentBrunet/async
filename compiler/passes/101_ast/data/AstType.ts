@@ -1,1 +1,3 @@
-export interface AstType {}
+export interface AstType {
+  // TODO
+}

@@ -44,13 +44,15 @@ typedef struct t_variable t_variable;
  * Typedefs internal types, actual declaration
  */
 
+// Set of variable (compacted in memory)
 typedef struct t_object {
   t_u32 size;
   t_variable *fields;
 } t_object;
 
 typedef struct t_function {
-  t_object closure;
+  t_u32 size;
+  t_variable **variables;
   void* callable;
 } t_function;
 

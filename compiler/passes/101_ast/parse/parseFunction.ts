@@ -1,11 +1,9 @@
 import { Keyword } from "../../../constants/Keyword.ts";
 import { TokenType } from "../../001_tokens/data/TokenType.ts";
 import { AstFunction, AstFunctionParam } from "../data/AstFunction.ts";
-import { AstType } from "../data/AstType.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseBlock } from "./parseBlock.ts";
-import { parseIdentifier } from "./parseIdentifier.ts";
 import { parseType } from "./parseType.ts";
 
 export function parseFunction(
@@ -28,7 +26,7 @@ export function parseFunction(
     browser.consume();
     const astReturn = browser.recurse(parseType);
     if (astReturn instanceof TokenImpasse) {
-      return browser.impasse("Type", [astReturn]);
+      return browser.impasse("Function.Type", [astReturn]);
     }
     astFunction.return = astReturn;
   }
@@ -50,9 +48,10 @@ export function parseFunction(
       const astFunctionParam: AstFunctionParam = {};
 
       // params - optional name
-      const astFunctionParamName = browser.recurse(parseIdentifier);
-      if (!(astFunctionParamName instanceof TokenImpasse)) {
-        astFunctionParam.name = astFunctionParamName;
+      const identifierParam = browser.peek();
+      if (identifierParam.type === TokenType.Text) {
+        browser.consume();
+        astFunctionParam.name = identifierParam.str;
       }
 
       // params - optional type
@@ -76,7 +75,7 @@ export function parseFunction(
         browser.consume();
         break;
       } else {
-        return browser.impasse("Function parameters separator");
+        return browser.impasse("Function.Param(separator)");
       }
     }
   }

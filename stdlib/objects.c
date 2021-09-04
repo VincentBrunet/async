@@ -24,23 +24,7 @@ void object_key(t_object *object, t_u32 idx, t_u32 key) {
   object->fields[idx].key = key;
 }
 
-void object_set(t_object *object, t_u32 name, t_value *value) {
-  t_variable dummy;
-  dummy.key = name;
-  void *result = bsearch(
-    &dummy,
-    object->fields,
-    object->size,
-    sizeof(t_variable),
-    object_variable_compare
-  );
-  if (result == NULL) {
-    return;
-  }
-  ((t_variable *)result)->value = value;
-}
-
-t_value *object_get(t_object *object, t_u32 name) {
+t_variable *object_get(t_object *object, t_u32 name) {
   t_variable dummy;
   dummy.key = name;
   void *result = bsearch(
@@ -53,16 +37,7 @@ t_value *object_get(t_object *object, t_u32 name) {
   if (result == NULL) {
     return value_null;
   }
-  return ((t_variable *)result)->value;
-}
-
-void object_sort(t_object *object) {
-  qsort(
-    object->fields,
-    object->size,
-    sizeof(t_variable),
-    object_variable_compare
-  );
+  return ((t_variable *)result);
 }
 
 t_i32 object_variable_compare(const void *a, const void *b) {

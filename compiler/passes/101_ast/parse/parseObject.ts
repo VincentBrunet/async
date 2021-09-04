@@ -11,15 +11,16 @@ export function parseObject(browser: TokenBrowser): AstType | TokenImpasse {
   // keyword (required)
   const first = browser.peek();
   if (first.str !== Keyword.Object) {
-    return browser.impasse("Cannot be an object declaration");
+    return browser.impasse("Object.Keyboard");
   }
   browser.consume();
 
   // block (optional)
   const astBlock = browser.recurse(parseBlock);
   if (astBlock instanceof TokenImpasse) {
-    return browser.impasse("Object", [astBlock]);
+    return browser.impasse("Object.Block", [astBlock]);
   }
   astObject.block = astBlock;
+
   return astObject;
 }

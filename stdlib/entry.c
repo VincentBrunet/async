@@ -38,6 +38,7 @@ int main() {
   printf("sizeof(t_object): %ld\n", sizeof(t_object));
   printf("sizeof(t_function): %ld\n", sizeof(t_function));
   printf("sizeof(t_string): %ld\n", sizeof(t_string));
+  printf("sizeof(t_boolean): %ld\n", sizeof(t_boolean));
 
   printf(" -- value type -- \n");
   printf("sizeof(t_type): %ld\n", sizeof(t_type));

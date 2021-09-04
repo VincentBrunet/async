@@ -1,6 +1,6 @@
 export enum TokenType {
   Whitespace = "whitespace",
   Special = "special",
-  Identifier = "identifier",
+  Text = "text",
   Invalid = "invalid",
 }

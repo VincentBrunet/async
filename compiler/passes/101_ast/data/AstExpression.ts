@@ -1,50 +1,28 @@
+import { AstCall } from "./AstCall.ts";
 import { AstFunction } from "./AstFunction.ts";
+import { AstIdentifier } from "./AstIdentifier.ts";
+import { AstLiteral } from "./AstLiteral.ts";
 import { AstObject } from "./AstObject.ts";
+import { AstOperation } from "./AstOperation.ts";
 
 export enum AstExpressionType {
-  Identifier = "identifier",
+  Call = "Call",
+  Identifier = "Identifier",
   Literal = "Literal",
-  Function = "function",
-  Object = "object",
-  Call = "call",
-  Math = "math",
+  Function = "Function",
+  Object = "Object",
+  Operation = "Operation",
 }
 
-export interface AstExpressionIdentifier {
-  name: string;
-}
-
-export interface AstExpressionLiteral {
-  type: string;
-  value: string;
-}
-
-export interface AstExpressionFunction {
-  function: AstFunction;
-}
-
-export interface AstExpressionObject {
-  object: AstObject;
-}
-
-export interface AstExpressionCall {
-  callee: AstExpression;
-  params: AstExpression[];
-}
-
-export interface AstExpressionMath {
-  operator: string;
-  left: AstExpression;
-  right: AstExpression;
-}
+export type AstExpressionData =
+  | AstCall
+  | AstIdentifier
+  | AstLiteral
+  | AstFunction
+  | AstObject
+  | AstOperation;
 
 export interface AstExpression {
   type: AstExpressionType;
-  data:
-    | AstExpressionCall
-    | AstExpressionIdentifier
-    | AstExpressionLiteral
-    | AstExpressionFunction
-    | AstExpressionObject
-    | AstExpressionMath;
+  data: AstExpressionData;
 }

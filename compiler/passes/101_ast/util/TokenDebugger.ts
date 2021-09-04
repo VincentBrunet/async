@@ -26,10 +26,14 @@ export class TokenDebugger {
     const idx = impasse.index;
 
     const before = this.tokenString(this.slice(idx - 10, idx));
-    const middle = this.tokenString(this.slice(idx, idx));
+    const middle = this.tokenString(this.slice(idx, idx + 1));
     const after = this.tokenString(this.slice(idx + 1, idx + 10));
 
-    return [before, middle, after, this.tokenString(this.slice(idx - 10, idx + 10))];
+    return [
+      before,
+      middle,
+      after,
+    ];
   }
 
   private tokenString(tokens: Token[]) {

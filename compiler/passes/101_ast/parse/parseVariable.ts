@@ -27,8 +27,8 @@ export function parseVariable(
 
   // name (required)
   const name = browser.peek();
-  if (name.type !== TokenType.Identifier) {
-    return browser.impasse("Identifier for variable name");
+  if (name.type !== TokenType.Text) {
+    return browser.impasse("Variable.Name");
   }
   astVariable.name = name.str;
   browser.consume();
@@ -39,7 +39,7 @@ export function parseVariable(
     browser.consume();
     const astType = browser.recurse(parseType);
     if (astType instanceof TokenImpasse) {
-      return browser.impasse("Type", [astType]);
+      return browser.impasse("Variable.Type", [astType]);
     }
     astVariable.type = astType;
   }

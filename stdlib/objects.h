@@ -15,12 +15,6 @@ void object_init(t_object *object, t_u32 size);
 
 void object_key(t_object *object, t_u32 idx, t_u32 key);
 
-void object_set(t_object *object, t_u32 key, t_value *value);
-
-t_value *object_get(t_object *object, t_u32 key);
-
-void object_sort(t_object *object);
-
-t_i32 object_variable_compare(const void *a, const void *b);
+t_variable *object_get(t_object *object, t_u32 key);
 
 #endif

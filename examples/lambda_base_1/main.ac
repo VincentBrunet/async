@@ -1,6 +1,12 @@
 
 const num = 42
 
+const numHex = 0xff
+
+const c1 = true
+const c2 = false
+const c3 = null
+
 const hello = fn () {
 
   const f = fn {

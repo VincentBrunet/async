@@ -36,7 +36,7 @@ export function convertCodeToTokens(code: string): Token[] {
     } else if (specialSet.has(char)) {
       type = TokenType.Special;
     } else {
-      type = TokenType.Identifier;
+      type = TokenType.Text;
     }
     if (currentToken !== undefined) {
       if (

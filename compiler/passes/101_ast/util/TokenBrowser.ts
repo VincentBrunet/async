@@ -1,4 +1,3 @@
-import { clamp } from "../../../utils/numbers/clamp.ts";
 import { repeat } from "../../../utils/strings/repeat.ts";
 import { Token } from "../../001_tokens/data/Token.ts";
 import { TokenType } from "../../001_tokens/data/TokenType.ts";
@@ -22,13 +21,33 @@ export class TokenBrowser {
     this.fastForward();
   }
 
-  recurse<T>(
-    recurser: (stack: TokenBrowser) => T | TokenImpasse,
+  private id = 0;
+
+  recurse<T, V>(
+    recurser: (stack: TokenBrowser, param?: V) => T | TokenImpasse,
+    param?: V,
   ): T | TokenImpasse {
     this.indexes.push(this.getCurrentIndex());
-    const ast = recurser(this);
+    this.id++;
+    console.log(
+      repeat("  ", this.id),
+      "+",
+      recurser.name,
+      "TRY",
+      this.getCurrentToken().str,
+    );
+    const ast = recurser(this, param);
+    const success = !(ast instanceof TokenImpasse);
+    console.log(
+      repeat("  ", this.id),
+      "-",
+      recurser.name,
+      success ? "SUCCESS" : "FAIL",
+      this.getCurrentToken().str,
+    );
+    this.id--;
     const after = this.indexes.pop();
-    if (ast !== undefined && after !== undefined) {
+    if (success && after !== undefined) {
       this.indexes[this.getCurrentHeight()] = after;
     }
     return ast;
