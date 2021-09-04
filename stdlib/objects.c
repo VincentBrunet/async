@@ -35,7 +35,7 @@ t_variable *object_get(t_object *object, t_u32 name) {
     object_variable_compare
   );
   if (result == NULL) {
-    return value_null;
+    return NULL;
   }
   return ((t_variable *)result);
 }
