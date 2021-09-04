@@ -6,22 +6,23 @@ import { parseExpression } from "./parseExpression.ts";
 export function parseParenthesis(
   browser: TokenBrowser,
 ): AstExpression | TokenImpasse {
-  // parenthesis
+  // Open
   const parenthesisOpen = browser.peek();
-  if (parenthesisOpen.str === "(") {
-    browser.consume();
-    const astExpression = browser.recurse(parseExpression);
-    if (astExpression instanceof TokenImpasse) {
-      return browser.impasse("Expression", [astExpression]);
-    }
-    const parenthesisClose = browser.peek();
-    if (parenthesisClose.str === ")") {
-      browser.consume();
-      return astExpression;
-    } else {
-      return browser.impasse("Closing parenthesis");
-    }
+  if (parenthesisOpen.str !== "(") {
+    return browser.impasse("Parenthesis.Opening");
   }
-  // Some other kind
-  return browser.impasse("Not a parenthesis expression");
+  browser.consume();
+  // Expression
+  const astExpression = browser.recurse(parseExpression);
+  if (astExpression instanceof TokenImpasse) {
+    return browser.impasse("Parenthesis.Expression", [astExpression]);
+  }
+  // Close
+  const parenthesisClose = browser.peek();
+  if (parenthesisClose.str !== ")") {
+    return browser.impasse("Parenthesis.Closing");
+  }
+  browser.consume();
+  // Done
+  return astExpression;
 }

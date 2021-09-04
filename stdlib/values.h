@@ -14,6 +14,7 @@ extern t_value *value_null;
 
 extern t_value *value_empty_string;
 extern t_value *value_empty_object;
+extern t_value *value_empty_function;
 
 /**
  * Global utils

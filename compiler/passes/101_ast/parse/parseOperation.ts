@@ -7,12 +7,12 @@ import { parseExpression } from "./parseExpression.ts";
 export function parseOperation(
   browser: TokenBrowser,
 ): AstOperation | TokenImpasse {
-  // left (required)
+  // left
   const astExpressionLeft = browser.recurse(parseExpression);
   if (astExpressionLeft instanceof TokenImpasse) {
     return browser.impasse("Operation.Left", [astExpressionLeft]);
   }
-  // operator (required)
+  // operator
   const operator = browser.peek();
   if (
     operator.str === Operator.MathAddition ||
@@ -30,6 +30,7 @@ export function parseOperation(
   if (astExpressionRight instanceof TokenImpasse) {
     return browser.impasse("Operation.Right", [astExpressionRight]);
   }
+  // done
   return {
     operator: operator.str,
     left: astExpressionLeft,

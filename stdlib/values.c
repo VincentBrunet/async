@@ -58,8 +58,15 @@ t_value *value_factory_string(t_u32 hash, t_u32 size, t_i8 *chars) {
   return value;
 }
 
-t_value *value_factory_object(t_u32 size) {
-  t_value *value = value_factory(type_object);
+t_value *value_factory_object(t_type *type, t_u32 size) {
+  t_value *value = value_factory(type);
   object_init((t_object *)value, size);
+  return value;
+}
+
+t_value *value_factory_function(t_type *type, t_u32 size, void *callable) {
+  t_value *value = value_factory(type);
+  closure_init((t_closure *)value, size);
+  value->content.function.callable = callable;
   return value;
 }
