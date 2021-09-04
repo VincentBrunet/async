@@ -6,5 +6,6 @@
 #include "values.h"
 #include "entry.h"
 #include "objects.h"
+#include "closures.h"
 
 #endif

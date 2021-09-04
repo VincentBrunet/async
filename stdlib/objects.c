@@ -9,10 +9,6 @@ void objects_init() {
 
 }
 
-t_object *object_alloc() {
-  return calloc(1, sizeof(t_object));
-}
-
 void object_init(t_object *object, t_u32 size) {
   object->size = size;
   if (size > 0) {
