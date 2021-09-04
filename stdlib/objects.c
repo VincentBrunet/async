@@ -24,6 +24,10 @@ void object_key(t_object *object, t_u32 idx, t_u32 key) {
   object->fields[idx].key = key;
 }
 
+t_i32 object_variable_compare(const void *a, const void *b) {
+  return ((t_variable *)a)->key - ((t_variable *)b)->key;
+}
+
 t_variable *object_get(t_object *object, t_u32 name) {
   t_variable dummy;
   dummy.key = name;
@@ -38,8 +42,4 @@ t_variable *object_get(t_object *object, t_u32 name) {
     return NULL;
   }
   return ((t_variable *)result);
-}
-
-t_i32 object_variable_compare(const void *a, const void *b) {
-  return ((t_variable *)a)->key - ((t_variable *)b)->key;
 }

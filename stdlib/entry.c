@@ -69,7 +69,7 @@ void f_block(t_object *stack) {
 }
 
 t_value *f_lambda(t_object *closure) {
-  return object_get(closure, 0x001);
+  return object_get(closure, 0x001)->value;
 }
 
 t_value *hello_lambda(t_object *closure) {
@@ -85,9 +85,9 @@ t_value *lal_module(t_object *module) {
   object_key(__module_object, 1, 0x001); // num
   object_key(__module_object, 2, 0x002); // hello
   // statements
-  object_set(__module_object, 0x001, value_factory_i32(42));
-  object_set(__module_object, 0x002, value_factory_i32(22)); // TODO (should be a function alloc)
-  object_set(__module_object, 0x000, object_get(__module_object, 0x002));
+  object_get(__module_object, 0x001)->value = value_factory_i32(42);
+  object_get(__module_object, 0x002)->value = value_factory_i32(22); // TODO (should be a function alloc)
+  object_get(__module_object, 0x000)->value = object_get(__module_object, 0x002)->value;
 
   printf("world key: %d\n", __module_object->fields[0].key);
   printf("world value: %d\n", __module_object->fields[0].value->content.i32);
