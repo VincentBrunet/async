@@ -9,7 +9,9 @@ import { AstLiteral } from "../../101_ast/data/AstLiteral.ts";
 import { AstOperation } from "../../101_ast/data/AstOperation.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
+import { writeCall } from "./writeCall.ts";
 import { writeFunction } from "./writeFunction.ts";
+import { writeIdentifier } from "./writeIdentifier.ts";
 import { writeLiteral } from "./writeLiteral.ts";
 
 export function writeExpression(
@@ -20,7 +22,7 @@ export function writeExpression(
   switch (astExpression.type) {
     case AstExpressionType.Identifier: {
       const astData = astExpression.data as AstIdentifier;
-      statement.pushPart(astData.name);
+      writeIdentifier(module, statement, astData);
       break;
     }
     case AstExpressionType.Literal: {
@@ -35,10 +37,7 @@ export function writeExpression(
     }
     case AstExpressionType.Call: {
       const astData = astExpression.data as AstCall;
-      statement.pushPart("(");
-      writeExpression(module, statement, astData.callee);
-      statement.pushPart(")");
-      statement.pushPart("()");
+      writeCall(module, statement, astData);
       break;
     }
     case AstExpressionType.Operation: {

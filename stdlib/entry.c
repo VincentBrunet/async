@@ -78,7 +78,7 @@ t_value *hello_lambda(t_object *closure) {
 
 t_value *lal_module(t_object *module) {
   // module prep
-  t_value *__module_value = value_factory_object(3);
+  t_value *__module_value = value_factory_object(type_object, 3);
   t_object *__module_object = (t_object *)__module_value;
   object_key(__module_object, 0, 0x000); // world
   object_key(__module_object, 1, 0x001); // num
@@ -98,5 +98,4 @@ t_value *lal_module(t_object *module) {
   printf("returned value: %d\n", f_lambda(__module_object)->content.i32);
   return __module_value;
 }
-t_value *(*main_module)() = lal_module;
 

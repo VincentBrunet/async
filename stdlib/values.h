@@ -22,11 +22,11 @@ extern t_value *value_empty_function;
 
 void values_init();
 
-t_value *value_factory(t_type *type);
-
 t_value *value_factory_i32(t_i32 number);
 
-t_value *value_factory_object(t_u32 size);
+t_value *value_factory_object(t_type *type, t_u32 size, ...);
+
+t_value *value_factory_function(t_type *type, void* callable, t_u32 size, ...);
 
 t_value *value_factory_boolean(t_boolean value);
 

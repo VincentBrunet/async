@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <stdint.h>
+#include <stdarg.h>
 
 /**
  * Typedefs primitive types
@@ -29,22 +30,27 @@ typedef uint8_t t_boolean;
  * Typedefs internal types, forward declaration
  */
 
+typedef struct t_variable t_variable;
 typedef struct t_object t_object;
 typedef struct t_closure t_closure;
 
 typedef struct t_function t_function;
-
 typedef struct t_string t_string;
 
 typedef union t_content t_content;
-typedef struct t_type t_type;
-
 typedef struct t_value t_value;
-typedef struct t_variable t_variable;
+
+typedef struct t_type t_type;
 
 /**
  * Typedefs internal types, actual declaration
  */
+
+// Named value holder
+typedef struct t_variable {
+  t_value *value;
+  t_u32 key;
+} t_variable;
 
 // Set of variable (compacted in memory)
 typedef struct t_object {
@@ -89,22 +95,16 @@ typedef union t_content {
   t_boolean boolean;
 } t_content;
 
-// Representation of a value type
-typedef struct t_type {
-  t_u32 parent_count;
-  t_type **parent_array;
-} t_type;
-
 // Immutable value
 typedef struct t_value {
   t_content content;
   t_type *type;
 } t_value;
 
-// Named value holder
-typedef struct t_variable {
-  t_value *value;
-  t_u32 key;
-} t_variable;
+// Representation of a value type
+typedef struct t_type {
+  t_u32 parent_count;
+  t_type **parent_array;
+} t_type;
 
 #endif

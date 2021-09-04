@@ -1,7 +1,6 @@
 import { AstStatement } from "../../101_ast/data/AstStatement.ts";
 import { OutputBlock } from "../util/OutputBlock.ts";
 import { OutputModule } from "../util/OutputModule.ts";
-import { OutputOrder } from "../util/OutputOrder.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
 import { writeExpression } from "./writeExpression.ts";
 import { writeVariable } from "./writeVariable.ts";
@@ -19,6 +18,6 @@ export function writeStatement(
   if (astExpression) {
     const statement = new OutputStatement();
     writeExpression(module, statement, astExpression);
-    block.pushStatement(OutputOrder.Logic, statement);
+    block.pushStatement(statement);
   }
 }

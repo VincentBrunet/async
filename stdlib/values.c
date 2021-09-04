@@ -19,6 +19,12 @@ t_value *value_empty_function = NULL;
  * Global utils
  */
 
+t_value *value_factory(t_type *type) {
+  t_value *value = calloc(1, sizeof(t_value));
+  value->type = type;
+  return value;
+}
+
 void values_init() {
   value_null = value_factory(type_null);
 
@@ -26,16 +32,8 @@ void values_init() {
   value_true = value_factory_boolean(1);
 
   value_empty_string = value_factory_string(0, 0, NULL);
-  value_empty_object = value_factory_object(0);
-
-  value_empty_function = value_factory(type_function);
-  closure_init(&(value_empty_function->content.function.closure), 0);
-}
-
-t_value *value_factory(t_type *type) {
-  t_value *value = calloc(1, sizeof(t_value));
-  value->type = type;
-  return value;
+  value_empty_object = value_factory_object(type_object, 0);
+  value_empty_function = value_factory_function(type_function, NULL, 0);
 }
 
 t_value *value_factory_boolean(t_boolean boolean) {
@@ -58,15 +56,33 @@ t_value *value_factory_string(t_u32 hash, t_u32 size, t_i8 *chars) {
   return value;
 }
 
-t_value *value_factory_object(t_type *type, t_u32 size) {
+t_value *value_factory_object(t_type *type, t_u32 size, ...) {
   t_value *value = value_factory(type);
-  object_init((t_object *)value, size);
+  t_object *object = (t_object *)value;
+  object_init(object, size);
+  t_variable *variables = object->variables;
+  va_list keys;
+  va_start(keys, size);
+  for (t_u32 idx = 0; idx < size; idx++) {
+    t_u32 key = va_arg(keys, t_u32);
+    variables[idx].key = key;
+  }
+  va_end(keys);
   return value;
 }
 
-t_value *value_factory_function(t_type *type, t_u32 size, void *callable) {
+t_value *value_factory_function(t_type *type, void *callable, t_u32 size, ...) {
   t_value *value = value_factory(type);
+  t_function *function = (t_function *)value;
+  t_closure *closure = (t_closure *)value;
   closure_init((t_closure *)value, size);
-  value->content.function.callable = callable;
+  function->callable = callable;
+  va_list variables;
+  va_start(variables, size);
+  for (t_u32 idx = 0; idx < size; idx++) {
+    t_variable *variable = va_arg(variables, t_variable *);
+    closure->variables[idx] = variable;
+  }
+  va_end(variables);
   return value;
 }

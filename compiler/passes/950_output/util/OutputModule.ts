@@ -9,7 +9,7 @@ export class OutputModule {
 
   generateHeader(): string {
     const parts: string[] = [];
-    parts.push('#include "runtime.h"\n');
+    parts.push("#include <runtime.h>\n");
     parts.push("\n");
     for (const block of this.blocks) {
       for (const part of block.generateHeader()) {
@@ -21,7 +21,7 @@ export class OutputModule {
   }
   generateSource(): string {
     const parts: string[] = [];
-    parts.push('#include "runtime.h"\n');
+    parts.push("#include <runtime.h>\n");
     parts.push("\n");
     for (const block of this.blocks) {
       for (const part of block.generateSource()) {
@@ -29,6 +29,7 @@ export class OutputModule {
       }
       parts.push("\n");
     }
+    parts.push("t_value *(*main_module)() = module_load;\n");
     return parts.join("");
   }
 }

@@ -7,5 +7,6 @@
 #include "entry.h"
 #include "objects.h"
 #include "closures.h"
+#include "functions.h"
 
 #endif
