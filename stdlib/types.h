@@ -7,7 +7,7 @@
  * Global native types
  */
 
-extern t_type *type_value;
+extern t_type *type_root;
 
 extern t_type *type_u8;
 extern t_type *type_u16;
@@ -35,7 +35,6 @@ extern t_type *type_null;
 void types_init();
 
 t_type *type_factory(t_u32 parents);
-t_type *type_factory_value(t_u32 parents);
 
 void type_sort(t_type *type);
 

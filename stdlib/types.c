@@ -4,7 +4,7 @@
  * Global native types
  */
 
-t_type *type_value = NULL;
+t_type *type_root = NULL;
 
 t_type *type_u8 = NULL;
 t_type *type_u16 = NULL;
@@ -29,41 +29,44 @@ t_type *type_null = NULL;
  * Global Utils
  */
 
+t_type *type_alloc() {
+  return calloc(1, sizeof(t_type));
+}
+
+void type_init(t_type *type, t_u32 parents) {
+  type->parent_count = parents;
+  if (parents > 0) {
+    type->parent_array = calloc(parents, sizeof(t_type*));
+  }
+}
+
 void types_init() {
-  type_value = type_factory(0);
+  type_root = type_alloc();
 
-  type_u8 = type_factory_value(0);
-  type_u16 = type_factory_value(0);
-  type_u32 = type_factory_value(0);
-  type_u64 = type_factory_value(0);
+  type_u8 = type_factory(0);
+  type_u16 = type_factory(0);
+  type_u32 = type_factory(0);
+  type_u64 = type_factory(0);
 
-  type_i8 = type_factory_value(0);
-  type_i16 = type_factory_value(0);
-  type_i32 = type_factory_value(0);
-  type_i64 = type_factory_value(0);
+  type_i8 = type_factory(0);
+  type_i16 = type_factory(0);
+  type_i32 = type_factory(0);
+  type_i64 = type_factory(0);
 
-  type_f32 = type_factory_value(0);
-  type_f64 = type_factory_value(0);
+  type_f32 = type_factory(0);
+  type_f64 = type_factory(0);
 
-  type_object = type_factory_value(0);
-  type_function = type_factory_value(0);
-  type_string = type_factory_value(0);
-  type_boolean = type_factory_value(0);
-  type_null = type_factory_value(0);
+  type_object = type_factory(0);
+  type_function = type_factory(0);
+  type_string = type_factory(0);
+  type_boolean = type_factory(0);
+  type_null = type_factory(0);
 }
 
 t_type *type_factory(t_u32 parents) {
-  t_type *value = calloc(1, sizeof(t_type));
-  value->parent_count = parents;
-  if (parents > 0) {
-    value->parent_array = calloc(parents, sizeof(t_type*));
-  }
-  return value;
-}
-
-t_type *type_factory_value(t_u32 parents) {
-  t_type *type = type_factory(parents + 1);
-  type->parent_array[parents] = type_value;
+  t_type *type = type_alloc();
+  type_init(type, parents + 1);
+  type->parent_array[parents] = type_root;
   return type;
 }
 
@@ -78,21 +81,6 @@ void type_sort(t_type *type) {
     sizeof(t_type *),
     type_sort_compare
   );
-}
-
-t_boolean type_find_recursor(t_type **haystack, t_type *needle, t_u32 start, t_u32 end) {
-  if (end < start) {
-    return FALSE;
-  }
-  t_u32 mid = (start + end) / 2;
-  t_type *center = haystack[mid];
-  if (center == needle) {
-    return TRUE;
-  } else if (center > needle) {
-    return type_find_recursor(haystack, needle, start, mid - 1);
-  } else {
-    return type_find_recursor(haystack, needle, mid + 1, end);
-  }
 }
 */
 

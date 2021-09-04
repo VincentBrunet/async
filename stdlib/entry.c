@@ -10,8 +10,6 @@
 int main() {
   types_init();
   values_init();
-  objects_init();
-  objects_init();
 
   printf(" -- interfaces -- \n");
   printf("type_i32: %p\n", (void*)type_i32);
@@ -50,9 +48,10 @@ int main() {
   printf("sizeof(t_variable): %ld\n", sizeof(t_variable));
 
   printf(" -- type hierachy -- \n");
-  printf("type_is(type_object, type_value): %hhu\n", type_is(type_object, type_value));
-  printf("type_is(type_boolean, type_value): %hhu\n", type_is(type_boolean, type_value));
-  printf("type_is(type_null, type_value): %hhu\n", type_is(type_null, type_value));
+  printf("type_is(type_object, type_root): %hhu\n", type_is(type_object, type_root));
+  printf("type_is(type_boolean, type_root): %hhu\n", type_is(type_boolean, type_root));
+  printf("type_is(type_null, type_root): %hhu\n", type_is(type_null, type_root));
+  printf("type_is(type_string, type_root): %hhu\n", type_is(type_string, type_root));
   printf("type_is(type_null, type_string): %hhu\n", type_is(type_null, type_string));
 
   printf(" -- main module -- \n");
@@ -89,12 +88,12 @@ t_value *lal_module(t_object *module) {
   object_get(__module_object, 0x002)->value = value_factory_i32(22); // TODO (should be a function alloc)
   object_get(__module_object, 0x000)->value = object_get(__module_object, 0x002)->value;
 
-  printf("world key: %d\n", __module_object->fields[0].key);
-  printf("world value: %d\n", __module_object->fields[0].value->content.i32);
-  printf("num key: %d\n", __module_object->fields[1].key);
-  printf("num value: %d\n", __module_object->fields[1].value->content.i32);
-  printf("hello key: %d\n", __module_object->fields[2].key);
-  printf("hello value: %d\n", __module_object->fields[2].value->content.i32);
+  printf("world key: %d\n", __module_object->variables[0].key);
+  printf("world value: %d\n", __module_object->variables[0].value->content.i32);
+  printf("num key: %d\n", __module_object->variables[1].key);
+  printf("num value: %d\n", __module_object->variables[1].value->content.i32);
+  printf("hello key: %d\n", __module_object->variables[2].key);
+  printf("hello value: %d\n", __module_object->variables[2].value->content.i32);
 
   printf("returned value: %d\n", f_lambda(__module_object)->content.i32);
   return __module_value;

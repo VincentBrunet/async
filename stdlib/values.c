@@ -1,5 +1,6 @@
 #include "values.h"
 #include "objects.h"
+#include "closures.h"
 
 /**
  * Global native values
@@ -12,6 +13,7 @@ t_value *value_true = NULL;
 
 t_value *value_empty_string = NULL;
 t_value *value_empty_object = NULL;
+t_value *value_empty_function = NULL;
 
 /**
  * Global utils
@@ -20,19 +22,14 @@ t_value *value_empty_object = NULL;
 void values_init() {
   value_null = value_factory(type_null);
 
-  value_false = value_factory(type_boolean);
-  value_false->content.boolean = 0;
-  value_true = value_factory(type_boolean);
-  value_true->content.boolean = 1;
+  value_false = value_factory_boolean(0);
+  value_true = value_factory_boolean(1);
 
-  value_empty_string = value_factory(type_string);
-  value_empty_string->content.string.hash = 0;
-  value_empty_string->content.string.size = 0;
-  value_empty_string->content.string.chars = NULL;
+  value_empty_string = value_factory_string(0, 0, NULL);
+  value_empty_object = value_factory_object(0);
 
-  value_empty_object = value_factory(type_object);
-  value_empty_object->content.object.size = 0;
-  value_empty_object->content.object.fields = NULL;
+  value_empty_function = value_factory(type_function);
+  closure_init(&(value_empty_function->content.function.closure), 0);
 }
 
 t_value *value_factory(t_type *type) {
@@ -41,9 +38,23 @@ t_value *value_factory(t_type *type) {
   return value;
 }
 
+t_value *value_factory_boolean(t_boolean boolean) {
+  t_value *value = value_factory(type_boolean);
+  value->content.boolean = boolean;
+  return value;
+}
+
 t_value *value_factory_i32(t_i32 number) {
   t_value *value = value_factory(type_i32);
   value->content.i32 = number;
+  return value;
+}
+
+t_value *value_factory_string(t_u32 hash, t_u32 size, t_i8 *chars) {
+  t_value *value = value_factory(type_string);
+  value->content.string.hash = hash;
+  value->content.string.size = size;
+  value->content.string.chars = chars;
   return value;
 }
 

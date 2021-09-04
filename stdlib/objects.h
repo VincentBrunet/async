@@ -7,8 +7,6 @@
  * Global utils
  */
 
-void objects_init();
-
 t_object *object_alloc();
 
 void object_init(t_object *object, t_u32 size);

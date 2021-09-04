@@ -30,14 +30,16 @@ typedef uint8_t t_boolean;
  */
 
 typedef struct t_object t_object;
+typedef struct t_closure t_closure;
+
 typedef struct t_function t_function;
+
 typedef struct t_string t_string;
 
 typedef union t_content t_content;
 typedef struct t_type t_type;
 
 typedef struct t_value t_value;
-
 typedef struct t_variable t_variable;
 
 /**

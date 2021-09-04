@@ -27,4 +27,8 @@ t_value *value_factory_i32(t_i32 number);
 
 t_value *value_factory_object(t_u32 size);
 
+t_value *value_factory_boolean(t_boolean value);
+
+t_value *value_factory_string(t_u32 hash, t_u32 size, t_i8 *chars);
+
 #endif
