@@ -7,12 +7,10 @@
  * Global utils
  */
 
-t_object *object_alloc();
+void object_init(t_value *value, t_u32 size);
 
-void object_init(t_object *object, t_u32 size);
+void object_key(t_value *value, t_u32 idx, t_u32 key);
 
-void object_key(t_object *object, t_u32 idx, t_u32 key);
-
-t_variable *object_get(t_object *object, t_u32 key);
+t_variable *object_get(t_value *value, t_u32 key);
 
 #endif

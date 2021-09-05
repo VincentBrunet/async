@@ -8,7 +8,7 @@ export function writeIdentifier(
   statement: OutputStatement,
   astIdentifier: AstIdentifier,
 ) {
-  statement.pushPart("object_get(this, ");
+  statement.pushPart("object_get(module, ");
   statement.pushPart(hash(astIdentifier.name).toString());
   statement.pushPart(")->value");
 }

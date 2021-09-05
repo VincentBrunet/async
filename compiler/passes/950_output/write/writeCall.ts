@@ -8,7 +8,7 @@ export function writeCall(
   statement: OutputStatement,
   astCall: AstCall,
 ) {
-  statement.pushPart("function_call((t_function *)");
+  statement.pushPart("function_call(");
   writeExpression(module, statement, astCall.callee);
   statement.pushPart(")");
 }

@@ -29,9 +29,5 @@ t_variable *closure_get(t_closure *closure, t_u32 name)
       closure->size,
       sizeof(t_variable *),
       closure_variable_compare);
-  if (result == NULL)
-  {
-    return NULL;
-  }
   return (*(t_variable **)result);
 }

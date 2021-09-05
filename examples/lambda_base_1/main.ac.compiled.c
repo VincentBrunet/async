@@ -17,7 +17,16 @@ t_value *f_0x0()
 
 t_value *module_load()
 {
-  t_value *module = value_factory_object(type_object, 7, /* numHex */ -1034389067, /* c1 */ 3118, /* c2 */ 3119, /* c3 */ 3120, /* num */ 109446, /* hello */ 99162322, /* world */ 113318802);
+  t_value *module = value_factory_object(
+      type_object, 7,
+      /* numHex */ -1034389067,
+      /* c1 */ 3118,
+      /* c2 */ 3119,
+      /* c3 */ 3120,
+      /* num */ 109446,
+      /* hello */ 99162322,
+      /* world */ 113318802);
+
   t_object *this = (t_object *)module;
   object_get(this, 109446)->value = value_factory_i32(42);
   object_get(this, -1034389067)->value = value_factory_i32(255);
