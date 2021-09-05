@@ -19,13 +19,15 @@ t_value *value_empty_function = NULL;
  * Global utils
  */
 
-t_value *value_factory(t_type *type) {
+t_value *value_factory(t_type *type)
+{
   t_value *value = calloc(1, sizeof(t_value));
   value->type = type;
   return value;
 }
 
-void values_init() {
+void values_init()
+{
   value_null = value_factory(type_null);
 
   value_false = value_factory_boolean(0);
@@ -36,25 +38,29 @@ void values_init() {
   value_empty_function = value_factory_function(type_function, NULL, 0);
 }
 
-t_value *value_factory_boolean(t_boolean boolean) {
+t_value *value_factory_boolean(t_boolean boolean)
+{
   t_value *value = value_factory(type_boolean);
   value->content.boolean = boolean;
   return value;
 }
 
-t_value *value_factory_i32(t_i32 number) {
+t_value *value_factory_i32(t_i32 number)
+{
   t_value *value = value_factory(type_i32);
   value->content.i32 = number;
   return value;
 }
 
-t_value *value_factory_f32(t_f32 number) {
+t_value *value_factory_f32(t_f32 number)
+{
   t_value *value = value_factory(type_f32);
   value->content.f32 = number;
   return value;
 }
 
-t_value *value_factory_string(t_u32 hash, t_u32 size, t_i8 *chars) {
+t_value *value_factory_string(t_u32 hash, t_u32 size, t_i8 *chars)
+{
   t_value *value = value_factory(type_string);
   value->content.string.hash = hash;
   value->content.string.size = size;
@@ -62,15 +68,18 @@ t_value *value_factory_string(t_u32 hash, t_u32 size, t_i8 *chars) {
   return value;
 }
 
-t_value *value_factory_object(t_type *type, t_u32 size, ...) {
+t_value *value_factory_object(t_type *type, t_u32 size, ...)
+{
   t_value *value = value_factory(type);
   t_object *object = (t_object *)value;
   object_init(object, size);
-  if (size > 0) {
+  if (size > 0)
+  {
     t_variable *variables = object->variables;
     va_list keys;
     va_start(keys, size);
-    for (t_u32 idx = 0; idx < size; idx++) {
+    for (t_u32 idx = 0; idx < size; idx++)
+    {
       t_u32 key = va_arg(keys, t_u32);
       variables[idx].key = key;
     }
@@ -79,18 +88,21 @@ t_value *value_factory_object(t_type *type, t_u32 size, ...) {
   return value;
 }
 
-t_value *value_factory_function(t_type *type, void *callable, t_u32 size, ...) {
+t_value *value_factory_function(t_type *type, void *callable, t_u32 size, ...)
+{
   t_value *value = value_factory(type);
   t_function *function = (t_function *)value;
   t_closure *closure = (t_closure *)value;
   closure_init((t_closure *)value, size);
   function->callable = callable;
-  if (size > 0) {
+  if (size > 0)
+  {
     va_list variables;
     va_start(variables, size);
-    for (t_u32 idx = 0; idx < size; idx++) {
+    for (t_u32 idx = 0; idx < size; idx++)
+    {
       t_variable *variable = va_arg(variables, t_variable *);
-      closure->variables[idx] = variable;
+      function->closure.variables[idx] = variable;
     }
     va_end(variables);
   }

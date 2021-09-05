@@ -7,14 +7,15 @@
 /**
  * Entrypoint
  */
-int main() {
+int main()
+{
   types_init();
   values_init();
 
   printf(" -- interfaces -- \n");
-  printf("type_i32: %p\n", (void*)type_i32);
-  printf("type_i64: %p\n", (void*)type_i64);
-  printf("type_string: %p\n", (void*)type_string);
+  printf("type_i32: %p\n", (void *)type_i32);
+  printf("type_i64: %p\n", (void *)type_i64);
+  printf("type_string: %p\n", (void *)type_string);
 
   printf(" -- unsigned integers -- \n");
   printf("sizeof(t_u8): %ld\n", sizeof(t_u8));
@@ -54,7 +55,8 @@ int main() {
   printf("type_is(type_string, type_root): %hhu\n", type_is(type_string, type_root));
   printf("type_is(type_null, type_string): %hhu\n", type_is(type_null, type_string));
 
-  if (main_module != NULL) {
+  if (main_module != NULL)
+  {
     printf(" -- main module -- \n");
     main_module();
     printf(" -- end module -- \n");
@@ -64,20 +66,23 @@ int main() {
 /**
  * TestModule
  */
-void f_block(t_object *stack) {
-
+void f_block(t_object *stack)
+{
 }
 
-t_value *f_lambda(t_object *closure) {
+t_value *f_lambda(t_object *closure)
+{
   return object_get(closure, 0x001)->value;
 }
 
-t_value *hello_lambda(t_object *closure) {
+t_value *hello_lambda(t_object *closure)
+{
   // object prep
   return value_null;
 }
 
-t_value *lal_module(t_object *module) {
+t_value *lal_module(t_object *module)
+{
   // module prep
   t_value *__module_value = value_factory_object(type_object, 3);
   t_object *__module_object = (t_object *)__module_value;
@@ -99,4 +104,3 @@ t_value *lal_module(t_object *module) {
   printf("returned value: %d\n", f_lambda(__module_object)->content.i32);
   return __module_value;
 }
-
