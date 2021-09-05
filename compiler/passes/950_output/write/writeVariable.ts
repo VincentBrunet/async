@@ -1,6 +1,7 @@
 import { AstVariable } from "../../101_ast/data/AstVariable.ts";
-import { OutputBlock } from "../util/OutputBlock.ts";
+import { OutputFunc } from "../util/OutputFunc.ts";
 import { OutputModule } from "../util/OutputModule.ts";
+import { OutputOrder } from "../util/OutputOrder.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
 import { OutputVariable } from "../util/OutputVariable.ts";
 import { writeExpression } from "./writeExpression.ts";
@@ -8,10 +9,10 @@ import { writeIdentifier } from "./writeIdentifier.ts";
 
 export function writeVariable(
   module: OutputModule,
-  block: OutputBlock,
+  func: OutputFunc,
   astVariable: AstVariable,
 ) {
-  block.pushVariable(new OutputVariable(astVariable.name));
+  func.pushVariable(new OutputVariable(astVariable.name));
 
   if (astVariable.value) {
     const assignment = new OutputStatement();
@@ -20,6 +21,6 @@ export function writeVariable(
     });
     assignment.pushPart(" = ");
     writeExpression(module, assignment, astVariable.value);
-    block.pushStatement(assignment);
+    func.pushStatement(OutputOrder.Logic, assignment);
   }
 }

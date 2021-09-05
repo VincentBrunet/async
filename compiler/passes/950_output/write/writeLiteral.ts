@@ -3,7 +3,7 @@ import { OutputModule } from "../util/OutputModule.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
 
 export function writeLiteral(
-  module: OutputModule,
+  _module: OutputModule,
   statement: OutputStatement,
   astLiteral: AstLiteral,
 ) {

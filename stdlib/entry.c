@@ -54,9 +54,10 @@ int main() {
   printf("type_is(type_string, type_root): %hhu\n", type_is(type_string, type_root));
   printf("type_is(type_null, type_string): %hhu\n", type_is(type_null, type_string));
 
-  printf(" -- main module -- \n");
   if (main_module != NULL) {
+    printf(" -- main module -- \n");
     main_module();
+    printf(" -- end module -- \n");
   }
 }
 

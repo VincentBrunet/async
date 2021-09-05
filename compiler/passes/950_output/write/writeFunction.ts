@@ -1,6 +1,7 @@
 import { AstFunction } from "../../101_ast/data/AstFunction.ts";
-import { OutputBlock, OutputBlockType } from "../util/OutputBlock.ts";
+import { OutputFunc } from "../util/OutputFunc.ts";
 import { OutputModule } from "../util/OutputModule.ts";
+import { OutputOrder } from "../util/OutputOrder.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
 import { writeBlock } from "./writeBlock.ts";
 
@@ -21,20 +22,19 @@ export function writeFunction(
   statement.pushPart("0");
   statement.pushPart(")");
 
-  const block = new OutputBlock(OutputBlockType.Function, name);
+  const func = new OutputFunc(name);
 
   const tt = new OutputStatement();
   tt.pushPart("t_object *this");
-  block.pushStatement(tt);
+  func.pushStatement(OutputOrder.Variables, tt);
 
   if (astFunction.block) {
-    writeBlock(module, block, astFunction.block);
+    writeBlock(module, func, astFunction.block);
   }
 
   const tt2 = new OutputStatement();
-  tt2.pushPart("return value_null;");
-  block.pushStatement(tt2);
+  tt2.pushPart("return value_null");
+  func.pushStatement(OutputOrder.After, tt2);
 
-  block.process();
-  module.pushBlock(block);
+  module.pushFunc(func);
 }

@@ -33,5 +33,9 @@
     "vector": "c"
   },
   "deno.lint": true,
-  "deno.unstable": true
+  "deno.unstable": true,
+  "[c]": {
+    "editor.defaultFormatter": "ms-vscode.cpptools"
+  },
+  "editor.rulers": [80]
 }

@@ -1,18 +1,18 @@
-import { OutputBlock } from "./OutputBlock.ts";
+import { OutputFunc } from "./OutputFunc.ts";
 
 export class OutputModule {
-  private blocks: OutputBlock[] = [];
+  private funcs: OutputFunc[] = [];
 
-  pushBlock(block: OutputBlock) {
-    this.blocks.push(block);
+  pushFunc(func: OutputFunc) {
+    this.funcs.push(func);
   }
 
   generateHeader(): string {
     const parts: string[] = [];
     parts.push("#include <runtime.h>\n");
     parts.push("\n");
-    for (const block of this.blocks) {
-      for (const part of block.generateHeader()) {
+    for (const func of this.funcs) {
+      for (const part of func.generateHeader()) {
         parts.push(part);
       }
       parts.push("\n");
@@ -23,13 +23,15 @@ export class OutputModule {
     const parts: string[] = [];
     parts.push("#include <runtime.h>\n");
     parts.push("\n");
-    for (const block of this.blocks) {
-      for (const part of block.generateSource()) {
+    for (const func of this.funcs) {
+      for (const part of func.generateSource()) {
         parts.push(part);
       }
       parts.push("\n");
     }
-    parts.push("t_value *(*main_module)() = module_load;\n");
+    parts.push("\n");
+    parts.push("t_value *(*main_module)() = module_load;");
+    parts.push("\n");
     return parts.join("");
   }
 }
