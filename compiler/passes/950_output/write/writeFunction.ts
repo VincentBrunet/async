@@ -25,7 +25,7 @@ export function writeFunction(
   const func = new OutputFunc(name);
 
   const tt = new OutputStatement();
-  tt.pushPart("t_object *this");
+  tt.pushPart("t_value *module");
   func.pushStatement(OutputOrder.Variables, tt);
 
   if (astFunction.block) {

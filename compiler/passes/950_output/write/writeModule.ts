@@ -35,11 +35,6 @@ export function writeModule(module: OutputModule, astModule: AstModule) {
   moduleInstantiate.pushPart(")");
   func.pushStatement(OutputOrder.Variables, moduleInstantiate);
 
-  // Object trick
-  var objectPtr = new OutputStatement();
-  objectPtr.pushPart("t_object *this = (t_object *)module");
-  func.pushStatement(OutputOrder.Variables, objectPtr);
-
   // Needed to compile // TODO
   var postReturn = new OutputStatement();
   postReturn.pushPart("return module");

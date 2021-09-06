@@ -70,12 +70,12 @@ void f_block(t_object *stack)
 {
 }
 
-t_value *f_lambda(t_object *closure)
+t_value *f_lambda(t_value *value)
 {
-  return object_get(closure, 0x001)->value;
+  return object_get(value, 0x001)->value;
 }
 
-t_value *hello_lambda(t_object *closure)
+t_value *hello_lambda(t_value *value)
 {
   // object prep
   return value_null;
@@ -85,15 +85,15 @@ t_value *lal_module(t_object *module)
 {
   // module prep
   t_value *__module_value = value_factory_object(type_object, 3);
-  t_object *__module_object = (t_object *)__module_value;
-  object_key(__module_object, 0, 0x000); // world
-  object_key(__module_object, 1, 0x001); // num
-  object_key(__module_object, 2, 0x002); // hello
+  object_key(__module_value, 0, 0x000); // world
+  object_key(__module_value, 1, 0x001); // num
+  object_key(__module_value, 2, 0x002); // hello
   // statements
-  object_get(__module_object, 0x001)->value = value_factory_i32(42);
-  object_get(__module_object, 0x002)->value = value_factory_i32(22); // TODO (should be a function alloc)
-  object_get(__module_object, 0x000)->value = object_get(__module_object, 0x002)->value;
+  object_get(__module_value, 0x001)->value = value_factory_i32(42);
+  object_get(__module_value, 0x002)->value = value_factory_i32(22); // TODO (should be a function alloc)
+  object_get(__module_value, 0x000)->value = object_get(__module_value, 0x002)->value;
 
+  t_object *__module_object = (t_object *)__module_value;
   printf("world key: %d\n", __module_object->variables[0].key);
   printf("world value: %d\n", __module_object->variables[0].value->content.i32);
   printf("num key: %d\n", __module_object->variables[1].key);
@@ -101,6 +101,6 @@ t_value *lal_module(t_object *module)
   printf("hello key: %d\n", __module_object->variables[2].key);
   printf("hello value: %d\n", __module_object->variables[2].value->content.i32);
 
-  printf("returned value: %d\n", f_lambda(__module_object)->content.i32);
+  printf("returned value: %d\n", f_lambda(__module_value)->content.i32);
   return __module_value;
 }

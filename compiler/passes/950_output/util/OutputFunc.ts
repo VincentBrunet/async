@@ -41,7 +41,7 @@ export class OutputFunc {
     parts.push("t_value *");
     parts.push(this.name);
     parts.push("()");
-    parts.push(" {\n");
+    parts.push("\n{\n");
 
     const keys = [...this.statements.keys()];
     keys.sort((a, b) => {

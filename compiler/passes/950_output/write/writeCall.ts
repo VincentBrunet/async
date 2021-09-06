@@ -8,7 +8,13 @@ export function writeCall(
   statement: OutputStatement,
   astCall: AstCall,
 ) {
-  statement.pushPart("function_call(");
+  statement.pushPart("function_call_");
+  statement.pushPart(astCall.params.length.toString());
+  statement.pushPart("(");
   writeExpression(module, statement, astCall.callee);
+  for (const astParam of astCall.params) {
+    statement.pushPart(", ");
+    writeExpression(module, statement, astParam);
+  }
   statement.pushPart(")");
 }
