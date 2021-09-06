@@ -7,7 +7,7 @@ t_value *o_0x0()
   t_variable *variables = object->content.object.variables;
   t_variable *__dudu = &(variables[0]);
   // Logic
-  __dudu = number_i32_make(32);
+  __dudu->value = number_i32_make(32);
   // After
   return object;
 }
@@ -25,8 +25,8 @@ t_value *f_0x0(t_closure *closure, t_value *__num)
   // Variables
   t_variable *__f = variable_make(102);
   // Logic
-  __f = function_make_x(type_function, f_0x1, 0);
-  function_call_1(__f, __num);
+  __f->value = function_make_x(type_function, f_0x1, 0);
+  function_call_1(__f->value, __num);
   // After
   return value_null;
 }
@@ -44,14 +44,14 @@ t_value *module_load()
   t_variable *__hello = &(variables[5]);
   t_variable *__world = &(variables[6]);
   // Logic
-  __numHex = number_i32_make(255);
-  __c1 = value_true;
-  __c2 = value_false;
-  __c3 = value_null;
-  __obj = o_0x0();
-  __hello = function_make_x(type_function, f_0x0, 0);
-  __world = __hello;
-  function_call_1(__world, number_i32_make(32));
+  __numHex->value = number_i32_make(255);
+  __c1->value = value_true;
+  __c2->value = value_false;
+  __c3->value = value_null;
+  __obj->value = o_0x0();
+  __hello->value = function_make_x(type_function, f_0x0, 0);
+  __world->value = __hello->value;
+  function_call_1(__world->value, number_i32_make(32));
   // After
   return module;
 }

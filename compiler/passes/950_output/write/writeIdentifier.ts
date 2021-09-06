@@ -20,8 +20,14 @@ export function writeIdentifier(
       statement.pushPart(hash(declaration.name).toString());
       statement.pushPart(")->value");
     } else {
-      statement.pushPart("__");
-      statement.pushPart(declaration.name);
+      if (declaration.variable) {
+        statement.pushPart("__");
+        statement.pushPart(declaration.name);
+        statement.pushPart("->value");
+      } else {
+        statement.pushPart("__");
+        statement.pushPart(declaration.name);
+      }
     }
   } else {
     throw new Error("Unresolved identifier:" + astIdentifier.name);

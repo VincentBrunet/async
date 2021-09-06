@@ -18,6 +18,7 @@ export function writeVariable(
     const assignment = new OutputStatement();
     assignment.pushPart("__");
     assignment.pushPart(astVariable.name);
+    assignment.pushPart("->value");
     assignment.pushPart(" = ");
     writeExpression(module, assignment, astVariable.value);
     func.pushStatement(OutputOrder.Logic, assignment);
