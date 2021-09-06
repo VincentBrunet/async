@@ -29,7 +29,6 @@ export class OutputModule {
       }
       parts.push("\n");
     }
-    parts.push("\n");
     parts.push("t_value *(*main_module)() = module_load");
     parts.push("\n");
     return parts.join("");

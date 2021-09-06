@@ -28,10 +28,7 @@ export function writeFunction(
     writeBlock(module, func, astFunction.block);
   }
 
-  const variables = func.getVariables();
-  variables.sort((a, b) => {
-    return a.getHash() - b.getHash();
-  });
+  const variables = func.readVariables();
 
   func.pushParam("t_closure *closure");
 

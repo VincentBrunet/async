@@ -7,6 +7,10 @@ const c1 = true
 const c2 = false
 const c3 = null
 
+const obj = object {
+  const dudu = 32
+}
+
 const hello = fn () {
 
   const f = fn {
@@ -18,5 +22,5 @@ const hello = fn () {
 
 const world = hello
 
-world()
+world(obj)
 

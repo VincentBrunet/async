@@ -1,4 +1,4 @@
-import { AstBlock } from "../../101_ast/data/AstBlock.ts";
+import { AstBlock } from "../../../data/ast/AstBlock.ts";
 import { OutputFunc } from "../util/OutputFunc.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { writeStatement } from "./writeStatement.ts";

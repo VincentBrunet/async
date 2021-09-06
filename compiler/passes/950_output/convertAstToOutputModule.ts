@@ -1,4 +1,4 @@
-import { AstModule } from "../101_ast/data/AstModule.ts";
+import { AstModule } from "../../data/ast/AstModule.ts";
 import { OutputModule } from "./util/OutputModule.ts";
 import { writeModule } from "./write/writeModule.ts";
 

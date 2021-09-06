@@ -1,5 +1,5 @@
 import { repeat } from "../../../util/strings/repeat.ts";
-import { Token } from "../../001_tokens/data/Token.ts";
+import { Token } from "../../../data/token/Token.ts";
 import { TokenType } from "../../../data/token/TokenType.ts";
 import { TokenImpasse } from "./TokenImpasse.ts";
 
@@ -29,6 +29,7 @@ export class TokenBrowser {
   ): T | TokenImpasse {
     this.indexes.push(this.getCurrentIndex());
     this.id++;
+    /*
     console.log(
       repeat("  ", this.id),
       "+",
@@ -36,8 +37,10 @@ export class TokenBrowser {
       "TRY",
       this.getCurrentToken().str,
     );
+    */
     const ast = recurser(this, param);
     const success = !(ast instanceof TokenImpasse);
+    /*
     console.log(
       repeat("  ", this.id),
       "-",
@@ -45,6 +48,7 @@ export class TokenBrowser {
       success ? "SUCCESS" : "FAIL",
       this.getCurrentToken().str,
     );
+    */
     this.id--;
     const after = this.indexes.pop();
     if (success && after !== undefined) {

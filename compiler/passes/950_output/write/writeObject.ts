@@ -1,16 +1,24 @@
-import { AstModule } from "../../../data/ast/AstModule.ts";
+import { AstObject } from "../../../data/ast/AstObject.ts";
 import { OutputFunc } from "../util/OutputFunc.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputOrder } from "../util/OutputOrder.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
-import { OutputVariable } from "../util/OutputVariable.ts";
-import { writeStatement } from "./writeStatement.ts";
+import { writeBlock } from "./writeBlock.ts";
 
-export function writeModule(module: OutputModule, astModule: AstModule) {
+let _id = 0;
+
+export function writeObject(
+  module: OutputModule,
+  statement: OutputStatement,
+  astObject: AstObject,
+) {
+  // TODO - Object name mangling
+  const name = "o_0x" + (_id++).toString(16);
+
   // Do the recursive writing
-  const func = new OutputFunc("module_load");
-  for (const astStatement of astModule.statements) {
-    writeStatement(module, func, astStatement);
+  const func = new OutputFunc(name);
+  if (astObject.block) {
+    writeBlock(module, func, astObject.block);
   }
 
   // Read the variables declared in the function
@@ -18,7 +26,7 @@ export function writeModule(module: OutputModule, astModule: AstModule) {
 
   // Create the module object containing all declared variables
   const object = new OutputStatement();
-  object.pushPart("t_value *module = object_make_x(");
+  object.pushPart("t_value *object = object_make_x(");
   object.pushPart("type_object"); // TODO
   object.pushPart(", ");
   object.pushPart(variables.length.toString());
@@ -34,7 +42,7 @@ export function writeModule(module: OutputModule, astModule: AstModule) {
 
   // Read a variable field pointer
   const shortcut = new OutputStatement();
-  shortcut.pushPart("t_variable *variables = module->content.object.variables");
+  shortcut.pushPart("t_variable *variables = object->content.object.variables");
   func.pushStatement(OutputOrder.Variables, shortcut);
 
   // Make local references to created variables
@@ -51,10 +59,15 @@ export function writeModule(module: OutputModule, astModule: AstModule) {
     func.pushStatement(OutputOrder.Variables, named);
   }
 
-  // Needed to compile // TODO
-  var postReturn = new OutputStatement();
-  postReturn.pushPart("return module");
-  func.pushStatement(OutputOrder.After, postReturn);
+  // We simply return the object
+  const done = new OutputStatement();
+  done.pushPart("return object");
+  func.pushStatement(OutputOrder.After, done);
+
+  // Simply call the object factory in the expression
+  statement.pushPart(name);
+  statement.pushPart("(");
+  statement.pushPart(")");
 
   // Done
   module.pushFunc(func);

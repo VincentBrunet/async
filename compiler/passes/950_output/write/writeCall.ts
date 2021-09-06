@@ -1,4 +1,4 @@
-import { AstCall } from "../../101_ast/data/AstCall.ts";
+import { AstCall } from "../../../data/ast/AstCall.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
 import { writeExpression } from "./writeExpression.ts";

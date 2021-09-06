@@ -23,12 +23,15 @@ export class OutputFunc {
     this.variables.push(variable);
   }
 
-  getVariables(): Array<OutputVariable> {
-    return this.variables;
-  }
-
   pushStatement(order: OutputOrder, statement: OutputStatement) {
     this.statements.push(order, statement);
+  }
+
+  readVariables(): Array<OutputVariable> {
+    this.variables.sort((a: OutputVariable, b: OutputVariable) => {
+      return a.getHash() - b.getHash();
+    });
+    return this.variables;
   }
 
   generateHeader(): Array<string> {
@@ -60,6 +63,10 @@ export class OutputFunc {
     for (const key of keys) {
       const statements = this.statements.list(key);
       if (statements) {
+        parts.push("  ");
+        parts.push("// ");
+        parts.push(OutputOrder[key]);
+        parts.push("\n");
         for (const statement of statements) {
           parts.push("  ");
           for (const part of statement.generateParts()) {

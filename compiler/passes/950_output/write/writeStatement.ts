@@ -1,4 +1,4 @@
-import { AstStatement } from "../../101_ast/data/AstStatement.ts";
+import { AstStatement } from "../../../data/ast/AstStatement.ts";
 import { OutputFunc } from "../util/OutputFunc.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputOrder } from "../util/OutputOrder.ts";

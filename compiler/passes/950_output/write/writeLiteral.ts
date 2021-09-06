@@ -1,4 +1,4 @@
-import { AstLiteral, AstLiteralType } from "../../101_ast/data/AstLiteral.ts";
+import { AstLiteral, AstLiteralType } from "../../../data/ast/AstLiteral.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
 

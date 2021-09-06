@@ -1,4 +1,4 @@
-import { AstVariable } from "../../101_ast/data/AstVariable.ts";
+import { AstVariable } from "../../../data/ast/AstVariable.ts";
 import { OutputFunc } from "../util/OutputFunc.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputOrder } from "../util/OutputOrder.ts";

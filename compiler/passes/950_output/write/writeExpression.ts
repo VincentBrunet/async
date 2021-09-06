@@ -1,18 +1,20 @@
-import { AstCall } from "../../101_ast/data/AstCall.ts";
+import { AstCall } from "../../../data/ast/AstCall.ts";
 import {
   AstExpression,
   AstExpressionType,
-} from "../../101_ast/data/AstExpression.ts";
-import { AstFunction } from "../../101_ast/data/AstFunction.ts";
-import { AstIdentifier } from "../../101_ast/data/AstIdentifier.ts";
-import { AstLiteral } from "../../101_ast/data/AstLiteral.ts";
-import { AstOperation } from "../../101_ast/data/AstOperation.ts";
+} from "../../../data/ast/AstExpression.ts";
+import { AstFunction } from "../../../data/ast/AstFunction.ts";
+import { AstIdentifier } from "../../../data/ast/AstIdentifier.ts";
+import { AstLiteral } from "../../../data/ast/AstLiteral.ts";
+import { AstObject } from "../../../data/ast/AstObject.ts";
+import { AstOperation } from "../../../data/ast/AstOperation.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
 import { writeCall } from "./writeCall.ts";
 import { writeFunction } from "./writeFunction.ts";
 import { writeIdentifier } from "./writeIdentifier.ts";
 import { writeLiteral } from "./writeLiteral.ts";
+import { writeObject } from "./writeObject.ts";
 
 export function writeExpression(
   module: OutputModule,
@@ -38,6 +40,11 @@ export function writeExpression(
     case AstExpressionType.Call: {
       const astData = astExpression.data as AstCall;
       writeCall(module, statement, astData);
+      break;
+    }
+    case AstExpressionType.Object: {
+      const astData = astExpression.data as AstObject;
+      writeObject(module, statement, astData);
       break;
     }
     case AstExpressionType.Operation: {
