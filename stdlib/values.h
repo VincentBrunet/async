@@ -26,10 +26,6 @@ t_value *value_factory_i32(t_i32 number);
 
 t_value *value_factory_f32(t_f32 number);
 
-t_value *value_factory_object(t_type *type, t_u32 size, ...);
-
-t_value *value_factory_function(t_type *type, void* callable, t_u32 size, ...);
-
 t_value *value_factory_boolean(t_boolean value);
 
 t_value *value_factory_string(t_u32 hash, t_u32 size, t_i8 *chars);

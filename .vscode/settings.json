@@ -32,7 +32,9 @@
     "string_view": "c",
     "unordered_map": "c",
     "utility": "c",
-    "vector": "c"
+    "vector": "c",
+    "function_make.h": "c",
+    "object_var.h": "c"
   },
   "deno.lint": true,
   "deno.unstable": true,

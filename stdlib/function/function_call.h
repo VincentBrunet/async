@@ -1,5 +1,5 @@
-#ifndef __FUNCTION_CALL_H
-#define __FUNCTION_CALL_H
+#ifndef __function_call_H
+#define __function_call_H
 
 #include <types.h>
 

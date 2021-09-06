@@ -1,5 +1,4 @@
 #include "values.h"
-#include "objects.h"
 #include "closures.h"
 
 /**
@@ -65,46 +64,5 @@ t_value *value_factory_string(t_u32 hash, t_u32 size, t_i8 *chars)
   value->content.string.hash = hash;
   value->content.string.size = size;
   value->content.string.chars = chars;
-  return value;
-}
-
-t_value *value_factory_object(t_type *type, t_u32 size, ...)
-{
-  t_value *value = value_factory(type);
-  object_init(value, size);
-  if (size > 0)
-  {
-    t_variable *variables = value->content.object.variables;
-    va_list keys;
-    va_start(keys, size);
-    for (t_u32 idx = 0; idx < size; idx++)
-    {
-      t_u32 key = va_arg(keys, t_u32);
-      variables[idx].key = key;
-    }
-    va_end(keys);
-  }
-  return value;
-}
-
-t_value *value_factory_function(t_type *type, void *callable, t_u32 size, ...)
-{
-  t_value *value = value_factory(type);
-  t_function *function = (t_function *)value;
-  t_closure *closure = (t_closure *)value;
-  closure_init(closure, size);
-  function->callable = callable;
-  if (size > 0)
-  {
-    t_variable **variables = closure->variables;
-    va_list dependencies;
-    va_start(dependencies, size);
-    for (t_u32 idx = 0; idx < size; idx++)
-    {
-      t_variable *dependency = va_arg(dependencies, t_variable *);
-      variables[idx] = dependency;
-    }
-    va_end(dependencies);
-  }
   return value;
 }
