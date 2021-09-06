@@ -1,4 +1,4 @@
-import { AstFunction } from "../../101_ast/data/AstFunction.ts";
+import { AstFunction } from "../../../data/ast/AstFunction.ts";
 import { OutputFunc } from "../util/OutputFunc.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputOrder } from "../util/OutputOrder.ts";
@@ -28,16 +28,23 @@ export function writeFunction(
     writeBlock(module, func, astFunction.block);
   }
 
-  const tt = new OutputStatement();
-  tt.pushPart("t_value *module");
-  func.pushStatement(OutputOrder.Variables, tt);
-
   const variables = func.getVariables();
   variables.sort((a, b) => {
     return a.getHash() - b.getHash();
   });
 
   func.pushParam("t_closure *closure");
+
+  for (const variable of variables) {
+    const declaration = new OutputStatement();
+    declaration.pushPart("t_variable *");
+    declaration.pushPart(variable.getName());
+    declaration.pushPart(" = ");
+    declaration.pushPart("variable_make(");
+    declaration.pushPart(variable.getHash().toString());
+    declaration.pushPart(")");
+    func.pushStatement(OutputOrder.Variables, declaration);
+  }
 
   const tt2 = new OutputStatement();
   tt2.pushPart("return value_null");

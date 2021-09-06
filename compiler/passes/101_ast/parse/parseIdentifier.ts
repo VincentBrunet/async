@@ -1,5 +1,5 @@
-import { TokenType } from "../../001_tokens/data/TokenType.ts";
-import { AstIdentifier } from "../data/AstIdentifier.ts";
+import { TokenType } from "../../../data/token/TokenType.ts";
+import { AstIdentifier } from "../../../data/ast/AstIdentifier.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 

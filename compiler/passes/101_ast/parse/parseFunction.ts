@@ -1,6 +1,9 @@
 import { Keyword } from "../../../constants/Keyword.ts";
-import { TokenType } from "../../001_tokens/data/TokenType.ts";
-import { AstFunction, AstFunctionParam } from "../data/AstFunction.ts";
+import { TokenType } from "../../../data/token/TokenType.ts";
+import {
+  AstFunction,
+  AstFunctionParam,
+} from "../../../data/ast/AstFunction.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseBlock } from "./parseBlock.ts";

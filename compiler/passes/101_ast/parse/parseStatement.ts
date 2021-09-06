@@ -1,4 +1,4 @@
-import { AstStatement } from "../data/AstStatement.ts";
+import { AstStatement } from "../../../data/ast/AstStatement.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseExpression } from "./parseExpression.ts";

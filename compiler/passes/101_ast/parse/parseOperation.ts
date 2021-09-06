@@ -1,5 +1,5 @@
-import { Operator } from "../../../constants/Operator.ts";
-import { AstOperation } from "../data/AstOperation.ts";
+import { Keyword } from "../../../constants/Keyword.ts";
+import { AstOperation } from "../../../data/ast/AstOperation.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseExpression } from "./parseExpression.ts";

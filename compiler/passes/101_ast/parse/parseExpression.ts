@@ -2,7 +2,7 @@ import {
   AstExpression,
   AstExpressionData,
   AstExpressionType,
-} from "../data/AstExpression.ts";
+} from "../../../data/ast/AstExpression.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseCall } from "./parseCall.ts";

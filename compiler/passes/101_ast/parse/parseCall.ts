@@ -1,5 +1,8 @@
-import { AstCall } from "../data/AstCall.ts";
-import { AstExpression, AstExpressionType } from "../data/AstExpression.ts";
+import { AstCall } from "../../../data/ast/AstCall.ts";
+import {
+  AstExpression,
+  AstExpressionType,
+} from "../../../data/ast/AstExpression.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseExpression } from "./parseExpression.ts";

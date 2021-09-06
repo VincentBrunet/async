@@ -1,5 +1,5 @@
-import { Token } from "../001_tokens/data/Token.ts";
-import { AstModule } from "./data/AstModule.ts";
+import { Token } from "../../data/token/Token.ts";
+import { AstModule } from "../../data/ast/AstModule.ts";
 import { parseModule } from "./parse/parseModule.ts";
 import { TokenBrowser } from "./util/TokenBrowser.ts";
 import { TokenDebugger } from "./util/TokenDebugger.ts";

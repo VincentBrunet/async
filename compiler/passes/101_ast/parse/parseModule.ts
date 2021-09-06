@@ -1,5 +1,5 @@
-import { AstModule } from "../data/AstModule.ts";
-import { AstStatement } from "../data/AstStatement.ts";
+import { AstModule } from "../../../data/ast/AstModule.ts";
+import { AstStatement } from "../../../data/ast/AstStatement.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseStatement } from "./parseStatement.ts";

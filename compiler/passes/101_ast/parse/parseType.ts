@@ -1,4 +1,4 @@
-import { AstType } from "../data/AstType.ts";
+import { AstType } from "../../../data/ast/AstType.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 
