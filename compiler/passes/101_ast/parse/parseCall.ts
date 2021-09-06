@@ -1,5 +1,5 @@
 import { AstCall } from "../data/AstCall.ts";
-import { AstExpressionType } from "../data/AstExpression.ts";
+import { AstExpression, AstExpressionType } from "../data/AstExpression.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseExpression } from "./parseExpression.ts";
@@ -19,7 +19,7 @@ export function parseCall(
   }
   browser.consume();
   // param - loop
-  const astParams = [];
+  const astParams = new Array<AstExpression>();
   while (true) {
     // param - close
     const delimParamClose = browser.peek();

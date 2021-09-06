@@ -22,7 +22,7 @@ export function writeLiteral(
       break;
     // Number
     default:
-      statement.pushPart("value_factory_i32(");
+      statement.pushPart("number_i32_make(");
       statement.pushPart(astLiteral.value);
       statement.pushPart(")");
       break;

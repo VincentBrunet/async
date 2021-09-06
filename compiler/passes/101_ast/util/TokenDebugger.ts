@@ -4,7 +4,7 @@ import { Token } from "../../001_tokens/data/Token.ts";
 import { TokenImpasse } from "./TokenImpasse.ts";
 
 export class TokenDebugger {
-  constructor(private readonly tokens: Token[]) {}
+  constructor(private readonly tokens: Array<Token>) {}
 
   error(impasse: TokenImpasse) {
     console.log("impasse");
@@ -36,7 +36,7 @@ export class TokenDebugger {
     ];
   }
 
-  private tokenString(tokens: Token[]) {
+  private tokenString(tokens: Array<Token>) {
     return tokens.map((token) => token.str).join("");
   }
 

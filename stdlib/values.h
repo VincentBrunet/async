@@ -22,8 +22,6 @@ extern t_value *value_empty_function;
 
 void values_init();
 
-t_value *value_factory_i32(t_i32 number);
-
 t_value *value_factory_f32(t_f32 number);
 
 t_value *value_factory_boolean(t_boolean value);

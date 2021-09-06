@@ -21,15 +21,15 @@ export function writeModule(module: OutputModule, astModule: AstModule) {
 
   // Create the module object containing all declared variables
   var moduleInstantiate = new OutputStatement();
-  moduleInstantiate.pushPart("t_value *module = value_factory_object(");
+  moduleInstantiate.pushPart("t_value *module = object_make_x(");
   moduleInstantiate.pushPart("type_object"); // TODO
   moduleInstantiate.pushPart(", ");
   moduleInstantiate.pushPart(variables.length.toString());
   for (const variable of variables) {
-    moduleInstantiate.pushPart(",");
-    moduleInstantiate.pushPart(" /* ");
+    moduleInstantiate.pushPart(", ");
+    moduleInstantiate.pushPart("/*");
     moduleInstantiate.pushPart(variable.getName().toString());
-    moduleInstantiate.pushPart(" */ ");
+    moduleInstantiate.pushPart("*/");
     moduleInstantiate.pushPart(variable.getHash().toString());
   }
   moduleInstantiate.pushPart(")");

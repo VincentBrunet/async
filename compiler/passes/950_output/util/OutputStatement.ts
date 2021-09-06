@@ -1,5 +1,5 @@
 export class OutputStatement {
-  private parts: string[] = [];
+  private parts = new Array<string>();
   pushPart(part: string) {
     this.parts.push(part);
   }

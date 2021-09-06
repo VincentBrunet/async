@@ -44,13 +44,6 @@ t_value *value_factory_boolean(t_boolean boolean)
   return value;
 }
 
-t_value *value_factory_i32(t_i32 number)
-{
-  t_value *value = value_factory(type_i32);
-  value->content.i32 = number;
-  return value;
-}
-
 t_value *value_factory_f32(t_f32 number)
 {
   t_value *value = value_factory(type_f32);

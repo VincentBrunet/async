@@ -4,10 +4,10 @@ import { TokenType } from "../../001_tokens/data/TokenType.ts";
 import { TokenImpasse } from "./TokenImpasse.ts";
 
 export class TokenBrowser {
-  private tokens: Token[];
-  private indexes: number[] = [];
+  private tokens: Array<Token>;
+  private indexes: Array<number>;
 
-  constructor(tokens: Token[]) {
+  constructor(tokens: Array<Token>) {
     this.tokens = tokens;
     this.indexes = [0];
     this.fastForward();
@@ -76,7 +76,7 @@ export class TokenBrowser {
   }
   */
 
-  impasse(message: string, children?: TokenImpasse[]) {
+  impasse(message: string, children?: Array<TokenImpasse>) {
     return new TokenImpasse(this.getCurrentIndex(), message, children);
   }
 

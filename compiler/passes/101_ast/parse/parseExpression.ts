@@ -23,7 +23,7 @@ export function parseExpression(
   browser: TokenBrowser,
   cutoff?: AstExpressionType,
 ): AstExpression | TokenImpasse {
-  const astImpasses: TokenImpasse[] = [];
+  const astImpasses = new Array<TokenImpasse>();
 
   // Parenthesis
   const astParenthesis = browser.recurse(parseParenthesis);

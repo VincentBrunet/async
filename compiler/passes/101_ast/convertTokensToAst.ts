@@ -5,7 +5,7 @@ import { TokenBrowser } from "./util/TokenBrowser.ts";
 import { TokenDebugger } from "./util/TokenDebugger.ts";
 import { TokenImpasse } from "./util/TokenImpasse.ts";
 
-export function convertTokensToAst(tokens: Token[]): AstModule {
+export function convertTokensToAst(tokens: Array<Token>): AstModule {
   const browser = new TokenBrowser(tokens);
 
   const astModule = parseModule(browser);

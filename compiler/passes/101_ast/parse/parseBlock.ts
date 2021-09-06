@@ -12,7 +12,7 @@ export function parseBlock(browser: TokenBrowser): AstBlock | TokenImpasse {
   }
   browser.consume();
   // statements
-  const statements: AstStatement[] = [];
+  const statements = new Array<AstStatement>();
   while (true) {
     // close
     const close = browser.peek();

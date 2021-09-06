@@ -5,6 +5,7 @@ import { MapArray } from "../../../utils/data/MapArray.ts";
 
 export class OutputFunc {
   private name: string;
+  private params = new Array<string>();
   private variables = new Array<OutputVariable>();
   private statements = new MapArray<OutputOrder, OutputStatement>();
 
@@ -12,6 +13,10 @@ export class OutputFunc {
     name: string,
   ) {
     this.name = name;
+  }
+
+  pushParam(param: string) {
+    this.params.push(param);
   }
 
   pushVariable(variable: OutputVariable) {
@@ -26,21 +31,25 @@ export class OutputFunc {
     this.statements.push(order, statement);
   }
 
-  generateHeader(): string[] {
-    const parts: string[] = [];
+  generateHeader(): Array<string> {
+    const parts = new Array<string>();
     parts.push("t_value *");
     parts.push(this.name);
-    parts.push("()");
+    parts.push("(");
+    parts.push(this.params.join(", "));
+    parts.push(")");
     parts.push(";\n");
     return parts;
   }
 
-  generateSource(): string[] {
-    const parts: string[] = [];
+  generateSource(): Array<string> {
+    const parts = new Array<string>();
 
     parts.push("t_value *");
     parts.push(this.name);
-    parts.push("()");
+    parts.push("(");
+    parts.push(this.params.join(", "));
+    parts.push(")");
     parts.push("\n{\n");
 
     const keys = [...this.statements.keys()];

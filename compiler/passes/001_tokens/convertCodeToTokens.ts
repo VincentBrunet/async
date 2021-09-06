@@ -20,11 +20,11 @@ const specialSet = new Set([
 
 interface PartialToken {
   type: TokenType;
-  chars: string[];
+  chars: Array<string>;
 }
 
-export function convertCodeToTokens(code: string): Token[] {
-  const tokens: Token[] = [];
+export function convertCodeToTokens(code: string): Array<Token> {
+  const tokens = new Array<Token>();
   let currentToken: PartialToken | undefined = undefined;
   for (let idx = 0; idx < code.length; idx++) {
     const char = code.charAt(idx);

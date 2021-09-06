@@ -1,5 +1,5 @@
 export class MapArray<K, V> {
-  private map: Map<K, V[]> = new Map();
+  private map: Map<K, Array<V>> = new Map();
 
   public push(key: K, value: V) {
     const array = this.map.get(key);
@@ -10,7 +10,7 @@ export class MapArray<K, V> {
     }
   }
 
-  public concat(key: K, values: V[]) {
+  public concat(key: K, values: Array<V>) {
     const array = this.map.get(key);
     if (array !== undefined) {
       for (const value of values) {
@@ -33,7 +33,7 @@ export class MapArray<K, V> {
     return this.map.clear();
   }
 
-  public forEach(cb: (value: V[], key: K) => void) {
+  public forEach(cb: (value: Array<V>, key: K) => void) {
     return this.map.forEach(cb);
   }
 }

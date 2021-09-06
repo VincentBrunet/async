@@ -12,9 +12,10 @@ export function writeFunction(
   statement: OutputStatement,
   astFunction: AstFunction,
 ) {
+  // TODO - function name mangling
   const name = "f_0x" + (_id++).toString(16);
 
-  statement.pushPart("value_factory_function(");
+  statement.pushPart("function_make_x(");
   statement.pushPart("type_function"); // TODO,
   statement.pushPart(", ");
   statement.pushPart(name);
@@ -23,14 +24,20 @@ export function writeFunction(
   statement.pushPart(")");
 
   const func = new OutputFunc(name);
+  if (astFunction.block) {
+    writeBlock(module, func, astFunction.block);
+  }
 
   const tt = new OutputStatement();
   tt.pushPart("t_value *module");
   func.pushStatement(OutputOrder.Variables, tt);
 
-  if (astFunction.block) {
-    writeBlock(module, func, astFunction.block);
-  }
+  const variables = func.getVariables();
+  variables.sort((a, b) => {
+    return a.getHash() - b.getHash();
+  });
+
+  func.pushParam("t_closure *closure");
 
   const tt2 = new OutputStatement();
   tt2.pushPart("return value_null");
