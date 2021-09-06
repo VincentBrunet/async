@@ -5,35 +5,35 @@ import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseExpression } from "./parseExpression.ts";
 import { parseType } from "./parseType.ts";
+import { AstType } from "../../../data/ast/AstType.ts";
+import { AstExpression } from "../../../data/ast/AstExpression.ts";
 
 export function parseVariable(
   browser: TokenBrowser,
 ): AstVariable | TokenImpasse {
-  const astVariable: AstVariable = {
-    mutable: false,
-    name: "????",
-  };
-
   // keyword const/mutable (required)
+  let mutable = false;
   const first = browser.peek();
   if (first.str === Keyword.VariableConstant) {
-    astVariable.mutable = false;
+    mutable = false;
   } else if (first.str === Keyword.VariableMutable) {
-    astVariable.mutable = true;
+    mutable = true;
   } else {
     return browser.impasse("Variable declaration: " + first.str);
   }
   browser.consume();
 
   // name (required)
-  const name = browser.peek();
-  if (name.type !== TokenType.Text) {
+  let name: string | undefined;
+  const tokenName = browser.peek();
+  if (tokenName.type !== TokenType.Text) {
     return browser.impasse("Variable.Name");
   }
-  astVariable.name = name.str;
   browser.consume();
+  name = tokenName.str;
 
   // type (optional)
+  let type: AstType = {};
   const delimType = browser.peek();
   if (delimType.str === ":") {
     browser.consume();
@@ -41,10 +41,11 @@ export function parseVariable(
     if (astType instanceof TokenImpasse) {
       return browser.impasse("Variable.Type", [astType]);
     }
-    astVariable.type = astType;
+    type = astType;
   }
 
   // value (optional)
+  let value: AstExpression | undefined;
   const delimValue = browser.peek();
   if (delimValue.str === "=") {
     browser.consume();
@@ -52,8 +53,14 @@ export function parseVariable(
     if (astValue instanceof TokenImpasse) {
       return browser.impasse("Variable's Expression", [astValue]);
     }
-    astVariable.value = astValue;
+    value = astValue;
   }
 
-  return astVariable;
+  // Done
+  return {
+    mutable: mutable,
+    name: name,
+    type: type,
+    value: value,
+  };
 }

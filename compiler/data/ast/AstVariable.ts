@@ -4,6 +4,6 @@ import { AstType } from "./AstType.ts";
 export interface AstVariable {
   mutable: boolean;
   name: string;
-  type?: AstType;
+  type: AstType;
   value?: AstExpression;
 }

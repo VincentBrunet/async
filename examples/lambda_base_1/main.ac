@@ -1,6 +1,4 @@
 
-const num = 42
-
 const numHex = 0xff
 
 const c1 = true
@@ -11,16 +9,17 @@ const obj = object {
   const dudu = 32
 }
 
-const hello = fn () {
+const hello = fn (num) {
 
-  const f = fn {
-    log(num)
+  const f = fn (num2) {
+    hello(num, num2)
   }
 
-  f()
+  f(num)
 }
 
 const world = hello
 
-world(obj)
+world(32)
+
 

@@ -8,6 +8,7 @@ import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseBlock } from "./parseBlock.ts";
 import { parseType } from "./parseType.ts";
+import { AstType } from "../../../data/ast/AstType.ts";
 
 export function parseFunction(
   browser: TokenBrowser,
@@ -47,28 +48,33 @@ export function parseFunction(
         break;
       }
 
-      // ast repr
-      const astFunctionParam: AstFunctionParam = {};
-
       // params - optional name
-      const identifierParam = browser.peek();
-      if (identifierParam.type === TokenType.Text) {
+      let name: string | undefined;
+      const identifierParamName = browser.peek();
+      if (identifierParamName.type === TokenType.Text) {
         browser.consume();
-        astFunctionParam.name = identifierParam.str;
+        name = identifierParamName.str;
       }
 
       // params - optional type
+      let type: AstType = {};
       const delimParamType = browser.peek();
       if (delimParamType.str === ":") {
         browser.consume();
         const astFunctionParamType = browser.recurse(parseType);
-        if (!(astFunctionParamType instanceof TokenImpasse)) {
-          astFunctionParam.type = astFunctionParamType;
+        if (astFunctionParamType instanceof TokenImpasse) {
+          return browser.impasse("Function.Param(type)", [
+            astFunctionParamType,
+          ]);
         }
+        type = astFunctionParamType;
       }
 
       // param - validated
-      astFunction.params.push(astFunctionParam);
+      astFunction.params.push({
+        name: name,
+        type: type,
+      });
 
       // params - separator, end
       const delimParamSep = browser.peek();

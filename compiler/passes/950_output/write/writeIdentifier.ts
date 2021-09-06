@@ -8,12 +8,22 @@ export function writeIdentifier(
   statement: OutputStatement,
   astIdentifier: AstIdentifier,
 ) {
-  statement.pushPart("object_variable(");
-  statement.pushPart("module");
-  statement.pushPart(",");
-  statement.pushPart(" /*");
-  statement.pushPart(astIdentifier.name);
-  statement.pushPart("*/ ");
-  statement.pushPart(hash(astIdentifier.name).toString());
-  statement.pushPart(")->value");
+  const declaration = astIdentifier.declaration;
+  if (declaration) {
+    if (declaration.closure) {
+      statement.pushPart("closure_variable(");
+      statement.pushPart("closure");
+      statement.pushPart(",");
+      statement.pushPart(" /*");
+      statement.pushPart(declaration.name);
+      statement.pushPart("*/ ");
+      statement.pushPart(hash(declaration.name).toString());
+      statement.pushPart(")->value");
+    } else {
+      statement.pushPart("__");
+      statement.pushPart(declaration.name);
+    }
+  } else {
+    throw new Error("Unresolved identifier:" + astIdentifier.name);
+  }
 }

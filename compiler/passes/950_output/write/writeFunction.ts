@@ -24,17 +24,29 @@ export function writeFunction(
   statement.pushPart(")");
 
   const func = new OutputFunc(name);
+
+  // Setup params
+  func.pushParam("t_closure *closure");
+  const astParams = astFunction.params;
+  for (let i = 0; i < astParams.length; i++) {
+    const astParam = astParams[i];
+    if (astParam.name) {
+      func.pushParam("t_value *__" + astParam.name);
+    } else {
+      func.pushParam("t_value *_u" + i.toString());
+    }
+  }
+
+  // Push statements
   if (astFunction.block) {
     writeBlock(module, func, astFunction.block);
   }
 
+  // Setup declarations
   const variables = func.readVariables();
-
-  func.pushParam("t_closure *closure");
-
   for (const variable of variables) {
     const declaration = new OutputStatement();
-    declaration.pushPart("t_variable *");
+    declaration.pushPart("t_variable *__");
     declaration.pushPart(variable.getName());
     declaration.pushPart(" = ");
     declaration.pushPart("variable_make(");
@@ -43,6 +55,7 @@ export function writeFunction(
     func.pushStatement(OutputOrder.Variables, declaration);
   }
 
+  // TODO - wut
   const tt2 = new OutputStatement();
   tt2.pushPart("return value_null");
   func.pushStatement(OutputOrder.After, tt2);

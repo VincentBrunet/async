@@ -16,9 +16,8 @@ export function writeVariable(
 
   if (astVariable.value) {
     const assignment = new OutputStatement();
-    writeIdentifier(module, assignment, {
-      name: astVariable.name, // TODO
-    });
+    assignment.pushPart("__");
+    assignment.pushPart(astVariable.name);
     assignment.pushPart(" = ");
     writeExpression(module, assignment, astVariable.value);
     func.pushStatement(OutputOrder.Logic, assignment);

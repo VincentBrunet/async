@@ -39,6 +39,16 @@ export function parseCall(
     } else {
       astParams.push(astParam);
     }
+    // params - separator, end
+    const delimParamSep = browser.peek();
+    if (delimParamSep.str === ",") {
+      browser.consume();
+    } else if (delimParamSep.str === ")") {
+      browser.consume();
+      break;
+    } else {
+      return browser.impasse("Call.Param(separator)");
+    }
   }
   // done
   return {

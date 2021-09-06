@@ -21,7 +21,16 @@ export function writeLiteral(
       statement.pushPart("value_null");
       break;
     // Number
-    default:
+    case AstLiteralType.Integer8:
+    case AstLiteralType.Integer16:
+    case AstLiteralType.Integer32:
+    case AstLiteralType.Integer64:
+    case AstLiteralType.Unsigned8:
+    case AstLiteralType.Unsigned16:
+    case AstLiteralType.Unsigned32:
+    case AstLiteralType.Unsigned64:
+    case AstLiteralType.Float32:
+    case AstLiteralType.Float64:
       statement.pushPart("number_i32_make(");
       statement.pushPart(astLiteral.value);
       statement.pushPart(")");

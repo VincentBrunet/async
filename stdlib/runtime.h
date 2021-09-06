@@ -14,4 +14,6 @@
 #include <object_make.h>
 #include <object_variable.h>
 
+#include <closure_variable.h>
+
 #endif
