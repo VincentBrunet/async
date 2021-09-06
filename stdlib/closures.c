@@ -2,7 +2,7 @@
 #include "values.h"
 
 /**
- * Global utils
+ * Global util
  */
 
 void closure_init(t_closure *closure, t_u32 size)

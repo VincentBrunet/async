@@ -1,7 +1,7 @@
 import { OutputOrder } from "./OutputOrder.ts";
 import { OutputStatement } from "./OutputStatement.ts";
 import { OutputVariable } from "./OutputVariable.ts";
-import { MapArray } from "../../../utils/data/MapArray.ts";
+import { MapArray } from "../../../util/data/MapArray.ts";
 
 export class OutputFunc {
   private name: string;

@@ -1,4 +1,4 @@
-import { repeat } from "../../../utils/strings/repeat.ts";
+import { repeat } from "../../../util/strings/repeat.ts";
 import { Token } from "../../001_tokens/data/Token.ts";
 import { TokenType } from "../../../data/token/TokenType.ts";
 import { TokenImpasse } from "./TokenImpasse.ts";

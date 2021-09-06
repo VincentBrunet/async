@@ -1,5 +1,5 @@
-import { clamp } from "../../../utils/numbers/clamp.ts";
-import { repeat } from "../../../utils/strings/repeat.ts";
+import { clamp } from "../../../util/numbers/clamp.ts";
+import { repeat } from "../../../util/strings/repeat.ts";
 import { Token } from "../../001_tokens/data/Token.ts";
 import { TokenImpasse } from "./TokenImpasse.ts";
 

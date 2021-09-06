@@ -1,7 +1,7 @@
 import { convertCodeToTokens } from "./passes/001_tokens/convertCodeToTokens.ts";
 import { convertTokensToAst } from "./passes/101_ast/convertTokensToAst.ts";
 import { convertAstToOutputModule } from "./passes/950_output/convertAstToOutputModule.ts";
-import { stringify } from "./utils/stringify.ts";
+import { stringify } from "./util/stringify.ts";
 import { getConfig } from "./wrappers/getConfig.ts";
 
 const files = (await getConfig()).files;

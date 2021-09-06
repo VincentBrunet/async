@@ -17,7 +17,7 @@ extern t_value *value_empty_object;
 extern t_value *value_empty_function;
 
 /**
- * Global utils
+ * Global util
  */
 
 void values_init();

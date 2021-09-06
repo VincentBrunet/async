@@ -1,4 +1,4 @@
-import { hash } from "../../../utils/strings/hash.ts";
+import { hash } from "../../../util/strings/hash.ts";
 
 export class OutputVariable {
   private hash: number;

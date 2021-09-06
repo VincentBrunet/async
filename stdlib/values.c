@@ -15,7 +15,7 @@ t_value *value_empty_object = NULL;
 t_value *value_empty_function = NULL;
 
 /**
- * Global utils
+ * Global util
  */
 
 t_value *value_factory(t_type *type)

@@ -26,7 +26,7 @@ t_type *type_boolean = NULL;
 t_type *type_null = NULL;
 
 /**
- * Global Utils
+ * Global util
  */
 
 t_type *type_alloc()

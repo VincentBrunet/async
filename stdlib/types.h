@@ -29,7 +29,7 @@ extern t_type *type_boolean;
 extern t_type *type_null;
 
 /**
- * Global utils
+ * Global util
  */
 
 void types_init();
