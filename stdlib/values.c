@@ -17,15 +17,13 @@ t_value *value_empty_function = NULL;
  * Global util
  */
 
-t_value *value_factory(t_type *type)
-{
+t_value *value_factory(t_type *type) {
   t_value *value = calloc(1, sizeof(t_value));
   value->type = type;
   return value;
 }
 
-void values_init()
-{
+void values_init() {
   value_null = value_factory(type_null);
 
   value_false = value_factory_boolean(0);
@@ -36,22 +34,19 @@ void values_init()
   value_empty_function = value_factory_function(type_function, NULL, 0);
 }
 
-t_value *value_factory_boolean(t_boolean boolean)
-{
+t_value *value_factory_boolean(t_boolean boolean) {
   t_value *value = value_factory(type_boolean);
   value->data.boolean = boolean;
   return value;
 }
 
-t_value *value_factory_f32(t_f32 number)
-{
+t_value *value_factory_f32(t_f32 number) {
   t_value *value = value_factory(type_f32);
   value->data.f32 = number;
   return value;
 }
 
-t_value *value_factory_string(t_u32 hash, t_u32 size, t_i8 *chars)
-{
+t_value *value_factory_string(t_u32 hash, t_u32 size, t_i8 *chars) {
   t_value *value = value_factory(type_string);
   //value->data.string.hash = hash;
   //value->data.string.size = size;

@@ -1,6 +1,6 @@
 import { repeat } from "../../../util/strings/repeat.ts";
 import { Token } from "../../../data/token/Token.ts";
-import { TokenKind } from "../../../data/token/TokenKind.ts";
+import { TokenKind } from "../../../data/token/Token.ts";
 import { TokenImpasse } from "./TokenImpasse.ts";
 
 export class TokenBrowser {

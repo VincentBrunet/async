@@ -1,4 +1,4 @@
-import { TokenKind } from "../../../data/token/TokenKind.ts";
+import { TokenKind } from "../../../data/token/Token.ts";
 import { AstLiteral, AstLiteralKind } from "../../../data/ast/AstLiteral.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";

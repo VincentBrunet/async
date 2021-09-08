@@ -1,5 +1,4 @@
-import { Token } from "../../data/token/Token.ts";
-import { TokenKind } from "../../data/token/TokenKind.ts";
+import { Token, TokenKind } from "../../data/token/Token.ts";
 
 const invalidArray = ["\v", "\b", "\f"];
 const invalidSet = new Set(invalidArray);
