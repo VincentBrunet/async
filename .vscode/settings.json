@@ -36,7 +36,9 @@
     "function_make.h": "c",
     "object_var.h": "c",
     "object_variable.h": "c",
-    "value_make.h": "c"
+    "value_make.h": "c",
+    "runtime.h": "c",
+    "object_call.h": "c"
   },
   "deno.lint": true,
   "deno.unstable": true,
