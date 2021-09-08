@@ -1,9 +1,8 @@
 #include <runtime.h>
 
-t_value *o_0x0(t_ref **closure)
-{
+t_value *o_0x0(t_ref **closure) {
   // Variables
-  t_value *object = object_make_x(type_object, 2, /*lol*/ 107337, /*dudu*/ 3094754);
+  t_value *object = object_make_x(type_object, 2, 107337, 3094754);
   t_variable *variables = object->data.object.variables;
   t_ref *__lol = &(variables[0]) /*107337*/;
   t_ref *__dudu = &(variables[1]) /*3094754*/;
@@ -14,16 +13,14 @@ t_value *o_0x0(t_ref **closure)
   return object;
 }
 
-t_value *f_0x1(t_ref **closure, t_value *__num2)
-{
+t_value *f_0x1(t_ref **closure, t_value *__num2) {
   // Logic
   function_call_3(closure[0]->value, closure[1]->value, __num2, closure[2]->value);
   // After
   return value_null;
 }
 
-t_value *f_0x0(t_ref **closure, t_value *__num)
-{
+t_value *f_0x0(t_ref **closure, t_value *__num) {
   // Variables
   t_ref *__f = ref_make(NULL);
   // Logic
@@ -33,10 +30,9 @@ t_value *f_0x0(t_ref **closure, t_value *__num)
   return value_null;
 }
 
-t_value *module_load()
-{
+t_value *module_load() {
   // Variables
-  t_value *module = object_make_x(type_object, 7, /*numHex*/ -1034389067, /*c1*/ 3118, /*c2*/ 3119, /*c3*/ 3120, /*obj*/ 109815, /*hello*/ 99162322, /*world*/ 113318802);
+  t_value *module = object_make_x(type_object, 7, -1034389067, 3118, 3119, 3120, 109815, 99162322, 113318802);
   t_variable *variables = module->data.object.variables;
   t_ref *__numHex = &(variables[0]) /*-1034389067*/;
   t_ref *__c1 = &(variables[1]) /*3118*/;

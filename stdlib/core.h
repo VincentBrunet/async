@@ -1,9 +1,9 @@
 #ifndef __CORE_H
 #define __CORE_H
 
-#include <stdlib.h>
-#include <stdint.h>
 #include <stdarg.h>
+#include <stdint.h>
+#include <stdlib.h>
 
 /**
  * Typedefs primitive types
@@ -48,43 +48,37 @@ typedef struct t_value t_value;
  */
 
 // Value holder
-typedef struct t_ref
-{
-  t_value *value;
+typedef struct t_ref {
+  t_value* value;
 } t_ref;
 
 // Named value holder
-typedef struct t_variable
-{
+typedef struct t_variable {
   t_ref ref;
   t_u64 key;
 } t_variable;
 
 // Set of variable (compacted in memory)
-typedef struct t_object
-{
+typedef struct t_object {
   t_u32 size;
-  t_variable *variables;
+  t_variable* variables;
 } t_object;
 
 // Runnable value with closure
-typedef struct t_function
-{
-  t_ref **closure;
-  void *callable;
+typedef struct t_function {
+  t_ref** closure;
+  void* callable;
 } t_function;
 
 // Immutable string
-typedef struct t_string
-{
+typedef struct t_string {
   t_u32 hash;
   t_u32 size;
-  t_i8 *chars;
+  t_i8* chars;
 } t_string;
 
 // Union of all possible value content
-typedef union t_data
-{
+typedef union t_data {
   t_u8 u8;
   t_u16 u16;
   t_u32 u32;
@@ -97,22 +91,20 @@ typedef union t_data
   t_f64 f64;
   t_object object;
   t_function function;
-  //t_string string;
+  // t_string string;
   t_boolean boolean;
 } t_data;
 
 // Representation of a value type
-typedef struct t_type
-{
+typedef struct t_type {
   t_u32 parent_count;
-  t_type **parent_array;
+  t_type** parent_array;
 } t_type;
 
 // Immutable value
-typedef struct t_value
-{
+typedef struct t_value {
   t_data data;
-  t_type *type;
+  t_type* type;
 } t_value;
 
 #endif

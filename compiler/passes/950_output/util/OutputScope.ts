@@ -53,7 +53,7 @@ export class OutputScope {
     parts.push("(");
     parts.push(this.params.join(", "));
     parts.push(")");
-    parts.push("\n{\n");
+    parts.push(" {\n");
 
     const keys = [...this.statements.keys()];
     keys.sort((a, b) => {

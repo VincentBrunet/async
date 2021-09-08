@@ -54,10 +54,7 @@ export function writeObject(
   object.pushPart(", ");
   object.pushPart(variables.length.toString());
   for (const variable of variables) {
-    object.pushPart(",");
-    object.pushPart(" /*");
-    object.pushPart(variable.getName().toString());
-    object.pushPart("*/ ");
+    object.pushPart(", ");
     object.pushPart(variable.getHash().toString());
   }
   object.pushPart(")");
