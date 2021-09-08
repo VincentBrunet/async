@@ -3,6 +3,6 @@
 
 #include <types.h>
 
-t_variable *closure_variable(t_closure *closure, t_u32 key);
+t_variable *closure_variable(t_closure *closure, t_u64 key);
 
 #endif

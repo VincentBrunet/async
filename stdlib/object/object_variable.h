@@ -3,6 +3,6 @@
 
 #include <types.h>
 
-t_variable *object_variable(t_value *value, t_u32 key);
+t_variable *object_variable(t_value *value, t_u64 key);
 
 #endif

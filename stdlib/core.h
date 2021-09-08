@@ -49,7 +49,7 @@ typedef struct t_type t_type;
 // Named value holder
 typedef struct t_variable {
   t_value *value;
-  t_u32 key;
+  t_u64 key;
 } t_variable;
 
 // Set of variable (compacted in memory)

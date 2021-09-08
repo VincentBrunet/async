@@ -1,11 +1,24 @@
 #include <closure_variable.h>
 
-t_i32 closure_variable_compare(const void *a, const void *b)
+int closure_variable_compare(const void *a, const void *b)
 {
-  return (*(t_variable **)a)->key - (*(t_variable **)b)->key;
+  t_u64 keyA = (*(t_variable **)a)->key;
+  t_u64 keyB = (*(t_variable **)b)->key;
+  if (keyA == keyB)
+  {
+    return 0;
+  }
+  else if (keyA > keyB)
+  {
+    return 1;
+  }
+  else
+  {
+    return -1;
+  }
 }
 
-t_variable *closure_variable(t_closure *closure, t_u32 key)
+t_variable *closure_variable(t_closure *closure, t_u64 key)
 {
   t_variable dummy;
   dummy.key = key;

@@ -19,7 +19,7 @@ t_value *object_make_0(t_type *type)
   return value;
 }
 
-t_value *object_make_1(t_type *type, t_u32 key1)
+t_value *object_make_1(t_type *type, t_u64 key1)
 {
   t_value *value = object_make(type, 1);
   t_variable *variables = value->content.object.variables;
@@ -27,7 +27,7 @@ t_value *object_make_1(t_type *type, t_u32 key1)
   return value;
 }
 
-t_value *object_make_2(t_type *type, t_u32 key1, t_u32 key2)
+t_value *object_make_2(t_type *type, t_u64 key1, t_u64 key2)
 {
   t_value *value = object_make(type, 2);
   t_variable *variables = value->content.object.variables;
@@ -36,7 +36,7 @@ t_value *object_make_2(t_type *type, t_u32 key1, t_u32 key2)
   return value;
 }
 
-t_value *object_make_3(t_type *type, t_u32 key1, t_u32 key2, t_u32 key3)
+t_value *object_make_3(t_type *type, t_u64 key1, t_u64 key2, t_u64 key3)
 {
   t_value *value = object_make(type, 3);
   t_variable *variables = value->content.object.variables;
@@ -46,7 +46,7 @@ t_value *object_make_3(t_type *type, t_u32 key1, t_u32 key2, t_u32 key3)
   return value;
 }
 
-t_value *object_make_4(t_type *type, t_u32 key1, t_u32 key2, t_u32 key3, t_u32 key4)
+t_value *object_make_4(t_type *type, t_u64 key1, t_u64 key2, t_u64 key3, t_u64 key4)
 {
   t_value *value = object_make(type, 4);
   t_variable *variables = value->content.object.variables;
@@ -57,7 +57,7 @@ t_value *object_make_4(t_type *type, t_u32 key1, t_u32 key2, t_u32 key3, t_u32 k
   return value;
 }
 
-t_value *object_make_5(t_type *type, t_u32 key1, t_u32 key2, t_u32 key3, t_u32 key4, t_u32 key5)
+t_value *object_make_5(t_type *type, t_u64 key1, t_u64 key2, t_u64 key3, t_u64 key4, t_u64 key5)
 {
   t_value *value = object_make(type, 5);
   t_variable *variables = value->content.object.variables;
@@ -69,7 +69,7 @@ t_value *object_make_5(t_type *type, t_u32 key1, t_u32 key2, t_u32 key3, t_u32 k
   return value;
 }
 
-t_value *object_make_6(t_type *type, t_u32 key1, t_u32 key2, t_u32 key3, t_u32 key4, t_u32 key5, t_u32 key6)
+t_value *object_make_6(t_type *type, t_u64 key1, t_u64 key2, t_u64 key3, t_u64 key4, t_u64 key5, t_u64 key6)
 {
   t_value *value = object_make(type, 6);
   t_variable *variables = value->content.object.variables;
@@ -82,7 +82,7 @@ t_value *object_make_6(t_type *type, t_u32 key1, t_u32 key2, t_u32 key3, t_u32 k
   return value;
 }
 
-t_value *object_make_7(t_type *type, t_u32 key1, t_u32 key2, t_u32 key3, t_u32 key4, t_u32 key5, t_u32 key6, t_u32 key7)
+t_value *object_make_7(t_type *type, t_u64 key1, t_u64 key2, t_u64 key3, t_u64 key4, t_u64 key5, t_u64 key6, t_u64 key7)
 {
   t_value *value = object_make(type, 7);
   t_variable *variables = value->content.object.variables;
@@ -96,7 +96,7 @@ t_value *object_make_7(t_type *type, t_u32 key1, t_u32 key2, t_u32 key3, t_u32 k
   return value;
 }
 
-t_value *object_make_8(t_type *type, t_u32 key1, t_u32 key2, t_u32 key3, t_u32 key4, t_u32 key5, t_u32 key6, t_u32 key7, t_u32 key8)
+t_value *object_make_8(t_type *type, t_u64 key1, t_u64 key2, t_u64 key3, t_u64 key4, t_u64 key5, t_u64 key6, t_u64 key7, t_u64 key8)
 {
   t_value *value = object_make(type, 8);
   t_variable *variables = value->content.object.variables;
@@ -111,7 +111,7 @@ t_value *object_make_8(t_type *type, t_u32 key1, t_u32 key2, t_u32 key3, t_u32 k
   return value;
 }
 
-t_value *object_make_9(t_type *type, t_u32 key1, t_u32 key2, t_u32 key3, t_u32 key4, t_u32 key5, t_u32 key6, t_u32 key7, t_u32 key8, t_u32 key9)
+t_value *object_make_9(t_type *type, t_u64 key1, t_u64 key2, t_u64 key3, t_u64 key4, t_u64 key5, t_u64 key6, t_u64 key7, t_u64 key8, t_u64 key9)
 {
   t_value *value = object_make(type, 9);
   t_variable *variables = value->content.object.variables;
