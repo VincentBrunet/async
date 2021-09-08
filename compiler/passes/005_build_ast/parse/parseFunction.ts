@@ -1,9 +1,6 @@
 import { Keyword } from "../../../constants/Keyword.ts";
 import { TokenKind } from "../../../data/token/TokenKind.ts";
-import {
-  AstFunction,
-  AstParam,
-} from "../../../data/ast/AstFunction.ts";
+import { AstFunction } from "../../../data/ast/AstFunction.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseBlock } from "./parseBlock.ts";
@@ -72,7 +69,7 @@ export function parseFunction(
 
       // param - validated
       astFunction.params.push({
-        name: name,
+        name: name ?? ("$" + astFunction.params.length),
         type: type,
       });
 

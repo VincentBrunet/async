@@ -4,6 +4,8 @@ import { OutputModule } from "../util/OutputModule.ts";
 import { OutputOrder } from "../util/OutputOrder.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
 import { writeBlock } from "./writeBlock.ts";
+import { writeClosure } from "./writeClosure.ts";
+import { writeIdentifier } from "./writeIdentifier.ts";
 
 let _id = 0;
 
@@ -12,29 +14,33 @@ export function writeFunction(
   statement: OutputStatement,
   astFunction: AstFunction,
 ) {
+  if (!astFunction.closures) {
+    throw new Error("Inavlid closure setup");
+  }
+
   // TODO - function name mangling
   const name = "f_0x" + (_id++).toString(16);
 
+  // Simply call the function factory
   statement.pushPart("function_make_x(");
   statement.pushPart("type_function"); // TODO,
   statement.pushPart(", ");
   statement.pushPart(name);
   statement.pushPart(", ");
-  statement.pushPart("0");
+  statement.pushPart(astFunction.closures.length.toString());
+  for (const astClosure of astFunction.closures) {
+    statement.pushPart(", ");
+    writeClosure(module, statement, astClosure);
+  }
   statement.pushPart(")");
 
+  // New function
   const func = new OutputFunc(name);
 
   // Setup params
   func.pushParam("t_closure *closure");
-  const astParams = astFunction.params;
-  for (let i = 0; i < astParams.length; i++) {
-    const astParam = astParams[i];
-    if (astParam.name) {
-      func.pushParam("t_value *__" + astParam.name);
-    } else {
-      func.pushParam("t_value *_u" + i.toString());
-    }
+  for (const astParam of astFunction.params) {
+    func.pushParam("t_value *__" + astParam.name);
   }
 
   // Push statements
@@ -51,7 +57,7 @@ export function writeFunction(
     declaration.pushPart(" = ");
     declaration.pushPart("variable_make(");
     declaration.pushPart(variable.getHash().toString());
-    declaration.pushPart(")");
+    declaration.pushPart(", NULL)");
     func.pushStatement(OutputOrder.Variables, declaration);
   }
 

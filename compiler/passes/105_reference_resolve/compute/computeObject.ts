@@ -6,6 +6,9 @@ export function computeObject(
   scope: ResolveScope,
   astObject: AstObject,
 ) {
+  if (!astObject.closures) {
+    throw new Error("Object doesn't have proper closure");
+  }
   for (const astClosure of astObject.closures) {
     astClosure.reference = scope.findReference(astClosure.name);
   }

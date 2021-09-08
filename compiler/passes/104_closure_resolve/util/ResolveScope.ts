@@ -1,6 +1,7 @@
 import { AstClosure } from "../../../data/ast/AstClosure.ts";
 
 export class ResolveScope {
+  private parent?: ResolveScope;
 
   private localNames = new Set<string>();
   private closureNames = new Set<string>();
@@ -30,9 +31,8 @@ export class ResolveScope {
     for (const closureName of this.closureNames) {
       closures.push({
         name: closureName,
-      })
+      });
     }
     return closures;
   }
-
 }

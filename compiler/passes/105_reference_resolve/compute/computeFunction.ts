@@ -6,10 +6,13 @@ export function computeFunction(
   scope: ResolveScope,
   astFunction: AstFunction,
 ) {
+  if (!astFunction.closures) {
+    throw new Error("Undefined ast function closure");
+  }
   for (const astClosure of astFunction.closures) {
     astClosure.reference = scope.findReference(astClosure.name);
   }
-  const child = new ResolveScope(parent);
+  const child = new ResolveScope(scope);
   for (const astClosure of astFunction.closures) {
     child.pushClosure(astClosure);
   }

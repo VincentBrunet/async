@@ -15,10 +15,10 @@ digits.add("7");
 digits.add("8");
 digits.add("9");
 
-function makeLiteral(kind: AstLiteralKind, value: string) {
+function makeLiteral(kind: AstLiteralKind, data: string): AstLiteral {
   return {
     kind: kind,
-    value: value,
+    data: data,
   };
 }
 

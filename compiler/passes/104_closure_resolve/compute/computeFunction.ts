@@ -10,6 +10,8 @@ export function computeFunction(
   for (const astParam of astFunction.params) {
     child.pushLocalName(astParam.name);
   }
-  computeBlock(child, astFunction.block);
+  if (astFunction.block) {
+    computeBlock(child, astFunction.block);
+  }
   astFunction.closures = child.readClosures();
 }

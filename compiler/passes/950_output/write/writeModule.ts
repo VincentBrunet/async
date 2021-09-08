@@ -48,6 +48,10 @@ export function writeModule(module: OutputModule, astModule: AstModule) {
     named.pushPart("&(variables[");
     named.pushPart(i.toString());
     named.pushPart("])");
+    named.pushPart(" ");
+    named.pushPart("/*");
+    named.pushPart(variable.getHash().toString());
+    named.pushPart("*/");
     func.pushStatement(OutputOrder.Variables, named);
   }
 

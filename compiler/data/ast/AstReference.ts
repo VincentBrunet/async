@@ -1,3 +1,6 @@
+import { AstClosure } from "./AstClosure.ts";
+import { AstParam } from "./AstParam.ts";
+import { AstVariable } from "./AstVariable.ts";
 
 export enum AstReferenceKind {
   Variable = "Variable",

@@ -1,6 +1,4 @@
-import { AstParam } from "./AstFunction.ts";
-import { AstType } from "./AstType.ts";
-import { AstVariable } from "./AstVariable.ts";
+import { AstReference } from "./AstReference.ts";
 
 export interface AstIdentifier {
   name: string;

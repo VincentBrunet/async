@@ -7,12 +7,13 @@ const c3 = null
 
 const obj = object {
   const dudu = 32
+  const lol = c3
 }
 
 const hello = fn (num) {
 
   const f = fn (num2) {
-    hello(num, num2)
+    hello(num, num2, c3)
   }
 
   f(num)

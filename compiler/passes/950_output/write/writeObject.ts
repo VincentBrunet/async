@@ -4,6 +4,7 @@ import { OutputModule } from "../util/OutputModule.ts";
 import { OutputOrder } from "../util/OutputOrder.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
 import { writeBlock } from "./writeBlock.ts";
+import { writeClosure } from "./writeClosure.ts";
 
 let _id = 0;
 
@@ -12,11 +13,31 @@ export function writeObject(
   statement: OutputStatement,
   astObject: AstObject,
 ) {
+  if (!astObject.closures) {
+    throw new Error("Invalid closure setup");
+  }
+
   // TODO - Object name mangling
   const name = "o_0x" + (_id++).toString(16);
 
-  // Do the recursive writing
+  // Simply call the object factory in the expression
+  statement.pushPart("object_call_x(");
+  statement.pushPart(name);
+  statement.pushPart(", ");
+  statement.pushPart(astObject.closures.length.toString());
+  for (const astClosure of astObject.closures) {
+    statement.pushPart(", ");
+    writeClosure(module, statement, astClosure);
+  }
+  statement.pushPart(")");
+
+  // New function
   const func = new OutputFunc(name);
+
+  // Setup params
+  func.pushParam("t_closure *closure");
+
+  // Do the recursive writing
   if (astObject.block) {
     writeBlock(module, func, astObject.block);
   }
@@ -56,6 +77,10 @@ export function writeObject(
     named.pushPart("&(variables[");
     named.pushPart(i.toString());
     named.pushPart("])");
+    named.pushPart(" ");
+    named.pushPart("/*");
+    named.pushPart(variable.getHash().toString());
+    named.pushPart("*/");
     func.pushStatement(OutputOrder.Variables, named);
   }
 
@@ -63,11 +88,6 @@ export function writeObject(
   const done = new OutputStatement();
   done.pushPart("return object");
   func.pushStatement(OutputOrder.After, done);
-
-  // Simply call the object factory in the expression
-  statement.pushPart(name);
-  statement.pushPart("(");
-  statement.pushPart(")");
 
   // Done
   module.pushFunc(func);

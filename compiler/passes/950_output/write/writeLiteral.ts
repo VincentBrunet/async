@@ -10,7 +10,7 @@ export function writeLiteral(
   switch (astLiteral.kind) {
     // Bool
     case AstLiteralKind.Boolean:
-      if (astLiteral.value === "false") {
+      if (astLiteral.data === "false") {
         statement.pushPart("value_false");
       } else {
         statement.pushPart("value_true");
@@ -32,7 +32,7 @@ export function writeLiteral(
     case AstLiteralKind.Float32:
     case AstLiteralKind.Float64:
       statement.pushPart("number_i32_make(");
-      statement.pushPart(astLiteral.value);
+      statement.pushPart(astLiteral.data);
       statement.pushPart(")");
       break;
   }

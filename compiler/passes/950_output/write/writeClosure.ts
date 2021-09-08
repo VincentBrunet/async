@@ -1,18 +1,17 @@
 import { hash } from "../../../util/strings/hash.ts";
-import { AstIdentifier } from "../../../data/ast/AstIdentifier.ts";
+import { AstClosure } from "../../../data/ast/AstClosure.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
-import { AstClosure } from "../../../data/ast/AstClosure.ts";
 import { AstReferenceKind } from "../../../data/ast/AstReference.ts";
 import { AstParam } from "../../../data/ast/AstParam.ts";
 import { AstVariable } from "../../../data/ast/AstVariable.ts";
 
-export function writeIdentifier(
+export function writeClosure(
   module: OutputModule,
   statement: OutputStatement,
-  astIdentifier: AstIdentifier,
+  astClosure: AstClosure,
 ) {
-  const reference = astIdentifier.reference;
+  const reference = astClosure.reference;
   if (reference) {
     switch (reference.kind) {
       case AstReferenceKind.Closure: {
@@ -24,13 +23,20 @@ export function writeIdentifier(
         statement.pushPart(closure.name);
         statement.pushPart("*/ ");
         statement.pushPart(hash(closure.name).toString());
-        statement.pushPart(")->value");
+        statement.pushPart(")");
         break;
       }
       case AstReferenceKind.Param: {
         const param = reference.data as AstParam;
+        statement.pushPart("variable_make(");
+        statement.pushPart(" /*");
+        statement.pushPart(param.name);
+        statement.pushPart("*/ ");
+        statement.pushPart(hash(param.name).toString());
+        statement.pushPart(", ");
         statement.pushPart("__");
         statement.pushPart(param.name);
+        statement.pushPart(")");
         break;
       }
       case AstReferenceKind.Variable: {
@@ -41,6 +47,6 @@ export function writeIdentifier(
       }
     }
   } else {
-    throw new Error("Unresolved identifier:" + astIdentifier.name);
+    throw new Error("Unresolved Closure:" + astClosure.name);
   }
 }

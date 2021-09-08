@@ -1,8 +1,12 @@
+import { AstClosure } from "../../../data/ast/AstClosure.ts";
 import { AstParam } from "../../../data/ast/AstParam.ts";
+import {
+  AstReference,
+  AstReferenceKind,
+} from "../../../data/ast/AstReference.ts";
 import { AstVariable } from "../../../data/ast/AstVariable.ts";
 
 export class ResolveScope {
-
   private parent?: ResolveScope;
 
   private references = new Map<string, AstReference>();
@@ -14,8 +18,7 @@ export class ResolveScope {
   pushVariable(variable: AstVariable) {
     const name = variable.name;
     this.pushReference(name, {
-      name: name,
-      kind: AstReferenceType.Variable,
+      kind: AstReferenceKind.Variable,
       data: variable,
     });
   }
@@ -23,20 +26,15 @@ export class ResolveScope {
   pushClosure(closure: AstClosure) {
     const name = closure.name;
     this.pushReference(name, {
-      name: name,
-      kind: AstReferenceType.Closure,
+      kind: AstReferenceKind.Closure,
       data: closure,
-    })
+    });
   }
 
   pushParam(param: AstParam) {
     const name = param.name;
-    if (!name) {
-      return;
-    }
     this.pushReference(name, {
-      name: name,
-      kind: AstReferenceType.Param,
+      kind: AstReferenceKind.Param,
       data: param,
     });
   }
@@ -55,5 +53,4 @@ export class ResolveScope {
     }
     return this.parent?.findReference(name);
   }
-
 }

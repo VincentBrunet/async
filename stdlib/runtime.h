@@ -13,6 +13,7 @@
 
 #include <object_make.h>
 #include <object_variable.h>
+#include <object_call.h>
 
 #include <closure_variable.h>
 
