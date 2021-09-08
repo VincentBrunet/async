@@ -2,9 +2,9 @@ import { AstModule } from "../../../data/ast/AstModule.ts";
 import { ResolveScope } from "../util/ResolveScope.ts";
 import { computeStatement } from "./computeStatement.ts";
 
-export function computeModule(parent: ResolveScope, astModule: AstModule) {
-  const scope = new ResolveScope(parent);
+export function computeModule(scope: ResolveScope, astModule: AstModule) {
+  const child = new ResolveScope(scope);
   for (const astStatement of astModule.statements) {
-    computeStatement(scope, astStatement);
+    computeStatement(child, astStatement);
   }
 }

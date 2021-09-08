@@ -23,6 +23,7 @@ export class ResolveScope {
   pushParam(param: AstParam) {
     const name = param.name;
     if (!name) {
+      return;
     }
     this.pushReference(name, {
       name: name,

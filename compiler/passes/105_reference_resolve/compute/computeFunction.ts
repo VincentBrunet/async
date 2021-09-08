@@ -3,15 +3,20 @@ import { ResolveScope } from "../util/ResolveScope.ts";
 import { computeBlock } from "./computeBlock.ts";
 
 export function computeFunction(
-  parent: ResolveScope,
+  scope: ResolveScope,
   astFunction: AstFunction,
 ) {
-  if (!astFunction.block) {
-    return;
+  for (const astClosure of astFunction.closures) {
+    astClosure.reference = scope.findReference(astClosure.name);
   }
-  const scope = new ResolveScope(parent);
+  const child = new ResolveScope(parent);
+  for (const astClosure of astFunction.closures) {
+    child.pushClosure(astClosure);
+  }
   for (const astParam of astFunction.params) {
-    scope.pushFunctionParam(astParam);
+    child.pushParam(astParam);
   }
-  computeBlock(scope, astFunction.block);
+  if (astFunction.block) {
+    computeBlock(child, astFunction.block);
+  }
 }

@@ -3,12 +3,17 @@ import { ResolveScope } from "../util/ResolveScope.ts";
 import { computeBlock } from "./computeBlock.ts";
 
 export function computeObject(
-  parent: ResolveScope,
+  scope: ResolveScope,
   astObject: AstObject,
 ) {
-  if (!astObject.block) {
-    return;
+  for (const astClosure of astObject.closures) {
+    astClosure.reference = scope.findReference(astClosure.name);
   }
-  const scope = new ResolveScope(parent);
-  computeBlock(scope, astObject.block);
+  const child = new ResolveScope(scope);
+  for (const astClosure of astObject.closures) {
+    child.pushClosure(astClosure);
+  }
+  if (astObject.block) {
+    computeBlock(child, astObject.block);
+  }
 }

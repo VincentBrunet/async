@@ -6,7 +6,7 @@ export function computeVariable(
   scope: ResolveScope,
   astVariable: AstVariable,
 ) {
-  scope.pushName(astVariable.name);
+  scope.pushLocalName(astVariable.name);
   if (astVariable.value) {
     computeExpression(scope, astVariable.value);
   }

@@ -3,12 +3,12 @@ import { ResolveScope } from "../util/ResolveScope.ts";
 import { computeBlock } from "./computeBlock.ts";
 
 export function computeObject(
-  parent: ResolveScope,
+  scope: ResolveScope,
   astObject: AstObject,
 ) {
-  if (!astObject.block) {
-    return;
+  const child = new ResolveScope(scope);
+  if (astObject.block) {
+    computeBlock(child, astObject.block);
   }
-  const scope = new ResolveScope(parent);
-  computeBlock(scope, astObject.block);
+  astObject.closures = child.readClosures();
 }
