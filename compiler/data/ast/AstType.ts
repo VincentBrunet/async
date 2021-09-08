@@ -1,3 +1,3 @@
 export interface AstType {
-  // TODO
+  description?: string; // TODO
 }

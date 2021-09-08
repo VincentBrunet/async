@@ -1,5 +1,4 @@
 import { AstBlock } from "../../../data/ast/AstBlock.ts";
-import { AstCall } from "../../../data/ast/AstCall.ts";
 import { ResolveScope } from "../util/ResolveScope.ts";
 import { computeStatement } from "./computeStatement.ts";
 
