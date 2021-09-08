@@ -20,6 +20,15 @@ export class ResolveScope {
     });
   }
 
+  pushClosure(closure: AstClosure) {
+    const name = closure.name;
+    this.pushReference(name, {
+      name: name,
+      kind: AstReferenceType.Closure,
+      data: closure,
+    })
+  }
+
   pushParam(param: AstParam) {
     const name = param.name;
     if (!name) {
@@ -32,16 +41,7 @@ export class ResolveScope {
     });
   }
 
-  pushClosure(closure: AstClosure) {
-    const name = closure.name;
-    this.pushReference(name, {
-      name: name,
-      kind: AstReferenceType.Closure,
-      data: closure,
-    })
-  }
-
-  pushReference(name: string, reference: AstReference) {
+  private pushReference(name: string, reference: AstReference) {
     if (this.references.get(name)) {
       throw new Error("Already defined: " + name);
     }

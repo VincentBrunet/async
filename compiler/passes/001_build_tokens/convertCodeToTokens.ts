@@ -1,5 +1,5 @@
 import { Token } from "../../data/token/Token.ts";
-import { TokenType } from "../../data/token/TokenType.ts";
+import { TokenKind } from "../../data/token/TokenKind.ts";
 
 const invalidArray = ["\v", "\b", "\f"];
 const invalidSet = new Set(invalidArray);
@@ -19,7 +19,7 @@ const specialSet = new Set([
 ]);
 
 interface PartialToken {
-  type: TokenType;
+  kind: TokenKind;
   chars: Array<string>;
 }
 
@@ -28,24 +28,24 @@ export function convertCodeToTokens(code: string): Array<Token> {
   let currentToken: PartialToken | undefined = undefined;
   for (let idx = 0; idx < code.length; idx++) {
     const char = code.charAt(idx);
-    let type;
+    let kind;
     if (invalidSet.has(char)) {
-      type = TokenType.Invalid;
+      kind = TokenKind.Invalid;
     } else if (whitespaceSet.has(char)) {
-      type = TokenType.Whitespace;
+      kind = TokenKind.Whitespace;
     } else if (specialSet.has(char)) {
-      type = TokenType.Special;
+      kind = TokenKind.Special;
     } else {
-      type = TokenType.Text;
+      kind = TokenKind.Text;
     }
     if (currentToken !== undefined) {
       if (
-        currentToken.type !== type ||
-        type === TokenType.Special ||
+        currentToken.kind !== kind ||
+        kind === TokenKind.Special ||
         char === "\n"
       ) {
         tokens.push({
-          type: currentToken.type,
+          kind: currentToken.kind,
           str: currentToken.chars.join(""),
         });
         currentToken = undefined;
@@ -53,7 +53,7 @@ export function convertCodeToTokens(code: string): Array<Token> {
     }
     if (currentToken === undefined) {
       currentToken = {
-        type: type,
+        kind: kind,
         chars: [],
       };
     }
@@ -61,7 +61,7 @@ export function convertCodeToTokens(code: string): Array<Token> {
   }
   if (currentToken !== undefined) {
     tokens.push({
-      type: currentToken.type,
+      kind: currentToken.kind,
       str: currentToken.chars.join(""),
     });
   }

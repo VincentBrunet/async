@@ -1,6 +1,6 @@
 import { repeat } from "../../../util/strings/repeat.ts";
 import { Token } from "../../../data/token/Token.ts";
-import { TokenType } from "../../../data/token/TokenType.ts";
+import { TokenKind } from "../../../data/token/TokenKind.ts";
 import { TokenImpasse } from "./TokenImpasse.ts";
 
 export class TokenBrowser {
@@ -97,7 +97,7 @@ export class TokenBrowser {
     const token = this.tokens[this.getCurrentIndex()];
     if (token === undefined) {
       return {
-        type: TokenType.Invalid,
+        kind: TokenKind.Invalid,
         str: "",
       };
     }
@@ -113,7 +113,7 @@ export class TokenBrowser {
   private fastForward() {
     while (true) {
       const token = this.getCurrentToken();
-      if (token.type === TokenType.Whitespace) {
+      if (token.kind === TokenKind.Whitespace) {
         this.increment();
       } else {
         return;

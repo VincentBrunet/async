@@ -1,7 +1,7 @@
 import { AstCall } from "../../../data/ast/AstCall.ts";
 import {
   AstExpression,
-  AstExpressionType,
+  AstExpressionKind,
 } from "../../../data/ast/AstExpression.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
@@ -11,7 +11,7 @@ export function parseCall(
   browser: TokenBrowser,
 ): AstCall | TokenImpasse {
   // callee // TODO
-  const astCallee = browser.recurse(parseExpression, AstExpressionType.Call);
+  const astCallee = browser.recurse(parseExpression, AstExpressionKind.Call);
   if (astCallee instanceof TokenImpasse) {
     return browser.impasse("Call.Callee", [astCallee]);
   }

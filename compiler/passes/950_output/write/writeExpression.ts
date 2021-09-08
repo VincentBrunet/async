@@ -1,7 +1,7 @@
 import { AstCall } from "../../../data/ast/AstCall.ts";
 import {
   AstExpression,
-  AstExpressionType,
+  AstExpressionKind,
 } from "../../../data/ast/AstExpression.ts";
 import { AstFunction } from "../../../data/ast/AstFunction.ts";
 import { AstIdentifier } from "../../../data/ast/AstIdentifier.ts";
@@ -21,33 +21,33 @@ export function writeExpression(
   statement: OutputStatement,
   astExpression: AstExpression,
 ) {
-  switch (astExpression.type) {
-    case AstExpressionType.Identifier: {
+  switch (astExpression.kind) {
+    case AstExpressionKind.Identifier: {
       const astData = astExpression.data as AstIdentifier;
       writeIdentifier(module, statement, astData);
       break;
     }
-    case AstExpressionType.Literal: {
+    case AstExpressionKind.Literal: {
       const astData = astExpression.data as AstLiteral;
       writeLiteral(module, statement, astData);
       break;
     }
-    case AstExpressionType.Function: {
+    case AstExpressionKind.Function: {
       const astData = astExpression.data as AstFunction;
       writeFunction(module, statement, astData);
       break;
     }
-    case AstExpressionType.Call: {
+    case AstExpressionKind.Call: {
       const astData = astExpression.data as AstCall;
       writeCall(module, statement, astData);
       break;
     }
-    case AstExpressionType.Object: {
+    case AstExpressionKind.Object: {
       const astData = astExpression.data as AstObject;
       writeObject(module, statement, astData);
       break;
     }
-    case AstExpressionType.Operation: {
+    case AstExpressionKind.Operation: {
       const astData = astExpression.data as AstOperation;
       statement.pushPart("(");
       writeExpression(module, statement, astData.left);

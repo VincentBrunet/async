@@ -24,7 +24,7 @@ export function parseObject(browser: TokenBrowser): AstObject | TokenImpasse {
   block = astBlock;
 
   return {
-    type: {},
+    type: {}, // TODO
     block: block,
   };
 }

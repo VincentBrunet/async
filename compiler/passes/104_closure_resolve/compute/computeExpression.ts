@@ -1,7 +1,7 @@
 import { AstCall } from "../../../data/ast/AstCall.ts";
 import {
   AstExpression,
-  AstExpressionType,
+  AstExpressionKind,
 } from "../../../data/ast/AstExpression.ts";
 import { AstFunction } from "../../../data/ast/AstFunction.ts";
 import { AstIdentifier } from "../../../data/ast/AstIdentifier.ts";
@@ -18,33 +18,33 @@ export function computeExpression(
   scope: ResolveScope,
   astExpression: AstExpression,
 ) {
-  switch (astExpression.type) {
-    case AstExpressionType.Identifier: {
+  switch (astExpression.kind) {
+    case AstExpressionKind.Identifier: {
       const astData = astExpression.data as AstIdentifier;
       computeIdentifier(scope, astData);
       break;
     }
-    case AstExpressionType.Literal: {
+    case AstExpressionKind.Literal: {
       const astData = astExpression.data as AstLiteral;
       //computeLiteral(scope, astData);
       break;
     }
-    case AstExpressionType.Function: {
+    case AstExpressionKind.Function: {
       const astData = astExpression.data as AstFunction;
       computeFunction(scope, astData);
       break;
     }
-    case AstExpressionType.Call: {
+    case AstExpressionKind.Call: {
       const astData = astExpression.data as AstCall;
       computeCall(scope, astData);
       break;
     }
-    case AstExpressionType.Object: {
+    case AstExpressionKind.Object: {
       const astData = astExpression.data as AstObject;
       computeObject(scope, astData);
       break;
     }
-    case AstExpressionType.Operation: {
+    case AstExpressionKind.Operation: {
       const astData = astExpression.data as AstOperation;
       computeExpression(scope, astData.left);
       computeExpression(scope, astData.right);

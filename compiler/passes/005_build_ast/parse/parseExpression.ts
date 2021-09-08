@@ -1,7 +1,7 @@
 import {
   AstExpression,
   AstExpressionData,
-  AstExpressionType,
+  AstExpressionKind,
 } from "../../../data/ast/AstExpression.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
@@ -12,16 +12,16 @@ import { parseLiteral } from "./parseLiteral.ts";
 import { parseObject } from "./parseObject.ts";
 import { parseParenthesis } from "./parseParenthesis.ts";
 
-function makeExpression(type: AstExpressionType, data: AstExpressionData) {
+function makeExpression(kind: AstExpressionKind, data: AstExpressionData) {
   return {
-    type: type,
+    kind: kind,
     data: data,
   };
 }
 
 export function parseExpression(
   browser: TokenBrowser,
-  cutoff?: AstExpressionType,
+  cutoff?: AstExpressionKind,
 ): AstExpression | TokenImpasse {
   const astImpasses = new Array<TokenImpasse>();
 
@@ -38,7 +38,7 @@ export function parseExpression(
   if (astFunction instanceof TokenImpasse) {
     astImpasses.push(astFunction);
   } else {
-    return makeExpression(AstExpressionType.Function, astFunction);
+    return makeExpression(AstExpressionKind.Function, astFunction);
   }
 
   // Object
@@ -46,16 +46,16 @@ export function parseExpression(
   if (astObject instanceof TokenImpasse) {
     astImpasses.push(astObject);
   } else {
-    return makeExpression(AstExpressionType.Object, astObject);
+    return makeExpression(AstExpressionKind.Object, astObject);
   }
 
   // Call
-  if (cutoff !== AstExpressionType.Call) {
+  if (cutoff !== AstExpressionKind.Call) {
     const astCall = browser.recurse(parseCall);
     if (astCall instanceof TokenImpasse) {
       astImpasses.push(astCall);
     } else {
-      return makeExpression(AstExpressionType.Call, astCall);
+      return makeExpression(AstExpressionKind.Call, astCall);
     }
   }
 
@@ -64,7 +64,7 @@ export function parseExpression(
   if (astLiteral instanceof TokenImpasse) {
     astImpasses.push(astLiteral);
   } else {
-    return makeExpression(AstExpressionType.Literal, astLiteral);
+    return makeExpression(AstExpressionKind.Literal, astLiteral);
   }
 
   // Identifier
@@ -72,7 +72,7 @@ export function parseExpression(
   if (astIdentifier instanceof TokenImpasse) {
     astImpasses.push(astIdentifier);
   } else {
-    return makeExpression(AstExpressionType.Identifier, astIdentifier);
+    return makeExpression(AstExpressionKind.Identifier, astIdentifier);
   }
 
   return browser.impasse("Expression", astImpasses);

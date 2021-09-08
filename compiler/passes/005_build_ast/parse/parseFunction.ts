@@ -1,5 +1,5 @@
 import { Keyword } from "../../../constants/Keyword.ts";
-import { TokenType } from "../../../data/token/TokenType.ts";
+import { TokenKind } from "../../../data/token/TokenKind.ts";
 import {
   AstFunction,
   AstParam,
@@ -51,7 +51,7 @@ export function parseFunction(
       // params - optional name
       let name: string | undefined;
       const identifierParamName = browser.peek();
-      if (identifierParamName.type === TokenType.Text) {
+      if (identifierParamName.kind === TokenKind.Text) {
         browser.consume();
         name = identifierParamName.str;
       }

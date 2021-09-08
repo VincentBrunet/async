@@ -11,6 +11,6 @@ export type AstReferenceData =
   | AstClosure;
 
 export interface AstReference {
-  kind: AstReferenceLind;
+  kind: AstReferenceKind;
   data: AstReferenceData;
 }

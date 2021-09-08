@@ -1,5 +1,5 @@
 import { Keyword } from "../../../constants/Keyword.ts";
-import { TokenType } from "../../../data/token/TokenType.ts";
+import { TokenKind } from "../../../data/token/TokenKind.ts";
 import { AstVariable } from "../../../data/ast/AstVariable.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
@@ -26,7 +26,7 @@ export function parseVariable(
   // name (required)
   let name: string | undefined;
   const tokenName = browser.peek();
-  if (tokenName.type !== TokenType.Text) {
+  if (tokenName.kind !== TokenKind.Text) {
     return browser.impasse("Variable.Name");
   }
   browser.consume();
