@@ -1,5 +1,5 @@
 
-export interface AstCapture {
+export interface AstClosure {
   name: string;
   reference?: AstReference;
 }

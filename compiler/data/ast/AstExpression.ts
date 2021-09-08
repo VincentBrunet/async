@@ -5,7 +5,7 @@ import { AstLiteral } from "./AstLiteral.ts";
 import { AstObject } from "./AstObject.ts";
 import { AstOperation } from "./AstOperation.ts";
 
-export enum AstExpressionType {
+export enum AstExpressionKind {
   Call = "Call",
   Identifier = "Identifier",
   Literal = "Literal",
@@ -23,6 +23,6 @@ export type AstExpressionData =
   | AstOperation;
 
 export interface AstExpression {
-  type: AstExpressionType;
+  kind: AstExpressionKind;
   data: AstExpressionData;
 }

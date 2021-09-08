@@ -1,37 +1,43 @@
-import { AstFunctionParam } from "../../../data/ast/AstFunction.ts";
+import { AstParam } from "../../../data/ast/AstParam.ts";
 import { AstVariable } from "../../../data/ast/AstVariable.ts";
 
 export class ResolveScope {
-  private closure: boolean;
+
   private parent?: ResolveScope;
 
   private references = new Map<string, AstReference>();
 
-  constructor(closure: boolean, parent?: ResolveScope) {
-    this.closure = closure;
+  constructor(parent?: ResolveScope) {
     this.parent = parent;
   }
 
   pushVariable(variable: AstVariable) {
     const name = variable.name;
-    const type = variable.type;
     this.pushReference(name, {
       name: name,
-      type: type,
-      variable: variable,
+      kind: AstReferenceType.Variable,
+      data: variable,
     });
   }
 
-  pushFunctionParam(param: AstFunctionParam) {
+  pushParam(param: AstParam) {
     const name = param.name;
-    const type = param.type;
-    if (name) {
-      this.pushReference(name, {
-        name: name,
-        type: type,
-        param: param,
-      });
+    if (!name) {
     }
+    this.pushReference(name, {
+      name: name,
+      kind: AstReferenceType.Param,
+      data: param,
+    });
+  }
+
+  pushClosure(closure: AstClosure) {
+    const name = closure.name;
+    this.pushReference(name, {
+      name: name,
+      kind: AstReferenceType.Closure,
+      data: closure,
+    })
   }
 
   pushReference(name: string, reference: AstReference) {
@@ -42,14 +48,11 @@ export class ResolveScope {
   }
 
   findReference(name: string): AstReference | undefined {
-    return this.references.get(name);
+    const reference = this.references.get(name);
+    if (reference) {
+      return reference;
+    }
+    return this.parent?.findReference(name);
   }
 
-  getParent(): ResolveScope | undefined {
-    return this.parent;
-  }
-
-  needClosure() {
-    return this.closure;
-  }
 }

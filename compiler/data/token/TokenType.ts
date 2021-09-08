@@ -1,4 +1,4 @@
-export enum TokenType {
+export enum TokenKind {
   Whitespace = "whitespace",
   Special = "special",
   Text = "text",

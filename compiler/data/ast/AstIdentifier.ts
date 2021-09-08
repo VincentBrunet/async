@@ -1,4 +1,4 @@
-import { AstFunctionParam } from "./AstFunction.ts";
+import { AstParam } from "./AstFunction.ts";
 import { AstType } from "./AstType.ts";
 import { AstVariable } from "./AstVariable.ts";
 

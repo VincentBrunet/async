@@ -2,7 +2,7 @@ import { Keyword } from "../../../constants/Keyword.ts";
 import { TokenType } from "../../../data/token/TokenType.ts";
 import {
   AstFunction,
-  AstFunctionParam,
+  AstParam,
 } from "../../../data/ast/AstFunction.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
@@ -61,13 +61,13 @@ export function parseFunction(
       const delimParamType = browser.peek();
       if (delimParamType.str === ":") {
         browser.consume();
-        const astFunctionParamType = browser.recurse(parseType);
-        if (astFunctionParamType instanceof TokenImpasse) {
+        const AstParamType = browser.recurse(parseType);
+        if (AstParamType instanceof TokenImpasse) {
           return browser.impasse("Function.Param(type)", [
-            astFunctionParamType,
+            AstParamType,
           ]);
         }
-        type = astFunctionParamType;
+        type = AstParamType;
       }
 
       // param - validated

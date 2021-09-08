@@ -1,6 +1,7 @@
 import { convertCodeToTokens } from "./passes/001_build_tokens/convertCodeToTokens.ts";
 import { convertTokensToAst } from "./passes/005_build_ast/convertTokensToAst.ts";
-import { applyAstIdentifierResolve } from "./passes/105_identifier_resolve/applyAstIdentifierResolve.ts";
+import { applyAstClosureResolve } from "./passes/104_closure_resolve/applyAstClosureResolve.ts";
+import { applyAstReferenceResolve } from "./passes/105_reference_resolve/applyAstReferenceResolve.ts";
 import { convertAstToOutputModule } from "./passes/950_output/convertAstToOutputModule.ts";
 import { stringify } from "./util/stringify.ts";
 import { getConfig } from "./wrappers/getConfig.ts";
@@ -21,7 +22,7 @@ const firstAst = convertTokensToAst(firstTokens);
 
 //console.log("firstAst - 0", stringify(firstAst));
 
-applyAstCaptureResolve(firstAst);
+applyAstClosureResolve(firstAst);
 applyAstReferenceResolve(firstAst);
 
 //console.log("firstAst - 1", stringify(firstAst));

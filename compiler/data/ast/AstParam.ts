@@ -1,6 +1,6 @@
 import { AstType } from "./AstType.ts";
 
-export interface AstFunctionParam {
+export interface AstParam {
   name?: string;
   type: AstType;
 }

@@ -5,5 +5,5 @@ export interface AstFunction {
   params: Array<AstParam>;
   block?: AstBlock;
   return?: AstType;
-  closure?: Array<AstCapture>;
+  closures?: Array<AstClosure>;
 }

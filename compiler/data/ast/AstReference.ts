@@ -1,7 +1,16 @@
 
+export enum AstReferenceKind {
+  Variable = "Variable",
+  Param = "Param",
+  Closure = "Closure",
+}
+
+export type AstReferenceData =
+  | AstVariable
+  | AstParam
+  | AstClosure;
+
 export interface AstReference {
-  type: AstType;
-  variable?: AstVariable;
-  param?: AstParam;
-  capture?: AstCapture;
+  kind: AstReferenceLind;
+  data: AstReferenceData;
 }
