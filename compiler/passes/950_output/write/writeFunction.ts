@@ -1,5 +1,5 @@
 import { AstFunction } from "../../../data/ast/AstFunction.ts";
-import { OutputFunc } from "../util/OutputFunc.ts";
+import { OutputScope } from "../util/OutputScope.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputOrder } from "../util/OutputOrder.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
@@ -14,8 +14,9 @@ export function writeFunction(
   statement: OutputStatement,
   astFunction: AstFunction,
 ) {
+  // Asserts
   if (!astFunction.closures) {
-    throw new Error("Inavlid closure setup");
+    throw new Error("Invalid closure setup");
   }
 
   // TODO - function name mangling
@@ -25,6 +26,7 @@ export function writeFunction(
   statement.pushPart("function_make_x(");
   statement.pushPart("type_function"); // TODO,
   statement.pushPart(", ");
+  statement.pushPart("&");
   statement.pushPart(name);
   statement.pushPart(", ");
   statement.pushPart(astFunction.closures.length.toString());
@@ -35,36 +37,35 @@ export function writeFunction(
   statement.pushPart(")");
 
   // New function
-  const func = new OutputFunc(name);
-
-  // Setup params
-  func.pushParam("t_closure *closure");
-  for (const astParam of astFunction.params) {
-    func.pushParam("t_value *__" + astParam.name);
-  }
+  const scope = new OutputScope(name);
 
   // Push statements
   if (astFunction.block) {
-    writeBlock(module, func, astFunction.block);
+    writeBlock(module, scope, astFunction.block);
+  }
+
+  // Setup params
+  scope.pushParam("t_ref **closure");
+  for (const astParam of astFunction.params) {
+    scope.pushParam("t_value *__" + astParam.name);
   }
 
   // Setup declarations
-  const variables = func.readVariables();
+  const variables = scope.readVariables();
   for (const variable of variables) {
     const declaration = new OutputStatement();
-    declaration.pushPart("t_variable *__");
+    declaration.pushPart("t_ref *__");
     declaration.pushPart(variable.getName());
     declaration.pushPart(" = ");
-    declaration.pushPart("variable_make(");
-    declaration.pushPart(variable.getHash().toString());
-    declaration.pushPart(", NULL)");
-    func.pushStatement(OutputOrder.Variables, declaration);
+    declaration.pushPart("ref_make(NULL)");
+    scope.pushStatement(OutputOrder.Variables, declaration);
   }
 
-  // TODO - wut
-  const tt2 = new OutputStatement();
-  tt2.pushPart("return value_null");
-  func.pushStatement(OutputOrder.After, tt2);
+  // Add a return statement - TODO (this should be added by user)
+  const final = new OutputStatement();
+  final.pushPart("return value_null");
+  scope.pushStatement(OutputOrder.After, final);
 
-  module.pushFunc(func);
+  // Done, push the newly created function
+  module.pushScope(scope);
 }

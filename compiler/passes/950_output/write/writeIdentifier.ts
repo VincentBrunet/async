@@ -17,14 +17,9 @@ export function writeIdentifier(
     switch (reference.kind) {
       case AstReferenceKind.Closure: {
         const closure = reference.data as AstClosure;
-        statement.pushPart("closure_variable(");
-        statement.pushPart("closure");
-        statement.pushPart(",");
-        statement.pushPart(" /*");
-        statement.pushPart(closure.name);
-        statement.pushPart("*/ ");
-        statement.pushPart(hash(closure.name).toString());
-        statement.pushPart(")->value");
+        statement.pushPart("closure[");
+        statement.pushPart(closure.idx.toString());
+        statement.pushPart("]->value");
         break;
       }
       case AstReferenceKind.Param: {
@@ -37,6 +32,7 @@ export function writeIdentifier(
         const variable = reference.data as AstVariable;
         statement.pushPart("__");
         statement.pushPart(variable.name);
+        statement.pushPart("->value");
         break;
       }
     }

@@ -3,7 +3,7 @@ import { OutputStatement } from "./OutputStatement.ts";
 import { OutputVariable } from "./OutputVariable.ts";
 import { MapArray } from "../../../util/data/MapArray.ts";
 
-export class OutputFunc {
+export class OutputScope {
   private name: string;
   private params = new Array<string>();
   private variables = new Array<OutputVariable>();

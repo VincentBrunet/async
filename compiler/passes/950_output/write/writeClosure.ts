@@ -16,24 +16,14 @@ export function writeClosure(
     switch (reference.kind) {
       case AstReferenceKind.Closure: {
         const closure = reference.data as AstClosure;
-        statement.pushPart("closure_variable(");
-        statement.pushPart("closure");
-        statement.pushPart(",");
-        statement.pushPart(" /*");
-        statement.pushPart(closure.name);
-        statement.pushPart("*/ ");
-        statement.pushPart(hash(closure.name).toString());
-        statement.pushPart(")");
+        statement.pushPart("closure[");
+        statement.pushPart(closure.idx.toString());
+        statement.pushPart("]");
         break;
       }
       case AstReferenceKind.Param: {
         const param = reference.data as AstParam;
-        statement.pushPart("variable_make(");
-        statement.pushPart(" /*");
-        statement.pushPart(param.name);
-        statement.pushPart("*/ ");
-        statement.pushPart(hash(param.name).toString());
-        statement.pushPart(", ");
+        statement.pushPart("ref_make(");
         statement.pushPart("__");
         statement.pushPart(param.name);
         statement.pushPart(")");

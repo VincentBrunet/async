@@ -24,8 +24,8 @@ t_variable *object_variable(t_value *value, t_u64 key)
   dummy.key = key;
   void *result = bsearch(
       &dummy,
-      value->content.object.variables,
-      value->content.object.size,
+      value->data.object.variables,
+      value->data.object.size,
       sizeof(t_variable),
       object_variable_compare);
   return ((t_variable *)result);

@@ -1,18 +1,18 @@
-import { OutputFunc } from "./OutputFunc.ts";
+import { OutputScope } from "./OutputScope.ts";
 
 export class OutputModule {
-  private funcs = new Array<OutputFunc>();
+  private scopes = new Array<OutputScope>();
 
-  pushFunc(func: OutputFunc) {
-    this.funcs.push(func);
+  pushScope(scope: OutputScope) {
+    this.scopes.push(scope);
   }
 
   generateHeader(): string {
     const parts = new Array<string>();
     parts.push("#include <runtime.h>\n");
     parts.push("\n");
-    for (const func of this.funcs) {
-      for (const part of func.generateHeader()) {
+    for (const scope of this.scopes) {
+      for (const part of scope.generateHeader()) {
         parts.push(part);
       }
       parts.push("\n");
@@ -23,8 +23,8 @@ export class OutputModule {
     const parts = new Array<string>();
     parts.push("#include <runtime.h>\n");
     parts.push("\n");
-    for (const func of this.funcs) {
-      for (const part of func.generateSource()) {
+    for (const scope of this.scopes) {
+      for (const part of scope.generateSource()) {
         parts.push(part);
       }
       parts.push("\n");

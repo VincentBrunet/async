@@ -1,14 +1,14 @@
 import { AstBlock } from "../../../data/ast/AstBlock.ts";
-import { OutputFunc } from "../util/OutputFunc.ts";
+import { OutputScope } from "../util/OutputScope.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { writeStatement } from "./writeStatement.ts";
 
 export function writeBlock(
   module: OutputModule,
-  func: OutputFunc,
+  scope: OutputScope,
   astBlock: AstBlock,
 ) {
   for (const statement of astBlock.statements) {
-    writeStatement(module, func, statement);
+    writeStatement(module, scope, statement);
   }
 }

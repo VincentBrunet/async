@@ -1,135 +1,122 @@
 #include <object_call.h>
 
-#include <closures.h>
-
-t_value *object_call_0(t_value *(callable)(t_closure *))
+t_value *object_call_0(t_value *(callable)(t_ref **))
 {
-  t_closure closure;
-  closure_init(&closure, 0);
-  return callable(&closure);
+  t_ref *closure[0];
+  return callable(closure);
 }
 
-t_value *object_call_1(t_value *(callable)(t_closure *), t_variable *d1)
+t_value *object_call_1(t_value *(callable)(t_ref **), t_ref *r1)
 {
-  t_closure closure;
-  closure_init(&closure, 1);
-  closure.variables[0] = d1;
-  return callable(&closure);
+  t_ref *closure[1];
+  closure[0] = r1;
+  return callable(closure);
 }
 
-t_value *object_call_2(t_value *(callable)(t_closure *), t_variable *d1, t_variable *d2)
+t_value *object_call_2(t_value *(callable)(t_ref **), t_ref *r1, t_ref *r2)
 {
-  t_closure closure;
-  closure_init(&closure, 2);
-  closure.variables[0] = d1;
-  closure.variables[1] = d2;
-  return callable(&closure);
+  t_ref *closure[2];
+  closure[0] = r1;
+  closure[1] = r2;
+  return callable(closure);
 }
 
-t_value *object_call_3(t_value *(callable)(t_closure *), t_variable *d1, t_variable *d2, t_variable *d3)
+t_value *object_call_3(t_value *(callable)(t_ref **), t_ref *r1, t_ref *r2, t_ref *r3)
 {
-  t_closure closure;
-  closure_init(&closure, 3);
-  closure.variables[0] = d1;
-  closure.variables[1] = d2;
-  closure.variables[2] = d3;
-  return callable(&closure);
+  t_ref *closure[3];
+  closure[0] = r1;
+  closure[1] = r2;
+  closure[2] = r3;
+  return callable(closure);
 }
 
-t_value *object_call_4(t_value *(callable)(t_closure *), t_variable *d1, t_variable *d2, t_variable *d3, t_variable *d4)
+t_value *object_call_4(t_value *(callable)(t_ref **), t_ref *r1, t_ref *r2, t_ref *r3, t_ref *r4)
 {
-  t_closure closure;
-  closure_init(&closure, 4);
-  closure.variables[0] = d1;
-  closure.variables[1] = d2;
-  closure.variables[2] = d3;
-  closure.variables[3] = d4;
-  return callable(&closure);
+  t_ref *closure[4];
+  closure[0] = r1;
+  closure[1] = r2;
+  closure[2] = r3;
+  closure[3] = r4;
+  return callable(closure);
 }
 
-t_value *object_call_5(t_value *(callable)(t_closure *), t_variable *d1, t_variable *d2, t_variable *d3, t_variable *d4, t_variable *d5)
+t_value *object_call_5(t_value *(callable)(t_ref **), t_ref *r1, t_ref *r2, t_ref *r3, t_ref *r4, t_ref *r5)
 {
-  t_closure closure;
-  closure_init(&closure, 5);
-  closure.variables[0] = d1;
-  closure.variables[1] = d2;
-  closure.variables[2] = d3;
-  closure.variables[3] = d4;
-  closure.variables[4] = d5;
-  return callable(&closure);
+  t_ref *closure[5];
+  closure[0] = r1;
+  closure[1] = r2;
+  closure[2] = r3;
+  closure[3] = r4;
+  closure[4] = r5;
+  return callable(closure);
 }
 
-t_value *object_call_6(t_value *(callable)(t_closure *), t_variable *d1, t_variable *d2, t_variable *d3, t_variable *d4, t_variable *d5, t_variable *d6)
+t_value *object_call_6(t_value *(callable)(t_ref **), t_ref *r1, t_ref *r2, t_ref *r3, t_ref *r4, t_ref *r5, t_ref *r6)
 {
-  t_closure closure;
-  closure_init(&closure, 6);
-  closure.variables[0] = d1;
-  closure.variables[1] = d2;
-  closure.variables[2] = d3;
-  closure.variables[3] = d4;
-  closure.variables[4] = d5;
-  closure.variables[5] = d6;
-  return callable(&closure);
+  t_ref *closure[6];
+  closure[0] = r1;
+  closure[1] = r2;
+  closure[2] = r3;
+  closure[3] = r4;
+  closure[4] = r5;
+  closure[5] = r6;
+  return callable(closure);
 }
 
-t_value *object_call_7(t_value *(callable)(t_closure *), t_variable *d1, t_variable *d2, t_variable *d3, t_variable *d4, t_variable *d5, t_variable *d6, t_variable *d7)
+t_value *object_call_7(t_value *(callable)(t_ref **), t_ref *r1, t_ref *r2, t_ref *r3, t_ref *r4, t_ref *r5, t_ref *r6, t_ref *r7)
 {
-  t_closure closure;
-  closure_init(&closure, 7);
-  closure.variables[0] = d1;
-  closure.variables[1] = d2;
-  closure.variables[2] = d3;
-  closure.variables[3] = d4;
-  closure.variables[4] = d5;
-  closure.variables[5] = d6;
-  closure.variables[6] = d7;
-  return callable(&closure);
+  t_ref *closure[7];
+  closure[0] = r1;
+  closure[1] = r2;
+  closure[2] = r3;
+  closure[3] = r4;
+  closure[4] = r5;
+  closure[5] = r6;
+  closure[6] = r7;
+  return callable(closure);
 }
 
-t_value *object_call_8(t_value *(callable)(t_closure *), t_variable *d1, t_variable *d2, t_variable *d3, t_variable *d4, t_variable *d5, t_variable *d6, t_variable *d7, t_variable *d8)
+t_value *object_call_8(t_value *(callable)(t_ref **), t_ref *r1, t_ref *r2, t_ref *r3, t_ref *r4, t_ref *r5, t_ref *r6, t_ref *r7, t_ref *r8)
 {
-  t_closure closure;
-  closure_init(&closure, 8);
-  closure.variables[0] = d1;
-  closure.variables[1] = d2;
-  closure.variables[2] = d3;
-  closure.variables[3] = d4;
-  closure.variables[4] = d5;
-  closure.variables[5] = d6;
-  closure.variables[6] = d7;
-  closure.variables[7] = d8;
-  return callable(&closure);
+  t_ref *closure[8];
+  closure[0] = r1;
+  closure[1] = r2;
+  closure[2] = r3;
+  closure[3] = r4;
+  closure[4] = r5;
+  closure[5] = r6;
+  closure[6] = r7;
+  closure[7] = r8;
+  return callable(closure);
 }
 
-t_value *object_call_9(t_value *(callable)(t_closure *), t_variable *d1, t_variable *d2, t_variable *d3, t_variable *d4, t_variable *d5, t_variable *d6, t_variable *d7, t_variable *d8, t_variable *d9)
+t_value *object_call_9(t_value *(callable)(t_ref **), t_ref *r1, t_ref *r2, t_ref *r3, t_ref *r4, t_ref *r5, t_ref *r6, t_ref *r7, t_ref *r8, t_ref *r9)
 {
-  t_closure closure;
-  closure_init(&closure, 9);
-  closure.variables[0] = d1;
-  closure.variables[1] = d2;
-  closure.variables[2] = d3;
-  closure.variables[3] = d4;
-  closure.variables[4] = d5;
-  closure.variables[5] = d6;
-  closure.variables[6] = d7;
-  closure.variables[7] = d8;
-  closure.variables[8] = d9;
-  return callable(&closure);
+  t_ref *closure[9];
+  closure[0] = r1;
+  closure[1] = r2;
+  closure[2] = r3;
+  closure[3] = r4;
+  closure[4] = r5;
+  closure[5] = r6;
+  closure[6] = r7;
+  closure[7] = r8;
+  closure[8] = r9;
+  return callable(closure);
 }
 
-t_value *object_call_x(t_value *(callable)(t_closure *), t_u32 size, ...)
+t_value *object_call_x(t_value *(callable)(t_ref **), t_u32 size, ...)
 {
-  t_closure closure;
-  closure_init(&closure, size);
+  t_ref *closure[size];
   if (size > 0)
   {
-    va_list keys;
-    va_start(keys, size);
+    va_list rX;
+    va_start(rX, size);
     for (t_u32 idx = 0; idx < size; idx++)
     {
-      closure.variables[idx] = va_arg(keys, t_variable *);
+      closure[idx] = va_arg(rX, t_ref *);
     }
-    va_end(keys);
+    va_end(rX);
   }
-  return callable(&closure);
+  return callable(closure);
 }

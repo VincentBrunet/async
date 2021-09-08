@@ -13,7 +13,4 @@
 #include <object_variable.h>
 #include <object_call.h>
 
-#include <closure_init.h>
-#include <closure_variable.h>
-
 #endif

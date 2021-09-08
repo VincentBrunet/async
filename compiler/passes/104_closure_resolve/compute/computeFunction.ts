@@ -8,7 +8,7 @@ export function computeFunction(
 ) {
   const child = new ResolveScope(scope);
   for (const astParam of astFunction.params) {
-    child.pushLocalName(astParam.name);
+    child.pushName(astParam.name);
   }
   if (astFunction.block) {
     computeBlock(child, astFunction.block);

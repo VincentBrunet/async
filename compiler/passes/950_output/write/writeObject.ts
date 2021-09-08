@@ -1,5 +1,5 @@
 import { AstObject } from "../../../data/ast/AstObject.ts";
-import { OutputFunc } from "../util/OutputFunc.ts";
+import { OutputScope } from "../util/OutputScope.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputOrder } from "../util/OutputOrder.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
@@ -13,6 +13,7 @@ export function writeObject(
   statement: OutputStatement,
   astObject: AstObject,
 ) {
+  // Asserts
   if (!astObject.closures) {
     throw new Error("Invalid closure setup");
   }
@@ -22,6 +23,7 @@ export function writeObject(
 
   // Simply call the object factory in the expression
   statement.pushPart("object_call_x(");
+  statement.pushPart("&");
   statement.pushPart(name);
   statement.pushPart(", ");
   statement.pushPart(astObject.closures.length.toString());
@@ -31,19 +33,19 @@ export function writeObject(
   }
   statement.pushPart(")");
 
-  // New function
-  const func = new OutputFunc(name);
-
-  // Setup params
-  func.pushParam("t_closure *closure");
+  // New scope
+  const scope = new OutputScope(name);
 
   // Do the recursive writing
   if (astObject.block) {
-    writeBlock(module, func, astObject.block);
+    writeBlock(module, scope, astObject.block);
   }
 
+  // Setup params
+  scope.pushParam("t_ref **closure");
+
   // Read the variables declared in the function
-  const variables = func.readVariables();
+  const variables = scope.readVariables();
 
   // Create the module object containing all declared variables
   const object = new OutputStatement();
@@ -59,18 +61,18 @@ export function writeObject(
     object.pushPart(variable.getHash().toString());
   }
   object.pushPart(")");
-  func.pushStatement(OutputOrder.Variables, object);
+  scope.pushStatement(OutputOrder.Variables, object);
 
   // Read a variable field pointer
   const shortcut = new OutputStatement();
-  shortcut.pushPart("t_variable *variables = object->content.object.variables");
-  func.pushStatement(OutputOrder.Variables, shortcut);
+  shortcut.pushPart("t_variable *variables = object->data.object.variables");
+  scope.pushStatement(OutputOrder.Variables, shortcut);
 
   // Make local references to created variables
   for (let i = 0; i < variables.length; i++) {
     const variable = variables[i];
     const named = new OutputStatement();
-    named.pushPart("t_variable *");
+    named.pushPart("t_ref *");
     named.pushPart("__");
     named.pushPart(variable.getName());
     named.pushPart(" = ");
@@ -81,14 +83,14 @@ export function writeObject(
     named.pushPart("/*");
     named.pushPart(variable.getHash().toString());
     named.pushPart("*/");
-    func.pushStatement(OutputOrder.Variables, named);
+    scope.pushStatement(OutputOrder.Variables, named);
   }
 
   // We simply return the object
   const done = new OutputStatement();
   done.pushPart("return object");
-  func.pushStatement(OutputOrder.After, done);
+  scope.pushStatement(OutputOrder.After, done);
 
-  // Done
-  module.pushFunc(func);
+  // Done, push the newly created function
+  module.pushScope(scope);
 }

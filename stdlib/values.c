@@ -1,5 +1,4 @@
 #include "values.h"
-#include "closures.h"
 
 /**
  * Global native values
@@ -40,22 +39,22 @@ void values_init()
 t_value *value_factory_boolean(t_boolean boolean)
 {
   t_value *value = value_factory(type_boolean);
-  value->content.boolean = boolean;
+  value->data.boolean = boolean;
   return value;
 }
 
 t_value *value_factory_f32(t_f32 number)
 {
   t_value *value = value_factory(type_f32);
-  value->content.f32 = number;
+  value->data.f32 = number;
   return value;
 }
 
 t_value *value_factory_string(t_u32 hash, t_u32 size, t_i8 *chars)
 {
   t_value *value = value_factory(type_string);
-  value->content.string.hash = hash;
-  value->content.string.size = size;
-  value->content.string.chars = chars;
+  //value->data.string.hash = hash;
+  //value->data.string.size = size;
+  //value->data.string.chars = chars;
   return value;
 }

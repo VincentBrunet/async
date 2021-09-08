@@ -3,36 +3,40 @@ import { AstClosure } from "../../../data/ast/AstClosure.ts";
 export class ResolveScope {
   private parent?: ResolveScope;
 
-  private localNames = new Set<string>();
-  private closureNames = new Set<string>();
+  private names = new Set<string>();
+
+  private closures = new Set<string>();
 
   constructor(parent?: ResolveScope) {
     this.parent = parent;
   }
 
-  pushLocalName(localName: string) {
-    if (this.localNames.has(localName)) {
-      throw new Error("Already defined: " + localName);
+  pushName(name: string) {
+    if (this.names.has(name)) {
+      throw new Error("Already defined: " + name);
     }
-    this.localNames.add(localName);
+    this.names.add(name);
   }
 
   propagateName(name: string) {
-    if (this.localNames.has(name)) {
+    if (this.names.has(name)) {
       return;
-    } else {
-      this.closureNames.add(name);
     }
-    this.parent?.propagateName(name);
+    if (this.parent) {
+      this.parent.propagateName(name);
+    }
+    this.closures.add(name);
   }
 
   readClosures(): Array<AstClosure> {
-    const closures = new Array<AstClosure>();
-    for (const closureName of this.closureNames) {
-      closures.push({
-        name: closureName,
+    const closures = [...this.closures];
+    const astClosures = new Array<AstClosure>();
+    for (let idx = 0; idx < closures.length; idx++) {
+      astClosures.push({
+        idx: idx,
+        name: closures[idx],
       });
     }
-    return closures;
+    return astClosures;
   }
 }
