@@ -1,14 +1,13 @@
-#include <stdio.h>
-
 #include "entry.h"
+
+#include <stdio.h>
 
 #include "values.h"
 
 /**
  * Entrypoint
  */
-int main()
-{
+int main() {
   types_init();
   values_init();
 
@@ -41,11 +40,11 @@ int main()
 
   printf(" -- value type -- \n");
   printf("sizeof(t_type): %ld\n", sizeof(t_type));
-  printf("sizeof(t_content): %ld\n", sizeof(t_content));
+  printf("sizeof(t_data): %ld\n", sizeof(t_data));
   printf("sizeof(t_value): %ld\n", sizeof(t_value));
 
   printf(" -- runtime type -- \n");
-  printf("sizeof(t_object): %ld\n", sizeof(t_object));
+  printf("sizeof(t_ref): %ld\n", sizeof(t_ref));
   printf("sizeof(t_variable): %ld\n", sizeof(t_variable));
 
   printf(" -- type hierachy -- \n");
@@ -55,8 +54,7 @@ int main()
   printf("type_is(type_string, type_root): %hhu\n", type_is(type_string, type_root));
   printf("type_is(type_null, type_string): %hhu\n", type_is(type_null, type_string));
 
-  if (main_module != NULL)
-  {
+  if (main_module != NULL) {
     printf(" -- main module -- \n");
     main_module();
     printf(" -- end module -- \n");

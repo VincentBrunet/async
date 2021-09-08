@@ -101,7 +101,7 @@ typedef struct t_type {
   t_type** parent_array;
 } t_type;
 
-// Immutable value
+// Atomic real value
 typedef struct t_value {
   t_data data;
   t_type* type;
