@@ -24,13 +24,12 @@ export function parseVariable(
   browser.consume();
 
   // name (required)
-  let name: string | undefined;
   const tokenName = browser.peek();
   if (tokenName.kind !== TokenKind.Text) {
     return browser.impasse("Variable.Name");
   }
   browser.consume();
-  name = tokenName.str;
+  const name = tokenName.str;
 
   // type (optional)
   let type: AstType = {};

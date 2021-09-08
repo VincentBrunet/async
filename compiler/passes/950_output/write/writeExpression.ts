@@ -24,7 +24,7 @@ export function writeExpression(
   switch (astExpression.kind) {
     case AstExpressionKind.Identifier: {
       const astData = astExpression.data as AstIdentifier;
-      writeIdentifier(module, statement, astData);
+      writeIdentifier(statement, astData);
       break;
     }
     case AstExpressionKind.Literal: {

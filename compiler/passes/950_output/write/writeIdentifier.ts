@@ -1,6 +1,4 @@
-import { hash } from "../../../util/strings/hash.ts";
 import { AstIdentifier } from "../../../data/ast/AstIdentifier.ts";
-import { OutputModule } from "../util/OutputModule.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
 import { AstClosure } from "../../../data/ast/AstClosure.ts";
 import { AstReferenceKind } from "../../../data/ast/AstReference.ts";
@@ -8,7 +6,6 @@ import { AstParam } from "../../../data/ast/AstParam.ts";
 import { AstVariable } from "../../../data/ast/AstVariable.ts";
 
 export function writeIdentifier(
-  module: OutputModule,
   statement: OutputStatement,
   astIdentifier: AstIdentifier,
 ) {

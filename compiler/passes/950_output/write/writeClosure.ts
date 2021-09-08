@@ -1,13 +1,10 @@
-import { hash } from "../../../util/strings/hash.ts";
 import { AstClosure } from "../../../data/ast/AstClosure.ts";
-import { OutputModule } from "../util/OutputModule.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
 import { AstReferenceKind } from "../../../data/ast/AstReference.ts";
 import { AstParam } from "../../../data/ast/AstParam.ts";
 import { AstVariable } from "../../../data/ast/AstVariable.ts";
 
 export function writeClosure(
-  module: OutputModule,
   statement: OutputStatement,
   astClosure: AstClosure,
 ) {

@@ -29,7 +29,7 @@ export function writeObject(
   statement.pushPart(astObject.closures.length.toString());
   for (const astClosure of astObject.closures) {
     statement.pushPart(", ");
-    writeClosure(module, statement, astClosure);
+    writeClosure(statement, astClosure);
   }
   statement.pushPart(")");
 

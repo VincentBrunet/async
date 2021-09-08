@@ -5,7 +5,6 @@ import { OutputOrder } from "../util/OutputOrder.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
 import { writeBlock } from "./writeBlock.ts";
 import { writeClosure } from "./writeClosure.ts";
-import { writeIdentifier } from "./writeIdentifier.ts";
 
 let _id = 0;
 
@@ -32,7 +31,7 @@ export function writeFunction(
   statement.pushPart(astFunction.closures.length.toString());
   for (const astClosure of astFunction.closures) {
     statement.pushPart(", ");
-    writeClosure(module, statement, astClosure);
+    writeClosure(statement, astClosure);
   }
   statement.pushPart(")");
 

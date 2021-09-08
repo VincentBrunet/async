@@ -25,8 +25,6 @@ export function computeExpression(
       break;
     }
     case AstExpressionKind.Literal: {
-      const astData = astExpression.data as AstLiteral;
-      //computeLiteral(scope, astData);
       break;
     }
     case AstExpressionKind.Function: {
