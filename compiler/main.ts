@@ -21,7 +21,8 @@ const firstAst = convertTokensToAst(firstTokens);
 
 //console.log("firstAst - 0", stringify(firstAst));
 
-applyAstIdentifierResolve(firstAst);
+applyAstCaptureResolve(firstAst);
+applyAstReferenceResolve(firstAst);
 
 //console.log("firstAst - 1", stringify(firstAst));
 

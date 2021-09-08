@@ -1,12 +1,11 @@
 import { AstFunctionParam } from "../../../data/ast/AstFunction.ts";
 import { AstVariable } from "../../../data/ast/AstVariable.ts";
-import { ResolveDeclaration } from "./ResolveDeclaration.ts";
 
 export class ResolveScope {
   private closure: boolean;
   private parent?: ResolveScope;
 
-  private declarations = new Map<string, ResolveDeclaration>();
+  private references = new Map<string, AstReference>();
 
   constructor(closure: boolean, parent?: ResolveScope) {
     this.closure = closure;
@@ -16,7 +15,7 @@ export class ResolveScope {
   pushVariable(variable: AstVariable) {
     const name = variable.name;
     const type = variable.type;
-    this.pushDeclaration(name, {
+    this.pushReference(name, {
       name: name,
       type: type,
       variable: variable,
@@ -27,7 +26,7 @@ export class ResolveScope {
     const name = param.name;
     const type = param.type;
     if (name) {
-      this.pushDeclaration(name, {
+      this.pushReference(name, {
         name: name,
         type: type,
         param: param,
@@ -35,15 +34,15 @@ export class ResolveScope {
     }
   }
 
-  pushDeclaration(name: string, declaration: ResolveDeclaration) {
-    if (this.declarations.get(name)) {
+  pushReference(name: string, reference: AstReference) {
+    if (this.references.get(name)) {
       throw new Error("Already defined: " + name);
     }
-    this.declarations.set(name, declaration);
+    this.references.set(name, reference);
   }
 
-  findDeclaration(name: string): ResolveDeclaration | undefined {
-    return this.declarations.get(name);
+  findReference(name: string): AstReference | undefined {
+    return this.references.get(name);
   }
 
   getParent(): ResolveScope | undefined {

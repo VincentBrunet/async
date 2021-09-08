@@ -1,13 +1,9 @@
 import { AstBlock } from "./AstBlock.ts";
 import { AstType } from "./AstType.ts";
 
-export interface AstFunctionParam {
-  name?: string;
-  type: AstType;
-}
-
 export interface AstFunction {
-  params: Array<AstFunctionParam>;
+  params: Array<AstParam>;
   block?: AstBlock;
   return?: AstType;
+  closure?: Array<AstCapture>;
 }
