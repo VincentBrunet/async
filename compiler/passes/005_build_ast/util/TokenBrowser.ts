@@ -114,28 +114,48 @@ export class TokenBrowser {
 
   private fastForward() {
     while (true) {
-      let curr = this.readToken(0);
-      let next = this.readToken(1);
+      const curr = this.readToken(0);
+      const next = this.readToken(1);
       if (curr.kind === TokenKind.Whitespace) {
         this.increment();
       } else if (curr.str === "/" && next.str === "/") {
-        while (curr.str !== "\n" && curr.kind !== TokenKind.Invalid) {
-          this.increment();
-          curr = this.readToken(0);
-          next = this.readToken(1);
-        }
+        this.fastForwardLineComment();
       } else if (curr.str === "/" && next.str === "*") {
-        while (
-          curr.str !== "*" && next.str === "/" &&
-          curr.kind !== TokenKind.Invalid
-        ) {
-          this.increment();
-          curr = this.readToken(0);
-          next = this.readToken(1);
-        }
+        this.fastForwardBlockComment();
       } else {
         return;
       }
     }
+  }
+
+  private fastForwardLineComment() {
+    this.increment(); // consume first dash
+    this.increment(); // consume second dash
+    let it = this.readToken(0);
+    while (
+      it.str.indexOf("\n") === -1 &&
+      it.kind !== TokenKind.Invalid
+    ) {
+      this.increment();
+      it = this.readToken(0);
+    }
+    this.increment(); // consume line return
+  }
+
+  private fastForwardBlockComment() {
+    this.increment(); // consume dash
+    this.increment(); // consume dot
+    let curr = this.readToken(0);
+    let next = this.readToken(1);
+    while (
+      !(curr.str === "*" && next.str === "/") &&
+      curr.kind !== TokenKind.Invalid
+    ) {
+      this.increment();
+      curr = this.readToken(0);
+      next = this.readToken(1);
+    }
+    this.increment(); // consume dot
+    this.increment(); // consume dash
   }
 }

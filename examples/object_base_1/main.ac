@@ -1,6 +1,9 @@
 
 const toto = 42
 
+/**
+ * This object is commented
+ */
 const cl = object {
 
   const l = toto
