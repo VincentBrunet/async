@@ -26,30 +26,6 @@ export function parseExpression(
 ): AstExpression | TokenImpasse {
   const astImpasses = new Array<TokenImpasse>();
 
-  // Parenthesis
-  const astParenthesis = browser.recurse(parseParenthesis);
-  if (astParenthesis instanceof TokenImpasse) {
-    astImpasses.push(astParenthesis);
-  } else {
-    return astParenthesis;
-  }
-
-  // Function
-  const astFunction = browser.recurse(parseFunction);
-  if (astFunction instanceof TokenImpasse) {
-    astImpasses.push(astFunction);
-  } else {
-    return makeExpression(AstExpressionKind.Function, astFunction);
-  }
-
-  // Object
-  const astObject = browser.recurse(parseObject);
-  if (astObject instanceof TokenImpasse) {
-    astImpasses.push(astObject);
-  } else {
-    return makeExpression(AstExpressionKind.Object, astObject);
-  }
-
   // Lookup
   if (
     cutoff !== AstExpressionKind.Call && cutoff !== AstExpressionKind.Lookup
@@ -72,6 +48,22 @@ export function parseExpression(
     }
   }
 
+  // Function
+  const astFunction = browser.recurse(parseFunction);
+  if (astFunction instanceof TokenImpasse) {
+    astImpasses.push(astFunction);
+  } else {
+    return makeExpression(AstExpressionKind.Function, astFunction);
+  }
+
+  // Object
+  const astObject = browser.recurse(parseObject);
+  if (astObject instanceof TokenImpasse) {
+    astImpasses.push(astObject);
+  } else {
+    return makeExpression(AstExpressionKind.Object, astObject);
+  }
+
   // Literal
   const astLiteral = browser.recurse(parseLiteral);
   if (astLiteral instanceof TokenImpasse) {
@@ -86,6 +78,14 @@ export function parseExpression(
     astImpasses.push(astIdentifier);
   } else {
     return makeExpression(AstExpressionKind.Identifier, astIdentifier);
+  }
+
+  // Parenthesis
+  const astParenthesis = browser.recurse(parseParenthesis);
+  if (astParenthesis instanceof TokenImpasse) {
+    astImpasses.push(astParenthesis);
+  } else {
+    return astParenthesis;
   }
 
   return browser.impasse("Expression", astImpasses);

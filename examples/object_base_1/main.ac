@@ -3,7 +3,7 @@ const toto = 42
 
 const cl = object {
 
-  const l = toto;
+  const l = toto
 
   mutable t = 42
 
@@ -14,5 +14,6 @@ const cl = object {
   const lol = fn {}
 
 }
-
-const obj = cl.l
+//
+const obj = (cl.l)()
+// const obj2 = cl.hello()

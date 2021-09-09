@@ -1,6 +1,6 @@
-#include <object_variable.h>
+#include <object_read.h>
 
-int object_variable_compare(const void *a, const void *b) {
+int object_read_compare(const void *a, const void *b) {
   t_u64 keyA = ((t_variable *)a)->key;
   t_u64 keyB = ((t_variable *)b)->key;
   if (keyA == keyB) {
@@ -12,7 +12,7 @@ int object_variable_compare(const void *a, const void *b) {
   }
 }
 
-t_variable *object_variable(t_value *value, t_u64 key) {
+t_ref *object_read(t_value *value, t_u64 key) {
   t_variable dummy;
   dummy.key = key;
   void *result = bsearch(
@@ -20,6 +20,6 @@ t_variable *object_variable(t_value *value, t_u64 key) {
       value->data.object.variables,
       value->data.object.size,
       sizeof(t_variable),
-      object_variable_compare);
-  return ((t_variable *)result);
+      object_read_compare);
+  return ((t_ref *)result);
 }

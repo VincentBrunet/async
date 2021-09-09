@@ -8,7 +8,7 @@ export function writeLookup(
   statement: OutputStatement,
   astLookup: AstLookup,
 ) {
-  statement.pushPart("object_variable(");
+  statement.pushPart("object_read(");
   writeExpression(module, statement, astLookup.object);
   statement.pushPart(", ");
   statement.pushPart(astLookup.hash);

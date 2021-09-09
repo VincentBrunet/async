@@ -4,6 +4,8 @@ import { TokenKind } from "../../../data/token/Token.ts";
 import { TokenImpasse } from "./TokenImpasse.ts";
 
 export class TokenBrowser {
+  private depth = 0;
+
   private tokens: Array<Token>;
   private indexes: Array<number>;
 
@@ -14,42 +16,41 @@ export class TokenBrowser {
   }
 
   peek() {
-    return this.getCurrentToken();
+    return this.readToken(0);
   }
+
   consume() {
     this.increment();
     this.fastForward();
   }
-
-  private id = 0;
 
   recurse<T, V>(
     recurser: (stack: TokenBrowser, param?: V) => T | TokenImpasse,
     param?: V,
   ): T | TokenImpasse {
     this.indexes.push(this.getCurrentIndex());
-    this.id++;
+    this.depth++;
     /*
     console.log(
-      repeat("  ", this.id),
+      repeat("  ", this.depth),
       "+",
       recurser.name,
       "TRY",
-      this.getCurrentToken().str,
+      this.readToken().str,
     );
     */
     const ast = recurser(this, param);
     const success = !(ast instanceof TokenImpasse);
     /*
     console.log(
-      repeat("  ", this.id),
+      repeat("  ", this.depth),
       "-",
       recurser.name,
       success ? "SUCCESS" : "FAIL",
-      this.getCurrentToken().str,
+      this.readToken().str,
     );
     */
-    this.id--;
+    this.depth--;
     const after = this.indexes.pop();
     if (success && after !== undefined) {
       this.indexes[this.getCurrentHeight()] = after;
@@ -89,12 +90,12 @@ export class TokenBrowser {
   }
 
   private increment() {
-    this.indexes[this.getCurrentHeight()] =
-      this.indexes[this.getCurrentHeight()] + 1;
+    const height = this.getCurrentHeight();
+    this.indexes[height] = this.indexes[height] + 1;
   }
 
-  private getCurrentToken() {
-    const token = this.tokens[this.getCurrentIndex()];
+  private readToken(offset: number) {
+    const token = this.tokens[this.getCurrentIndex() + offset];
     if (token === undefined) {
       return {
         kind: TokenKind.Invalid,
@@ -103,6 +104,7 @@ export class TokenBrowser {
     }
     return token;
   }
+
   private getCurrentIndex() {
     return this.indexes[this.getCurrentHeight()];
   }
@@ -112,9 +114,25 @@ export class TokenBrowser {
 
   private fastForward() {
     while (true) {
-      const token = this.getCurrentToken();
-      if (token.kind === TokenKind.Whitespace) {
+      let curr = this.readToken(0);
+      let next = this.readToken(1);
+      if (curr.kind === TokenKind.Whitespace) {
         this.increment();
+      } else if (curr.str === "/" && next.str === "/") {
+        while (curr.str !== "\n" && curr.kind !== TokenKind.Invalid) {
+          this.increment();
+          curr = this.readToken(0);
+          next = this.readToken(1);
+        }
+      } else if (curr.str === "/" && next.str === "*") {
+        while (
+          curr.str !== "*" && next.str === "/" &&
+          curr.kind !== TokenKind.Invalid
+        ) {
+          this.increment();
+          curr = this.readToken(0);
+          next = this.readToken(1);
+        }
       } else {
         return;
       }
