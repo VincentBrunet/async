@@ -57,7 +57,7 @@ export function parseVariable(
     value = astValue;
   }
 
-  // unique hash name
+  // hashed name
   const sha256 = createHash("sha256").update(name).toString();
   const hash = "0x" + sha256.slice(0, 16).toUpperCase();
 

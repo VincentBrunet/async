@@ -5,12 +5,14 @@ import {
 } from "../../../data/ast/AstExpression.ts";
 import { AstFunction } from "../../../data/ast/AstFunction.ts";
 import { AstIdentifier } from "../../../data/ast/AstIdentifier.ts";
+import { AstLookup } from "../../../data/ast/AstLookup.ts";
 import { AstObject } from "../../../data/ast/AstObject.ts";
 import { AstOperation } from "../../../data/ast/AstOperation.ts";
 import { ResolveScope } from "../util/ResolveScope.ts";
 import { computeCall } from "./computeCall.ts";
 import { computeFunction } from "./computeFunction.ts";
 import { computeIdentifier } from "./computeIdentifier.ts";
+import { computeLookup } from "./computeLookup.ts";
 import { computeObject } from "./computeObject.ts";
 
 export function computeExpression(
@@ -29,6 +31,11 @@ export function computeExpression(
     case AstExpressionKind.Function: {
       const astData = astExpression.data as AstFunction;
       computeFunction(scope, astData);
+      break;
+    }
+    case AstExpressionKind.Lookup: {
+      const astData = astExpression.data as AstLookup;
+      computeLookup(scope, astData);
       break;
     }
     case AstExpressionKind.Call: {

@@ -31,6 +31,11 @@ export function computeExpression(
       computeFunction(scope, astData);
       break;
     }
+    case AstExpressionKind.Lookup: {
+      const astData = astExpression.data as AstLookup;
+      computeLookup(scope, astData);
+      break;
+    }
     case AstExpressionKind.Call: {
       const astData = astExpression.data as AstCall;
       computeCall(scope, astData);

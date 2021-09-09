@@ -9,6 +9,7 @@ import { parseCall } from "./parseCall.ts";
 import { parseFunction } from "./parseFunction.ts";
 import { parseIdentifier } from "./parseIdentifier.ts";
 import { parseLiteral } from "./parseLiteral.ts";
+import { parseLookup } from "./parseLookup.ts";
 import { parseObject } from "./parseObject.ts";
 import { parseParenthesis } from "./parseParenthesis.ts";
 
@@ -47,6 +48,18 @@ export function parseExpression(
     astImpasses.push(astObject);
   } else {
     return makeExpression(AstExpressionKind.Object, astObject);
+  }
+
+  // Lookup
+  if (
+    cutoff !== AstExpressionKind.Call && cutoff !== AstExpressionKind.Lookup
+  ) {
+    const astLookup = browser.recurse(parseLookup);
+    if (astLookup instanceof TokenImpasse) {
+      astImpasses.push(astLookup);
+    } else {
+      return makeExpression(AstExpressionKind.Lookup, astLookup);
+    }
   }
 
   // Call

@@ -6,6 +6,7 @@ import {
 import { AstFunction } from "../../../data/ast/AstFunction.ts";
 import { AstIdentifier } from "../../../data/ast/AstIdentifier.ts";
 import { AstLiteral } from "../../../data/ast/AstLiteral.ts";
+import { AstLookup } from "../../../data/ast/AstLookup.ts";
 import { AstObject } from "../../../data/ast/AstObject.ts";
 import { AstOperation } from "../../../data/ast/AstOperation.ts";
 import { OutputModule } from "../util/OutputModule.ts";
@@ -14,6 +15,7 @@ import { writeCall } from "./writeCall.ts";
 import { writeFunction } from "./writeFunction.ts";
 import { writeIdentifier } from "./writeIdentifier.ts";
 import { writeLiteral } from "./writeLiteral.ts";
+import { writeLookup } from "./writeLookup.ts";
 import { writeObject } from "./writeObject.ts";
 
 export function writeExpression(
@@ -35,6 +37,11 @@ export function writeExpression(
     case AstExpressionKind.Function: {
       const astData = astExpression.data as AstFunction;
       writeFunction(module, statement, astData);
+      break;
+    }
+    case AstExpressionKind.Lookup: {
+      const astData = astExpression.data as AstLookup;
+      writeLookup(module, statement, astData);
       break;
     }
     case AstExpressionKind.Call: {
