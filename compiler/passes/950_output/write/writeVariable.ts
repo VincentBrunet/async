@@ -3,7 +3,6 @@ import { OutputScope } from "../util/OutputScope.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputOrder } from "../util/OutputOrder.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
-import { OutputVariable } from "../util/OutputVariable.ts";
 import { writeExpression } from "./writeExpression.ts";
 
 export function writeVariable(
@@ -11,7 +10,7 @@ export function writeVariable(
   scope: OutputScope,
   astVariable: AstVariable,
 ) {
-  scope.pushVariable(new OutputVariable(astVariable.name));
+  scope.pushVariable(astVariable);
 
   if (astVariable.value) {
     const assignment = new OutputStatement();

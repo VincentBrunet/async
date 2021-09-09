@@ -16,11 +16,11 @@ t_value *f_0x1(t_ref **closure) {
 
 t_value *module_load() {
   // Variables
-  t_value *module = object_make_x(type_object, 3, -892396981, 97, 98);
+  t_value *module = object_make_x(type_object, 3, 0x3E23E8160039594A, 0x63D42D26156FCC76, 0xCA978112CA1BBDCA);
   t_variable *variables = module->data.object.variables;
-  t_ref *__stdout = &(variables[0]) /*-892396981*/;
-  t_ref *__a = &(variables[1]) /*97*/;
-  t_ref *__b = &(variables[2]) /*98*/;
+  t_ref *__b = &(variables[0]);
+  t_ref *__stdout = &(variables[1]);
+  t_ref *__a = &(variables[2]);
   // Logic
   __stdout->value = number_i32_make(42);
   __a->value = function_make_x(type_function, &f_0x0, 1, __stdout);

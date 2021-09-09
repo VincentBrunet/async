@@ -2,10 +2,10 @@
 
 t_value *o_0x0(t_ref **closure) {
   // Variables
-  t_value *object = object_make_x(type_object, 2, 107337, 3094754);
+  t_value *object = object_make_x(type_object, 2, 0x07123E1F482356C4, 0x4FC75659C5DAF27D);
   t_variable *variables = object->data.object.variables;
-  t_ref *__lol = &(variables[0]) /*107337*/;
-  t_ref *__dudu = &(variables[1]) /*3094754*/;
+  t_ref *__lol = &(variables[0]);
+  t_ref *__dudu = &(variables[1]);
   // Logic
   __dudu->value = number_i32_make(32);
   __lol->value = closure[0]->value;
@@ -32,15 +32,15 @@ t_value *f_0x0(t_ref **closure, t_value *__num) {
 
 t_value *module_load() {
   // Variables
-  t_value *module = object_make_x(type_object, 7, -1034389067, 3118, 3119, 3120, 109815, 99162322, 113318802);
+  t_value *module = object_make_x(type_object, 7, 0x19A0FC8FD60BD0E9, 0x2CF24DBA5FB0A30E, 0x486EA46224D1BB4F, 0x772A5FB04F9BAD38, 0x7C1C97DF17C06692, 0x9C0ABE51C6E6655D, 0xD0F631CA1DDBA8DB);
   t_variable *variables = module->data.object.variables;
-  t_ref *__numHex = &(variables[0]) /*-1034389067*/;
-  t_ref *__c1 = &(variables[1]) /*3118*/;
-  t_ref *__c2 = &(variables[2]) /*3119*/;
-  t_ref *__c3 = &(variables[3]) /*3120*/;
-  t_ref *__obj = &(variables[4]) /*109815*/;
-  t_ref *__hello = &(variables[5]) /*99162322*/;
-  t_ref *__world = &(variables[6]) /*113318802*/;
+  t_ref *__numHex = &(variables[0]);
+  t_ref *__hello = &(variables[1]);
+  t_ref *__world = &(variables[2]);
+  t_ref *__obj = &(variables[3]);
+  t_ref *__c3 = &(variables[4]);
+  t_ref *__c2 = &(variables[5]);
+  t_ref *__c1 = &(variables[6]);
   // Logic
   __numHex->value = number_i32_make(255);
   __c1->value = value_true;

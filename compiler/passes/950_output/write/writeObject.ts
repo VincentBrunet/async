@@ -55,7 +55,7 @@ export function writeObject(
   object.pushPart(variables.length.toString());
   for (const variable of variables) {
     object.pushPart(", ");
-    object.pushPart(variable.getHash().toString());
+    object.pushPart(variable.hash);
   }
   object.pushPart(")");
   scope.pushStatement(OutputOrder.Variables, object);
@@ -71,15 +71,11 @@ export function writeObject(
     const named = new OutputStatement();
     named.pushPart("t_ref *");
     named.pushPart("__");
-    named.pushPart(variable.getName());
+    named.pushPart(variable.name);
     named.pushPart(" = ");
     named.pushPart("&(variables[");
     named.pushPart(i.toString());
     named.pushPart("])");
-    named.pushPart(" ");
-    named.pushPart("/*");
-    named.pushPart(variable.getHash().toString());
-    named.pushPart("*/");
     scope.pushStatement(OutputOrder.Variables, named);
   }
 

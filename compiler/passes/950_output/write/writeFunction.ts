@@ -54,7 +54,7 @@ export function writeFunction(
   for (const variable of variables) {
     const declaration = new OutputStatement();
     declaration.pushPart("t_ref *__");
-    declaration.pushPart(variable.getName());
+    declaration.pushPart(variable.name);
     declaration.pushPart(" = ");
     declaration.pushPart("ref_make(NULL)");
     scope.pushStatement(OutputOrder.Variables, declaration);

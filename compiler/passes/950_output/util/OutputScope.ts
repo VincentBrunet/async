@@ -1,12 +1,12 @@
 import { OutputOrder } from "./OutputOrder.ts";
 import { OutputStatement } from "./OutputStatement.ts";
-import { OutputVariable } from "./OutputVariable.ts";
 import { MapArray } from "../../../util/data/MapArray.ts";
+import { AstVariable } from "../../../data/ast/AstVariable.ts";
 
 export class OutputScope {
   private name: string;
   private params = new Array<string>();
-  private variables = new Array<OutputVariable>();
+  private variables = new Array<AstVariable>();
   private statements = new MapArray<OutputOrder, OutputStatement>();
 
   constructor(
@@ -19,7 +19,7 @@ export class OutputScope {
     this.params.push(param);
   }
 
-  pushVariable(variable: OutputVariable) {
+  pushVariable(variable: AstVariable) {
     this.variables.push(variable);
   }
 
@@ -27,9 +27,15 @@ export class OutputScope {
     this.statements.push(order, statement);
   }
 
-  readVariables(): Array<OutputVariable> {
-    this.variables.sort((a: OutputVariable, b: OutputVariable) => {
-      return a.getHash() - b.getHash();
+  readVariables(): Array<AstVariable> {
+    this.variables.sort((a: AstVariable, b: AstVariable) => {
+      if (a.hash < b.hash) {
+        return -1;
+      } else if (a.hash > b.hash) {
+        return 1;
+      } else {
+        return 0;
+      }
     });
     return this.variables;
   }

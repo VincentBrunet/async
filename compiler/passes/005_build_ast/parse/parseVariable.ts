@@ -1,3 +1,5 @@
+import { createHash } from "https://deno.land/std@0.106.0/hash/mod.ts";
+
 import { Keyword } from "../../../constants/Keyword.ts";
 import { TokenKind } from "../../../data/token/Token.ts";
 import { AstVariable } from "../../../data/ast/AstVariable.ts";
@@ -55,10 +57,15 @@ export function parseVariable(
     value = astValue;
   }
 
+  // unique hash name
+  const sha256 = createHash("sha256").update(name).toString();
+  const hash = "0x" + sha256.slice(0, 16).toUpperCase();
+
   // Done
   return {
     mutable: mutable,
     name: name,
+    hash: hash,
     type: type,
     value: value,
   };
