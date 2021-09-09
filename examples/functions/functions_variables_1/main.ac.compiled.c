@@ -22,7 +22,7 @@ t_value *module_load() {
   t_ref *__stdout = &(variables[1]);
   t_ref *__a = &(variables[2]);
   // Logic
-  __stdout->value = number_i32_make(42);
+  __stdout->value = i32_make(42);
   __a->value = function_make_x(type_function, &f_0x0, 1, __stdout);
   __b->value = function_make_x(type_function, &f_0x1, 2, __stdout, __a);
   function_call_0(__a->value);

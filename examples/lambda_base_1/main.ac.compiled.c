@@ -7,7 +7,7 @@ t_value *o_0x0(t_ref **closure) {
   t_ref *__lol = &(variables[0]);
   t_ref *__dudu = &(variables[1]);
   // Logic
-  __dudu->value = number_i32_make(32);
+  __dudu->value = i32_make(32);
   __lol->value = closure[0]->value;
   // After
   return object;
@@ -42,14 +42,14 @@ t_value *module_load() {
   t_ref *__c2 = &(variables[5]);
   t_ref *__c1 = &(variables[6]);
   // Logic
-  __numHex->value = number_i32_make(255);
+  __numHex->value = i32_make(255);
   __c1->value = value_true;
   __c2->value = value_false;
   __c3->value = value_null;
   __obj->value = object_call_x(&o_0x0, 1, __c3);
   __hello->value = function_make_x(type_function, &f_0x0, 2, __hello, __c3);
   __world->value = __hello->value;
-  function_call_1(__world->value, number_i32_make(32));
+  function_call_1(__world->value, i32_make(32));
   // After
   return module;
 }

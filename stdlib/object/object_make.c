@@ -4,9 +4,7 @@
 t_value *object_make(t_type *type, t_u32 size) {
   t_value *value = value_make(type);
   value->data.object.size = size;
-  if (size > 0) {
-    value->data.object.variables = calloc(size, sizeof(t_variable));
-  }
+  value->data.object.variables = calloc(size, sizeof(t_variable));
   return value;
 }
 

@@ -11,14 +11,14 @@ export function writeLiteral(
     // Bool
     case AstLiteralKind.Boolean:
       if (astLiteral.data === "false") {
-        statement.pushPart("value_false");
+        statement.pushPart("boolean_make(false)");
       } else {
-        statement.pushPart("value_true");
+        statement.pushPart("boolean_make(true)");
       }
       break;
     // Null
     case AstLiteralKind.Null:
-      statement.pushPart("value_null");
+      statement.pushPart("null_make()");
       break;
     // Number
     case AstLiteralKind.Integer8:
@@ -31,7 +31,7 @@ export function writeLiteral(
     case AstLiteralKind.Unsigned64:
     case AstLiteralKind.Float32:
     case AstLiteralKind.Float64:
-      statement.pushPart("number_i32_make(");
+      statement.pushPart("i32_make(");
       statement.pushPart(astLiteral.data);
       statement.pushPart(")");
       break;
