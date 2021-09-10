@@ -2,14 +2,14 @@
 
 t_value *f_0x0(t_ref **closure, t_value *__$0) {
   // Logic
-  function_call_1(closure[0]->value, value_true);
+  function_call_1(closure[0]->value, boolean_make(TRUE));
   // After
   return value_null;
 }
 
 t_value *f_0x1(t_ref **closure) {
   // Logic
-  function_call_2(closure[0]->value, value_true, closure[1]->value);
+  function_call_2(closure[0]->value, boolean_make(TRUE), closure[1]->value);
   // After
   return value_null;
 }

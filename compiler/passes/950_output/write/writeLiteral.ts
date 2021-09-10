@@ -11,9 +11,9 @@ export function writeLiteral(
     // Bool
     case AstLiteralKind.Boolean:
       if (astLiteral.data === "false") {
-        statement.pushPart("boolean_make(false)");
+        statement.pushPart("boolean_make(FALSE)");
       } else {
-        statement.pushPart("boolean_make(true)");
+        statement.pushPart("boolean_make(TRUE)");
       }
       break;
     // Null
