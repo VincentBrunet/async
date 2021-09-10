@@ -1,14 +1,13 @@
 import { createHash } from "https://deno.land/std@0.106.0/hash/mod.ts";
-
 import { Keyword } from "../../../constants/Keyword.ts";
-import { TokenKind } from "../../../data/token/Token.ts";
+import { AstExpression } from "../../../data/ast/AstExpression.ts";
+import { AstType } from "../../../data/ast/AstType.ts";
 import { AstVariable } from "../../../data/ast/AstVariable.ts";
+import { TokenKind } from "../../../data/token/Token.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseExpression } from "./parseExpression.ts";
 import { parseType } from "./parseType.ts";
-import { AstType } from "../../../data/ast/AstType.ts";
-import { AstExpression } from "../../../data/ast/AstExpression.ts";
 
 export function parseVariable(
   browser: TokenBrowser,
@@ -35,13 +34,8 @@ export function parseVariable(
 
   // type (optional)
   let type: AstType = {};
-  const delimType = browser.peek();
-  if (delimType.str === ":") {
-    browser.consume();
-    const astType = browser.recurse(parseType);
-    if (astType instanceof TokenImpasse) {
-      return browser.impasse("Variable.Type", [astType]);
-    }
+  const astType = browser.recurse(parseType);
+  if (!(astType instanceof TokenImpasse)) {
     type = astType;
   }
 
