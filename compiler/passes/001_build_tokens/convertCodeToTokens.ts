@@ -20,13 +20,19 @@ const specialSet = new Set([
 interface PartialToken {
   kind: TokenKind;
   chars: Array<string>;
+  indexBegin: number;
+  columnBegin: number;
+  lineBegin: number;
 }
 
 export function convertCodeToTokens(code: string): Array<Token> {
   const tokens = new Array<Token>();
+  let index = 0;
+  let column = 0;
+  let line = 0;
   let currentToken: PartialToken | undefined = undefined;
-  for (let idx = 0; idx < code.length; idx++) {
-    const char = code.charAt(idx);
+  for (index = 0; index < code.length; index++) {
+    const char = code.charAt(index);
     let kind;
     if (invalidSet.has(char)) {
       kind = TokenKind.Invalid;
@@ -46,6 +52,14 @@ export function convertCodeToTokens(code: string): Array<Token> {
         tokens.push({
           kind: currentToken.kind,
           str: currentToken.chars.join(""),
+          location: {
+            indexBegin: currentToken.indexBegin,
+            indexEnd: index,
+            columnBegin: currentToken.columnBegin,
+            columnEnd: column,
+            lineBegin: currentToken.lineBegin,
+            lineEnd: line,
+          },
         });
         currentToken = undefined;
       }
@@ -54,14 +68,32 @@ export function convertCodeToTokens(code: string): Array<Token> {
       currentToken = {
         kind: kind,
         chars: [],
+        indexBegin: index,
+        columnBegin: column,
+        lineBegin: line,
       };
     }
     currentToken.chars.push(char);
+    if (char === "\n") {
+      line = line + 1;
+      column = 0;
+    }
+    if (char === "\r") {
+      column = 0;
+    }
   }
   if (currentToken !== undefined) {
     tokens.push({
       kind: currentToken.kind,
       str: currentToken.chars.join(""),
+      location: {
+        indexBegin: currentToken.indexBegin,
+        indexEnd: index - 1,
+        columnBegin: currentToken.columnBegin,
+        columnEnd: column,
+        lineBegin: currentToken.lineBegin,
+        lineEnd: line,
+      },
     });
   }
   return tokens;
