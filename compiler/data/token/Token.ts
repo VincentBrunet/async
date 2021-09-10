@@ -5,13 +5,15 @@ export enum TokenKind {
   Invalid = "invalid",
 }
 
+export interface TokenRange {
+  begin: number;
+  end: number;
+}
+
 export interface TokenLocation {
-  indexBegin: number;
-  indexEnd: number;
-  columnBegin: number;
-  columnEnd: number;
-  lineBegin: number;
-  lineEnd: number;
+  index: TokenRange;
+  column: TokenRange;
+  line: TokenRange;
 }
 
 export interface Token {

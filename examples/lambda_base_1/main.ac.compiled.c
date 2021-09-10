@@ -43,9 +43,9 @@ t_value *module_load() {
   t_ref *__c1 = &(variables[6]);
   // Logic
   __numHex->value = i32_make(255);
-  __c1->value = value_true;
-  __c2->value = value_false;
-  __c3->value = value_null;
+  __c1->value = boolean_make(true);
+  __c2->value = boolean_make(false);
+  __c3->value = null_make();
   __obj->value = object_call_x(&o_0x0, 1, __c3);
   __hello->value = function_make_x(type_function, &f_0x0, 2, __hello, __c3);
   __world->value = __hello->value;

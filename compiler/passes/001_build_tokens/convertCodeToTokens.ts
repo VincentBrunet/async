@@ -25,14 +25,51 @@ interface PartialToken {
   lineBegin: number;
 }
 
+function makeToken(
+  partialToken: PartialToken,
+  finalIndex: number,
+  finalColumn: number,
+  finalLine: number,
+) {
+  return {
+    kind: partialToken.kind,
+    str: partialToken.chars.join(""),
+    location: {
+      index: {
+        begin: partialToken.indexBegin,
+        end: finalIndex,
+      },
+      column: {
+        begin: partialToken.columnBegin,
+        end: finalColumn,
+      },
+      line: {
+        begin: partialToken.lineBegin,
+        end: finalLine,
+      },
+    },
+  };
+}
+
+/**
+ * Convert a code file into a token array
+ */
 export function convertCodeToTokens(code: string): Array<Token> {
   const tokens = new Array<Token>();
+
+  // location counters
   let index = 0;
   let column = 0;
   let line = 0;
-  let currentToken: PartialToken | undefined = undefined;
-  for (index = 0; index < code.length; index++) {
-    const char = code.charAt(index);
+
+  // current token being parsed
+  let partialToken: PartialToken | undefined = undefined;
+
+  // loop over all characters of the code
+  for (let i = 0; i < code.length; i++) {
+    const char = code.charAt(i);
+
+    // Find the kind of token this character belong to
     let kind;
     if (invalidSet.has(char)) {
       kind = TokenKind.Invalid;
@@ -43,29 +80,25 @@ export function convertCodeToTokens(code: string): Array<Token> {
     } else {
       kind = TokenKind.Text;
     }
-    if (currentToken !== undefined) {
+
+    // If we were already parsing a token, we may consider closing it
+    if (partialToken !== undefined) {
       if (
-        currentToken.kind !== kind ||
-        kind === TokenKind.Special ||
-        char === "\n"
+        partialToken.kind !== kind ||
+        kind === TokenKind.Special
       ) {
-        tokens.push({
-          kind: currentToken.kind,
-          str: currentToken.chars.join(""),
-          location: {
-            indexBegin: currentToken.indexBegin,
-            indexEnd: index,
-            columnBegin: currentToken.columnBegin,
-            columnEnd: column,
-            lineBegin: currentToken.lineBegin,
-            lineEnd: line,
-          },
-        });
-        currentToken = undefined;
+        tokens.push(makeToken(partialToken, index, column, line));
+        partialToken = undefined;
       }
     }
-    if (currentToken === undefined) {
-      currentToken = {
+
+    // Increment location counters
+    index = index + 1;
+    column = column + 1;
+
+    // If we don't have a token opened yet, open one
+    if (partialToken === undefined) {
+      partialToken = {
         kind: kind,
         chars: [],
         indexBegin: index,
@@ -73,28 +106,21 @@ export function convertCodeToTokens(code: string): Array<Token> {
         lineBegin: line,
       };
     }
-    currentToken.chars.push(char);
+
+    // Add the current character to the currently parsed token
+    partialToken.chars.push(char);
+
+    // If we just line-returned, update location counters
     if (char === "\n") {
       line = line + 1;
       column = 0;
     }
-    if (char === "\r") {
-      column = 0;
-    }
   }
-  if (currentToken !== undefined) {
-    tokens.push({
-      kind: currentToken.kind,
-      str: currentToken.chars.join(""),
-      location: {
-        indexBegin: currentToken.indexBegin,
-        indexEnd: index - 1,
-        columnBegin: currentToken.columnBegin,
-        columnEnd: column,
-        lineBegin: currentToken.lineBegin,
-        lineEnd: line,
-      },
-    });
+
+  // If we still have an open token at the end of the parsing, close it
+  if (partialToken !== undefined) {
+    tokens.push(makeToken(partialToken, index, column, line));
   }
+
   return tokens;
 }
