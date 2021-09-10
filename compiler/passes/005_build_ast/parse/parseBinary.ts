@@ -1,16 +1,16 @@
 import { Keyword } from "../../../constants/Keyword.ts";
-import { AstOperation } from "../../../data/ast/AstOperation.ts";
+import { AstBinary } from "../../../data/ast/AstBinary.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseExpression } from "./parseExpression.ts";
 
-export function parseOperation(
+export function parseBinary(
   browser: TokenBrowser,
-): AstOperation | TokenImpasse {
+): AstBinary | TokenImpasse {
   // left
   const astExpressionLeft = browser.recurse(parseExpression);
   if (astExpressionLeft instanceof TokenImpasse) {
-    return browser.impasse("Operation.Left", [astExpressionLeft]);
+    return browser.impasse("Binary.Left", [astExpressionLeft]);
   }
   // operator
   const operator = browser.peek();
@@ -23,12 +23,12 @@ export function parseOperation(
   ) {
     browser.consume();
   } else {
-    return browser.impasse("Operation.Operator");
+    return browser.impasse("Binary.Operator");
   }
   // right
   const astExpressionRight = browser.recurse(parseExpression);
   if (astExpressionRight instanceof TokenImpasse) {
-    return browser.impasse("Operation.Right", [astExpressionRight]);
+    return browser.impasse("Binary.Right", [astExpressionRight]);
   }
   // done
   return {

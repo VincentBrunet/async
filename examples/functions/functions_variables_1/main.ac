@@ -9,5 +9,15 @@ const b = fn {
   stdout(true, a)
 }
 
+const val = do {
+  /*
+  if (a > b) {
+    return 42
+  }
+  */
+  const totoA = a
+  const totoB = b
+}
+
 a()
 b()

@@ -1,4 +1,6 @@
+import { AstBinary } from "../../../data/ast/AstBinary.ts";
 import { AstCall } from "../../../data/ast/AstCall.ts";
+import { AstDo } from "../../../data/ast/AstDo.ts";
 import {
   AstExpression,
   AstExpressionKind,
@@ -8,15 +10,18 @@ import { AstIdentifier } from "../../../data/ast/AstIdentifier.ts";
 import { AstLiteral } from "../../../data/ast/AstLiteral.ts";
 import { AstLookup } from "../../../data/ast/AstLookup.ts";
 import { AstObject } from "../../../data/ast/AstObject.ts";
-import { AstOperation } from "../../../data/ast/AstOperation.ts";
+import { AstUnary } from "../../../data/ast/AstUnary.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
+import { writeBinary } from "./writeBinary.ts";
 import { writeCall } from "./writeCall.ts";
+import { writeDo } from "./writeDo.ts";
 import { writeFunction } from "./writeFunction.ts";
 import { writeIdentifier } from "./writeIdentifier.ts";
 import { writeLiteral } from "./writeLiteral.ts";
 import { writeLookup } from "./writeLookup.ts";
 import { writeObject } from "./writeObject.ts";
+import { writeUnary } from "./writeUnary.ts";
 
 export function writeExpression(
   module: OutputModule,
@@ -54,13 +59,19 @@ export function writeExpression(
       writeObject(module, statement, astData);
       break;
     }
-    case AstExpressionKind.Operation: {
-      const astData = astExpression.data as AstOperation;
-      statement.pushPart("(");
-      writeExpression(module, statement, astData.left);
-      statement.pushPart(astData.operator);
-      writeExpression(module, statement, astData.right);
-      statement.pushPart(")");
+    case AstExpressionKind.Do: {
+      const astData = astExpression.data as AstDo;
+      writeDo(module, statement, astData);
+      break;
+    }
+    case AstExpressionKind.Unary: {
+      const astData = astExpression.data as AstUnary;
+      writeUnary(module, statement, astData);
+      break;
+    }
+    case AstExpressionKind.Binary: {
+      const astData = astExpression.data as AstBinary;
+      writeBinary(module, statement, astData);
       break;
     }
   }

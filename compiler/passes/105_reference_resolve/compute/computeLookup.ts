@@ -6,5 +6,5 @@ export function computeLookup(
   scope: ResolveScope,
   astLookup: AstLookup,
 ) {
-  computeExpression(scope, astLookup.object);
+  computeExpression(scope, astLookup.expression);
 }

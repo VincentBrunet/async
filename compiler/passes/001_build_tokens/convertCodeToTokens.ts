@@ -27,9 +27,9 @@ interface PartialToken {
 
 function makeToken(
   partialToken: PartialToken,
-  finalIndex: number,
-  finalColumn: number,
-  finalLine: number,
+  indexEnd: number,
+  columnEnd: number,
+  lineEnd: number,
 ) {
   return {
     kind: partialToken.kind,
@@ -37,15 +37,15 @@ function makeToken(
     location: {
       index: {
         begin: partialToken.indexBegin,
-        end: finalIndex,
+        end: indexEnd,
       },
       column: {
         begin: partialToken.columnBegin,
-        end: finalColumn,
+        end: columnEnd,
       },
       line: {
         begin: partialToken.lineBegin,
-        end: finalLine,
+        end: lineEnd,
       },
     },
   };
@@ -122,5 +122,6 @@ export function convertCodeToTokens(code: string): Array<Token> {
     tokens.push(makeToken(partialToken, index, column, line));
   }
 
+  // done
   return tokens;
 }

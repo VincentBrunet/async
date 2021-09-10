@@ -11,9 +11,12 @@ export function parseLookup(
   browser: TokenBrowser,
 ): AstLookup | TokenImpasse {
   // object // TODO
-  const astObject = browser.recurse(parseExpression, AstExpressionKind.Lookup);
-  if (astObject instanceof TokenImpasse) {
-    return browser.impasse("Lookup.Object", [astObject]);
+  const astExpression = browser.recurse(
+    parseExpression,
+    AstExpressionKind.Lookup,
+  );
+  if (astExpression instanceof TokenImpasse) {
+    return browser.impasse("Lookup.Object", [astExpression]);
   }
   // dot (required)
   const delim = browser.peek();
@@ -35,7 +38,7 @@ export function parseLookup(
 
   // done
   return {
-    object: astObject,
+    expression: astExpression,
     name: name,
     hash: hash,
   };

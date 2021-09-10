@@ -1,10 +1,9 @@
+import { getConfig } from "./command/getConfig.ts";
 import { convertCodeToTokens } from "./passes/001_build_tokens/convertCodeToTokens.ts";
 import { convertTokensToAst } from "./passes/005_build_ast/convertTokensToAst.ts";
 import { applyAstClosureResolve } from "./passes/104_closure_resolve/applyAstClosureResolve.ts";
 import { applyAstReferenceResolve } from "./passes/105_reference_resolve/applyAstReferenceResolve.ts";
 import { convertAstToOutputModule } from "./passes/950_output/convertAstToOutputModule.ts";
-import { stringify } from "./util/stringify.ts";
-import { getConfig } from "./wrappers/getConfig.ts";
 
 const files = (await getConfig()).files;
 

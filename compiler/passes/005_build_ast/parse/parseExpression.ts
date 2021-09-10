@@ -6,6 +6,7 @@ import {
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseCall } from "./parseCall.ts";
+import { parseDo } from "./parseDo.ts";
 import { parseFunction } from "./parseFunction.ts";
 import { parseIdentifier } from "./parseIdentifier.ts";
 import { parseLiteral } from "./parseLiteral.ts";
@@ -62,6 +63,14 @@ export function parseExpression(
     astImpasses.push(astObject);
   } else {
     return makeExpression(AstExpressionKind.Object, astObject);
+  }
+
+  // Do
+  const astDo = browser.recurse(parseDo);
+  if (astDo instanceof TokenImpasse) {
+    astImpasses.push(astDo);
+  } else {
+    return makeExpression(AstExpressionKind.Do, astDo);
   }
 
   // Literal

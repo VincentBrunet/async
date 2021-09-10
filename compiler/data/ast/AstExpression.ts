@@ -1,10 +1,12 @@
+import { AstBinary } from "./AstBinary.ts";
 import { AstCall } from "./AstCall.ts";
+import { AstDo } from "./AstDo.ts";
 import { AstFunction } from "./AstFunction.ts";
 import { AstIdentifier } from "./AstIdentifier.ts";
 import { AstLiteral } from "./AstLiteral.ts";
 import { AstLookup } from "./AstLookup.ts";
 import { AstObject } from "./AstObject.ts";
-import { AstOperation } from "./AstOperation.ts";
+import { AstUnary } from "./AstUnary.ts";
 
 export enum AstExpressionKind {
   Call = "Call",
@@ -12,8 +14,10 @@ export enum AstExpressionKind {
   Literal = "Literal",
   Function = "Function",
   Object = "Object",
+  Do = "Do",
   Lookup = "Lookup",
-  Operation = "Operation",
+  Unary = "Unary",
+  Binary = "Binary",
 }
 
 export type AstExpressionData =
@@ -22,8 +26,10 @@ export type AstExpressionData =
   | AstLiteral
   | AstFunction
   | AstObject
+  | AstDo
   | AstLookup
-  | AstOperation;
+  | AstUnary
+  | AstBinary;
 
 export interface AstExpression {
   kind: AstExpressionKind;

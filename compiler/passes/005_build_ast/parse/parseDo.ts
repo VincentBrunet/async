@@ -1,15 +1,15 @@
 import { Keyword } from "../../../constants/Keyword.ts";
 import { AstBlock } from "../../../data/ast/AstBlock.ts";
-import { AstObject } from "../../../data/ast/AstObject.ts";
+import { AstDo } from "../../../data/ast/AstDo.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseBlock } from "./parseBlock.ts";
 
-export function parseObject(browser: TokenBrowser): AstObject | TokenImpasse {
+export function parseDo(browser: TokenBrowser): AstDo | TokenImpasse {
   // keyword (required)
   const first = browser.peek();
-  if (first.str !== Keyword.Object) {
-    return browser.impasse("Object.Keyword");
+  if (first.str !== Keyword.Do) {
+    return browser.impasse("Do.Keyword");
   }
   browser.consume();
 
@@ -19,7 +19,7 @@ export function parseObject(browser: TokenBrowser): AstObject | TokenImpasse {
   let block: AstBlock | undefined;
   const astBlock = browser.recurse(parseBlock);
   if (astBlock instanceof TokenImpasse) {
-    return browser.impasse("Object.Block", [astBlock]);
+    return browser.impasse("Do.Block", [astBlock]);
   }
   block = astBlock;
 
