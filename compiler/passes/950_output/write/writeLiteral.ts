@@ -1,9 +1,11 @@
 import { AstLiteral, AstLiteralKind } from "../../../data/ast/AstLiteral.ts";
 import { OutputModule } from "../util/OutputModule.ts";
+import { OutputScope } from "../util/OutputScope.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
 
 export function writeLiteral(
-  _module: OutputModule,
+  module: OutputModule,
+  scope: OutputScope,
   statement: OutputStatement,
   astLiteral: AstLiteral,
 ) {

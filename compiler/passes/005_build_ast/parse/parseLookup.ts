@@ -1,11 +1,10 @@
 import { createHash } from "https://deno.land/std@0.106.0/hash/mod.ts";
-
-import { TokenKind } from "../../../data/token/Token.ts";
+import { AstExpressionKind } from "../../../data/ast/AstExpression.ts";
 import { AstLookup } from "../../../data/ast/AstLookup.ts";
+import { TokenKind } from "../../../data/token/Token.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseExpression } from "./parseExpression.ts";
-import { AstExpressionKind } from "../../../data/ast/AstExpression.ts";
 
 export function parseLookup(
   browser: TokenBrowser,
@@ -21,7 +20,7 @@ export function parseLookup(
   // dot (required)
   const delim = browser.peek();
   if (delim.str !== ".") {
-    return browser.impasse("Lookup.Dot");
+    return browser.impasse("Lookup.Runt");
   }
   browser.consume();
   // name (required)

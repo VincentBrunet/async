@@ -7,8 +7,6 @@ export function computeObject(
   astObject: AstObject,
 ) {
   const child = new ResolveScope(scope);
-  if (astObject.block) {
-    computeBlock(child, astObject.block);
-  }
+  computeBlock(child, astObject.block);
   astObject.closures = child.readClosures();
 }

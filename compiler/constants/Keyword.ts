@@ -1,7 +1,8 @@
 export enum Keyword {
   Function = "fn",
   Object = "object",
-  Do = "do",
+  Run = "run",
+  While = "while",
   VariableConstant = "const",
   VariableMutable = "mutable",
   BooleanTrue = "true",

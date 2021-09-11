@@ -6,13 +6,13 @@ import {
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseCall } from "./parseCall.ts";
-import { parseDo } from "./parseDo.ts";
 import { parseFunction } from "./parseFunction.ts";
 import { parseIdentifier } from "./parseIdentifier.ts";
 import { parseLiteral } from "./parseLiteral.ts";
 import { parseLookup } from "./parseLookup.ts";
 import { parseObject } from "./parseObject.ts";
 import { parseParenthesis } from "./parseParenthesis.ts";
+import { parseRun } from "./parseRun.ts";
 
 function makeExpression(kind: AstExpressionKind, data: AstExpressionData) {
   return {
@@ -65,12 +65,12 @@ export function parseExpression(
     return makeExpression(AstExpressionKind.Object, astObject);
   }
 
-  // Do
-  const astDo = browser.recurse(parseDo);
-  if (astDo instanceof TokenImpasse) {
-    astImpasses.push(astDo);
+  // Run
+  const astRun = browser.recurse(parseRun);
+  if (astRun instanceof TokenImpasse) {
+    astImpasses.push(astRun);
   } else {
-    return makeExpression(AstExpressionKind.Do, astDo);
+    return makeExpression(AstExpressionKind.Run, astRun);
   }
 
   // Literal

@@ -1,11 +1,15 @@
-import { AstIdentifier } from "../../../data/ast/AstIdentifier.ts";
-import { OutputStatement } from "../util/OutputStatement.ts";
 import { AstClosure } from "../../../data/ast/AstClosure.ts";
-import { AstReferenceKind } from "../../../data/ast/AstReference.ts";
+import { AstIdentifier } from "../../../data/ast/AstIdentifier.ts";
 import { AstParam } from "../../../data/ast/AstParam.ts";
+import { AstReferenceKind } from "../../../data/ast/AstReference.ts";
 import { AstVariable } from "../../../data/ast/AstVariable.ts";
+import { OutputModule } from "../util/OutputModule.ts";
+import { OutputScope } from "../util/OutputScope.ts";
+import { OutputStatement } from "../util/OutputStatement.ts";
 
 export function writeIdentifier(
+  module: OutputModule,
+  scope: OutputScope,
   statement: OutputStatement,
   astIdentifier: AstIdentifier,
 ) {

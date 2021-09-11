@@ -1,7 +1,7 @@
 import { AstObject } from "../../../data/ast/AstObject.ts";
-import { OutputScope } from "../util/OutputScope.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputOrder } from "../util/OutputOrder.ts";
+import { OutputScope } from "../util/OutputScope.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
 import { writeBlock } from "./writeBlock.ts";
 import { writeClosure } from "./writeClosure.ts";
@@ -10,6 +10,7 @@ let _id = 0;
 
 export function writeObject(
   module: OutputModule,
+  scope: OutputScope,
   statement: OutputStatement,
   astObject: AstObject,
 ) {
@@ -34,18 +35,16 @@ export function writeObject(
   statement.pushPart(")");
 
   // New scope
-  const scope = new OutputScope(name);
+  const child = new OutputScope(name);
 
   // Do the recursive writing
-  if (astObject.block) {
-    writeBlock(module, scope, astObject.block);
-  }
+  writeBlock(module, child, astObject.block);
 
   // Setup params
-  scope.pushParam("t_ref **closure");
+  child.pushParam("t_ref **closure");
 
   // Read the variables declared in the function
-  const variables = scope.readVariables();
+  const variables = child.readVariables();
 
   // Create the module object containing all declared variables
   const object = new OutputStatement();
@@ -58,12 +57,12 @@ export function writeObject(
     object.pushPart(variable.hash);
   }
   object.pushPart(")");
-  scope.pushStatement(OutputOrder.Variables, object);
+  child.pushStatement(OutputOrder.Variables, object);
 
   // Read a variable field pointer
   const shortcut = new OutputStatement();
   shortcut.pushPart("t_variable *variables = object->data.object.variables");
-  scope.pushStatement(OutputOrder.Variables, shortcut);
+  child.pushStatement(OutputOrder.Variables, shortcut);
 
   // Make local references to created variables
   for (let i = 0; i < variables.length; i++) {
@@ -76,14 +75,14 @@ export function writeObject(
     named.pushPart("&(variables[");
     named.pushPart(i.toString());
     named.pushPart("])");
-    scope.pushStatement(OutputOrder.Variables, named);
+    child.pushStatement(OutputOrder.Variables, named);
   }
 
   // We simply return the object
   const done = new OutputStatement();
   done.pushPart("return object");
-  scope.pushStatement(OutputOrder.After, done);
+  child.pushStatement(OutputOrder.After, done);
 
   // Done, push the newly created function
-  module.pushScope(scope);
+  module.pushScope(child);
 }

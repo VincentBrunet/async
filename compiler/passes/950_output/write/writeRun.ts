@@ -1,4 +1,4 @@
-import { AstDo } from "../../../data/ast/AstDo.ts";
+import { AstRun } from "../../../data/ast/AstRun.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputOrder } from "../util/OutputOrder.ts";
 import { OutputScope } from "../util/OutputScope.ts";
@@ -8,58 +8,57 @@ import { writeClosure } from "./writeClosure.ts";
 
 let _id = 0;
 
-export function writeDo(
+export function writeRun(
   module: OutputModule,
+  scope: OutputScope,
   statement: OutputStatement,
-  astDo: AstDo,
+  astRun: AstRun,
 ) {
   // Asserts
-  if (!astDo.closures) {
+  if (!astRun.closures) {
     throw new Error("Invalid closure setup");
   }
 
-  // TODO - Do name mangling
-  const name = "d_0x" + (_id++).toString(16);
+  // TODO - Run name mangling
+  const name = "r_0x" + (_id++).toString(16);
 
-  // Simply call the do function in the expression
-  statement.pushPart("do_call_x(");
+  // Simply call the run function in the expression
+  statement.pushPart("run_call_x(");
   statement.pushPart("&");
   statement.pushPart(name);
   statement.pushPart(", ");
-  statement.pushPart(astDo.closures.length.toString());
-  for (const astClosure of astDo.closures) {
+  statement.pushPart(astRun.closures.length.toString());
+  for (const astClosure of astRun.closures) {
     statement.pushPart(", ");
     writeClosure(statement, astClosure);
   }
   statement.pushPart(")");
 
   // New scope
-  const scope = new OutputScope(name);
+  const child = new OutputScope(name);
 
-  // Do the recursive writing
-  if (astDo.block) {
-    writeBlock(module, scope, astDo.block);
-  }
+  // Run the recursive writing
+  writeBlock(module, child, astRun.block);
 
   // Setup params
-  scope.pushParam("t_ref **closure");
+  child.pushParam("t_ref **closure");
 
   // Setup declarations
-  const variables = scope.readVariables();
+  const variables = child.readVariables();
   for (const variable of variables) {
     const declaration = new OutputStatement();
     declaration.pushPart("t_ref *__");
     declaration.pushPart(variable.name);
     declaration.pushPart(" = ");
     declaration.pushPart("ref_make(NULL)");
-    scope.pushStatement(OutputOrder.Variables, declaration);
+    child.pushStatement(OutputOrder.Variables, declaration);
   }
 
   // Add a return statement - TODO (this should be added by user)
   const final = new OutputStatement();
   final.pushPart("return value_null");
-  scope.pushStatement(OutputOrder.After, final);
+  child.pushStatement(OutputOrder.After, final);
 
-  // Done, push the newly created function
-  module.pushScope(scope);
+  // Runne, push the newly created function
+  module.pushScope(child);
 }

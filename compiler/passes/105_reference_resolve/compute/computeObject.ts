@@ -21,7 +21,5 @@ export function computeObject(
     child.pushClosure(astClosure);
   }
 
-  if (astObject.block) {
-    computeBlock(child, astObject.block);
-  }
+  computeBlock(child, astObject.block);
 }

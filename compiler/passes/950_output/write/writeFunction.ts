@@ -1,7 +1,7 @@
 import { AstFunction } from "../../../data/ast/AstFunction.ts";
-import { OutputScope } from "../util/OutputScope.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputOrder } from "../util/OutputOrder.ts";
+import { OutputScope } from "../util/OutputScope.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
 import { writeBlock } from "./writeBlock.ts";
 import { writeClosure } from "./writeClosure.ts";
@@ -10,6 +10,7 @@ let _id = 0;
 
 export function writeFunction(
   module: OutputModule,
+  scope: OutputScope,
   statement: OutputStatement,
   astFunction: AstFunction,
 ) {
@@ -36,35 +37,33 @@ export function writeFunction(
   statement.pushPart(")");
 
   // New function
-  const scope = new OutputScope(name);
+  const child = new OutputScope(name);
 
   // Push statements
-  if (astFunction.block) {
-    writeBlock(module, scope, astFunction.block);
-  }
+  writeBlock(module, child, astFunction.block);
 
   // Setup params
-  scope.pushParam("t_ref **closure");
+  child.pushParam("t_ref **closure");
   for (const astParam of astFunction.params) {
-    scope.pushParam("t_value *__" + astParam.name);
+    child.pushParam("t_value *__" + astParam.name);
   }
 
   // Setup declarations
-  const variables = scope.readVariables();
+  const variables = child.readVariables();
   for (const variable of variables) {
     const declaration = new OutputStatement();
     declaration.pushPart("t_ref *__");
     declaration.pushPart(variable.name);
     declaration.pushPart(" = ");
     declaration.pushPart("ref_make(NULL)");
-    scope.pushStatement(OutputOrder.Variables, declaration);
+    child.pushStatement(OutputOrder.Variables, declaration);
   }
 
   // Add a return statement - TODO (this should be added by user)
   const final = new OutputStatement();
   final.pushPart("return value_null");
-  scope.pushStatement(OutputOrder.After, final);
+  child.pushStatement(OutputOrder.After, final);
 
   // Done, push the newly created function
-  module.pushScope(scope);
+  module.pushScope(child);
 }

@@ -1,78 +1,54 @@
-import { AstBinary } from "../../../data/ast/AstBinary.ts";
-import { AstCall } from "../../../data/ast/AstCall.ts";
-import { AstDo } from "../../../data/ast/AstDo.ts";
-import {
-  AstExpression,
-  AstExpressionKind,
-} from "../../../data/ast/AstExpression.ts";
-import { AstFunction } from "../../../data/ast/AstFunction.ts";
-import { AstIdentifier } from "../../../data/ast/AstIdentifier.ts";
-import { AstLiteral } from "../../../data/ast/AstLiteral.ts";
-import { AstLookup } from "../../../data/ast/AstLookup.ts";
-import { AstObject } from "../../../data/ast/AstObject.ts";
-import { AstUnary } from "../../../data/ast/AstUnary.ts";
+import { AstExpression } from "../../../data/ast/AstExpression.ts";
+import { browseExpression } from "../../../data/ast/util/browseExpression.ts";
 import { OutputModule } from "../util/OutputModule.ts";
+import { OutputScope } from "../util/OutputScope.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
 import { writeBinary } from "./writeBinary.ts";
 import { writeCall } from "./writeCall.ts";
-import { writeDo } from "./writeDo.ts";
 import { writeFunction } from "./writeFunction.ts";
 import { writeIdentifier } from "./writeIdentifier.ts";
 import { writeLiteral } from "./writeLiteral.ts";
 import { writeLookup } from "./writeLookup.ts";
 import { writeObject } from "./writeObject.ts";
+import { writeRun } from "./writeRun.ts";
 import { writeUnary } from "./writeUnary.ts";
+
+interface ExpressionParam {
+  module: OutputModule;
+  scope: OutputScope;
+  statement: OutputStatement;
+}
+
+function makeBrowser<T>(
+  call: (
+    module: OutputModule,
+    scope: OutputScope,
+    statement: OutputStatement,
+    ast: T,
+  ) => void,
+) {
+  return (param: ExpressionParam, ast: T) => {
+    return call(param.module, param.scope, param.statement, ast);
+  };
+}
+
+const browser = {
+  browseCall: makeBrowser(writeCall),
+  browseIdentifier: makeBrowser(writeIdentifier),
+  browseLiteral: makeBrowser(writeLiteral),
+  browseFunction: makeBrowser(writeFunction),
+  browseObject: makeBrowser(writeObject),
+  browseRun: makeBrowser(writeRun),
+  browseLookup: makeBrowser(writeLookup),
+  browseUnary: makeBrowser(writeUnary),
+  browseBinary: makeBrowser(writeBinary),
+};
 
 export function writeExpression(
   module: OutputModule,
+  scope: OutputScope,
   statement: OutputStatement,
   astExpression: AstExpression,
 ) {
-  switch (astExpression.kind) {
-    case AstExpressionKind.Identifier: {
-      const astData = astExpression.data as AstIdentifier;
-      writeIdentifier(statement, astData);
-      break;
-    }
-    case AstExpressionKind.Literal: {
-      const astData = astExpression.data as AstLiteral;
-      writeLiteral(module, statement, astData);
-      break;
-    }
-    case AstExpressionKind.Function: {
-      const astData = astExpression.data as AstFunction;
-      writeFunction(module, statement, astData);
-      break;
-    }
-    case AstExpressionKind.Lookup: {
-      const astData = astExpression.data as AstLookup;
-      writeLookup(module, statement, astData);
-      break;
-    }
-    case AstExpressionKind.Call: {
-      const astData = astExpression.data as AstCall;
-      writeCall(module, statement, astData);
-      break;
-    }
-    case AstExpressionKind.Object: {
-      const astData = astExpression.data as AstObject;
-      writeObject(module, statement, astData);
-      break;
-    }
-    case AstExpressionKind.Do: {
-      const astData = astExpression.data as AstDo;
-      writeDo(module, statement, astData);
-      break;
-    }
-    case AstExpressionKind.Unary: {
-      const astData = astExpression.data as AstUnary;
-      writeUnary(module, statement, astData);
-      break;
-    }
-    case AstExpressionKind.Binary: {
-      const astData = astExpression.data as AstBinary;
-      writeBinary(module, statement, astData);
-      break;
-    }
-  }
+  browseExpression(astExpression, { module, scope, statement }, browser);
 }

@@ -1,24 +1,43 @@
+import { AstExpression } from "../../../data/ast/AstExpression.ts";
 import { AstStatement } from "../../../data/ast/AstStatement.ts";
-import { OutputScope } from "../util/OutputScope.ts";
+import { browseStatement } from "../../../data/ast/util/browseStatement.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputOrder } from "../util/OutputOrder.ts";
+import { OutputScope } from "../util/OutputScope.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
 import { writeExpression } from "./writeExpression.ts";
 import { writeVariable } from "./writeVariable.ts";
+import { writeWhile } from "./writeWhile.ts";
+
+interface StatementParam {
+  module: OutputModule;
+  scope: OutputScope;
+}
+
+function makeBrowser<T>(
+  call: (module: OutputModule, scope: OutputScope, ast: T) => void,
+) {
+  return (param: StatementParam, ast: T) => {
+    return call(param.module, param.scope, ast);
+  };
+}
+
+const browser = {
+  browseVariable: makeBrowser(writeVariable),
+  browseWhile: makeBrowser(writeWhile),
+  browseExpression: makeBrowser(
+    (module: OutputModule, scope: OutputScope, expression: AstExpression) => {
+      const statement = new OutputStatement();
+      writeExpression(module, scope, statement, expression);
+      scope.pushStatement(OutputOrder.Logic, statement);
+    },
+  ),
+};
 
 export function writeStatement(
   module: OutputModule,
   scope: OutputScope,
   astStatement: AstStatement,
 ) {
-  const astVariable = astStatement.variable;
-  if (astVariable) {
-    writeVariable(module, scope, astVariable);
-  }
-  const astExpression = astStatement.expression;
-  if (astExpression) {
-    const statement = new OutputStatement();
-    writeExpression(module, statement, astExpression);
-    scope.pushStatement(OutputOrder.Logic, statement);
-  }
+  browseStatement(astStatement, { module, scope }, browser);
 }

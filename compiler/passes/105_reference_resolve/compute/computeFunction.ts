@@ -24,7 +24,5 @@ export function computeFunction(
     child.pushParam(astParam);
   }
 
-  if (astFunction.block) {
-    computeBlock(child, astFunction.block);
-  }
+  computeBlock(child, astFunction.block);
 }

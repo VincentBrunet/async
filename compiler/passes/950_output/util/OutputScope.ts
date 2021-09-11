@@ -1,7 +1,7 @@
+import { AstVariable } from "../../../data/ast/AstVariable.ts";
+import { MapArray } from "../../../util/data/MapArray.ts";
 import { OutputOrder } from "./OutputOrder.ts";
 import { OutputStatement } from "./OutputStatement.ts";
-import { MapArray } from "../../../util/data/MapArray.ts";
-import { AstVariable } from "../../../data/ast/AstVariable.ts";
 
 export class OutputScope {
   private name: string;
@@ -78,7 +78,10 @@ export class OutputScope {
           for (const part of statement.generateParts()) {
             parts.push(part);
           }
-          parts.push(";\n");
+          if (!statement.isSpecial()) {
+            parts.push(";");
+          }
+          parts.push("\n");
         }
       }
     }

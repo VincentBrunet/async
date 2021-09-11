@@ -1,5 +1,6 @@
 import { Keyword } from "../../../constants/Keyword.ts";
 import { AstFunction } from "../../../data/ast/AstFunction.ts";
+import { AstParam } from "../../../data/ast/AstParam.ts";
 import { AstType } from "../../../data/ast/AstType.ts";
 import { TokenKind } from "../../../data/token/Token.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
@@ -10,10 +11,6 @@ import { parseType } from "./parseType.ts";
 export function parseFunction(
   browser: TokenBrowser,
 ): AstFunction | TokenImpasse {
-  const astFunction: AstFunction = {
-    params: [],
-  };
-
   // keyword (required)
   const keyword = browser.peek();
   if (keyword.str !== Keyword.Function) {
@@ -22,10 +19,13 @@ export function parseFunction(
   browser.consume();
 
   // return type (optional)
-  const astType = browser.recurse(parseType);
-  if (!(astType instanceof TokenImpasse)) {
-    astFunction.return = astType;
+  const astReturn = browser.recurse(parseType);
+  if (astReturn instanceof TokenImpasse) {
+    return browser.impasse("Function.Type", [astReturn]);
   }
+
+  // params
+  const astParams = new Array<AstParam>();
 
   // params - open (optional)
   const paramOpen = browser.peek();
@@ -47,17 +47,19 @@ export function parseFunction(
         browser.consume();
         name = paramName.str;
       }
+      name = name ?? ("$" + astParams.length);
 
       // params - optional type
-      let type: AstType = {};
+      let type: AstType;
       const paramType = browser.recurse(parseType);
-      if (!(paramType instanceof TokenImpasse)) {
-        astFunction.return = paramType;
+      if (paramType instanceof TokenImpasse) {
+        return browser.impasse("Function.Param(type)", [paramType]);
       }
+      type = paramType;
 
       // param - validated
-      astFunction.params.push({
-        name: name ?? ("$" + astFunction.params.length),
+      astParams.push({
+        name: name,
         type: type,
       });
 
@@ -76,9 +78,14 @@ export function parseFunction(
 
   // block (optional)
   const astBlock = browser.recurse(parseBlock);
-  if (!(astBlock instanceof TokenImpasse)) {
-    astFunction.block = astBlock;
+  if (astBlock instanceof TokenImpasse) {
+    return browser.impasse("Function.Block", [astBlock]);
   }
 
-  return astFunction;
+  // done, create ast
+  return {
+    params: astParams,
+    return: astReturn,
+    block: astBlock,
+  };
 }

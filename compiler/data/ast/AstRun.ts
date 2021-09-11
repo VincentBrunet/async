@@ -2,8 +2,8 @@ import { AstBlock } from "./AstBlock.ts";
 import { AstClosure } from "./AstClosure.ts";
 import { AstType } from "./AstType.ts";
 
-export interface AstDo {
+export interface AstRun {
   type: AstType;
-  block?: AstBlock;
+  block: AstBlock;
   closures?: Array<AstClosure>;
 }

@@ -1,7 +1,7 @@
 import { AstVariable } from "../../../data/ast/AstVariable.ts";
-import { OutputScope } from "../util/OutputScope.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputOrder } from "../util/OutputOrder.ts";
+import { OutputScope } from "../util/OutputScope.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
 import { writeExpression } from "./writeExpression.ts";
 
@@ -18,7 +18,7 @@ export function writeVariable(
     assignment.pushPart(astVariable.name);
     assignment.pushPart("->value");
     assignment.pushPart(" = ");
-    writeExpression(module, assignment, astVariable.value);
+    writeExpression(module, scope, assignment, astVariable.value);
     scope.pushStatement(OutputOrder.Logic, assignment);
   }
 }

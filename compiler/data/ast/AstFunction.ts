@@ -5,7 +5,7 @@ import { AstType } from "./AstType.ts";
 
 export interface AstFunction {
   params: Array<AstParam>;
-  block?: AstBlock;
-  return?: AstType;
+  return: AstType;
+  block: AstBlock;
   closures?: Array<AstClosure>;
 }

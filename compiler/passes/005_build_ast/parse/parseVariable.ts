@@ -33,16 +33,17 @@ export function parseVariable(
   const name = tokenName.str;
 
   // type (optional)
-  let type: AstType = {};
+  let type: AstType;
   const astType = browser.recurse(parseType);
-  if (!(astType instanceof TokenImpasse)) {
-    type = astType;
+  if (astType instanceof TokenImpasse) {
+    return browser.impasse("Variable.Type", [astType]);
   }
+  type = astType;
 
   // value (optional)
   let value: AstExpression | undefined;
-  const delimValue = browser.peek();
-  if (delimValue.str === "=") {
+  const delimEqual = browser.peek();
+  if (delimEqual.str === "=") {
     browser.consume();
     const astValue = browser.recurse(parseExpression);
     if (astValue instanceof TokenImpasse) {
