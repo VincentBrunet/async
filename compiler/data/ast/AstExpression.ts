@@ -5,6 +5,7 @@ import { AstIdentifier } from "./AstIdentifier.ts";
 import { AstLiteral } from "./AstLiteral.ts";
 import { AstLookup } from "./AstLookup.ts";
 import { AstObject } from "./AstObject.ts";
+import { AstParenthesis } from "./AstParenthesis.ts";
 import { AstRun } from "./AstRun.ts";
 import { AstUnary } from "./AstUnary.ts";
 
@@ -18,6 +19,7 @@ export enum AstExpressionKind {
   Lookup = "Lookup",
   Unary = "Unary",
   Binary = "Binary",
+  Parenthesis = " Parenthesis",
 }
 
 export type AstExpressionData =
@@ -29,7 +31,8 @@ export type AstExpressionData =
   | AstRun
   | AstLookup
   | AstUnary
-  | AstBinary;
+  | AstBinary
+  | AstParenthesis;
 
 export interface AstExpression {
   kind: AstExpressionKind;

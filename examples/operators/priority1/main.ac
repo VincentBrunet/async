@@ -1,0 +1,19 @@
+
+const i1 = 1
+const i2 = 2
+const i3 = 3
+const i4 = 4
+
+const a = i1 + i2 + i3 + i4
+
+const b = i1 - i2 - i3 - i4
+
+const c = i1 * i2 - i3 * i4
+
+const d = 2 + i1.k()() + 3
+
+const e = (i1 - i2) - (i3 - i4)
+
+const f = i1 - i2 * i3
+
+const g = i1 * i2 - i3

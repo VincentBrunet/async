@@ -22,7 +22,7 @@ t_value *r_0x0(t_ref **closure) {
   __totoA->value = closure[0]->value;
   __totoB->value = closure[1]->value;
   while (TO_BOOLEAN(boolean_make(TRUE))) {
-    function_call_0(__totoA->value);
+  function_call_0(__totoA->value);
   }
   // After
   return value_null;

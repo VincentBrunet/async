@@ -10,6 +10,7 @@ import { writeIdentifier } from "./writeIdentifier.ts";
 import { writeLiteral } from "./writeLiteral.ts";
 import { writeLookup } from "./writeLookup.ts";
 import { writeObject } from "./writeObject.ts";
+import { writeParenthesis } from "./writeParenthesis.ts";
 import { writeRun } from "./writeRun.ts";
 import { writeUnary } from "./writeUnary.ts";
 
@@ -42,6 +43,7 @@ const browser = {
   browseLookup: makeBrowser(writeLookup),
   browseUnary: makeBrowser(writeUnary),
   browseBinary: makeBrowser(writeBinary),
+  browseParenthesis: makeBrowser(writeParenthesis),
 };
 
 export function writeExpression(
