@@ -22,15 +22,15 @@ t_value *module_load() {
   __i2->value = i32_make(2);
   __i3->value = i32_make(3);
   __i4->value = i32_make(4);
-  __a->value = Addition(Addition(Addition(__i1->value, __i2->value), __i3->value), __i4->value);
-  __b->value = Substraction(Substraction(Substraction(__i1->value, __i2->value), __i3->value), __i4->value);
-  __c->value = Substraction(Multiplication(__i1->value, __i2->value), Multiplication(__i3->value, __i4->value));
-  __d->value = Addition(Addition(__i2->value, function_call_0(function_call_0(object_read(__i1->value, 0x8254C329A92850F6)->value))), i32_make(3));
+  __a->value = Addition(__i1->value, __i2->value);
+  __b->value = Substraction(__i1->value, __i2->value);
+  __c->value = Multiplication(__i1->value, __i2->value);
+  __d->value = Addition(__i2->value, function_call_0(function_call_0(object_read(__i1->value, 0x8254C329A92850F6)->value)));
   __e->value = Substraction((Substraction(__i1->value, __i2->value)), (Substraction(__i3->value, __i4->value)));
-  __f->value = Substraction(__i1->value, Multiplication(__i2->value, __i3->value));
-  __g->value = Substraction(Multiplication(__i1->value, __i2->value), __i3->value);
-  __h->value = Addition(Addition(__i1->value, Multiplication(__i2->value, __i3->value)), __i4->value);
-  __i->value = Substraction(Substraction(__i1->value, Multiplication(__i2->value, __i3->value)), __i4->value);
+  __f->value = Substraction(__i1->value, __i2->value);
+  __g->value = Multiplication(__i1->value, __i2->value);
+  __h->value = Addition(__i1->value, __i2->value);
+  __i->value = Substraction(__i1->value, __i2->value);
   // After
   return module;
 }
