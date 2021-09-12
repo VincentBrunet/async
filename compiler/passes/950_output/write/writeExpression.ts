@@ -1,5 +1,5 @@
 import { AstExpression } from "../../../data/ast/AstExpression.ts";
-import { browseExpression } from "../../../data/ast/util/browseExpression.ts";
+import { doBrowseExpression } from "../../../data/ast/util/doBrowseExpression.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputScope } from "../util/OutputScope.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
@@ -52,5 +52,5 @@ export function writeExpression(
   statement: OutputStatement,
   astExpression: AstExpression,
 ) {
-  browseExpression(astExpression, { module, scope, statement }, browser);
+  doBrowseExpression(astExpression, { module, scope, statement }, browser);
 }

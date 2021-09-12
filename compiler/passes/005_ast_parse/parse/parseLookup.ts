@@ -12,7 +12,7 @@ export function parseLookup(
   // dot (required)
   const delim = browser.peek();
   if (delim.str !== ".") {
-    return browser.impasse("Lookup.Runt");
+    return browser.impasse("Lookup.Dot");
   }
   browser.consume();
   // name (required)

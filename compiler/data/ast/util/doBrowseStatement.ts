@@ -3,16 +3,16 @@ import { AstStatement, AstStatementKind } from "../AstStatement.ts";
 import { AstVariable } from "../AstVariable.ts";
 import { AstWhile } from "../AstWhile.ts";
 
-export interface BrowseStatementMapping<T, R> {
-  browseVariable: (param: T, ast: AstVariable) => R;
-  browseWhile: (param: T, ast: AstWhile) => R;
-  browseExpression: (param: T, ast: AstExpression) => R;
+export interface BrowseStatementMapping<P, R> {
+  browseVariable: (param: P, ast: AstVariable) => R;
+  browseWhile: (param: P, ast: AstWhile) => R;
+  browseExpression: (param: P, ast: AstExpression) => R;
 }
 
-export function doBrowseStatement<T, R>(
+export function doBrowseStatement<P, R>(
   astStatement: AstStatement,
-  param: T,
-  mapping: BrowseStatementMapping<T, R>,
+  param: P,
+  mapping: BrowseStatementMapping<P, R>,
 ) {
   const kind = astStatement.kind;
   const data = astStatement.data;

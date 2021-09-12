@@ -4,30 +4,52 @@ import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseExpression } from "./parseExpression.ts";
 
+/**
+ * Support operator symbols
+ */
 const symbolMap = new Map<string, AstBinaryOperator>();
-symbolMap.set("+", AstBinaryOperator.Addition);
-symbolMap.set("-", AstBinaryOperator.Substraction);
+
 symbolMap.set("*", AstBinaryOperator.Multiplication);
 symbolMap.set("/", AstBinaryOperator.Division);
 symbolMap.set("%", AstBinaryOperator.Modulo);
 
-const priorityMap = new Map<AstBinaryOperator, number>();
-priorityMap.set(AstBinaryOperator.Addition, 1);
-priorityMap.set(AstBinaryOperator.Substraction, 1);
-priorityMap.set(AstBinaryOperator.Multiplication, 2);
-priorityMap.set(AstBinaryOperator.Division, 2);
-priorityMap.set(AstBinaryOperator.Modulo, 2);
+symbolMap.set("+", AstBinaryOperator.Addition);
+symbolMap.set("-", AstBinaryOperator.Substraction);
 
+symbolMap.set("==", AstBinaryOperator.Equal);
+symbolMap.set("!=", AstBinaryOperator.NotEqual);
+
+symbolMap.set("<", AstBinaryOperator.Less);
+symbolMap.set("<=", AstBinaryOperator.LessOrEqual);
+symbolMap.set(">", AstBinaryOperator.More);
+symbolMap.set(">=", AstBinaryOperator.MoreOrEqual);
+
+symbolMap.set("&&", AstBinaryOperator.And);
+symbolMap.set("||", AstBinaryOperator.Or);
+
+symbolMap.set("=", AstBinaryOperator.Assign);
+
+/**
+ * Do the parsing using an already-parsed left handside
+ */
 export function parseBinary(
   browser: TokenBrowser,
   left: AstExpression,
 ): AstBinary | TokenImpasse {
   // operator
-  const operator = symbolMap.get(browser.peek().str);
-  if (operator !== undefined) {
-    browser.consume();
-  } else {
+  const operator1 = browser.peek(0).str;
+  const operator2 = browser.peek(1).str;
+  let operator = symbolMap.get(operator1 + operator2);
+  let consumed = 2;
+  if (operator === undefined) {
+    operator = symbolMap.get(operator1);
+    consumed = 1;
+  }
+  if (operator === undefined) {
     return browser.impasse("Binary.Operator");
+  }
+  for (let i = 0; i < consumed; i++) {
+    browser.consume();
   }
   // right
   const right = browser.recurse(parseExpression);

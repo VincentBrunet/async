@@ -6,6 +6,7 @@ import { parseExpression } from "./parseExpression.ts";
 const symbolMap = new Map<string, AstUnaryOperator>();
 symbolMap.set("+", AstUnaryOperator.Positive);
 symbolMap.set("-", AstUnaryOperator.Negative);
+symbolMap.set("!", AstUnaryOperator.Not);
 
 export function parseUnary(
   browser: TokenBrowser,
@@ -18,7 +19,7 @@ export function parseUnary(
     return browser.impasse("Unary.Operator");
   }
   // Expression
-  const expression = browser.recurse(parseExpression);
+  const expression = browser.recurse(parseExpression, true);
   if (expression instanceof TokenImpasse) {
     return browser.impasse("Unary.Expression", [expression]);
   }

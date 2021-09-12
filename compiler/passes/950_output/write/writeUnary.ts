@@ -10,12 +10,8 @@ export function writeUnary(
   statement: OutputStatement,
   astUnary: AstUnary,
 ) {
-  statement.pushPart("unary"); // TODO
+  statement.pushPart(astUnary.operator); // TODO
   statement.pushPart("(");
-  statement.pushPart('"');
-  statement.pushPart(astUnary.operator);
-  statement.pushPart('"');
-  statement.pushPart(", ");
   writeExpression(module, scope, statement, astUnary.expression);
   statement.pushPart(")");
 }

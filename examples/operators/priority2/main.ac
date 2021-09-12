@@ -1,0 +1,8 @@
+
+const a = true || false || false
+
+const b = false || false && true
+
+const c = false == true || true == true
+
+const d = !false == true

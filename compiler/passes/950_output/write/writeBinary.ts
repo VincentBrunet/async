@@ -10,12 +10,8 @@ export function writeBinary(
   statement: OutputStatement,
   astBinary: AstBinary,
 ) {
-  statement.pushPart("binary"); // TODO
+  statement.pushPart(astBinary.operator); // TODO
   statement.pushPart("(");
-  statement.pushPart('"');
-  statement.pushPart(astBinary.operator);
-  statement.pushPart('"');
-  statement.pushPart(", ");
   writeExpression(module, scope, statement, astBinary.expression1);
   statement.pushPart(", ");
   writeExpression(module, scope, statement, astBinary.expression2);

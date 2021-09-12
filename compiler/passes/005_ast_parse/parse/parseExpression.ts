@@ -14,6 +14,7 @@ import { parseLookup } from "./parseLookup.ts";
 import { parseObject } from "./parseObject.ts";
 import { parseParenthesis } from "./parseParenthesis.ts";
 import { parseRun } from "./parseRun.ts";
+import { parseUnary } from "./parseUnary.ts";
 
 function makeExpression(kind: AstExpressionKind, data: AstExpressionData) {
   return { kind: kind, data: data };
@@ -22,6 +23,7 @@ function makeExpression(kind: AstExpressionKind, data: AstExpressionData) {
 const leafs = new Array<
   [AstExpressionKind, (b: TokenBrowser) => AstExpressionData | TokenImpasse]
 >();
+leafs.push([AstExpressionKind.Unary, parseUnary]);
 leafs.push([AstExpressionKind.Parenthesis, parseParenthesis]);
 leafs.push([AstExpressionKind.Function, parseFunction]);
 leafs.push([AstExpressionKind.Object, parseObject]);
@@ -42,8 +44,9 @@ recursors.push([AstExpressionKind.Binary, parseBinary]);
 
 export function parseExpression(
   browser: TokenBrowser,
+  leafOnly?: boolean,
 ): AstExpression | TokenImpasse {
-  // Simple leaf expressions
+  // Start with a simple leaf expression
   const astImpasses = new Array<TokenImpasse>();
   let astLeft: AstExpression | undefined;
   for (const leaf of leafs) {
@@ -59,23 +62,23 @@ export function parseExpression(
     return browser.impasse("Expression", astImpasses);
   }
 
-  // Left recursion part
+  // Then do a right recursion
   let astCurrent = astLeft;
-  let modified = true;
-  while (modified) {
-    modified = false;
+  let keepRecursing = !leafOnly;
+  while (keepRecursing) {
+    keepRecursing = false;
     for (const recursor of recursors) {
       const astResult = browser.recurse<
         AstExpressionData,
         AstExpression | undefined
       >(
-        recursor[1] as any, // wut
+        recursor[1] as any, // wut type-mess
         astCurrent,
       );
       if (astResult instanceof TokenImpasse) {
         // no-op
       } else {
-        modified = true;
+        keepRecursing = true;
         astCurrent = makeExpression(recursor[0], astResult);
       }
     }

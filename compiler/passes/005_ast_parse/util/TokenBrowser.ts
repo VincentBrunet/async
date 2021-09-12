@@ -15,8 +15,8 @@ export class TokenBrowser {
     this.fastForward();
   }
 
-  peek() {
-    return this.readToken(0);
+  peek(offset?: number) {
+    return this.readToken(offset);
   }
 
   consume() {

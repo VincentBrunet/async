@@ -6,6 +6,15 @@ export enum AstBinaryOperator {
   Multiplication = "Multiplication",
   Division = "Division",
   Modulo = "Modulo",
+  And = "And",
+  Or = "Or",
+  Equal = "Equal",
+  NotEqual = "NotEqual",
+  Less = "Less",
+  LessOrEqual = "LessOrEqual",
+  More = "More",
+  MoreOrEqual = "MoreOrEqual",
+  Assign = "Assign",
 }
 
 export interface AstBinary {

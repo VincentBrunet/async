@@ -10,23 +10,23 @@ import { AstParenthesis } from "../AstParenthesis.ts";
 import { AstRun } from "../AstRun.ts";
 import { AstUnary } from "../AstUnary.ts";
 
-export interface BrowseExpressionMapping<T, R> {
-  browseCall: (param: T, ast: AstCall) => R;
-  browseIdentifier: (param: T, ast: AstIdentifier) => R;
-  browseLiteral: (param: T, ast: AstLiteral) => R;
-  browseFunction: (param: T, ast: AstFunction) => R;
-  browseObject: (param: T, ast: AstObject) => R;
-  browseRun: (param: T, ast: AstRun) => R;
-  browseLookup: (param: T, ast: AstLookup) => R;
-  browseUnary: (param: T, ast: AstUnary) => R;
-  browseBinary: (param: T, ast: AstBinary) => R;
-  browseParenthesis: (param: T, ast: AstParenthesis) => R;
+export interface BrowseExpressionMapping<P, R> {
+  browseCall: (param: P, ast: AstCall) => R;
+  browseIdentifier: (param: P, ast: AstIdentifier) => R;
+  browseLiteral: (param: P, ast: AstLiteral) => R;
+  browseFunction: (param: P, ast: AstFunction) => R;
+  browseObject: (param: P, ast: AstObject) => R;
+  browseRun: (param: P, ast: AstRun) => R;
+  browseLookup: (param: P, ast: AstLookup) => R;
+  browseUnary: (param: P, ast: AstUnary) => R;
+  browseBinary: (param: P, ast: AstBinary) => R;
+  browseParenthesis: (param: P, ast: AstParenthesis) => R;
 }
 
-export function doBrowseExpression<T, R>(
+export function doBrowseExpression<P, R>(
   astExpression: AstExpression,
-  param: T,
-  mapping: BrowseExpressionMapping<T, R>,
+  param: P,
+  mapping: BrowseExpressionMapping<P, R>,
 ) {
   const kind = astExpression.kind;
   const data = astExpression.data;

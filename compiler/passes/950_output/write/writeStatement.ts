@@ -1,6 +1,6 @@
 import { AstExpression } from "../../../data/ast/AstExpression.ts";
 import { AstStatement } from "../../../data/ast/AstStatement.ts";
-import { browseStatement } from "../../../data/ast/util/browseStatement.ts";
+import { doBrowseStatement } from "../../../data/ast/util/doBrowseStatement.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputOrder } from "../util/OutputOrder.ts";
 import { OutputScope } from "../util/OutputScope.ts";
@@ -39,5 +39,5 @@ export function writeStatement(
   scope: OutputScope,
   astStatement: AstStatement,
 ) {
-  browseStatement(astStatement, { module, scope }, browser);
+  doBrowseStatement(astStatement, { module, scope }, browser);
 }

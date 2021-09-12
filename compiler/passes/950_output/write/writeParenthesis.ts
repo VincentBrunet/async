@@ -10,7 +10,6 @@ export function writeParenthesis(
   statement: OutputStatement,
   astParenthesis: AstParenthesis,
 ) {
-  console.log("writeParenthesis", astParenthesis);
   statement.pushPart("(");
   writeExpression(module, scope, statement, astParenthesis.expression);
   statement.pushPart(")");

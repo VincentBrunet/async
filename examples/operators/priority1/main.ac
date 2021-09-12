@@ -10,10 +10,14 @@ const b = i1 - i2 - i3 - i4
 
 const c = i1 * i2 - i3 * i4
 
-const d = 2 + i1.k()() + 3
+const d = i2 + i1.k()() + 3
 
 const e = (i1 - i2) - (i3 - i4)
 
 const f = i1 - i2 * i3
 
 const g = i1 * i2 - i3
+
+const h = i1 + i2 * i3 + i4
+
+const i = i1 - i2 * i3 - i4
