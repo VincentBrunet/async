@@ -66,7 +66,7 @@ function listBinaryNodes(
     listBinaryNodes(left, nodes);
   }
   nodes.push(binary);
-  const right = getBinary(binary.expression1);
+  const right = getBinary(binary.expression2);
   if (right) {
     listBinaryNodes(right, nodes);
   }

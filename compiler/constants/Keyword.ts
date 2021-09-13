@@ -7,11 +7,4 @@ export enum Keyword {
   VariableMutable = "mutable",
   BooleanTrue = "true",
   BooleanFalse = "false",
-  OperatorAddition = "+",
-  OperatorSubstraction = "-",
-  OperatorMultiplication = "*",
-  OperatorDivision = "/",
-  OperatorModulo = "%",
-  OperatorBinaryAnd = "&",
-  OperatorBinaryOr = "|",
 }

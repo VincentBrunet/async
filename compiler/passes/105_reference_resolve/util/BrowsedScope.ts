@@ -42,8 +42,8 @@ export class BrowsedScope {
   private pushReference(name: string, reference: AstReference) {
     if (this.references.get(name)) {
       throw new Error(
-        "Already defined: " + JSON.stringify(this.references.get(name)) +
-          " + " + JSON.stringify(reference),
+        "Already defined: " + (this.references.get(name)) +
+          " + " + (reference.data.name),
       );
     }
     this.references.set(name, reference);
