@@ -2,3 +2,7 @@
 const tInt: Int = 42
 
 const tIntOrDouble: Int | Double = 42
+
+const tIntAndDouble: Int & Double = 42
+
+const tIntAndDoubleAndFloat: Int & Double & Float = 42

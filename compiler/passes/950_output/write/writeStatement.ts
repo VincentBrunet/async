@@ -5,7 +5,7 @@ import { OutputModule } from "../util/OutputModule.ts";
 import { OutputOrder } from "../util/OutputOrder.ts";
 import { OutputScope } from "../util/OutputScope.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
-import { writeExpression } from "./writeExpression.ts";
+import { writeExpression } from "./expression/writeExpression.ts";
 import { writeVariable } from "./writeVariable.ts";
 import { writeWhile } from "./writeWhile.ts";
 
