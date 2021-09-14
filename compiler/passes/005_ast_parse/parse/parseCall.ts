@@ -1,5 +1,5 @@
-import { AstCall } from "../../../data/ast/AstCall.ts";
-import { AstExpression } from "../../../data/ast/AstExpression.ts";
+import { AstExpression } from "../../../data/ast/expression/AstExpression.ts";
+import { AstExpressionCall } from "../../../data/ast/expression/AstExpressionCall.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseExpression } from "./parseExpression.ts";
@@ -7,7 +7,7 @@ import { parseExpression } from "./parseExpression.ts";
 export function parseCall(
   browser: TokenBrowser,
   astCallee: AstExpression,
-): AstCall | TokenImpasse {
+): AstExpressionCall | TokenImpasse {
   // param - open
   const delimParamOpen = browser.peek();
   if (delimParamOpen.str !== "(") {

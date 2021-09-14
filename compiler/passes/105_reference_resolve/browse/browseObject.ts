@@ -1,10 +1,10 @@
-import { AstObject } from "../../../data/ast/AstObject.ts";
+import { AstExpressionObject } from "../../../data/ast/expression/AstExpressionObject.ts";
 import { BrowsedScope } from "../util/BrowsedScope.ts";
 import { browseBlock } from "./browseBlock.ts";
 
 export function browseObject(
   scope: BrowsedScope,
-  astObject: AstObject,
+  astObject: AstExpressionObject,
 ) {
   // Asserts
   if (!astObject.closures) {

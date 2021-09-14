@@ -1,4 +1,4 @@
-import { AstObject } from "../../../data/ast/AstObject.ts";
+import { AstExpressionObject } from "../../../data/ast/expression/AstExpressionObject.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputOrder } from "../util/OutputOrder.ts";
 import { OutputScope } from "../util/OutputScope.ts";
@@ -12,7 +12,7 @@ export function writeObject(
   module: OutputModule,
   scope: OutputScope,
   statement: OutputStatement,
-  astObject: AstObject,
+  astObject: AstExpressionObject,
 ) {
   // Asserts
   if (!astObject.closures) {

@@ -1,4 +1,4 @@
-import { AstParenthesis } from "../../../data/ast/AstParenthesis.ts";
+import { AstExpressionParenthesis } from "../../../data/ast/expression/AstExpressionParenthesis.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputScope } from "../util/OutputScope.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
@@ -8,7 +8,7 @@ export function writeParenthesis(
   module: OutputModule,
   scope: OutputScope,
   statement: OutputStatement,
-  astParenthesis: AstParenthesis,
+  astParenthesis: AstExpressionParenthesis,
 ) {
   statement.pushPart("(");
   writeExpression(module, scope, statement, astParenthesis.expression);

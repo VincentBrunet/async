@@ -1,5 +1,5 @@
-import { AstExpression } from "../../../data/ast/AstExpression.ts";
 import { AstStatement } from "../../../data/ast/AstStatement.ts";
+import { AstExpression } from "../../../data/ast/expression/AstExpression.ts";
 import { doBrowseStatement } from "../../../data/ast/util/doBrowseStatement.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputOrder } from "../util/OutputOrder.ts";

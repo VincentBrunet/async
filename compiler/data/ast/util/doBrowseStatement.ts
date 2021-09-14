@@ -1,7 +1,7 @@
-import { AstExpression } from "../AstExpression.ts";
 import { AstStatement, AstStatementKind } from "../AstStatement.ts";
 import { AstVariable } from "../AstVariable.ts";
 import { AstWhile } from "../AstWhile.ts";
+import { AstExpression } from "../expression/AstExpression.ts";
 
 export interface BrowseStatementMapping<P, R> {
   browseVariable: (param: P, ast: AstVariable) => R;

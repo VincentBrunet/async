@@ -1,4 +1,4 @@
-import { AstCall } from "../../../data/ast/AstCall.ts";
+import { AstExpressionCall } from "../../../data/ast/expression/AstExpressionCall.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputScope } from "../util/OutputScope.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
@@ -8,7 +8,7 @@ export function writeCall(
   module: OutputModule,
   scope: OutputScope,
   statement: OutputStatement,
-  astCall: AstCall,
+  astCall: AstExpressionCall,
 ) {
   statement.pushPart("function_call_");
   statement.pushPart(astCall.params.length.toString());

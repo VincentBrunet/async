@@ -1,5 +1,8 @@
-import { AstBinary, AstBinaryOperator } from "../../../data/ast/AstBinary.ts";
-import { AstExpression } from "../../../data/ast/AstExpression.ts";
+import { AstExpression } from "../../../data/ast/expression/AstExpression.ts";
+import {
+  AstExpressionBinary,
+  AstExpressionBinaryOperator,
+} from "../../../data/ast/expression/AstExpressionBinary.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseExpression } from "./parseExpression.ts";
@@ -7,27 +10,27 @@ import { parseExpression } from "./parseExpression.ts";
 /**
  * Support operator symbols
  */
-const symbolMap = new Map<string, AstBinaryOperator>();
+const symbolMap = new Map<string, AstExpressionBinaryOperator>();
 
-symbolMap.set("*", AstBinaryOperator.Multiplication);
-symbolMap.set("/", AstBinaryOperator.Division);
-symbolMap.set("%", AstBinaryOperator.Modulo);
+symbolMap.set("*", AstExpressionBinaryOperator.Multiplication);
+symbolMap.set("/", AstExpressionBinaryOperator.Division);
+symbolMap.set("%", AstExpressionBinaryOperator.Modulo);
 
-symbolMap.set("+", AstBinaryOperator.Addition);
-symbolMap.set("-", AstBinaryOperator.Substraction);
+symbolMap.set("+", AstExpressionBinaryOperator.Addition);
+symbolMap.set("-", AstExpressionBinaryOperator.Substraction);
 
-symbolMap.set("==", AstBinaryOperator.Equal);
-symbolMap.set("!=", AstBinaryOperator.NotEqual);
+symbolMap.set("==", AstExpressionBinaryOperator.Equal);
+symbolMap.set("!=", AstExpressionBinaryOperator.NotEqual);
 
-symbolMap.set("<", AstBinaryOperator.Less);
-symbolMap.set("<=", AstBinaryOperator.LessOrEqual);
-symbolMap.set(">", AstBinaryOperator.More);
-symbolMap.set(">=", AstBinaryOperator.MoreOrEqual);
+symbolMap.set("<", AstExpressionBinaryOperator.Less);
+symbolMap.set("<=", AstExpressionBinaryOperator.LessOrEqual);
+symbolMap.set(">", AstExpressionBinaryOperator.More);
+symbolMap.set(">=", AstExpressionBinaryOperator.MoreOrEqual);
 
-symbolMap.set("&&", AstBinaryOperator.And);
-symbolMap.set("||", AstBinaryOperator.Or);
+symbolMap.set("&&", AstExpressionBinaryOperator.And);
+symbolMap.set("||", AstExpressionBinaryOperator.Or);
 
-symbolMap.set("=", AstBinaryOperator.Assign);
+symbolMap.set("=", AstExpressionBinaryOperator.Assign);
 
 /**
  * Do the parsing using an already-parsed left handside
@@ -35,7 +38,7 @@ symbolMap.set("=", AstBinaryOperator.Assign);
 export function parseBinary(
   browser: TokenBrowser,
   left: AstExpression,
-): AstBinary | TokenImpasse {
+): AstExpressionBinary | TokenImpasse {
   // operator
   const operator1 = browser.peek(0).str;
   const operator2 = browser.peek(1).str;

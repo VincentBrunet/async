@@ -1,10 +1,10 @@
-import { AstRun } from "../../../data/ast/AstRun.ts";
+import { AstExpressionRun } from "../../../data/ast/expression/AstExpressionRun.ts";
 import { BrowsedScope } from "../util/BrowsedScope.ts";
 import { browseBlock } from "./browseBlock.ts";
 
 export function browseRun(
   scope: BrowsedScope,
-  astRun: AstRun,
+  astRun: AstExpressionRun,
 ) {
   const child = new BrowsedScope(scope);
   browseBlock(child, astRun.block);

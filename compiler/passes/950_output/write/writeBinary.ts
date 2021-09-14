@@ -1,4 +1,4 @@
-import { AstBinary } from "../../../data/ast/AstBinary.ts";
+import { AstExpressionBinary } from "../../../data/ast/expression/AstExpressionBinary.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputScope } from "../util/OutputScope.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
@@ -8,7 +8,7 @@ export function writeBinary(
   module: OutputModule,
   scope: OutputScope,
   statement: OutputStatement,
-  astBinary: AstBinary,
+  astBinary: AstExpressionBinary,
 ) {
   statement.pushPart(astBinary.operator); // TODO
   statement.pushPart("(");

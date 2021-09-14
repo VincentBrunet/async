@@ -1,4 +1,4 @@
-import { AstRun } from "../../../data/ast/AstRun.ts";
+import { AstExpressionRun } from "../../../data/ast/expression/AstExpressionRun.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputOrder } from "../util/OutputOrder.ts";
 import { OutputScope } from "../util/OutputScope.ts";
@@ -12,7 +12,7 @@ export function writeRun(
   module: OutputModule,
   scope: OutputScope,
   statement: OutputStatement,
-  astRun: AstRun,
+  astRun: AstExpressionRun,
 ) {
   // Asserts
   if (!astRun.closures) {

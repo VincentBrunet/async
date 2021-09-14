@@ -1,6 +1,6 @@
 import { Keyword } from "../../../constants/Keyword.ts";
-import { AstFunction } from "../../../data/ast/AstFunction.ts";
 import { AstParam } from "../../../data/ast/AstParam.ts";
+import { AstExpressionFunction } from "../../../data/ast/expression/AstExpressionFunction.ts";
 import { TokenKind } from "../../../data/token/Token.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
@@ -9,7 +9,7 @@ import { parseBlock } from "./parseBlock.ts";
 
 export function parseFunction(
   browser: TokenBrowser,
-): AstFunction | TokenImpasse {
+): AstExpressionFunction | TokenImpasse {
   // keyword (required)
   const keyword = browser.peek();
   if (keyword.str !== Keyword.Function) {

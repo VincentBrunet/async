@@ -1,10 +1,10 @@
-import { AstParenthesis } from "../../../data/ast/AstParenthesis.ts";
+import { AstExpressionParenthesis } from "../../../data/ast/expression/AstExpressionParenthesis.ts";
 import { BrowsedScope } from "../util/BrowsedScope.ts";
 import { browseExpression } from "./browseExpression.ts";
 
 export function browseParenthesis(
   scope: BrowsedScope,
-  astParenthesis: AstParenthesis,
+  astParenthesis: AstExpressionParenthesis,
 ) {
   browseExpression(scope, astParenthesis.expression);
 }

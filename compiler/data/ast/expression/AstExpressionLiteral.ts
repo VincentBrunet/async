@@ -1,4 +1,4 @@
-export enum AstLiteralKind {
+export enum AstExpressionLiteralKind {
   String, // TODO
   Boolean,
   Null,
@@ -14,7 +14,7 @@ export enum AstLiteralKind {
   Float64,
 }
 
-export interface AstLiteral {
-  kind: AstLiteralKind;
+export interface AstExpressionLiteral {
+  kind: AstExpressionLiteralKind;
   data: string;
 }

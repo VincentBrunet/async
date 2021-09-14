@@ -1,7 +1,7 @@
 import { createHash } from "https://deno.land/std@0.106.0/hash/mod.ts";
 import { Keyword } from "../../../constants/Keyword.ts";
-import { AstExpression } from "../../../data/ast/AstExpression.ts";
 import { AstVariable } from "../../../data/ast/AstVariable.ts";
+import { AstExpression } from "../../../data/ast/expression/AstExpression.ts";
 import { TokenKind } from "../../../data/token/Token.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";

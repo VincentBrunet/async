@@ -1,12 +1,12 @@
 import { AstExpression } from "./AstExpression.ts";
 
-export enum AstUnaryOperator {
+export enum AstExpressionUnaryOperator {
   Positive = "Positive",
   Negative = "Negative",
   Not = "Not",
 }
 
-export interface AstUnary {
-  operator: AstUnaryOperator;
+export interface AstExpressionUnary {
+  operator: AstExpressionUnaryOperator;
   expression: AstExpression;
 }

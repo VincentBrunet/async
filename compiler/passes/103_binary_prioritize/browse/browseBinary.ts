@@ -1,47 +1,50 @@
-import { AstBinary, AstBinaryOperator } from "../../../data/ast/AstBinary.ts";
 import {
   AstExpression,
   AstExpressionKind,
-} from "../../../data/ast/AstExpression.ts";
+} from "../../../data/ast/expression/AstExpression.ts";
+import {
+  AstExpressionBinary,
+  AstExpressionBinaryOperator,
+} from "../../../data/ast/expression/AstExpressionBinary.ts";
 import { BrowsedScope } from "../util/BrowsedScope.ts";
 import { browseExpression } from "./browseExpression.ts";
 
 /**
  * Supported symbol priority map
  */
-const precedenceMap = new Map<AstBinaryOperator, number>();
+const precedenceMap = new Map<AstExpressionBinaryOperator, number>();
 
-precedenceMap.set(AstBinaryOperator.Multiplication, 20);
-precedenceMap.set(AstBinaryOperator.Division, 20);
-precedenceMap.set(AstBinaryOperator.Modulo, 20);
+precedenceMap.set(AstExpressionBinaryOperator.Multiplication, 20);
+precedenceMap.set(AstExpressionBinaryOperator.Division, 20);
+precedenceMap.set(AstExpressionBinaryOperator.Modulo, 20);
 
-precedenceMap.set(AstBinaryOperator.Addition, 10);
-precedenceMap.set(AstBinaryOperator.Substraction, 10);
+precedenceMap.set(AstExpressionBinaryOperator.Addition, 10);
+precedenceMap.set(AstExpressionBinaryOperator.Substraction, 10);
 
-precedenceMap.set(AstBinaryOperator.Less, 5);
-precedenceMap.set(AstBinaryOperator.LessOrEqual, 5);
-precedenceMap.set(AstBinaryOperator.More, 5);
-precedenceMap.set(AstBinaryOperator.MoreOrEqual, 5);
+precedenceMap.set(AstExpressionBinaryOperator.Less, 5);
+precedenceMap.set(AstExpressionBinaryOperator.LessOrEqual, 5);
+precedenceMap.set(AstExpressionBinaryOperator.More, 5);
+precedenceMap.set(AstExpressionBinaryOperator.MoreOrEqual, 5);
 
-precedenceMap.set(AstBinaryOperator.Equal, 3);
-precedenceMap.set(AstBinaryOperator.NotEqual, 3);
+precedenceMap.set(AstExpressionBinaryOperator.Equal, 3);
+precedenceMap.set(AstExpressionBinaryOperator.NotEqual, 3);
 
-precedenceMap.set(AstBinaryOperator.And, 2);
-precedenceMap.set(AstBinaryOperator.Or, 2);
+precedenceMap.set(AstExpressionBinaryOperator.And, 2);
+precedenceMap.set(AstExpressionBinaryOperator.Or, 2);
 
-precedenceMap.set(AstBinaryOperator.Assign, 1);
+precedenceMap.set(AstExpressionBinaryOperator.Assign, 1);
 
 /**
  * Recursor tooling for the binary chain
  */
-function getBinary(expression: AstExpression): AstBinary | undefined {
+function getBinary(expression: AstExpression): AstExpressionBinary | undefined {
   if (expression.kind === AstExpressionKind.Binary) {
-    return expression.data as AstBinary;
+    return expression.data as AstExpressionBinary;
   }
   return undefined;
 }
 function listBinaryLeafs(
-  binary: AstBinary,
+  binary: AstExpressionBinary,
   leafs: Array<AstExpression>,
 ) {
   const left = getBinary(binary.expression1);
@@ -58,8 +61,8 @@ function listBinaryLeafs(
   }
 }
 function listBinaryNodes(
-  binary: AstBinary,
-  nodes: Array<AstBinary>,
+  binary: AstExpressionBinary,
+  nodes: Array<AstExpressionBinary>,
 ) {
   const left = getBinary(binary.expression1);
   if (left) {
@@ -77,11 +80,11 @@ function listBinaryNodes(
  */
 export function browseBinary(
   scope: BrowsedScope,
-  astBinary: AstBinary,
+  astBinary: AstExpressionBinary,
 ) {
   // existing state of ast
   const leafs = new Array<AstExpression>();
-  const nodes = new Array<AstBinary>();
+  const nodes = new Array<AstExpressionBinary>();
   listBinaryLeafs(astBinary, leafs);
   listBinaryNodes(astBinary, nodes);
 

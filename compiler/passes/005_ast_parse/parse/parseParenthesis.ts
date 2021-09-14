@@ -1,11 +1,11 @@
-import { AstParenthesis } from "../../../data/ast/AstParenthesis.ts";
+import { AstExpressionParenthesis } from "../../../data/ast/expression/AstExpressionParenthesis.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseExpression } from "./parseExpression.ts";
 
 export function parseParenthesis(
   browser: TokenBrowser,
-): AstParenthesis | TokenImpasse {
+): AstExpressionParenthesis | TokenImpasse {
   // Open
   const parenthesisOpen = browser.peek();
   if (parenthesisOpen.str !== "(") {

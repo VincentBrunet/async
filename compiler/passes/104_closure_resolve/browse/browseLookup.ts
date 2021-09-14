@@ -1,10 +1,10 @@
-import { AstLookup } from "../../../data/ast/AstLookup.ts";
+import { AstExpressionLookup } from "../../../data/ast/expression/AstExpressionLookup.ts";
 import { BrowsedScope } from "../util/BrowsedScope.ts";
 import { browseExpression } from "./browseExpression.ts";
 
 export function browseLookup(
   scope: BrowsedScope,
-  astLookup: AstLookup,
+  astLookup: AstExpressionLookup,
 ) {
   browseExpression(scope, astLookup.expression);
 }

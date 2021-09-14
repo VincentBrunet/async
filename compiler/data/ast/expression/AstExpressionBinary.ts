@@ -1,6 +1,6 @@
 import { AstExpression } from "./AstExpression.ts";
 
-export enum AstBinaryOperator {
+export enum AstExpressionBinaryOperator {
   Addition = "Addition",
   Substraction = "Substraction",
   Multiplication = "Multiplication",
@@ -17,8 +17,8 @@ export enum AstBinaryOperator {
   Assign = "Assign",
 }
 
-export interface AstBinary {
-  operator: AstBinaryOperator;
+export interface AstExpressionBinary {
+  operator: AstExpressionBinaryOperator;
   expression1: AstExpression;
   expression2: AstExpression;
 }

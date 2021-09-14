@@ -1,5 +1,5 @@
 import { AstBlock } from "./AstBlock.ts";
-import { AstExpression } from "./AstExpression.ts";
+import { AstExpression } from "./expression/AstExpression.ts";
 
 export interface AstWhile {
   expression: AstExpression;

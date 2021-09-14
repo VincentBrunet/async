@@ -1,4 +1,4 @@
-import { AstUnary } from "../../../data/ast/AstUnary.ts";
+import { AstExpressionUnary } from "../../../data/ast/expression/AstExpressionUnary.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputScope } from "../util/OutputScope.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
@@ -8,7 +8,7 @@ export function writeUnary(
   module: OutputModule,
   scope: OutputScope,
   statement: OutputStatement,
-  astUnary: AstUnary,
+  astUnary: AstExpressionUnary,
 ) {
   statement.pushPart(astUnary.operator); // TODO
   statement.pushPart("(");

@@ -1,5 +1,8 @@
+import {
+  AstExpressionLiteral,
+  AstExpressionLiteralKind,
+} from "../../../data/ast/expression/AstExpressionLiteral.ts";
 import { TokenKind } from "../../../data/token/Token.ts";
-import { AstLiteral, AstLiteralKind } from "../../../data/ast/AstLiteral.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 
@@ -15,7 +18,10 @@ digits.add("7");
 digits.add("8");
 digits.add("9");
 
-function makeLiteral(kind: AstLiteralKind, data: string): AstLiteral {
+function makeLiteral(
+  kind: AstExpressionLiteralKind,
+  data: string,
+): AstExpressionLiteral {
   return {
     kind: kind,
     data: data,
@@ -24,7 +30,7 @@ function makeLiteral(kind: AstLiteralKind, data: string): AstLiteral {
 
 export function parseLiteral(
   browser: TokenBrowser,
-): AstLiteral | TokenImpasse {
+): AstExpressionLiteral | TokenImpasse {
   const token = browser.peek();
 
   if (token.kind !== TokenKind.Text) {
@@ -35,15 +41,15 @@ export function parseLiteral(
 
   if (value === "true") {
     browser.consume();
-    return makeLiteral(AstLiteralKind.Boolean, "true");
+    return makeLiteral(AstExpressionLiteralKind.Boolean, "true");
   }
   if (value === "false") {
     browser.consume();
-    return makeLiteral(AstLiteralKind.Boolean, "false");
+    return makeLiteral(AstExpressionLiteralKind.Boolean, "false");
   }
   if (value === "null") {
     browser.consume();
-    return makeLiteral(AstLiteralKind.Null, "null");
+    return makeLiteral(AstExpressionLiteralKind.Null, "null");
   }
 
   if (value.startsWith("0x")) {
@@ -55,7 +61,7 @@ export function parseLiteral(
 
   if (digits.has(value[0])) {
     browser.consume();
-    return makeLiteral(AstLiteralKind.Integer32, value);
+    return makeLiteral(AstExpressionLiteralKind.Integer32, value);
   }
 
   return browser.impasse("Literal");

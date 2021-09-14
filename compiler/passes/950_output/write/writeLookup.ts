@@ -1,4 +1,4 @@
-import { AstLookup } from "../../../data/ast/AstLookup.ts";
+import { AstExpressionLookup } from "../../../data/ast/expression/AstExpressionLookup.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputScope } from "../util/OutputScope.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
@@ -8,7 +8,7 @@ export function writeLookup(
   module: OutputModule,
   scope: OutputScope,
   statement: OutputStatement,
-  astLookup: AstLookup,
+  astLookup: AstExpressionLookup,
 ) {
   statement.pushPart("object_read(");
   writeExpression(module, scope, statement, astLookup.expression);

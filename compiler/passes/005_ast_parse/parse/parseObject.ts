@@ -1,11 +1,13 @@
 import { Keyword } from "../../../constants/Keyword.ts";
-import { AstObject } from "../../../data/ast/AstObject.ts";
+import { AstExpressionObject } from "../../../data/ast/expression/AstExpressionObject.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseAnnotation } from "./parseAnnotation.ts";
 import { parseBlock } from "./parseBlock.ts";
 
-export function parseObject(browser: TokenBrowser): AstObject | TokenImpasse {
+export function parseObject(
+  browser: TokenBrowser,
+): AstExpressionObject | TokenImpasse {
   // keyword (required)
   const first = browser.peek();
   if (first.str !== Keyword.Object) {

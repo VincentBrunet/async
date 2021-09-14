@@ -1,4 +1,4 @@
-import { AstExpression } from "../../../data/ast/AstExpression.ts";
+import { AstExpression } from "../../../data/ast/expression/AstExpression.ts";
 import { doBrowseExpression } from "../../../data/ast/util/doBrowseExpression.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputScope } from "../util/OutputScope.ts";

@@ -1,7 +1,5 @@
 import { AstExpression } from "./AstExpression.ts";
 
-export interface AstLookup {
+export interface AstExpressionParenthesis {
   expression: AstExpression;
-  name: string;
-  hash: string;
 }

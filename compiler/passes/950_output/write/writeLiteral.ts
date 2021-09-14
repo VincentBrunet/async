@@ -1,4 +1,7 @@
-import { AstLiteral, AstLiteralKind } from "../../../data/ast/AstLiteral.ts";
+import {
+  AstExpressionLiteral,
+  AstExpressionLiteralKind,
+} from "../../../data/ast/expression/AstExpressionLiteral.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputScope } from "../util/OutputScope.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
@@ -7,11 +10,11 @@ export function writeLiteral(
   module: OutputModule,
   scope: OutputScope,
   statement: OutputStatement,
-  astLiteral: AstLiteral,
+  astLiteral: AstExpressionLiteral,
 ) {
   switch (astLiteral.kind) {
     // Bool
-    case AstLiteralKind.Boolean:
+    case AstExpressionLiteralKind.Boolean:
       if (astLiteral.data === "false") {
         statement.pushPart("boolean_make(FALSE)");
       } else {
@@ -19,20 +22,20 @@ export function writeLiteral(
       }
       break;
     // Null
-    case AstLiteralKind.Null:
+    case AstExpressionLiteralKind.Null:
       statement.pushPart("null_make()");
       break;
     // Number
-    case AstLiteralKind.Integer8:
-    case AstLiteralKind.Integer16:
-    case AstLiteralKind.Integer32:
-    case AstLiteralKind.Integer64:
-    case AstLiteralKind.Unsigned8:
-    case AstLiteralKind.Unsigned16:
-    case AstLiteralKind.Unsigned32:
-    case AstLiteralKind.Unsigned64:
-    case AstLiteralKind.Float32:
-    case AstLiteralKind.Float64:
+    case AstExpressionLiteralKind.Integer8:
+    case AstExpressionLiteralKind.Integer16:
+    case AstExpressionLiteralKind.Integer32:
+    case AstExpressionLiteralKind.Integer64:
+    case AstExpressionLiteralKind.Unsigned8:
+    case AstExpressionLiteralKind.Unsigned16:
+    case AstExpressionLiteralKind.Unsigned32:
+    case AstExpressionLiteralKind.Unsigned64:
+    case AstExpressionLiteralKind.Float32:
+    case AstExpressionLiteralKind.Float64:
       statement.pushPart("i32_make(");
       statement.pushPart(astLiteral.data);
       statement.pushPart(")");
