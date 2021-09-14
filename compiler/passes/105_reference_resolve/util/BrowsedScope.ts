@@ -1,15 +1,15 @@
-import { AstClosure } from "../../../data/ast/AstClosure.ts";
 import { AstParam } from "../../../data/ast/AstParam.ts";
-import {
-  AstReference,
-  AstReferenceKind,
-} from "../../../data/ast/AstReference.ts";
 import { AstVariable } from "../../../data/ast/AstVariable.ts";
+import { AstResolvedClosure } from "../../../data/ast/resolved/AstResolvedClosure.ts";
+import {
+  AstResolvedReference,
+  AstResolvedReferenceKind,
+} from "../../../data/ast/resolved/AstResolvedReference.ts";
 
 export class BrowsedScope {
   private parent?: BrowsedScope;
 
-  private references = new Map<string, AstReference>();
+  private references = new Map<string, AstResolvedReference>();
 
   constructor(parent?: BrowsedScope) {
     this.parent = parent;
@@ -18,15 +18,15 @@ export class BrowsedScope {
   pushVariable(variable: AstVariable) {
     const name = variable.name;
     this.pushReference(name, {
-      kind: AstReferenceKind.Variable,
+      kind: AstResolvedReferenceKind.Variable,
       data: variable,
     });
   }
 
-  pushClosure(closure: AstClosure) {
+  pushClosure(closure: AstResolvedClosure) {
     const name = closure.name;
     this.pushReference(name, {
-      kind: AstReferenceKind.Closure,
+      kind: AstResolvedReferenceKind.Closure,
       data: closure,
     });
   }
@@ -34,12 +34,12 @@ export class BrowsedScope {
   pushParam(param: AstParam) {
     const name = param.name;
     this.pushReference(name, {
-      kind: AstReferenceKind.Param,
+      kind: AstResolvedReferenceKind.Param,
       data: param,
     });
   }
 
-  private pushReference(name: string, reference: AstReference) {
+  private pushReference(name: string, reference: AstResolvedReference) {
     if (this.references.get(name)) {
       throw new Error(
         "Already defined: " + (this.references.get(name)) +
@@ -49,7 +49,7 @@ export class BrowsedScope {
     this.references.set(name, reference);
   }
 
-  findReference(name: string): AstReference | undefined {
+  findReference(name: string): AstResolvedReference | undefined {
     const reference = this.references.get(name);
     if (reference) {
       return reference;

@@ -1,24 +1,24 @@
-import { AstClosure } from "../../../data/ast/AstClosure.ts";
-import { OutputStatement } from "../util/OutputStatement.ts";
-import { AstReferenceKind } from "../../../data/ast/AstReference.ts";
 import { AstParam } from "../../../data/ast/AstParam.ts";
 import { AstVariable } from "../../../data/ast/AstVariable.ts";
+import { AstResolvedClosure } from "../../../data/ast/resolved/AstResolvedClosure.ts";
+import { AstResolvedReferenceKind } from "../../../data/ast/resolved/AstResolvedReference.ts";
+import { OutputStatement } from "../util/OutputStatement.ts";
 
 export function writeClosure(
   statement: OutputStatement,
-  astClosure: AstClosure,
+  astClosure: AstResolvedClosure,
 ) {
   const reference = astClosure.reference;
   if (reference) {
     switch (reference.kind) {
-      case AstReferenceKind.Closure: {
-        const closure = reference.data as AstClosure;
+      case AstResolvedReferenceKind.Closure: {
+        const closure = reference.data as AstResolvedClosure;
         statement.pushPart("closure[");
         statement.pushPart(closure.idx.toString());
         statement.pushPart("]");
         break;
       }
-      case AstReferenceKind.Param: {
+      case AstResolvedReferenceKind.Param: {
         const param = reference.data as AstParam;
         statement.pushPart("ref_make(");
         statement.pushPart("__");
@@ -26,7 +26,7 @@ export function writeClosure(
         statement.pushPart(")");
         break;
       }
-      case AstReferenceKind.Variable: {
+      case AstResolvedReferenceKind.Variable: {
         const variable = reference.data as AstVariable;
         statement.pushPart("__");
         statement.pushPart(variable.name);

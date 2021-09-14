@@ -1,6 +1,6 @@
-import { AstReference } from "../AstReference.ts";
+import { AstResolvedReference } from "../resolved/AstResolvedReference.ts";
 
 export interface AstExpressionIdentifier {
   name: string;
-  reference?: AstReference;
+  reference?: AstResolvedReference;
 }

@@ -1,4 +1,4 @@
-import { AstClosure } from "../../../data/ast/AstClosure.ts";
+import { AstResolvedClosure } from "../../../data/ast/resolved/AstResolvedClosure.ts";
 
 export class BrowsedScope {
   private parent?: BrowsedScope;
@@ -28,9 +28,9 @@ export class BrowsedScope {
     this.closures.add(name);
   }
 
-  readClosures(): Array<AstClosure> {
+  readClosures(): Array<AstResolvedClosure> {
     const closures = [...this.closures];
-    const astClosures = new Array<AstClosure>();
+    const astClosures = new Array<AstResolvedClosure>();
     for (let idx = 0; idx < closures.length; idx++) {
       astClosures.push({
         idx: idx,
