@@ -1,30 +1,29 @@
 import { createHash } from "https://deno.land/std@0.106.0/hash/mod.ts";
 import { Keyword } from "../../../constants/Keyword.ts";
 import { AstExpression } from "../../../data/ast/AstExpression.ts";
-import { AstType } from "../../../data/ast/AstType.ts";
 import { AstVariable } from "../../../data/ast/AstVariable.ts";
 import { TokenKind } from "../../../data/token/Token.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
+import { parseAnnotation } from "./parseAnnotation.ts";
 import { parseExpression } from "./parseExpression.ts";
-import { parseType } from "./parseType.ts";
 
 export function parseVariable(
   browser: TokenBrowser,
 ): AstVariable | TokenImpasse {
-  // keyword const/mutable (required)
+  // keyword const/mutable
   let mutable = false;
-  const first = browser.peek();
-  if (first.str === Keyword.VariableConstant) {
+  const tokenKeyword = browser.peek();
+  if (tokenKeyword.str === Keyword.VariableConstant) {
     mutable = false;
-  } else if (first.str === Keyword.VariableMutable) {
+  } else if (tokenKeyword.str === Keyword.VariableMutable) {
     mutable = true;
   } else {
-    return browser.impasse("Variable declaration: " + first.str);
+    return browser.impasse("Variable.keyword");
   }
   browser.consume();
 
-  // name (required)
+  // name
   const tokenName = browser.peek();
   if (tokenName.kind !== TokenKind.Text) {
     return browser.impasse("Variable.Name");
@@ -32,22 +31,20 @@ export function parseVariable(
   browser.consume();
   const name = tokenName.str;
 
-  // type (optional)
-  let type: AstType;
-  const astType = browser.recurse(parseType);
-  if (astType instanceof TokenImpasse) {
-    return browser.impasse("Variable.Type", [astType]);
+  // type annotation
+  const astAnnotation = browser.recurse(parseAnnotation);
+  if (astAnnotation instanceof TokenImpasse) {
+    return browser.impasse("Variable.Annotation", [astAnnotation]);
   }
-  type = astType;
 
   // value (optional)
   let value: AstExpression | undefined;
-  const delimEqual = browser.peek();
-  if (delimEqual.str === "=") {
+  const tokenEqual = browser.peek();
+  if (tokenEqual.str === "=") {
     browser.consume();
     const astValue = browser.recurse(parseExpression);
     if (astValue instanceof TokenImpasse) {
-      return browser.impasse("Variable's Expression", [astValue]);
+      return browser.impasse("Variable.Expression", [astValue]);
     }
     value = astValue;
   }
@@ -61,7 +58,7 @@ export function parseVariable(
     mutable: mutable,
     name: name,
     hash: hash,
-    type: type,
+    annotation: astAnnotation,
     value: value,
   };
 }

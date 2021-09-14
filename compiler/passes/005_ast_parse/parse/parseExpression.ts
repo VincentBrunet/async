@@ -37,11 +37,13 @@ const recursors = new Array<
     (b: TokenBrowser, left: AstExpression) => AstExpressionData | TokenImpasse,
   ]
 >();
-
 recursors.push([AstExpressionKind.Call, parseCall]);
 recursors.push([AstExpressionKind.Lookup, parseLookup]);
 recursors.push([AstExpressionKind.Binary, parseBinary]);
 
+/**
+ * Parse
+ */
 export function parseExpression(
   browser: TokenBrowser,
   leafOnly?: boolean,

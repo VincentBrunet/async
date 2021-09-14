@@ -1,4 +1,4 @@
-import { repeat } from "./strings/repeat.ts";
+import { repeat } from "../strings/repeat.ts";
 
 function contentJoin(values: Array<string>, ident: number) {
   if (values.length <= 0) {

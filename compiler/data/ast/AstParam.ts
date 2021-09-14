@@ -1,6 +1,6 @@
-import { AstType } from "./AstType.ts";
+import { AstAnnotation } from "./AstAnnotation.ts";
 
 export interface AstParam {
   name: string;
-  type: AstType;
+  annotation: AstAnnotation;
 }

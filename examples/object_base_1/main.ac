@@ -17,6 +17,6 @@ const cl = object {
   const lol = fn {}
 
 }
-//
+
 const obj = (cl.l)()
-// const obj2 = cl.hello()
+const obj2 = cl.hello()

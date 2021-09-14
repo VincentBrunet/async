@@ -29,15 +29,17 @@ t_value *o_0x0(t_ref **closure) {
 
 t_value *module_load() {
   // Variables
-  t_value *module = object_make_x(type_object, 3, 0x31F7A65E315586AC, 0x772A5FB04F9BAD38, 0xD192375885EC7D50);
+  t_value *module = object_make_x(type_object, 4, 0x31F7A65E315586AC, 0x71D00F404E92546C, 0x772A5FB04F9BAD38, 0xD192375885EC7D50);
   t_variable *variables = module->data.object.variables;
   t_ref *__toto = &(variables[0]);
-  t_ref *__obj = &(variables[1]);
-  t_ref *__cl = &(variables[2]);
+  t_ref *__obj2 = &(variables[1]);
+  t_ref *__obj = &(variables[2]);
+  t_ref *__cl = &(variables[3]);
   // Logic
   __toto->value = i32_make(42);
   __cl->value = object_call_x(&o_0x0, 1, __toto);
-  __obj->value = function_call_0(object_read(__cl->value, 0xACAC86C0E609CA90)->value);
+  __obj->value = function_call_0((object_read(__cl->value, 0xACAC86C0E609CA90)->value));
+  __obj2->value = function_call_0(object_read(__cl->value, 0x2CF24DBA5FB0A30E)->value);
   // After
   return module;
 }

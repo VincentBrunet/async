@@ -1,0 +1,4 @@
+
+const tInt: Int = 42
+
+const tIntOrDouble: Int | Double = 42

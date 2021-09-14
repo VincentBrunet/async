@@ -1,12 +1,11 @@
 import { Keyword } from "../../../constants/Keyword.ts";
 import { AstFunction } from "../../../data/ast/AstFunction.ts";
 import { AstParam } from "../../../data/ast/AstParam.ts";
-import { AstType } from "../../../data/ast/AstType.ts";
 import { TokenKind } from "../../../data/token/Token.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
+import { parseAnnotation } from "./parseAnnotation.ts";
 import { parseBlock } from "./parseBlock.ts";
-import { parseType } from "./parseType.ts";
 
 export function parseFunction(
   browser: TokenBrowser,
@@ -14,14 +13,14 @@ export function parseFunction(
   // keyword (required)
   const keyword = browser.peek();
   if (keyword.str !== Keyword.Function) {
-    return browser.impasse("Function (fn)");
+    return browser.impasse("Function.Keyword");
   }
   browser.consume();
 
-  // return type (optional)
-  const astReturn = browser.recurse(parseType);
+  // return type annotation
+  const astReturn = browser.recurse(parseAnnotation);
   if (astReturn instanceof TokenImpasse) {
-    return browser.impasse("Function.Type", [astReturn]);
+    return browser.impasse("Function.Return", [astReturn]);
   }
 
   // params
@@ -49,18 +48,16 @@ export function parseFunction(
       }
       name = name ?? ("$" + astParams.length);
 
-      // params - optional type
-      let type: AstType;
-      const paramType = browser.recurse(parseType);
-      if (paramType instanceof TokenImpasse) {
-        return browser.impasse("Function.Param(type)", [paramType]);
+      // params - type annotation
+      const paramAnnotation = browser.recurse(parseAnnotation);
+      if (paramAnnotation instanceof TokenImpasse) {
+        return browser.impasse("Function.Param.Annotation", [paramAnnotation]);
       }
-      type = paramType;
 
       // param - validated
       astParams.push({
         name: name,
-        type: type,
+        annotation: paramAnnotation,
       });
 
       // params - separator, end
@@ -71,7 +68,7 @@ export function parseFunction(
         browser.consume();
         break;
       } else {
-        return browser.impasse("Function.Param(separator)");
+        return browser.impasse("Function.Param.Separator");
       }
     }
   }

@@ -2,8 +2,8 @@ import { Keyword } from "../../../constants/Keyword.ts";
 import { AstRun } from "../../../data/ast/AstRun.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
+import { parseAnnotation } from "./parseAnnotation.ts";
 import { parseBlock } from "./parseBlock.ts";
-import { parseType } from "./parseType.ts";
 
 export function parseRun(browser: TokenBrowser): AstRun | TokenImpasse {
   // keyword (required)
@@ -12,10 +12,10 @@ export function parseRun(browser: TokenBrowser): AstRun | TokenImpasse {
     return browser.impasse("Run.Keyword");
   }
   browser.consume();
-  // type
-  const astType = browser.recurse(parseType);
-  if (astType instanceof TokenImpasse) {
-    return browser.impasse("Run.Type", [astType]);
+  // type annotation
+  const astAnnotation = browser.recurse(parseAnnotation);
+  if (astAnnotation instanceof TokenImpasse) {
+    return browser.impasse("Run.Annotation", [astAnnotation]);
   }
   // block
   const astBlock = browser.recurse(parseBlock);
@@ -24,7 +24,7 @@ export function parseRun(browser: TokenBrowser): AstRun | TokenImpasse {
   }
   // done
   return {
-    type: astType,
+    annotation: astAnnotation,
     block: astBlock,
   };
 }
