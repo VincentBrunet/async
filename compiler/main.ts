@@ -4,7 +4,7 @@ import { convertTokensToAst } from "./passes/005_ast_parse/convertTokensToAst.ts
 import { applyAstBinaryPrioritize } from "./passes/103_binary_prioritize/applyAstBinaryPrioritize.ts";
 import { applyAstClosureResolve } from "./passes/104_closure_resolve/applyAstClosureResolve.ts";
 import { applyAstReferenceResolve } from "./passes/105_reference_resolve/applyAstReferenceResolve.ts";
-import { convertAstToOutputModule } from "./passes/950_output/convertAstToOutputModule.ts";
+import { convertAstToOutputModule } from "./passes/950_write_output/convertAstToOutputModule.ts";
 import { stringify } from "./util/debug/stringify.ts";
 
 const files = (await getConfig()).files;
