@@ -1,25 +1,26 @@
 import { AstExpressionObject } from "../../../data/ast/expression/AstExpressionObject.ts";
+import { AstRecursor } from "../../util/AstRecursor.ts";
 import { BrowsedScope } from "../util/BrowsedScope.ts";
-import { browseBlock } from "./browseBlock.ts";
 
-export function browseObject(
+export function browseExpressionObject(
+  recursor: AstRecursor<BrowsedScope>,
   scope: BrowsedScope,
-  astObject: AstExpressionObject,
+  ast: AstExpressionObject,
 ) {
   // Asserts
-  if (!astObject.closures) {
+  if (!ast.closures) {
     throw new Error("Object doesn't have proper closure");
   }
 
-  for (const astClosure of astObject.closures) {
+  for (const astClosure of ast.closures) {
     astClosure.reference = scope.findReference(astClosure.name);
   }
 
   const child = new BrowsedScope(scope);
 
-  for (const astClosure of astObject.closures) {
+  for (const astClosure of ast.closures) {
     child.pushClosure(astClosure);
   }
 
-  browseBlock(child, astObject.block);
+  recursor.recurseBlock(recursor, child, ast.block);
 }

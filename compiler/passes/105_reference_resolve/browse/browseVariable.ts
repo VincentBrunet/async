@@ -1,13 +1,14 @@
 import { AstVariable } from "../../../data/ast/AstVariable.ts";
+import { AstRecursor } from "../../util/AstRecursor.ts";
 import { BrowsedScope } from "../util/BrowsedScope.ts";
-import { browseExpression } from "./browseExpression.ts";
 
 export function browseVariable(
+  recursor: AstRecursor<BrowsedScope>,
   scope: BrowsedScope,
-  astVariable: AstVariable,
+  ast: AstVariable,
 ) {
-  scope.pushVariable(astVariable);
-  if (astVariable.value) {
-    browseExpression(scope, astVariable.value);
+  scope.pushVariable(ast);
+  if (ast.value) {
+    recursor.recurseExpression(recursor, scope, ast.value);
   }
 }

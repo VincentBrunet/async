@@ -16,7 +16,7 @@ import { recurseStatement } from "./recurseStatement.ts";
 import { recurseVariable } from "./recurseVariable.ts";
 import { recurseWhile } from "./recurseWhile.ts";
 
-export function makeAstRecursor<Param>(
+export function makeRecursor<Param>(
   partial: Partial<AstRecursor<Param>>,
 ): AstRecursor<Param> {
   return {

@@ -1,7 +1,7 @@
 import {
   AstExpression,
   AstExpressionKind,
-} from "../../data/ast/AstExpression.ts";
+} from "../../data/ast/expression/AstExpression.ts";
 import { AstExpressionBinary } from "../../data/ast/expression/AstExpressionBinary.ts";
 import { AstExpressionCall } from "../../data/ast/expression/AstExpressionCall.ts";
 import { AstExpressionFunction } from "../../data/ast/expression/AstExpressionFunction.ts";

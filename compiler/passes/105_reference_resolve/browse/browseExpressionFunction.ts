@@ -1,28 +1,29 @@
 import { AstExpressionFunction } from "../../../data/ast/expression/AstExpressionFunction.ts";
+import { AstRecursor } from "../../util/AstRecursor.ts";
 import { BrowsedScope } from "../util/BrowsedScope.ts";
-import { browseBlock } from "./browseBlock.ts";
 
-export function browseFunction(
+export function browseExpressionFunction(
+  recursor: AstRecursor<BrowsedScope>,
   scope: BrowsedScope,
-  astFunction: AstExpressionFunction,
+  ast: AstExpressionFunction,
 ) {
   // Asserts
-  if (!astFunction.closures) {
+  if (!ast.closures) {
     throw new Error("Undefined ast function closure");
   }
 
-  for (const astClosure of astFunction.closures) {
+  for (const astClosure of ast.closures) {
     astClosure.reference = scope.findReference(astClosure.name);
   }
 
   const child = new BrowsedScope(scope);
 
-  for (const astClosure of astFunction.closures) {
+  for (const astClosure of ast.closures) {
     child.pushClosure(astClosure);
   }
-  for (const astParam of astFunction.params) {
+  for (const astParam of ast.params) {
     child.pushParam(astParam);
   }
 
-  browseBlock(child, astFunction.block);
+  recursor.recurseBlock(recursor, child, ast.block);
 }

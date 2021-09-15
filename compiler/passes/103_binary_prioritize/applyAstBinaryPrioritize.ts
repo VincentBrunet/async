@@ -1,8 +1,12 @@
 import { AstModule } from "../../data/ast/AstModule.ts";
-import { browseModule } from "./browse/browseModule.ts";
+import { makeRecursor } from "../util/makeRecursor.ts";
+import { browseExpressionBinary } from "./browse/browseExpressionBinary.ts";
 import { BrowsedScope } from "./util/BrowsedScope.ts";
 
+const recursor = makeRecursor<BrowsedScope>({
+  recurseExpressionBinary: browseExpressionBinary,
+});
+
 export function applyAstBinaryPrioritize(astModule: AstModule) {
-  const scope = new BrowsedScope();
-  browseModule(scope, astModule);
+  recursor.recurseModule(recursor, new BrowsedScope(), astModule);
 }
