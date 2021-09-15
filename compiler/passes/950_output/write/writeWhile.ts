@@ -14,7 +14,7 @@ export function writeWhile(
   // opening (expression)
   const opening = new OutputStatement();
   opening.pushPart("while (TO_BOOLEAN(");
-  writeExpression(module, scope, opening, astWhile.expression);
+  writeExpression(module, scope, opening, astWhile.condition);
   opening.pushPart(")) {");
   opening.markSpecial();
   scope.pushStatement(OutputOrder.Logic, opening);

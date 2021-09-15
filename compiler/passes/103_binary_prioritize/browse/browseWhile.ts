@@ -7,6 +7,6 @@ export function browseWhile(
   scope: BrowsedScope,
   astWhile: AstWhile,
 ) {
-  browseExpression(scope, astWhile.expression);
+  browseExpression(scope, astWhile.condition);
   browseBlock(scope, astWhile.block);
 }

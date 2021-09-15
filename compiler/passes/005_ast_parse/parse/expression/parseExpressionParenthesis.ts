@@ -1,9 +1,9 @@
-import { AstExpressionParenthesis } from "../../../data/ast/expression/AstExpressionParenthesis.ts";
-import { TokenBrowser } from "../util/TokenBrowser.ts";
-import { TokenImpasse } from "../util/TokenImpasse.ts";
+import { AstExpressionParenthesis } from "../../../../data/ast/expression/AstExpressionParenthesis.ts";
+import { TokenBrowser } from "../../util/TokenBrowser.ts";
+import { TokenImpasse } from "../../util/TokenImpasse.ts";
 import { parseExpression } from "./parseExpression.ts";
 
-export function parseParenthesis(
+export function parseExpressionParenthesis(
   browser: TokenBrowser,
 ): AstExpressionParenthesis | TokenImpasse {
   // Open

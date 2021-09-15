@@ -1,5 +1,5 @@
 import { AstExpression } from "../../../../data/ast/expression/AstExpression.ts";
-import { doBrowseExpression } from "../../../../data/ast/util/doBrowseExpression.ts";
+import { switchOnExpression } from "../../../../data/ast/util/switchOnExpression.ts";
 import { OutputModule } from "../../util/OutputModule.ts";
 import { OutputScope } from "../../util/OutputScope.ts";
 import { OutputStatement } from "../../util/OutputStatement.ts";
@@ -20,7 +20,7 @@ interface ExpressionParam {
   statement: OutputStatement;
 }
 
-function makeBrowser<T>(
+function makeCase<T>(
   call: (
     module: OutputModule,
     scope: OutputScope,
@@ -33,17 +33,17 @@ function makeBrowser<T>(
   };
 }
 
-const browser = {
-  browseCall: makeBrowser(writeExpressionCall),
-  browseIdentifier: makeBrowser(writeExpressionIdentifier),
-  browseLiteral: makeBrowser(writeExpressionLiteral),
-  browseFunction: makeBrowser(writeExpressionFunction),
-  browseObject: makeBrowser(writeExpressionObject),
-  browseRun: makeBrowser(writeExpressionRun),
-  browseLookup: makeBrowser(writeExpressionLookup),
-  browseUnary: makeBrowser(writeExpressionUnary),
-  browseBinary: makeBrowser(writeExpressionBinary),
-  browseParenthesis: makeBrowser(writeExpressionParenthesis),
+const mapping = {
+  caseCall: makeCase(writeExpressionCall),
+  caseIdentifier: makeCase(writeExpressionIdentifier),
+  caseLiteral: makeCase(writeExpressionLiteral),
+  caseFunction: makeCase(writeExpressionFunction),
+  caseObject: makeCase(writeExpressionObject),
+  caseRun: makeCase(writeExpressionRun),
+  caseLookup: makeCase(writeExpressionLookup),
+  caseUnary: makeCase(writeExpressionUnary),
+  caseBinary: makeCase(writeExpressionBinary),
+  caseParenthesis: makeCase(writeExpressionParenthesis),
 };
 
 export function writeExpression(
@@ -52,5 +52,5 @@ export function writeExpression(
   statement: OutputStatement,
   astExpression: AstExpression,
 ) {
-  doBrowseExpression(astExpression, { module, scope, statement }, browser);
+  switchOnExpression(astExpression, { module, scope, statement }, mapping);
 }

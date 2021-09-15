@@ -1,6 +1,6 @@
 import { AstStatement } from "../../../data/ast/AstStatement.ts";
 import { AstExpression } from "../../../data/ast/expression/AstExpression.ts";
-import { doBrowseStatement } from "../../../data/ast/util/doBrowseStatement.ts";
+import { switchOnStatement } from "../../../data/ast/util/switchOnStatement.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputOrder } from "../util/OutputOrder.ts";
 import { OutputScope } from "../util/OutputScope.ts";
@@ -14,7 +14,7 @@ interface StatementParam {
   scope: OutputScope;
 }
 
-function makeBrowser<T>(
+function makeCase<T>(
   call: (module: OutputModule, scope: OutputScope, ast: T) => void,
 ) {
   return (param: StatementParam, ast: T) => {
@@ -22,10 +22,10 @@ function makeBrowser<T>(
   };
 }
 
-const browser = {
-  browseVariable: makeBrowser(writeVariable),
-  browseWhile: makeBrowser(writeWhile),
-  browseExpression: makeBrowser(
+const mapping = {
+  caseVariable: makeCase(writeVariable),
+  caseWhile: makeCase(writeWhile),
+  caseExpression: makeCase(
     (module: OutputModule, scope: OutputScope, expression: AstExpression) => {
       const statement = new OutputStatement();
       writeExpression(module, scope, statement, expression);
@@ -39,5 +39,5 @@ export function writeStatement(
   scope: OutputScope,
   astStatement: AstStatement,
 ) {
-  doBrowseStatement(astStatement, { module, scope }, browser);
+  switchOnStatement(astStatement, { module, scope }, mapping);
 }

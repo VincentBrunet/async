@@ -1,10 +1,10 @@
-import { AstExpression } from "../../../data/ast/expression/AstExpression.ts";
-import { AstExpressionCall } from "../../../data/ast/expression/AstExpressionCall.ts";
-import { TokenBrowser } from "../util/TokenBrowser.ts";
-import { TokenImpasse } from "../util/TokenImpasse.ts";
+import { AstExpression } from "../../../../data/ast/expression/AstExpression.ts";
+import { AstExpressionCall } from "../../../../data/ast/expression/AstExpressionCall.ts";
+import { TokenBrowser } from "../../util/TokenBrowser.ts";
+import { TokenImpasse } from "../../util/TokenImpasse.ts";
 import { parseExpression } from "./parseExpression.ts";
 
-export function parseCall(
+export function parseExpressionCall(
   browser: TokenBrowser,
   astCallee: AstExpression,
 ): AstExpressionCall | TokenImpasse {

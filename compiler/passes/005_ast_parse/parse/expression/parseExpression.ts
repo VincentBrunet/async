@@ -2,19 +2,19 @@ import {
   AstExpression,
   AstExpressionData,
   AstExpressionKind,
-} from "../../../data/ast/expression/AstExpression.ts";
-import { TokenBrowser } from "../util/TokenBrowser.ts";
-import { TokenImpasse } from "../util/TokenImpasse.ts";
-import { parseBinary } from "./parseBinary.ts";
-import { parseCall } from "./parseCall.ts";
-import { parseFunction } from "./parseFunction.ts";
-import { parseIdentifier } from "./parseIdentifier.ts";
-import { parseLiteral } from "./parseLiteral.ts";
-import { parseLookup } from "./parseLookup.ts";
-import { parseObject } from "./parseObject.ts";
-import { parseParenthesis } from "./parseParenthesis.ts";
-import { parseRun } from "./parseRun.ts";
-import { parseUnary } from "./parseUnary.ts";
+} from "../../../../data/ast/expression/AstExpression.ts";
+import { TokenBrowser } from "../../util/TokenBrowser.ts";
+import { TokenImpasse } from "../../util/TokenImpasse.ts";
+import { parseExpressionBinary } from "./parseExpressionBinary.ts";
+import { parseExpressionCall } from "./parseExpressionCall.ts";
+import { parseExpressionFunction } from "./parseExpressionFunction.ts";
+import { parseExpressionIdentifier } from "./parseExpressionIdentifier.ts";
+import { parseExpressionLiteral } from "./parseExpressionLiteral.ts";
+import { parseExpressionLookup } from "./parseExpressionLookup.ts";
+import { parseExpressionObject } from "./parseExpressionObject.ts";
+import { parseExpressionParenthesis } from "./parseExpressionParenthesis.ts";
+import { parseExpressionRun } from "./parseExpressionRun.ts";
+import { parseExpressionUnary } from "./parseExpressionUnary.ts";
 
 function makeExpression(kind: AstExpressionKind, data: AstExpressionData) {
   return { kind: kind, data: data };
@@ -23,13 +23,13 @@ function makeExpression(kind: AstExpressionKind, data: AstExpressionData) {
 const leafs = new Array<
   [AstExpressionKind, (b: TokenBrowser) => AstExpressionData | TokenImpasse]
 >();
-leafs.push([AstExpressionKind.Unary, parseUnary]);
-leafs.push([AstExpressionKind.Parenthesis, parseParenthesis]);
-leafs.push([AstExpressionKind.Function, parseFunction]);
-leafs.push([AstExpressionKind.Object, parseObject]);
-leafs.push([AstExpressionKind.Run, parseRun]);
-leafs.push([AstExpressionKind.Literal, parseLiteral]);
-leafs.push([AstExpressionKind.Identifier, parseIdentifier]);
+leafs.push([AstExpressionKind.Unary, parseExpressionUnary]);
+leafs.push([AstExpressionKind.Parenthesis, parseExpressionParenthesis]);
+leafs.push([AstExpressionKind.Function, parseExpressionFunction]);
+leafs.push([AstExpressionKind.Object, parseExpressionObject]);
+leafs.push([AstExpressionKind.Run, parseExpressionRun]);
+leafs.push([AstExpressionKind.Literal, parseExpressionLiteral]);
+leafs.push([AstExpressionKind.Identifier, parseExpressionIdentifier]);
 
 const recursors = new Array<
   [
@@ -37,9 +37,9 @@ const recursors = new Array<
     (b: TokenBrowser, left: AstExpression) => AstExpressionData | TokenImpasse,
   ]
 >();
-recursors.push([AstExpressionKind.Call, parseCall]);
-recursors.push([AstExpressionKind.Lookup, parseLookup]);
-recursors.push([AstExpressionKind.Binary, parseBinary]);
+recursors.push([AstExpressionKind.Call, parseExpressionCall]);
+recursors.push([AstExpressionKind.Lookup, parseExpressionLookup]);
+recursors.push([AstExpressionKind.Binary, parseExpressionBinary]);
 
 /**
  * Parse

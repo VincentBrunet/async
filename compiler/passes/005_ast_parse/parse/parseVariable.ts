@@ -5,8 +5,8 @@ import { AstExpression } from "../../../data/ast/expression/AstExpression.ts";
 import { TokenKind } from "../../../data/token/Token.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
+import { parseExpression } from "./expression/parseExpression.ts";
 import { parseAnnotation } from "./parseAnnotation.ts";
-import { parseExpression } from "./parseExpression.ts";
 
 export function parseVariable(
   browser: TokenBrowser,

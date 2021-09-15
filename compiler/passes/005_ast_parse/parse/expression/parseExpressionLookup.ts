@@ -1,11 +1,11 @@
 import { createHash } from "https://deno.land/std@0.106.0/hash/mod.ts";
-import { AstExpression } from "../../../data/ast/expression/AstExpression.ts";
-import { AstExpressionLookup } from "../../../data/ast/expression/AstExpressionLookup.ts";
-import { TokenKind } from "../../../data/token/Token.ts";
-import { TokenBrowser } from "../util/TokenBrowser.ts";
-import { TokenImpasse } from "../util/TokenImpasse.ts";
+import { AstExpression } from "../../../../data/ast/expression/AstExpression.ts";
+import { AstExpressionLookup } from "../../../../data/ast/expression/AstExpressionLookup.ts";
+import { TokenKind } from "../../../../data/token/Token.ts";
+import { TokenBrowser } from "../../util/TokenBrowser.ts";
+import { TokenImpasse } from "../../util/TokenImpasse.ts";
 
-export function parseLookup(
+export function parseExpressionLookup(
   browser: TokenBrowser,
   astExpression: AstExpression,
 ): AstExpressionLookup | TokenImpasse {

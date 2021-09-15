@@ -2,8 +2,8 @@ import { Keyword } from "../../../constants/Keyword.ts";
 import { AstWhile } from "../../../data/ast/AstWhile.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
+import { parseExpression } from "./expression/parseExpression.ts";
 import { parseBlock } from "./parseBlock.ts";
-import { parseExpression } from "./parseExpression.ts";
 
 export function parseWhile(browser: TokenBrowser): AstWhile | TokenImpasse {
   // keyword (required)
@@ -13,9 +13,9 @@ export function parseWhile(browser: TokenBrowser): AstWhile | TokenImpasse {
   }
   browser.consume();
   // expression
-  const astExpression = browser.recurse(parseExpression);
-  if (astExpression instanceof TokenImpasse) {
-    return browser.impasse("While.Expression", [astExpression]);
+  const astCondition = browser.recurse(parseExpression);
+  if (astCondition instanceof TokenImpasse) {
+    return browser.impasse("While.Condition", [astCondition]);
   }
   // block
   const astBlock = browser.recurse(parseBlock);
@@ -24,7 +24,7 @@ export function parseWhile(browser: TokenBrowser): AstWhile | TokenImpasse {
   }
   // done
   return {
-    expression: astExpression,
+    condition: astCondition,
     block: astBlock,
   };
 }

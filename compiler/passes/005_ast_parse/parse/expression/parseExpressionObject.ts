@@ -1,11 +1,11 @@
-import { Keyword } from "../../../constants/Keyword.ts";
-import { AstExpressionObject } from "../../../data/ast/expression/AstExpressionObject.ts";
-import { TokenBrowser } from "../util/TokenBrowser.ts";
-import { TokenImpasse } from "../util/TokenImpasse.ts";
-import { parseAnnotation } from "./parseAnnotation.ts";
-import { parseBlock } from "./parseBlock.ts";
+import { Keyword } from "../../../../constants/Keyword.ts";
+import { AstExpressionObject } from "../../../../data/ast/expression/AstExpressionObject.ts";
+import { TokenBrowser } from "../../util/TokenBrowser.ts";
+import { TokenImpasse } from "../../util/TokenImpasse.ts";
+import { parseAnnotation } from "../parseAnnotation.ts";
+import { parseBlock } from "../parseBlock.ts";
 
-export function parseObject(
+export function parseExpressionObject(
   browser: TokenBrowser,
 ): AstExpressionObject | TokenImpasse {
   // keyword (required)

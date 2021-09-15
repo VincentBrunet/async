@@ -1,10 +1,10 @@
-import { AstExpression } from "../../../data/ast/expression/AstExpression.ts";
+import { AstExpression } from "../../../../data/ast/expression/AstExpression.ts";
 import {
   AstExpressionBinary,
   AstExpressionBinaryOperator,
-} from "../../../data/ast/expression/AstExpressionBinary.ts";
-import { TokenBrowser } from "../util/TokenBrowser.ts";
-import { TokenImpasse } from "../util/TokenImpasse.ts";
+} from "../../../../data/ast/expression/AstExpressionBinary.ts";
+import { TokenBrowser } from "../../util/TokenBrowser.ts";
+import { TokenImpasse } from "../../util/TokenImpasse.ts";
 import { parseExpression } from "./parseExpression.ts";
 
 /**
@@ -35,7 +35,7 @@ symbolMap.set("=", AstExpressionBinaryOperator.Assign);
 /**
  * Do the parsing using an already-parsed left handside
  */
-export function parseBinary(
+export function parseExpressionBinary(
   browser: TokenBrowser,
   left: AstExpression,
 ): AstExpressionBinary | TokenImpasse {

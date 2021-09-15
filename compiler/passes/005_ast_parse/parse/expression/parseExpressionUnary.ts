@@ -1,9 +1,9 @@
 import {
   AstExpressionUnary,
   AstExpressionUnaryOperator,
-} from "../../../data/ast/expression/AstExpressionUnary.ts";
-import { TokenBrowser } from "../util/TokenBrowser.ts";
-import { TokenImpasse } from "../util/TokenImpasse.ts";
+} from "../../../../data/ast/expression/AstExpressionUnary.ts";
+import { TokenBrowser } from "../../util/TokenBrowser.ts";
+import { TokenImpasse } from "../../util/TokenImpasse.ts";
 import { parseExpression } from "./parseExpression.ts";
 
 const symbolMap = new Map<string, AstExpressionUnaryOperator>();
@@ -11,7 +11,7 @@ symbolMap.set("+", AstExpressionUnaryOperator.Positive);
 symbolMap.set("-", AstExpressionUnaryOperator.Negative);
 symbolMap.set("!", AstExpressionUnaryOperator.Not);
 
-export function parseUnary(
+export function parseExpressionUnary(
   browser: TokenBrowser,
 ): AstExpressionUnary | TokenImpasse {
   // operator

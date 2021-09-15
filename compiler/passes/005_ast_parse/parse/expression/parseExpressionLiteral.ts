@@ -1,10 +1,10 @@
 import {
   AstExpressionLiteral,
   AstExpressionLiteralKind,
-} from "../../../data/ast/expression/AstExpressionLiteral.ts";
-import { TokenKind } from "../../../data/token/Token.ts";
-import { TokenBrowser } from "../util/TokenBrowser.ts";
-import { TokenImpasse } from "../util/TokenImpasse.ts";
+} from "../../../../data/ast/expression/AstExpressionLiteral.ts";
+import { TokenKind } from "../../../../data/token/Token.ts";
+import { TokenBrowser } from "../../util/TokenBrowser.ts";
+import { TokenImpasse } from "../../util/TokenImpasse.ts";
 
 const digits = new Set<string>();
 digits.add("0");
@@ -28,7 +28,7 @@ function makeLiteral(
   };
 }
 
-export function parseLiteral(
+export function parseExpressionLiteral(
   browser: TokenBrowser,
 ): AstExpressionLiteral | TokenImpasse {
   const token = browser.peek();
