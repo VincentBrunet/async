@@ -5,7 +5,7 @@ import {
 } from "../../../data/ast/AstStatement.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
-import { parseExpression } from "./expression/parseExpression.ts";
+import { parseExpression } from "./parseExpression.ts";
 import { parseVariable } from "./parseVariable.ts";
 import { parseWhile } from "./parseWhile.ts";
 

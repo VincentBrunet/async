@@ -1,7 +1,7 @@
+import { AstExpression } from "../../data/ast/AstExpression.ts";
 import { AstStatement, AstStatementKind } from "../../data/ast/AstStatement.ts";
 import { AstVariable } from "../../data/ast/AstVariable.ts";
 import { AstWhile } from "../../data/ast/AstWhile.ts";
-import { AstExpression } from "../../data/ast/expression/AstExpression.ts";
 import { AstRecursor } from "./AstRecursor.ts";
 
 export function recurseStatement<Param>(

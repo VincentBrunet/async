@@ -1,11 +1,11 @@
 import {
   AstExpression,
   AstExpressionKind,
-} from "../../../data/ast/expression/AstExpression.ts";
+} from "../../../data/ast/AstExpression.ts";
 import {
   AstExpressionBinary,
   AstExpressionBinaryOperator,
-} from "../../../data/ast/expression/AstExpressionBinary.ts";
+} from "../../../data/ast/AstExpressionBinary.ts";
 import { AstRecursor } from "../../util/AstRecursor.ts";
 import { BrowsedScope } from "../util/BrowsedScope.ts";
 

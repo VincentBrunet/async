@@ -1,4 +1,4 @@
-import { AstExpressionParenthesis } from "../../data/ast/expression/AstExpressionParenthesis.ts";
+import { AstExpressionParenthesis } from "../../data/ast/AstExpressionParenthesis.ts";
 import { AstRecursor } from "./AstRecursor.ts";
 
 export function recurseExpressionParenthesis<Param>(

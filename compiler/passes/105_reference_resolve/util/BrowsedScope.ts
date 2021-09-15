@@ -1,10 +1,10 @@
 import { AstParam } from "../../../data/ast/AstParam.ts";
-import { AstVariable } from "../../../data/ast/AstVariable.ts";
-import { AstResolvedClosure } from "../../../data/ast/resolved/AstResolvedClosure.ts";
+import { AstResolvedClosure } from "../../../data/ast/AstResolvedClosure.ts";
 import {
   AstResolvedReference,
   AstResolvedReferenceKind,
-} from "../../../data/ast/resolved/AstResolvedReference.ts";
+} from "../../../data/ast/AstResolvedReference.ts";
+import { AstVariable } from "../../../data/ast/AstVariable.ts";
 
 export class BrowsedScope {
   private parent?: BrowsedScope;

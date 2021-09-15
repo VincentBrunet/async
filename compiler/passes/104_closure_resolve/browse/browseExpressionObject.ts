@@ -1,4 +1,4 @@
-import { AstExpressionObject } from "../../../data/ast/expression/AstExpressionObject.ts";
+import { AstExpressionObject } from "../../../data/ast/AstExpressionObject.ts";
 import { AstRecursor } from "../../util/AstRecursor.ts";
 import { BrowsedScope } from "../util/BrowsedScope.ts";
 

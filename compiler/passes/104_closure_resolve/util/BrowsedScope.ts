@@ -1,4 +1,4 @@
-import { AstResolvedClosure } from "../../../data/ast/resolved/AstResolvedClosure.ts";
+import { AstResolvedClosure } from "../../../data/ast/AstResolvedClosure.ts";
 
 export class BrowsedScope {
   private parent?: BrowsedScope;

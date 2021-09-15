@@ -1,4 +1,4 @@
-import { AstExpressionBinary } from "../../data/ast/expression/AstExpressionBinary.ts";
+import { AstExpressionBinary } from "../../data/ast/AstExpressionBinary.ts";
 import { AstRecursor } from "./AstRecursor.ts";
 
 export function recurseExpressionBinary<Param>(

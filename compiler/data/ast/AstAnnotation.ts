@@ -1,4 +1,4 @@
-import { AstType } from "./type/AstType.ts";
+import { AstType } from "./AstType.ts";
 
 export interface AstAnnotation {
   type?: AstType;

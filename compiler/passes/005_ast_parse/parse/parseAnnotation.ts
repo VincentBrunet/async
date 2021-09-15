@@ -1,7 +1,7 @@
 import { AstAnnotation } from "../../../data/ast/AstAnnotation.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
-import { parseType } from "./type/parseType.ts";
+import { parseType } from "./parseType.ts";
 
 export function parseAnnotation(
   browser: TokenBrowser,

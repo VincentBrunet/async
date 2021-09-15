@@ -1,5 +1,5 @@
 import { AstAnnotation } from "./AstAnnotation.ts";
-import { AstExpression } from "./expression/AstExpression.ts";
+import { AstExpression } from "./AstExpression.ts";
 
 export interface AstVariable {
   mutable: boolean;

@@ -3,8 +3,8 @@ import { OutputModule } from "../util/OutputModule.ts";
 import { OutputOrder } from "../util/OutputOrder.ts";
 import { OutputScope } from "../util/OutputScope.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
-import { writeExpression } from "./expression/writeExpression.ts";
 import { writeBlock } from "./writeBlock.ts";
+import { writeExpression } from "./writeExpression.ts";
 
 export function writeWhile(
   module: OutputModule,

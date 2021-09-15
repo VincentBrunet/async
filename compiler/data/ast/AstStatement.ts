@@ -1,6 +1,6 @@
+import { AstExpression } from "./AstExpression.ts";
 import { AstVariable } from "./AstVariable.ts";
 import { AstWhile } from "./AstWhile.ts";
-import { AstExpression } from "./expression/AstExpression.ts";
 
 export enum AstStatementKind {
   Variable = "Variable",

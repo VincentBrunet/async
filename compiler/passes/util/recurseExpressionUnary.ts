@@ -1,4 +1,4 @@
-import { AstExpressionUnary } from "../../data/ast/expression/AstExpressionUnary.ts";
+import { AstExpressionUnary } from "../../data/ast/AstExpressionUnary.ts";
 import { AstRecursor } from "./AstRecursor.ts";
 
 export function recurseExpressionUnary<Param>(

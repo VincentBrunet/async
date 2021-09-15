@@ -1,4 +1,4 @@
-import { AstExpressionCall } from "../../data/ast/expression/AstExpressionCall.ts";
+import { AstExpressionCall } from "../../data/ast/AstExpressionCall.ts";
 import { AstRecursor } from "./AstRecursor.ts";
 
 export function recurseExpressionCall<Param>(

@@ -1,17 +1,14 @@
-import {
-  AstExpression,
-  AstExpressionKind,
-} from "../expression/AstExpression.ts";
-import { AstExpressionBinary } from "../expression/AstExpressionBinary.ts";
-import { AstExpressionCall } from "../expression/AstExpressionCall.ts";
-import { AstExpressionFunction } from "../expression/AstExpressionFunction.ts";
-import { AstExpressionIdentifier } from "../expression/AstExpressionIdentifier.ts";
-import { AstExpressionLiteral } from "../expression/AstExpressionLiteral.ts";
-import { AstExpressionLookup } from "../expression/AstExpressionLookup.ts";
-import { AstExpressionObject } from "../expression/AstExpressionObject.ts";
-import { AstExpressionParenthesis } from "../expression/AstExpressionParenthesis.ts";
-import { AstExpressionRun } from "../expression/AstExpressionRun.ts";
-import { AstExpressionUnary } from "../expression/AstExpressionUnary.ts";
+import { AstExpression, AstExpressionKind } from "../AstExpression.ts";
+import { AstExpressionBinary } from "../AstExpressionBinary.ts";
+import { AstExpressionCall } from "../AstExpressionCall.ts";
+import { AstExpressionFunction } from "../AstExpressionFunction.ts";
+import { AstExpressionIdentifier } from "../AstExpressionIdentifier.ts";
+import { AstExpressionLiteral } from "../AstExpressionLiteral.ts";
+import { AstExpressionLookup } from "../AstExpressionLookup.ts";
+import { AstExpressionObject } from "../AstExpressionObject.ts";
+import { AstExpressionParenthesis } from "../AstExpressionParenthesis.ts";
+import { AstExpressionRun } from "../AstExpressionRun.ts";
+import { AstExpressionUnary } from "../AstExpressionUnary.ts";
 
 export interface ExpressionMapping<P, R> {
   caseCall: (param: P, ast: AstExpressionCall) => R;
