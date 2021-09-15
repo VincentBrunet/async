@@ -14,12 +14,15 @@ export function recurseStatement<Param>(
   switch (kind) {
     case AstStatementKind.Variable: {
       r.recurseVariable(r, p, data as AstVariable);
+      break;
     }
     case AstStatementKind.While: {
       r.recurseWhile(r, p, data as AstWhile);
+      break;
     }
     case AstStatementKind.Expression: {
       r.recurseExpression(r, p, data as AstExpression);
+      break;
     }
   }
 }
