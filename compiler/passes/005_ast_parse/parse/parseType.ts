@@ -2,9 +2,9 @@ import {
   AstType,
   AstTypeData,
   AstTypeKind,
-} from "../../../../data/ast/AstType.ts";
-import { TokenBrowser } from "../../util/TokenBrowser.ts";
-import { TokenImpasse } from "../../util/TokenImpasse.ts";
+} from "../../../data/ast/AstType.ts";
+import { TokenBrowser } from "../util/TokenBrowser.ts";
+import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseTypeBinary } from "./parseTypeBinary.ts";
 import { parseTypeIdentifier } from "./parseTypeIdentifier.ts";
 

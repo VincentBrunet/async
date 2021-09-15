@@ -1,7 +1,7 @@
-import { AstTypeIdentifier } from "../../../../data/ast/AstTypeIdentifier.ts";
-import { TokenKind } from "../../../../data/token/Token.ts";
-import { TokenBrowser } from "../../util/TokenBrowser.ts";
-import { TokenImpasse } from "../../util/TokenImpasse.ts";
+import { AstTypeIdentifier } from "../../../data/ast/AstTypeIdentifier.ts";
+import { TokenKind } from "../../../data/token/Token.ts";
+import { TokenBrowser } from "../util/TokenBrowser.ts";
+import { TokenImpasse } from "../util/TokenImpasse.ts";
 
 export function parseTypeIdentifier(
   browser: TokenBrowser,

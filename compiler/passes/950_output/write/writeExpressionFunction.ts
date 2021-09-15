@@ -1,10 +1,10 @@
 import { AstExpressionFunction } from "../../../data/ast/AstExpressionFunction.ts";
-import { writeResolvedClosure } from "../resolved/writeResolvedClosure.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputOrder } from "../util/OutputOrder.ts";
 import { OutputScope } from "../util/OutputScope.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
 import { writeBlock } from "./writeBlock.ts";
+import { writeResolvedClosure } from "./writeResolvedClosure.ts";
 
 let _id = 0;
 

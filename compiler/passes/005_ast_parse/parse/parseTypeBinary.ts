@@ -1,10 +1,10 @@
-import { AstType } from "../../../../data/ast/AstType.ts";
+import { AstType } from "../../../data/ast/AstType.ts";
 import {
   AstTypeBinary,
   AstTypeBinaryOperator,
-} from "../../../../data/ast/AstTypeBinary.ts";
-import { TokenBrowser } from "../../util/TokenBrowser.ts";
-import { TokenImpasse } from "../../util/TokenImpasse.ts";
+} from "../../../data/ast/AstTypeBinary.ts";
+import { TokenBrowser } from "../util/TokenBrowser.ts";
+import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseType } from "./parseType.ts";
 
 /**
