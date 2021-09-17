@@ -1,10 +1,10 @@
-import { AstVariable } from "../../data/ast/AstVariable.ts";
+import { AstStatementVariable } from "../../data/ast/AstStatementVariable.ts";
 import { AstRecursor } from "./AstRecursor.ts";
 
-export function recurseVariable<Param>(
+export function recurseStatementVariable<Param>(
   r: AstRecursor<Param>,
   p: Param,
-  ast: AstVariable,
+  ast: AstStatementVariable,
 ) {
   if (ast.value) {
     r.recurseExpression(r, p, ast.value);

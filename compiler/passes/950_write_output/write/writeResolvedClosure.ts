@@ -1,7 +1,7 @@
-import { AstParam } from "../../../data/ast/AstParam.ts";
+import { AstExpressionFunctionParam } from "../../../data/ast/AstExpressionFunction.ts";
 import { AstResolvedClosure } from "../../../data/ast/AstResolvedClosure.ts";
 import { AstResolvedReferenceKind } from "../../../data/ast/AstResolvedReference.ts";
-import { AstVariable } from "../../../data/ast/AstVariable.ts";
+import { AstStatementVariable } from "../../../data/ast/AstStatementVariable.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
 
 export function writeResolvedClosure(
@@ -19,7 +19,7 @@ export function writeResolvedClosure(
         break;
       }
       case AstResolvedReferenceKind.Param: {
-        const param = reference.data as AstParam;
+        const param = reference.data as AstExpressionFunctionParam;
         statement.pushPart("ref_make(");
         statement.pushPart("__");
         statement.pushPart(param.name);
@@ -27,7 +27,7 @@ export function writeResolvedClosure(
         break;
       }
       case AstResolvedReferenceKind.Variable: {
-        const variable = reference.data as AstVariable;
+        const variable = reference.data as AstStatementVariable;
         statement.pushPart("__");
         statement.pushPart(variable.name);
         break;

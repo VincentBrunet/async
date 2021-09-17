@@ -1,13 +1,10 @@
-import { AstExpression } from "../../../data/ast/AstExpression.ts";
 import { AstStatement } from "../../../data/ast/AstStatement.ts";
 import { switchOnStatement } from "../../../data/ast/util/switchOnStatement.ts";
 import { OutputModule } from "../util/OutputModule.ts";
-import { OutputOrder } from "../util/OutputOrder.ts";
 import { OutputScope } from "../util/OutputScope.ts";
-import { OutputStatement } from "../util/OutputStatement.ts";
-import { writeExpression } from "./writeExpression.ts";
-import { writeVariable } from "./writeVariable.ts";
-import { writeWhile } from "./writeWhile.ts";
+import { writeStatementExpression } from "./writeStatementExpression.ts";
+import { writeStatementVariable } from "./writeStatementVariable.ts";
+import { writeStatementWhile } from "./writeStatementWhile.ts";
 
 interface StatementParam {
   module: OutputModule;
@@ -23,15 +20,9 @@ function makeCase<T>(
 }
 
 const mapping = {
-  caseVariable: makeCase(writeVariable),
-  caseWhile: makeCase(writeWhile),
-  caseExpression: makeCase(
-    (module: OutputModule, scope: OutputScope, expression: AstExpression) => {
-      const statement = new OutputStatement();
-      writeExpression(module, scope, statement, expression);
-      scope.pushStatement(OutputOrder.Logic, statement);
-    },
-  ),
+  caseVariable: makeCase(writeStatementVariable),
+  caseWhile: makeCase(writeStatementWhile),
+  caseExpression: makeCase(writeStatementExpression),
 };
 
 export function writeStatement(

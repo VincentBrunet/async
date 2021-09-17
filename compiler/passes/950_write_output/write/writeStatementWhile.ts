@@ -1,4 +1,4 @@
-import { AstWhile } from "../../../data/ast/AstWhile.ts";
+import { AstStatementWhile } from "../../../data/ast/AstStatementWhile.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputOrder } from "../util/OutputOrder.ts";
 import { OutputScope } from "../util/OutputScope.ts";
@@ -6,10 +6,10 @@ import { OutputStatement } from "../util/OutputStatement.ts";
 import { writeBlock } from "./writeBlock.ts";
 import { writeExpression } from "./writeExpression.ts";
 
-export function writeWhile(
+export function writeStatementWhile(
   module: OutputModule,
   scope: OutputScope,
-  astWhile: AstWhile,
+  astWhile: AstStatementWhile,
 ) {
   // opening (expression)
   const opening = new OutputStatement();

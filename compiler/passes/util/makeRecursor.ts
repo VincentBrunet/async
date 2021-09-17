@@ -13,8 +13,9 @@ import { recurseExpressionRun } from "./recurseExpressionRun.ts";
 import { recurseExpressionUnary } from "./recurseExpressionUnary.ts";
 import { recurseModule } from "./recurseModule.ts";
 import { recurseStatement } from "./recurseStatement.ts";
-import { recurseVariable } from "./recurseVariable.ts";
-import { recurseWhile } from "./recurseWhile.ts";
+import { recurseStatementExpression } from "./recurseStatementExpression.ts";
+import { recurseStatementVariable } from "./recurseStatementVariable.ts";
+import { recurseStatementWhile } from "./recurseStatementWhile.ts";
 
 export function makeRecursor<Param>(
   partial: Partial<AstRecursor<Param>>,
@@ -43,7 +44,11 @@ export function makeRecursor<Param>(
     recurseModule: partial.recurseModule ?? recurseModule,
     recurseBlock: partial.recurseBlock ?? recurseBlock,
     recurseStatement: partial.recurseStatement ?? recurseStatement,
-    recurseVariable: partial.recurseVariable ?? recurseVariable,
-    recurseWhile: partial.recurseWhile ?? recurseWhile,
+    recurseStatementVariable: partial.recurseStatementVariable ??
+      recurseStatementVariable,
+    recurseStatementWhile: partial.recurseStatementWhile ??
+      recurseStatementWhile,
+    recurseStatementExpression: partial.recurseStatementExpression ??
+      recurseStatementExpression,
   };
 }

@@ -1,7 +1,7 @@
 import { AstAnnotation } from "./AstAnnotation.ts";
 import { AstExpression } from "./AstExpression.ts";
 
-export interface AstVariable {
+export interface AstStatementVariable {
   mutable: boolean;
   name: string;
   hash: string;

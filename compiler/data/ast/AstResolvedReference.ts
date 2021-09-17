@@ -1,6 +1,6 @@
-import { AstParam } from "./AstParam.ts";
+import { AstExpressionFunctionParam } from "./AstExpressionFunction.ts";
 import { AstResolvedClosure } from "./AstResolvedClosure.ts";
-import { AstVariable } from "./AstVariable.ts";
+import { AstStatementVariable } from "./AstStatementVariable.ts";
 
 export enum AstResolvedReferenceKind {
   Variable = "Variable",
@@ -9,8 +9,8 @@ export enum AstResolvedReferenceKind {
 }
 
 export type AstResolvedReferenceData =
-  | AstVariable
-  | AstParam
+  | AstStatementVariable
+  | AstExpressionFunctionParam
   | AstResolvedClosure;
 
 export interface AstResolvedReference {

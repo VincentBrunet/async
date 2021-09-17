@@ -1,7 +1,7 @@
-import { AstExpression } from "../../data/ast/AstExpression.ts";
 import { AstStatement, AstStatementKind } from "../../data/ast/AstStatement.ts";
-import { AstVariable } from "../../data/ast/AstVariable.ts";
-import { AstWhile } from "../../data/ast/AstWhile.ts";
+import { AstStatementExpression } from "../../data/ast/AstStatementExpression.ts";
+import { AstStatementVariable } from "../../data/ast/AstStatementVariable.ts";
+import { AstStatementWhile } from "../../data/ast/AstStatementWhile.ts";
 import { AstRecursor } from "./AstRecursor.ts";
 
 export function recurseStatement<Param>(
@@ -13,15 +13,15 @@ export function recurseStatement<Param>(
   const data = ast.data;
   switch (kind) {
     case AstStatementKind.Variable: {
-      r.recurseVariable(r, p, data as AstVariable);
+      r.recurseStatementVariable(r, p, data as AstStatementVariable);
       break;
     }
     case AstStatementKind.While: {
-      r.recurseWhile(r, p, data as AstWhile);
+      r.recurseStatementWhile(r, p, data as AstStatementWhile);
       break;
     }
     case AstStatementKind.Expression: {
-      r.recurseExpression(r, p, data as AstExpression);
+      r.recurseStatementExpression(r, p, data as AstStatementExpression);
       break;
     }
   }

@@ -1,12 +1,12 @@
-import { AstExpression } from "../AstExpression.ts";
 import { AstStatement, AstStatementKind } from "../AstStatement.ts";
-import { AstVariable } from "../AstVariable.ts";
-import { AstWhile } from "../AstWhile.ts";
+import { AstStatementExpression } from "../AstStatementExpression.ts";
+import { AstStatementVariable } from "../AstStatementVariable.ts";
+import { AstStatementWhile } from "../AstStatementWhile.ts";
 
 export interface StatementMapping<P, R> {
-  caseVariable: (param: P, ast: AstVariable) => R;
-  caseWhile: (param: P, ast: AstWhile) => R;
-  caseExpression: (param: P, ast: AstExpression) => R;
+  caseVariable: (param: P, ast: AstStatementVariable) => R;
+  caseWhile: (param: P, ast: AstStatementWhile) => R;
+  caseExpression: (param: P, ast: AstStatementExpression) => R;
 }
 
 export function switchOnStatement<P, R>(
@@ -18,13 +18,13 @@ export function switchOnStatement<P, R>(
   const data = astStatement.data;
   switch (kind) {
     case AstStatementKind.Variable: {
-      return mapping.caseVariable(param, data as AstVariable);
+      return mapping.caseVariable(param, data as AstStatementVariable);
     }
     case AstStatementKind.While: {
-      return mapping.caseWhile(param, data as AstWhile);
+      return mapping.caseWhile(param, data as AstStatementWhile);
     }
     case AstStatementKind.Expression: {
-      return mapping.caseExpression(param, data as AstExpression);
+      return mapping.caseExpression(param, data as AstStatementExpression);
     }
   }
 }

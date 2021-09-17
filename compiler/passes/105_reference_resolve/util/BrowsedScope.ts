@@ -1,10 +1,10 @@
-import { AstParam } from "../../../data/ast/AstParam.ts";
+import { AstExpressionFunctionParam } from "../../../data/ast/AstExpressionFunction.ts";
 import { AstResolvedClosure } from "../../../data/ast/AstResolvedClosure.ts";
 import {
   AstResolvedReference,
   AstResolvedReferenceKind,
 } from "../../../data/ast/AstResolvedReference.ts";
-import { AstVariable } from "../../../data/ast/AstVariable.ts";
+import { AstStatementVariable } from "../../../data/ast/AstStatementVariable.ts";
 
 export class BrowsedScope {
   private parent?: BrowsedScope;
@@ -15,7 +15,7 @@ export class BrowsedScope {
     this.parent = parent;
   }
 
-  pushVariable(variable: AstVariable) {
+  pushVariable(variable: AstStatementVariable) {
     const name = variable.name;
     this.pushReference(name, {
       kind: AstResolvedReferenceKind.Variable,
@@ -31,7 +31,7 @@ export class BrowsedScope {
     });
   }
 
-  pushParam(param: AstParam) {
+  pushParam(param: AstExpressionFunctionParam) {
     const name = param.name;
     this.pushReference(name, {
       kind: AstResolvedReferenceKind.Param,

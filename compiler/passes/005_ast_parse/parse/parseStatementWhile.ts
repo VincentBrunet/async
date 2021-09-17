@@ -1,11 +1,13 @@
 import { Keyword } from "../../../constants/Keyword.ts";
-import { AstWhile } from "../../../data/ast/AstWhile.ts";
+import { AstStatementWhile } from "../../../data/ast/AstStatementWhile.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseBlock } from "./parseBlock.ts";
 import { parseExpression } from "./parseExpression.ts";
 
-export function parseWhile(browser: TokenBrowser): AstWhile | TokenImpasse {
+export function parseStatementWhile(
+  browser: TokenBrowser,
+): AstStatementWhile | TokenImpasse {
   // keyword (required)
   const first = browser.peek();
   if (first.str !== Keyword.While) {

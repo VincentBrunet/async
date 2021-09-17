@@ -1,11 +1,11 @@
-import { AstVariable } from "../../../data/ast/AstVariable.ts";
+import { AstStatementVariable } from "../../../data/ast/AstStatementVariable.ts";
 import { AstRecursor } from "../../util/AstRecursor.ts";
 import { BrowsedScope } from "../util/BrowsedScope.ts";
 
-export function browseVariable(
+export function browseStatementVariable(
   recursor: AstRecursor<BrowsedScope>,
   scope: BrowsedScope,
-  ast: AstVariable,
+  ast: AstStatementVariable,
 ) {
   scope.pushVariable(ast);
   if (ast.value) {

@@ -19,6 +19,7 @@ const val = run {
   const totoB = b
 
   while (true) {
+    const inner = totoA()
     totoA()
   }
 }

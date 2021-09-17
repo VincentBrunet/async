@@ -1,14 +1,14 @@
-import { AstVariable } from "../../../data/ast/AstVariable.ts";
+import { AstStatementVariable } from "../../../data/ast/AstStatementVariable.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputOrder } from "../util/OutputOrder.ts";
 import { OutputScope } from "../util/OutputScope.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
 import { writeExpression } from "./writeExpression.ts";
 
-export function writeVariable(
+export function writeStatementVariable(
   module: OutputModule,
   scope: OutputScope,
-  astVariable: AstVariable,
+  astVariable: AstStatementVariable,
 ) {
   scope.pushVariable(astVariable);
 

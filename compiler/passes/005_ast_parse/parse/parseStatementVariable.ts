@@ -1,16 +1,16 @@
 import { createHash } from "https://deno.land/std@0.106.0/hash/mod.ts";
 import { Keyword } from "../../../constants/Keyword.ts";
 import { AstExpression } from "../../../data/ast/AstExpression.ts";
-import { AstVariable } from "../../../data/ast/AstVariable.ts";
+import { AstStatementVariable } from "../../../data/ast/AstStatementVariable.ts";
 import { TokenKind } from "../../../data/token/Token.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseAnnotation } from "./parseAnnotation.ts";
 import { parseExpression } from "./parseExpression.ts";
 
-export function parseVariable(
+export function parseStatementVariable(
   browser: TokenBrowser,
-): AstVariable | TokenImpasse {
+): AstStatementVariable | TokenImpasse {
   // keyword const/mutable
   let mutable = false;
   const tokenKeyword = browser.peek();

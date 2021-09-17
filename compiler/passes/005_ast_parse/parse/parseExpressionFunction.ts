@@ -1,6 +1,8 @@
 import { Keyword } from "../../../constants/Keyword.ts";
-import { AstExpressionFunction } from "../../../data/ast/AstExpressionFunction.ts";
-import { AstParam } from "../../../data/ast/AstParam.ts";
+import {
+  AstExpressionFunction,
+  AstExpressionFunctionParam,
+} from "../../../data/ast/AstExpressionFunction.ts";
 import { TokenKind } from "../../../data/token/Token.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
@@ -24,7 +26,7 @@ export function parseExpressionFunction(
   }
 
   // params
-  const astParams = new Array<AstParam>();
+  const astParams = new Array<AstExpressionFunctionParam>();
 
   // params - open (optional)
   const paramOpen = browser.peek();

@@ -5,12 +5,12 @@ import { browseExpressionIdentifier } from "./browse/browseExpressionIdentifier.
 import { browseExpressionObject } from "./browse/browseExpressionObject.ts";
 import { browseExpressionRun } from "./browse/browseExpressionRun.ts";
 import { browseModule } from "./browse/browseModule.ts";
-import { browseVariable } from "./browse/browseVariable.ts";
+import { browseStatementVariable } from "./browse/browseStatementVariable.ts";
 import { BrowsedScope } from "./util/BrowsedScope.ts";
 
 const recursor = makeRecursor<BrowsedScope>({
   recurseModule: browseModule,
-  recurseVariable: browseVariable,
+  recurseStatementVariable: browseStatementVariable,
   recurseExpressionFunction: browseExpressionFunction,
   recurseExpressionObject: browseExpressionObject,
   recurseExpressionRun: browseExpressionRun,

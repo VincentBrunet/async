@@ -1,6 +1,6 @@
-import { AstExpression } from "./AstExpression.ts";
-import { AstVariable } from "./AstVariable.ts";
-import { AstWhile } from "./AstWhile.ts";
+import { AstStatementExpression } from "./AstStatementExpression.ts";
+import { AstStatementVariable } from "./AstStatementVariable.ts";
+import { AstStatementWhile } from "./AstStatementWhile.ts";
 
 export enum AstStatementKind {
   Variable = "Variable",
@@ -9,9 +9,9 @@ export enum AstStatementKind {
 }
 
 export type AstStatementData =
-  | AstVariable
-  | AstWhile
-  | AstExpression;
+  | AstStatementVariable
+  | AstStatementWhile
+  | AstStatementExpression;
 
 export interface AstStatement {
   kind: AstStatementKind;

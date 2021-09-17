@@ -1,10 +1,14 @@
 import { AstAnnotation } from "./AstAnnotation.ts";
 import { AstBlock } from "./AstBlock.ts";
-import { AstParam } from "./AstParam.ts";
 import { AstResolvedClosure } from "./AstResolvedClosure.ts";
 
+export interface AstExpressionFunctionParam {
+  name: string;
+  annotation: AstAnnotation;
+}
+
 export interface AstExpressionFunction {
-  params: Array<AstParam>;
+  params: Array<AstExpressionFunctionParam>;
   return: AstAnnotation;
   block: AstBlock;
   closures?: Array<AstResolvedClosure>;

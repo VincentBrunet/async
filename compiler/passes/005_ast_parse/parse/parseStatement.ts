@@ -5,9 +5,9 @@ import {
 } from "../../../data/ast/AstStatement.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
-import { parseExpression } from "./parseExpression.ts";
-import { parseVariable } from "./parseVariable.ts";
-import { parseWhile } from "./parseWhile.ts";
+import { parseStatementExpression } from "./parseStatementExpression.ts";
+import { parseStatementVariable } from "./parseStatementVariable.ts";
+import { parseStatementWhile } from "./parseStatementWhile.ts";
 
 function makeStatement(kind: AstStatementKind, data: AstStatementData) {
   return { kind: kind, data: data };
@@ -17,20 +17,24 @@ export function parseStatement(
   browser: TokenBrowser,
 ): AstStatement | TokenImpasse {
   // const hello = expresion
-  const astVariable = browser.recurse(parseVariable);
-  if (!(astVariable instanceof TokenImpasse)) {
-    return makeStatement(AstStatementKind.Variable, astVariable);
+  const astStatementVariable = browser.recurse(parseStatementVariable);
+  if (!(astStatementVariable instanceof TokenImpasse)) {
+    return makeStatement(AstStatementKind.Variable, astStatementVariable);
   }
   // while (expression)
-  const astWhile = browser.recurse(parseWhile);
-  if (!(astWhile instanceof TokenImpasse)) {
-    return makeStatement(AstStatementKind.While, astWhile);
+  const astStatementWhile = browser.recurse(parseStatementWhile);
+  if (!(astStatementWhile instanceof TokenImpasse)) {
+    return makeStatement(AstStatementKind.While, astStatementWhile);
   }
   // expression
-  const astExpression = browser.recurse(parseExpression);
-  if (!(astExpression instanceof TokenImpasse)) {
-    return makeStatement(AstStatementKind.Expression, astExpression);
+  const astStatementExpression = browser.recurse(parseStatementExpression);
+  if (!(astStatementExpression instanceof TokenImpasse)) {
+    return makeStatement(AstStatementKind.Expression, astStatementExpression);
   }
   // unknown
-  return browser.impasse("Statement", [astVariable, astWhile, astExpression]);
+  return browser.impasse("Statement", [
+    astStatementVariable,
+    astStatementWhile,
+    astStatementExpression,
+  ]);
 }

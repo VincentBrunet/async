@@ -16,12 +16,14 @@ t_value *f_0x1(t_ref **closure) {
 
 t_value *r_0x0(t_ref **closure) {
   // Variables
+  t_ref *__inner = ref_make(NULL);
   t_ref *__totoB = ref_make(NULL);
   t_ref *__totoA = ref_make(NULL);
   // Logic
   __totoA->value = closure[0]->value;
   __totoB->value = closure[1]->value;
   while (TO_BOOLEAN((boolean_make(TRUE)))) {
+  __inner->value = function_call_0(__totoA->value);
   function_call_0(__totoA->value);
   }
   // After

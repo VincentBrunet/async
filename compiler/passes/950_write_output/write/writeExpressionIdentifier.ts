@@ -1,8 +1,8 @@
+import { AstExpressionFunctionParam } from "../../../data/ast/AstExpressionFunction.ts";
 import { AstExpressionIdentifier } from "../../../data/ast/AstExpressionIdentifier.ts";
-import { AstParam } from "../../../data/ast/AstParam.ts";
 import { AstResolvedClosure } from "../../../data/ast/AstResolvedClosure.ts";
 import { AstResolvedReferenceKind } from "../../../data/ast/AstResolvedReference.ts";
-import { AstVariable } from "../../../data/ast/AstVariable.ts";
+import { AstStatementVariable } from "../../../data/ast/AstStatementVariable.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputScope } from "../util/OutputScope.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
@@ -24,13 +24,13 @@ export function writeExpressionIdentifier(
         break;
       }
       case AstResolvedReferenceKind.Param: {
-        const param = reference.data as AstParam;
+        const param = reference.data as AstExpressionFunctionParam;
         statement.pushPart("__");
         statement.pushPart(param.name);
         break;
       }
       case AstResolvedReferenceKind.Variable: {
-        const variable = reference.data as AstVariable;
+        const variable = reference.data as AstStatementVariable;
         statement.pushPart("__");
         statement.pushPart(variable.name);
         statement.pushPart("->value");
