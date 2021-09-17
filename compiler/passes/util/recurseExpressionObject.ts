@@ -6,5 +6,6 @@ export function recurseExpressionObject<Param>(
   p: Param,
   ast: AstExpressionObject,
 ) {
+  r.recurseAnnotation(r, p, ast.annotation);
   r.recurseBlock(r, p, ast.block);
 }

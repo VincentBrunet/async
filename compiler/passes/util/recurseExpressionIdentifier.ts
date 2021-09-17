@@ -5,6 +5,5 @@ export function recurseExpressionIdentifier<Param>(
   r: AstRecursor<Param>,
   p: Param,
   ast: AstExpressionIdentifier,
-): AstExpressionIdentifier {
-  return ast;
+) {
 }

@@ -6,7 +6,9 @@ import {
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseTypeBinary } from "./parseTypeBinary.ts";
+import { parseTypeFunction } from "./parseTypeFunction.ts";
 import { parseTypeIdentifier } from "./parseTypeIdentifier.ts";
+import { parseTypeObject } from "./parseTypeObject.ts";
 
 function makeType(kind: AstTypeKind, data: AstTypeData) {
   return { kind: kind, data: data };
@@ -16,6 +18,8 @@ const leafs = new Array<
   [AstTypeKind, (b: TokenBrowser) => AstTypeData | TokenImpasse]
 >();
 leafs.push([AstTypeKind.Identifier, parseTypeIdentifier]);
+leafs.push([AstTypeKind.Function, parseTypeFunction]);
+leafs.push([AstTypeKind.Object, parseTypeObject]);
 
 const recursors = new Array<
   [

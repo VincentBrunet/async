@@ -1,4 +1,5 @@
 import { AstRecursor } from "./AstRecursor.ts";
+import { recurseAnnotation } from "./recurseAnnotation.ts";
 import { recurseBlock } from "./recurseBlock.ts";
 import { recurseExpression } from "./recurseExpression.ts";
 import { recurseExpressionBinary } from "./recurseExpressionBinary.ts";
@@ -16,11 +17,19 @@ import { recurseStatement } from "./recurseStatement.ts";
 import { recurseStatementExpression } from "./recurseStatementExpression.ts";
 import { recurseStatementVariable } from "./recurseStatementVariable.ts";
 import { recurseStatementWhile } from "./recurseStatementWhile.ts";
+import { recurseType } from "./recurseType.ts";
+import { recurseTypeBinary } from "./recurseTypeBinary.ts";
+import { recurseTypeFunction } from "./recurseTypeFunction.ts";
+import { recurseTypeIdentifier } from "./recurseTypeIdentifier.ts";
+import { recurseTypeObject } from "./recurseTypeObject.ts";
 
 export function makeRecursor<Param>(
   partial: Partial<AstRecursor<Param>>,
 ): AstRecursor<Param> {
   return {
+    recurseModule: partial.recurseModule ?? recurseModule,
+    recurseBlock: partial.recurseBlock ?? recurseBlock,
+
     recurseExpression: partial.recurseExpression ?? recurseExpression,
     recurseExpressionIdentifier: partial.recurseExpressionIdentifier ??
       recurseExpressionIdentifier,
@@ -41,8 +50,19 @@ export function makeRecursor<Param>(
       recurseExpressionCall,
     recurseExpressionLiteral: partial.recurseExpressionLiteral ??
       recurseExpressionLiteral,
-    recurseModule: partial.recurseModule ?? recurseModule,
-    recurseBlock: partial.recurseBlock ?? recurseBlock,
+
+    recurseAnnotation: partial.recurseAnnotation ?? recurseAnnotation,
+
+    recurseType: partial.recurseType ?? recurseType,
+    recurseTypeIdentifier: partial.recurseTypeIdentifier ??
+      recurseTypeIdentifier,
+    recurseTypeBinary: partial.recurseTypeBinary ??
+      recurseTypeBinary,
+    recurseTypeFunction: partial.recurseTypeFunction ??
+      recurseTypeFunction,
+    recurseTypeObject: partial.recurseTypeObject ??
+      recurseTypeObject,
+
     recurseStatement: partial.recurseStatement ?? recurseStatement,
     recurseStatementVariable: partial.recurseStatementVariable ??
       recurseStatementVariable,

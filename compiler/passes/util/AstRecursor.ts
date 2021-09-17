@@ -1,3 +1,4 @@
+import { AstAnnotation } from "../../data/ast/AstAnnotation.ts";
 import { AstBlock } from "../../data/ast/AstBlock.ts";
 import { AstExpression } from "../../data/ast/AstExpression.ts";
 import { AstExpressionBinary } from "../../data/ast/AstExpressionBinary.ts";
@@ -15,6 +16,11 @@ import { AstStatement } from "../../data/ast/AstStatement.ts";
 import { AstStatementExpression } from "../../data/ast/AstStatementExpression.ts";
 import { AstStatementVariable } from "../../data/ast/AstStatementVariable.ts";
 import { AstStatementWhile } from "../../data/ast/AstStatementWhile.ts";
+import { AstType } from "../../data/ast/AstType.ts";
+import { AstTypeBinary } from "../../data/ast/AstTypeBinary.ts";
+import { AstTypeFunction } from "../../data/ast/AstTypeFunction.ts";
+import { AstTypeIdentifier } from "../../data/ast/AstTypeIdentifier.ts";
+import { AstTypeObject } from "../../data/ast/AstTypeObject.ts";
 
 export interface AstRecursor<Param> {
   recurseModule: (
@@ -104,5 +110,37 @@ export interface AstRecursor<Param> {
     recursor: AstRecursor<Param>,
     param: Param,
     ast: AstExpressionParenthesis,
+  ) => void;
+
+  recurseAnnotation: (
+    recursor: AstRecursor<Param>,
+    param: Param,
+    ast: AstAnnotation,
+  ) => void;
+
+  recurseType: (
+    recursor: AstRecursor<Param>,
+    param: Param,
+    ast: AstType,
+  ) => void;
+  recurseTypeBinary: (
+    recursor: AstRecursor<Param>,
+    param: Param,
+    ast: AstTypeBinary,
+  ) => void;
+  recurseTypeIdentifier: (
+    recursor: AstRecursor<Param>,
+    param: Param,
+    ast: AstTypeIdentifier,
+  ) => void;
+  recurseTypeFunction: (
+    recursor: AstRecursor<Param>,
+    param: Param,
+    ast: AstTypeFunction,
+  ) => void;
+  recurseTypeObject: (
+    recursor: AstRecursor<Param>,
+    param: Param,
+    ast: AstTypeObject,
   ) => void;
 }

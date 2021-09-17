@@ -6,5 +6,6 @@ export function recurseExpressionRun<Param>(
   p: Param,
   ast: AstExpressionRun,
 ) {
+  r.recurseAnnotation(r, p, ast.annotation);
   r.recurseBlock(r, p, ast.block);
 }

@@ -5,6 +5,5 @@ export function recurseExpressionLiteral<Param>(
   r: AstRecursor<Param>,
   p: Param,
   ast: AstExpressionLiteral,
-): AstExpressionLiteral {
-  return ast;
+) {
 }
