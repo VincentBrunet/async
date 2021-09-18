@@ -17,7 +17,7 @@ export function parseTypeFunction(
   }
   browser.consume();
 
-  // params - loop
+  // param - loop
   const astParams = new Array<AstTypeFunctionParam>();
   while (true) {
     // param - close

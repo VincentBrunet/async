@@ -7,4 +7,5 @@ export enum Keyword {
   VariableMutable = "mutable",
   BooleanTrue = "true",
   BooleanFalse = "false",
+  Typedef = "typedef",
 }

@@ -6,6 +6,7 @@ import {
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseStatementExpression } from "./parseStatementExpression.ts";
+import { parseStatementTypedef } from "./parseStatementTypedef.ts";
 import { parseStatementVariable } from "./parseStatementVariable.ts";
 import { parseStatementWhile } from "./parseStatementWhile.ts";
 
@@ -32,6 +33,12 @@ export function parseStatement(
     consumeEnd(browser);
     return finishStatement(AstStatementKind.Variable, astStatementVariable);
   }
+  // typedef Hello = type
+  const astStatementTypedef = browser.recurse(parseStatementTypedef);
+  if (!(astStatementTypedef instanceof TokenImpasse)) {
+    consumeEnd(browser);
+    return finishStatement(AstStatementKind.Typedef, astStatementTypedef);
+  }
   // while (expression)
   const astStatementWhile = browser.recurse(parseStatementWhile);
   if (!(astStatementWhile instanceof TokenImpasse)) {
@@ -47,6 +54,7 @@ export function parseStatement(
   // unknown
   return browser.impasse("Statement", [
     astStatementVariable,
+    astStatementTypedef,
     astStatementWhile,
     astStatementExpression,
   ]);
