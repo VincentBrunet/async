@@ -20,7 +20,7 @@ const val = run {
 
   while (true) {
     const inner = totoA()
-    totoA()
+    totoA();
   }
 }
 

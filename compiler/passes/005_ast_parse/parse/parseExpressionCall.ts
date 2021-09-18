@@ -9,20 +9,22 @@ export function parseExpressionCall(
   astCallee: AstExpression,
 ): AstExpressionCall | TokenImpasse {
   // param - open
-  const delimParamOpen = browser.peek();
-  if (delimParamOpen.str !== "(") {
+  const paramOpen = browser.peek();
+  if (paramOpen.str !== "(") {
     return browser.impasse("Call.Params");
   }
   browser.consume();
+
   // param - loop
   const astParams = new Array<AstExpression>();
   while (true) {
     // param - close
-    const delimParamClose = browser.peek();
-    if (delimParamClose.str === ")") {
+    const paramClose = browser.peek();
+    if (paramClose.str === ")") {
       browser.consume();
       break;
     }
+
     // param - content
     const astParam = browser.recurse(parseExpression);
     if (astParam instanceof TokenImpasse) {
@@ -32,17 +34,19 @@ export function parseExpressionCall(
     } else {
       astParams.push(astParam);
     }
+
     // params - separator, end
-    const delimParamSep = browser.peek();
-    if (delimParamSep.str === ",") {
+    const paramDelim = browser.peek();
+    if (paramDelim.str === ",") {
       browser.consume();
-    } else if (delimParamSep.str === ")") {
+    } else if (paramDelim.str === ")") {
       browser.consume();
       break;
     } else {
       return browser.impasse("Call.Param(separator)");
     }
   }
+
   // done
   return {
     callee: astCallee,

@@ -19,20 +19,14 @@ export function parseExpressionFunction(
   }
   browser.consume();
 
-  // return type annotation
-  const astReturn = browser.recurse(parseAnnotation);
-  if (astReturn instanceof TokenImpasse) {
-    return browser.impasse("Function.Return", [astReturn]);
-  }
-
   // params
   const astParams = new Array<AstExpressionFunctionParam>();
 
-  // params - open (optional)
+  // params - open
   const paramOpen = browser.peek();
   if (paramOpen.str === "(") {
     browser.consume();
-
+    // params - loop
     while (true) {
       // params - close
       const paramClose = browser.peek();
@@ -48,31 +42,34 @@ export function parseExpressionFunction(
         browser.consume();
         name = paramName.str;
       }
-      name = name ?? ("$" + astParams.length);
-
       // params - type annotation
       const paramAnnotation = browser.recurse(parseAnnotation);
       if (paramAnnotation instanceof TokenImpasse) {
         return browser.impasse("Function.Param.Annotation", [paramAnnotation]);
       }
-
       // param - validated
       astParams.push({
-        name: name,
+        name: name ?? ("p" + astParams.length),
         annotation: paramAnnotation,
       });
 
       // params - separator, end
-      const paramDelimSeparator = browser.peek();
-      if (paramDelimSeparator.str === ",") {
+      const paramDelim = browser.peek();
+      if (paramDelim.str === ",") {
         browser.consume();
-      } else if (paramDelimSeparator.str === ")") {
+      } else if (paramDelim.str === ")") {
         browser.consume();
         break;
       } else {
         return browser.impasse("Function.Param.Separator");
       }
     }
+  }
+
+  // return type annotation
+  const astReturn = browser.recurse(parseAnnotation);
+  if (astReturn instanceof TokenImpasse) {
+    return browser.impasse("Function.Return", [astReturn]);
   }
 
   // block (optional)

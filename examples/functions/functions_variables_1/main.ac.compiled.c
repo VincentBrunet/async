@@ -1,6 +1,6 @@
 #include <runtime.h>
 
-t_value *f_0x0(t_ref **closure, t_value *__$0) {
+t_value *f_0x0(t_ref **closure, t_value *__p0) {
   // Logic
   function_call_1(closure[0]->value, boolean_make(TRUE));
   // After
