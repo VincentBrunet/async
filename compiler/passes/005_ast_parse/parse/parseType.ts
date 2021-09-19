@@ -17,9 +17,9 @@ function makeType(kind: AstTypeKind, data: AstTypeData) {
 const leafs = new Array<
   [AstTypeKind, (b: TokenBrowser) => AstTypeData | TokenImpasse]
 >();
-leafs.push([AstTypeKind.Identifier, parseTypeIdentifier]);
 leafs.push([AstTypeKind.Function, parseTypeFunction]);
 leafs.push([AstTypeKind.Object, parseTypeObject]);
+leafs.push([AstTypeKind.Identifier, parseTypeIdentifier]);
 
 const recursors = new Array<
   [

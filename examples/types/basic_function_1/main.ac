@@ -1,8 +1,11 @@
 
-const toto: (:Int,:Int):Int = fn (a, b) {
+typedef Func1 = (a: Int, b: Int): Float;
 
-}
+typedef Func2 = (a: Int, b: Int): Float;
 
+const toto: (b:Int,a:Int):Float = fn (a, b) {}
 
-const tutu = fn (a: Float, b: Float):Float {
-}
+const tutu: Func1 | Func2 = fn (a:Int,b:Int):Float {}
+
+const tfunc1: Func1 | Func2 = fn {}
+const tfunc2: Func2 = fn {}

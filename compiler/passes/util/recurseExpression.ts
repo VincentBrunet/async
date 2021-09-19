@@ -11,6 +11,7 @@ import { AstExpressionLookup } from "../../data/ast/AstExpressionLookup.ts";
 import { AstExpressionObject } from "../../data/ast/AstExpressionObject.ts";
 import { AstExpressionParenthesis } from "../../data/ast/AstExpressionParenthesis.ts";
 import { AstExpressionRun } from "../../data/ast/AstExpressionRun.ts";
+import { AstExpressionTyping } from "../../data/ast/AstExpressionTyping.ts";
 import { AstExpressionUnary } from "../../data/ast/AstExpressionUnary.ts";
 import { AstRecursor } from "./AstRecursor.ts";
 
@@ -56,6 +57,10 @@ export function recurseExpression<Param>(
     }
     case AstExpressionKind.Binary: {
       r.recurseExpressionBinary(r, p, data as AstExpressionBinary);
+      break;
+    }
+    case AstExpressionKind.Typing: {
+      r.recurseExpressionTyping(r, p, data as AstExpressionTyping);
       break;
     }
     case AstExpressionKind.Parenthesis: {

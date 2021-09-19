@@ -14,6 +14,7 @@ import { parseExpressionLookup } from "./parseExpressionLookup.ts";
 import { parseExpressionObject } from "./parseExpressionObject.ts";
 import { parseExpressionParenthesis } from "./parseExpressionParenthesis.ts";
 import { parseExpressionRun } from "./parseExpressionRun.ts";
+import { parseExpressionTyping } from "./parseExpressionTyping.ts";
 import { parseExpressionUnary } from "./parseExpressionUnary.ts";
 
 function makeExpression(kind: AstExpressionKind, data: AstExpressionData) {
@@ -42,6 +43,7 @@ const recursors = new Array<
 recursors.push([AstExpressionKind.Call, parseExpressionCall]);
 recursors.push([AstExpressionKind.Lookup, parseExpressionLookup]);
 recursors.push([AstExpressionKind.Binary, parseExpressionBinary]);
+recursors.push([AstExpressionKind.Typing, parseExpressionTyping]);
 
 /**
  * Parse

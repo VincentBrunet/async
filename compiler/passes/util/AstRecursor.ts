@@ -10,6 +10,7 @@ import { AstExpressionLookup } from "../../data/ast/AstExpressionLookup.ts";
 import { AstExpressionObject } from "../../data/ast/AstExpressionObject.ts";
 import { AstExpressionParenthesis } from "../../data/ast/AstExpressionParenthesis.ts";
 import { AstExpressionRun } from "../../data/ast/AstExpressionRun.ts";
+import { AstExpressionTyping } from "../../data/ast/AstExpressionTyping.ts";
 import { AstExpressionUnary } from "../../data/ast/AstExpressionUnary.ts";
 import { AstModule } from "../../data/ast/AstModule.ts";
 import { AstStatement } from "../../data/ast/AstStatement.ts";
@@ -73,15 +74,10 @@ export interface AstRecursor<Param> {
     param: Param,
     ast: AstExpression,
   ) => void;
-  recurseExpressionBinary: (
+  recurseExpressionCall: (
     recursor: AstRecursor<Param>,
     param: Param,
-    ast: AstExpressionBinary,
-  ) => void;
-  recurseExpressionUnary: (
-    recursor: AstRecursor<Param>,
-    param: Param,
-    ast: AstExpressionUnary,
+    ast: AstExpressionCall,
   ) => void;
   recurseExpressionIdentifier: (
     recursor: AstRecursor<Param>,
@@ -92,16 +88,6 @@ export interface AstRecursor<Param> {
     recursor: AstRecursor<Param>,
     param: Param,
     ast: AstExpressionLiteral,
-  ) => void;
-  recurseExpressionCall: (
-    recursor: AstRecursor<Param>,
-    param: Param,
-    ast: AstExpressionCall,
-  ) => void;
-  recurseExpressionLookup: (
-    recursor: AstRecursor<Param>,
-    param: Param,
-    ast: AstExpressionLookup,
   ) => void;
   recurseExpressionFunction: (
     recursor: AstRecursor<Param>,
@@ -117,6 +103,26 @@ export interface AstRecursor<Param> {
     recursor: AstRecursor<Param>,
     param: Param,
     ast: AstExpressionRun,
+  ) => void;
+  recurseExpressionLookup: (
+    recursor: AstRecursor<Param>,
+    param: Param,
+    ast: AstExpressionLookup,
+  ) => void;
+  recurseExpressionUnary: (
+    recursor: AstRecursor<Param>,
+    param: Param,
+    ast: AstExpressionUnary,
+  ) => void;
+  recurseExpressionBinary: (
+    recursor: AstRecursor<Param>,
+    param: Param,
+    ast: AstExpressionBinary,
+  ) => void;
+  recurseExpressionTyping: (
+    recursor: AstRecursor<Param>,
+    param: Param,
+    ast: AstExpressionTyping,
   ) => void;
   recurseExpressionParenthesis: (
     recursor: AstRecursor<Param>,

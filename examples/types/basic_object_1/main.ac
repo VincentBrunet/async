@@ -1,5 +1,10 @@
 
 typedef MyObject = {
+  const hello: Int<Int>;
+  const bubu: Int;
+}
+
+typedef MyObjectCopy = {
   const hello: Int;
   const bubu: Int;
 }
@@ -11,6 +16,8 @@ const myObject = obj : MyObject {
   const bubu: Int;
 }
 
+const myObject2 = obj: MyObjectCopy | MyObject {}
+
 const factoryMyObject = fn () {
   return myObject
 }
@@ -19,3 +26,5 @@ const factoryMyUnion = fn: MyUnion {
   const hello;
   return myObject;
 }
+
+const tt = myObject is MyObject<Int>;

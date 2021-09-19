@@ -12,6 +12,7 @@ import { writeExpressionLookup } from "./writeExpressionLookup.ts";
 import { writeExpressionObject } from "./writeExpressionObject.ts";
 import { writeExpressionParenthesis } from "./writeExpressionParenthesis.ts";
 import { writeExpressionRun } from "./writeExpressionRun.ts";
+import { writeExpressionTyping } from "./writeExpressionTyping.ts";
 import { writeExpressionUnary } from "./writeExpressionUnary.ts";
 
 interface ExpressionParam {
@@ -43,6 +44,7 @@ const mapping = {
   caseLookup: makeCase(writeExpressionLookup),
   caseUnary: makeCase(writeExpressionUnary),
   caseBinary: makeCase(writeExpressionBinary),
+  caseTyping: makeCase(writeExpressionTyping),
   caseParenthesis: makeCase(writeExpressionParenthesis),
 };
 

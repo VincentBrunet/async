@@ -8,6 +8,7 @@ import { AstExpressionLookup } from "../AstExpressionLookup.ts";
 import { AstExpressionObject } from "../AstExpressionObject.ts";
 import { AstExpressionParenthesis } from "../AstExpressionParenthesis.ts";
 import { AstExpressionRun } from "../AstExpressionRun.ts";
+import { AstExpressionTyping } from "../AstExpressionTyping.ts";
 import { AstExpressionUnary } from "../AstExpressionUnary.ts";
 
 export interface ExpressionMapping<P, R> {
@@ -20,6 +21,7 @@ export interface ExpressionMapping<P, R> {
   caseLookup: (param: P, ast: AstExpressionLookup) => R;
   caseUnary: (param: P, ast: AstExpressionUnary) => R;
   caseBinary: (param: P, ast: AstExpressionBinary) => R;
+  caseTyping: (param: P, ast: AstExpressionTyping) => R;
   caseParenthesis: (param: P, ast: AstExpressionParenthesis) => R;
 }
 
@@ -57,6 +59,9 @@ export function switchOnExpression<P, R>(
     }
     case AstExpressionKind.Binary: {
       return mapping.caseBinary(param, data as AstExpressionBinary);
+    }
+    case AstExpressionKind.Typing: {
+      return mapping.caseTyping(param, data as AstExpressionTyping);
     }
     case AstExpressionKind.Parenthesis: {
       return mapping.caseParenthesis(param, data as AstExpressionParenthesis);

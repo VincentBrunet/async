@@ -11,6 +11,7 @@ import { recurseExpressionLookup } from "./recurseExpressionLookup.ts";
 import { recurseExpressionObject } from "./recurseExpressionObject.ts";
 import { recurseExpressionParenthesis } from "./recurseExpressionParenthesis.ts";
 import { recurseExpressionRun } from "./recurseExpressionRun.ts";
+import { recurseExpressionTyping } from "./recurseExpressionTyping.ts";
 import { recurseExpressionUnary } from "./recurseExpressionUnary.ts";
 import { recurseModule } from "./recurseModule.ts";
 import { recurseStatement } from "./recurseStatement.ts";
@@ -35,23 +36,25 @@ export function makeRecursor<Param>(
     recurseExpression: partial.recurseExpression ?? recurseExpression,
     recurseExpressionIdentifier: partial.recurseExpressionIdentifier ??
       recurseExpressionIdentifier,
-    recurseExpressionBinary: partial.recurseExpressionBinary ??
-      recurseExpressionBinary,
-    recurseExpressionUnary: partial.recurseExpressionUnary ??
-      recurseExpressionUnary,
     recurseExpressionFunction: partial.recurseExpressionFunction ??
       recurseExpressionFunction,
     recurseExpressionObject: partial.recurseExpressionObject ??
       recurseExpressionObject,
     recurseExpressionRun: partial.recurseExpressionRun ?? recurseExpressionRun,
-    recurseExpressionParenthesis: partial.recurseExpressionParenthesis ??
-      recurseExpressionParenthesis,
     recurseExpressionLookup: partial.recurseExpressionLookup ??
       recurseExpressionLookup,
     recurseExpressionCall: partial.recurseExpressionCall ??
       recurseExpressionCall,
     recurseExpressionLiteral: partial.recurseExpressionLiteral ??
       recurseExpressionLiteral,
+    recurseExpressionUnary: partial.recurseExpressionUnary ??
+      recurseExpressionUnary,
+    recurseExpressionBinary: partial.recurseExpressionBinary ??
+      recurseExpressionBinary,
+    recurseExpressionTyping: partial.recurseExpressionTyping ??
+      recurseExpressionTyping,
+    recurseExpressionParenthesis: partial.recurseExpressionParenthesis ??
+      recurseExpressionParenthesis,
 
     recurseAnnotation: partial.recurseAnnotation ?? recurseAnnotation,
 
