@@ -56,7 +56,7 @@ export function writeExpressionRun(
 
   // Add a return statement - TODO (this should be added by user)
   const final = new OutputStatement();
-  final.pushPart("return value_null");
+  final.pushPart("return null_make()");
   child.pushStatement(OutputOrder.After, final);
 
   // Runne, push the newly created function

@@ -27,4 +27,4 @@ const factoryMyUnion = fn: MyUnion {
   return myObject;
 }
 
-const tt = myObject is MyObject<Int>;
+//const tt = myObject is MyObject<Int>;

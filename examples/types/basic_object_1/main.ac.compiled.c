@@ -22,7 +22,7 @@ t_value *f_0x0(t_ref **closure) {
   // Logic
   return closure[0]->value;
   // After
-  return value_null;
+  return null_make();
 }
 
 t_value *f_0x1(t_ref **closure) {
@@ -31,26 +31,25 @@ t_value *f_0x1(t_ref **closure) {
   // Logic
   return closure[0]->value;
   // After
-  return value_null;
+  return null_make();
 }
 
 t_value *module_load() {
   // Variables
-  t_value *module = object_make_x(type_object, 5, 0x0E07CF830957701D, 0x30936838B2B6EFA2, 0xCDCBB621A7F2B293, 0xDD3D1D46180E8504, 0xDF7ADC5142B4C5FA);
+  t_value *module = object_make_x(type_object, 4, 0x30936838B2B6EFA2, 0xCDCBB621A7F2B293, 0xDD3D1D46180E8504, 0xDF7ADC5142B4C5FA);
   t_variable *variables = module->data.object.variables;
-  t_ref *__tt = &(variables[0]);
-  t_ref *__myObject = &(variables[1]);
-  t_ref *__myObject2 = &(variables[2]);
-  t_ref *__factoryMyUnion = &(variables[3]);
-  t_ref *__factoryMyObject = &(variables[4]);
+  t_ref *__myObject = &(variables[0]);
+  t_ref *__myObject2 = &(variables[1]);
+  t_ref *__factoryMyUnion = &(variables[2]);
+  t_ref *__factoryMyObject = &(variables[3]);
   // Logic
   __myObject->value = object_call_x(&o_0x0, 0);
   __myObject2->value = object_call_x(&o_0x1, 0);
   __factoryMyObject->value = function_make_x(type_function, &f_0x0, 1, __myObject);
   __factoryMyUnion->value = function_make_x(type_function, &f_0x1, 1, __myObject);
-  __tt->value = Is(__myObject->value/*{"kind":"Identifier","data":{"name":"MyObject","templates":[{"kind":"Identifier","data":{"name":"Int","templates":[]}}]}}*/);
   // After
+  printf("Hello: %d\n", module->data.object.size);
   return module;
 }
 
-t_value *(*main_module)() = module_load
+t_value *(*entry_module)() = module_load;

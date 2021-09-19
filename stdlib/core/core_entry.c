@@ -5,9 +5,8 @@
  * Entrypoint
  */
 int main() {
-  /*
+  ///*
   types_init();
-  values_init();
 
   printf(" -- interfaces -- \n");
   printf("type_i32: %p\n", (void *)type_i32);
@@ -51,7 +50,7 @@ int main() {
   printf("type_is(type_null, type_root): %hhu\n", type_is(type_null, type_root));
   printf("type_is(type_string, type_root): %hhu\n", type_is(type_string, type_root));
   printf("type_is(type_null, type_string): %hhu\n", type_is(type_null, type_string));
-  */
+  //*/
 
   if (entry_module != NULL) {
     printf(" -- main module -- \n");
