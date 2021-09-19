@@ -1,0 +1,21 @@
+
+typedef MyObject = {
+  const hello: Int;
+  const bubu: Int;
+}
+
+typedef MyUnion = MyObject | MyOtherObject;
+
+const myObject = obj : MyObject {
+  const hello: Int;
+  const bubu: Int;
+}
+
+const factoryMyObject = fn () {
+  return myObject
+}
+
+const factoryMyUnion = fn: MyUnion {
+  const hello;
+  return myObject;
+}

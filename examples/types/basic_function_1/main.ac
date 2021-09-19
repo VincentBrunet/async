@@ -1,0 +1,8 @@
+
+const toto: (:Int,:Int):Int = fn (a, b) {
+
+}
+
+
+const tutu = fn (a: Float, b: Float):Float {
+}

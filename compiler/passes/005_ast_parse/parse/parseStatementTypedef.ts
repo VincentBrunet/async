@@ -1,4 +1,3 @@
-import { Keyword } from "../../../constants/Keyword.ts";
 import { AstStatementTypedef } from "../../../data/ast/AstStatementTypedef.ts";
 import { TokenKind } from "../../../data/token/Token.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
@@ -9,8 +8,8 @@ export function parseStatementTypedef(
   browser: TokenBrowser,
 ): AstStatementTypedef | TokenImpasse {
   // keyword
-  const tokenKeyword = browser.peek();
-  if (tokenKeyword.str !== Keyword.Typedef) {
+  const keyword = browser.peek();
+  if (keyword.str !== "typedef") {
     return browser.impasse("Typedef.keyword");
   }
   browser.consume();

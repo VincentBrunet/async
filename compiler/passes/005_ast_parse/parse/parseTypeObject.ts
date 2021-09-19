@@ -1,3 +1,4 @@
+import { createHash } from "https://deno.land/std@0.106.0/hash/mod.ts";
 import {
   AstTypeObject,
   AstTypeObjectField,
@@ -13,7 +14,7 @@ export function parseTypeObject(
   // field - open
   const fieldOpen = browser.peek();
   if (fieldOpen.str !== "{") {
-    return browser.impasse("TypeObject.Field.Open");
+    return browser.impasse("TypeObject.Open");
   }
   browser.consume();
 
@@ -27,12 +28,25 @@ export function parseTypeObject(
       break;
     }
 
+    // field - mutable
+    let mutable = false;
+    const fieldMutable = browser.peek();
+    if (fieldMutable.str === "const") {
+      mutable = false;
+    } else if (fieldMutable.str === "mutable") {
+      mutable = true;
+    } else {
+      return browser.impasse("TypeObject.Field.Modifier");
+    }
+    browser.consume();
+
     // field - name
     const fieldName = browser.peek();
     if (fieldName.kind !== TokenKind.Text) {
       return browser.impasse("TypeObject.Field.Name");
     }
     browser.consume();
+    const name = fieldName.str;
 
     // field - type
     const fieldAnnotation = browser.recurse(parseAnnotation);
@@ -45,15 +59,23 @@ export function parseTypeObject(
       return browser.impasse("TypeObject.Field.Type");
     }
 
+    // hashed name
+    const sha256 = createHash("sha256").update(name).toString();
+    const hash = "0x" + sha256.slice(0, 16).toUpperCase();
+
     // field - validated
     astFields.push({
-      name: fieldName.str,
+      mutable: mutable,
+      name: name,
+      hash: hash,
       type: fieldAnnotation.type,
     });
 
     // field - separator, end
     const fieldDelim = browser.peek();
     if (fieldDelim.str === ",") {
+      browser.consume();
+    } else if (fieldDelim.str === ";") {
       browser.consume();
     } else if (fieldDelim.str === "}") {
       browser.consume();

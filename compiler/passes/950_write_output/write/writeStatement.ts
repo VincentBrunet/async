@@ -3,6 +3,8 @@ import { switchOnStatement } from "../../../data/ast/util/switchOnStatement.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputScope } from "../util/OutputScope.ts";
 import { writeStatementExpression } from "./writeStatementExpression.ts";
+import { writeStatementReturn } from "./writeStatementReturn.ts";
+import { writeStatementTypedef } from "./writeStatementTypedef.ts";
 import { writeStatementVariable } from "./writeStatementVariable.ts";
 import { writeStatementWhile } from "./writeStatementWhile.ts";
 
@@ -21,7 +23,9 @@ function makeCase<T>(
 
 const mapping = {
   caseVariable: makeCase(writeStatementVariable),
+  caseTypedef: makeCase(writeStatementTypedef),
   caseWhile: makeCase(writeStatementWhile),
+  caseReturn: makeCase(writeStatementReturn),
   caseExpression: makeCase(writeStatementExpression),
 };
 

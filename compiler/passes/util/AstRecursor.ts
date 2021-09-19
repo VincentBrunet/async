@@ -14,6 +14,8 @@ import { AstExpressionUnary } from "../../data/ast/AstExpressionUnary.ts";
 import { AstModule } from "../../data/ast/AstModule.ts";
 import { AstStatement } from "../../data/ast/AstStatement.ts";
 import { AstStatementExpression } from "../../data/ast/AstStatementExpression.ts";
+import { AstStatementReturn } from "../../data/ast/AstStatementReturn.ts";
+import { AstStatementTypedef } from "../../data/ast/AstStatementTypedef.ts";
 import { AstStatementVariable } from "../../data/ast/AstStatementVariable.ts";
 import { AstStatementWhile } from "../../data/ast/AstStatementWhile.ts";
 import { AstType } from "../../data/ast/AstType.ts";
@@ -40,15 +42,25 @@ export interface AstRecursor<Param> {
     param: Param,
     ast: AstStatement,
   ) => void;
+  recurseStatementVariable: (
+    recursor: AstRecursor<Param>,
+    param: Param,
+    ast: AstStatementVariable,
+  ) => void;
+  recurseStatementTypedef: (
+    recursor: AstRecursor<Param>,
+    param: Param,
+    ast: AstStatementTypedef,
+  ) => void;
   recurseStatementWhile: (
     recursor: AstRecursor<Param>,
     param: Param,
     ast: AstStatementWhile,
   ) => void;
-  recurseStatementVariable: (
+  recurseStatementReturn: (
     recursor: AstRecursor<Param>,
     param: Param,
-    ast: AstStatementVariable,
+    ast: AstStatementReturn,
   ) => void;
   recurseStatementExpression: (
     recursor: AstRecursor<Param>,

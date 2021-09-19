@@ -1,5 +1,4 @@
 import { createHash } from "https://deno.land/std@0.106.0/hash/mod.ts";
-import { Keyword } from "../../../constants/Keyword.ts";
 import { AstExpression } from "../../../data/ast/AstExpression.ts";
 import { AstStatementVariable } from "../../../data/ast/AstStatementVariable.ts";
 import { TokenKind } from "../../../data/token/Token.ts";
@@ -13,13 +12,13 @@ export function parseStatementVariable(
 ): AstStatementVariable | TokenImpasse {
   // keyword const/mutable
   let mutable = false;
-  const tokenKeyword = browser.peek();
-  if (tokenKeyword.str === Keyword.VariableConstant) {
+  const modifier = browser.peek();
+  if (modifier.str === "const") {
     mutable = false;
-  } else if (tokenKeyword.str === Keyword.VariableMutable) {
+  } else if (modifier.str === "mutable") {
     mutable = true;
   } else {
-    return browser.impasse("Variable.keyword");
+    return browser.impasse("Variable.modifier");
   }
   browser.consume();
 

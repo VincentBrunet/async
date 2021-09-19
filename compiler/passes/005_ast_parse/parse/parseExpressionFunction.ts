@@ -1,4 +1,3 @@
-import { Keyword } from "../../../constants/Keyword.ts";
 import {
   AstExpressionFunction,
   AstExpressionFunctionParam,
@@ -14,7 +13,7 @@ export function parseExpressionFunction(
 ): AstExpressionFunction | TokenImpasse {
   // keyword (required)
   const keyword = browser.peek();
-  if (keyword.str !== Keyword.Function) {
+  if (keyword.str !== "fn") {
     return browser.impasse("Function.Keyword");
   }
   browser.consume();

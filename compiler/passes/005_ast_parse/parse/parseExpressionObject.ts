@@ -1,4 +1,3 @@
-import { Keyword } from "../../../constants/Keyword.ts";
 import { AstExpressionObject } from "../../../data/ast/AstExpressionObject.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
@@ -9,8 +8,8 @@ export function parseExpressionObject(
   browser: TokenBrowser,
 ): AstExpressionObject | TokenImpasse {
   // keyword (required)
-  const first = browser.peek();
-  if (first.str !== Keyword.Object) {
+  const keyword = browser.peek();
+  if (keyword.str !== "obj") {
     return browser.impasse("Object.Keyword");
   }
   browser.consume();

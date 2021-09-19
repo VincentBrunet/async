@@ -20,6 +20,7 @@ function makeExpression(kind: AstExpressionKind, data: AstExpressionData) {
   return { kind: kind, data: data };
 }
 
+// Leaf expression can consume tokens right away
 const leafs = new Array<
   [AstExpressionKind, (b: TokenBrowser) => AstExpressionData | TokenImpasse]
 >();
@@ -31,6 +32,7 @@ leafs.push([AstExpressionKind.Run, parseExpressionRun]);
 leafs.push([AstExpressionKind.Literal, parseExpressionLiteral]);
 leafs.push([AstExpressionKind.Identifier, parseExpressionIdentifier]);
 
+// Left recursion expressions require look-ahead
 const recursors = new Array<
   [
     AstExpressionKind,
