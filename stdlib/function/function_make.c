@@ -1,5 +1,5 @@
-#include <function_make.h>
-#include <value_make.h>
+#include <function/function_make.h>
+#include <value/value_make.h>
 
 t_value *function_make(t_type *type, void *callable, t_u32 size) {
   t_value *value = value_make(type);

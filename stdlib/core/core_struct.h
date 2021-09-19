@@ -1,5 +1,5 @@
-#ifndef __CORE_H
-#define __CORE_H
+#ifndef __core_struct_H
+#define __core_struct_H
 
 #include <stdarg.h>
 #include <stdint.h>
@@ -106,5 +106,7 @@ typedef struct t_value {
   t_data data;
   t_type* type;
 } t_value;
+
+#include <types.h>  // TODO
 
 #endif

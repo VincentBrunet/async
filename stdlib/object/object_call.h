@@ -1,7 +1,7 @@
 #ifndef __object_call_H
 #define __object_call_H
 
-#include <types.h>
+#include <core/core_struct.h>
 
 t_value *object_call_0(t_value *(type)(t_ref **));
 t_value *object_call_1(t_value *(type)(t_ref **), t_ref *r1);

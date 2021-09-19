@@ -1,5 +1,5 @@
-#include <boolean_make.h>
-#include <value_make.h>
+#include <boolean/boolean_make.h>
+#include <value/value_make.h>
 
 t_value *boolean_true = NULL;
 t_value *boolean_false = NULL;

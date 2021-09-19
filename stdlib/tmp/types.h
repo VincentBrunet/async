@@ -1,7 +1,7 @@
-#ifndef __TYPES_H
-#define __TYPES_H
+#ifndef __tmp_types_H
+#define __tmp_types_H
 
-#include "core.h"
+#include <core/core_struct.h>
 
 /**
  * Global native types

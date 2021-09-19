@@ -1,5 +1,5 @@
-#include <object_make.h>
-#include <value_make.h>
+#include <object/object_make.h>
+#include <value/value_make.h>
 
 t_value *object_make(t_type *type, t_u32 size) {
   t_value *value = value_make(type);

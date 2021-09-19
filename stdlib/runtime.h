@@ -1,16 +1,16 @@
-#ifndef __RUNTIME_H
-#define __RUNTIME_H
+#ifndef __runtime_H
+#define __runtime_H
 
-#include <function_call.h>
-#include <function_make.h>
-#include <object_call.h>
-#include <object_make.h>
-#include <object_read.h>
-#include <ref_make.h>
-
-#include "core.h"
-#include "entry.h"
-#include "types.h"
-#include "values.h"
+#include <boolean/boolean_make.h>
+#include <core/core_entry.h>
+#include <core/core_struct.h>
+#include <i32/i32_make.h>
+#include <null/null_make.h>
+#include <object/object_call.h>
+#include <object/object_make.h>
+#include <object/object_read.h>
+#include <ref/ref_make.h>
+#include <tmp/types.h>
+#include <value/value_make.h>
 
 #endif

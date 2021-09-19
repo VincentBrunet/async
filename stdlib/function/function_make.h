@@ -1,7 +1,7 @@
 #ifndef __function_make_H
 #define __function_make_H
 
-#include <types.h>
+#include <core/core_struct.h>
 
 t_value *function_make_0(t_type *type, void *callable);
 t_value *function_make_1(t_type *type, void *callable, t_ref *r1);

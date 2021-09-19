@@ -1,7 +1,7 @@
 #ifndef __object_make_H
 #define __object_make_H
 
-#include <types.h>
+#include <core/core_struct.h>
 
 t_value *object_make_0(t_type *type);
 t_value *object_make_1(t_type *type, t_u64 key1);

@@ -1,13 +1,11 @@
-#include "entry.h"
-
+#include <core/core_entry.h>
 #include <stdio.h>
-
-#include "values.h"
 
 /**
  * Entrypoint
  */
 int main() {
+  /*
   types_init();
   values_init();
 
@@ -53,10 +51,11 @@ int main() {
   printf("type_is(type_null, type_root): %hhu\n", type_is(type_null, type_root));
   printf("type_is(type_string, type_root): %hhu\n", type_is(type_string, type_root));
   printf("type_is(type_null, type_string): %hhu\n", type_is(type_null, type_string));
+  */
 
-  if (main_module != NULL) {
+  if (entry_module != NULL) {
     printf(" -- main module -- \n");
-    main_module();
+    entry_module();
     printf(" -- end module -- \n");
   }
 }
