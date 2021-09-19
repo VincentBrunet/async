@@ -91,7 +91,7 @@ typedef union t_data {
   t_f64 f64;
   t_object object;
   t_function function;
-  // t_string string;
+  t_string string;
   t_boolean boolean;
 } t_data;
 
