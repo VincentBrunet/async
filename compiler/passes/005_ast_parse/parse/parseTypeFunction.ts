@@ -5,7 +5,7 @@ import {
 import { TokenKind } from "../../../data/token/Token.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
-import { parseAnnotation } from "./parseAnnotation.ts";
+import { parseAnnotationType } from "./parseAnnotationType.ts";
 
 export function parseTypeFunction(
   browser: TokenBrowser,
@@ -35,7 +35,7 @@ export function parseTypeFunction(
       name = paramName.str;
     }
     // param - type
-    const paramAnnotation = browser.recurse(parseAnnotation);
+    const paramAnnotation = browser.recurse(parseAnnotationType);
     if (paramAnnotation instanceof TokenImpasse) {
       return browser.impasse("TypeFunction.Param.Annotation", [
         paramAnnotation,
@@ -63,7 +63,7 @@ export function parseTypeFunction(
   }
 
   // return
-  const returnAnnotation = browser.recurse(parseAnnotation);
+  const returnAnnotation = browser.recurse(parseAnnotationType);
   if (returnAnnotation instanceof TokenImpasse) {
     return browser.impasse("TypeFunction.Param.Annotation", [
       returnAnnotation,

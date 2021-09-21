@@ -4,7 +4,7 @@ import { AstStatementVariable } from "../../../data/ast/AstStatementVariable.ts"
 import { TokenKind } from "../../../data/token/Token.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
-import { parseAnnotation } from "./parseAnnotation.ts";
+import { parseAnnotationType } from "./parseAnnotationType.ts";
 import { parseExpression } from "./parseExpression.ts";
 
 export function parseStatementVariable(
@@ -31,7 +31,7 @@ export function parseStatementVariable(
   const name = tokenName.str;
 
   // type annotation
-  const astAnnotation = browser.recurse(parseAnnotation);
+  const astAnnotation = browser.recurse(parseAnnotationType);
   if (astAnnotation instanceof TokenImpasse) {
     return browser.impasse("Variable.Annotation", [astAnnotation]);
   }

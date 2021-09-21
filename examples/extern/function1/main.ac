@@ -3,5 +3,4 @@
 
 extern(C) my_print: (str:String):void;
 
-
 my_print("Hello");

@@ -6,7 +6,7 @@ export function recurseStatementVariable<Param>(
   p: Param,
   ast: AstStatementVariable,
 ) {
-  r.recurseAnnotation(r, p, ast.annotation);
+  r.recurseAnnotationType(r, p, ast.annotation);
   if (ast.value) {
     r.recurseExpression(r, p, ast.value);
   }

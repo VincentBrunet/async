@@ -1,11 +1,11 @@
-import { AstAnnotation } from "../../../data/ast/AstAnnotation.ts";
+import { AstAnnotationType } from "../../../data/ast/AstAnnotationType.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseType } from "./parseType.ts";
 
-export function parseAnnotation(
+export function parseAnnotationType(
   browser: TokenBrowser,
-): AstAnnotation | TokenImpasse {
+): AstAnnotationType | TokenImpasse {
   // type annotation symbol
   const keyword = browser.peek();
   if (keyword.str !== ":") {

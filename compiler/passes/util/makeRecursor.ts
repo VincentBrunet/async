@@ -1,5 +1,6 @@
 import { AstRecursor } from "./AstRecursor.ts";
-import { recurseAnnotation } from "./recurseAnnotation.ts";
+import { recurseAnnotationTemplate } from "./recurseAnnotationTemplate.ts";
+import { recurseAnnotationType } from "./recurseAnnotationType.ts";
 import { recurseBlock } from "./recurseBlock.ts";
 import { recurseExpression } from "./recurseExpression.ts";
 import { recurseExpressionBinary } from "./recurseExpressionBinary.ts";
@@ -56,7 +57,10 @@ export function makeRecursor<Param>(
     recurseExpressionParenthesis: partial.recurseExpressionParenthesis ??
       recurseExpressionParenthesis,
 
-    recurseAnnotation: partial.recurseAnnotation ?? recurseAnnotation,
+    recurseAnnotationType: partial.recurseAnnotationType ??
+      recurseAnnotationType,
+    recurseAnnotationTemplate: partial.recurseAnnotationTemplate ??
+      recurseAnnotationTemplate,
 
     recurseType: partial.recurseType ?? recurseType,
     recurseTypeIdentifier: partial.recurseTypeIdentifier ??

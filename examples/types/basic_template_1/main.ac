@@ -1,0 +1,18 @@
+
+
+typedef MyType<A, B> = {
+  const a: A;
+  const b: B;
+}
+
+
+const myValue = fn :MyType<Int, Int> {
+  return obj {
+    const a = 42;
+    const b = 44;
+  }
+}
+
+const myValue2 = fn<A: MyType, B> :MyType<A, B> {
+
+}

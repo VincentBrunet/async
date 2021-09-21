@@ -1,4 +1,5 @@
-import { AstAnnotation } from "../../data/ast/AstAnnotation.ts";
+import { AstAnnotationTemplate } from "../../data/ast/AstAnnotationTemplate.ts";
+import { AstAnnotationType } from "../../data/ast/AstAnnotationType.ts";
 import { AstBlock } from "../../data/ast/AstBlock.ts";
 import { AstExpression } from "../../data/ast/AstExpression.ts";
 import { AstExpressionBinary } from "../../data/ast/AstExpressionBinary.ts";
@@ -130,10 +131,15 @@ export interface AstRecursor<Param> {
     ast: AstExpressionParenthesis,
   ) => void;
 
-  recurseAnnotation: (
+  recurseAnnotationType: (
     recursor: AstRecursor<Param>,
     param: Param,
-    ast: AstAnnotation,
+    ast: AstAnnotationType,
+  ) => void;
+  recurseAnnotationTemplate: (
+    recursor: AstRecursor<Param>,
+    param: Param,
+    ast: AstAnnotationTemplate,
   ) => void;
 
   recurseType: (

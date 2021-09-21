@@ -5,7 +5,8 @@ import {
 import { TokenKind } from "../../../data/token/Token.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
-import { parseAnnotation } from "./parseAnnotation.ts";
+import { parseAnnotationTemplate } from "./parseAnnotationTemplate.ts";
+import { parseAnnotationType } from "./parseAnnotationType.ts";
 import { parseBlock } from "./parseBlock.ts";
 
 export function parseExpressionFunction(
@@ -17,6 +18,12 @@ export function parseExpressionFunction(
     return browser.impasse("Function.Keyword");
   }
   browser.consume();
+
+  // template annotation
+  const astTemplate = browser.recurse(parseAnnotationTemplate);
+  if (astTemplate instanceof TokenImpasse) {
+    return browser.impasse("Function.Templates", [astTemplate]);
+  }
 
   // params
   const astParams = new Array<AstExpressionFunctionParam>();
@@ -42,7 +49,7 @@ export function parseExpressionFunction(
         name = paramName.str;
       }
       // params - type annotation
-      const paramAnnotation = browser.recurse(parseAnnotation);
+      const paramAnnotation = browser.recurse(parseAnnotationType);
       if (paramAnnotation instanceof TokenImpasse) {
         return browser.impasse("Function.Param.Annotation", [paramAnnotation]);
       }
@@ -66,7 +73,7 @@ export function parseExpressionFunction(
   }
 
   // return type annotation
-  const astReturn = browser.recurse(parseAnnotation);
+  const astReturn = browser.recurse(parseAnnotationType);
   if (astReturn instanceof TokenImpasse) {
     return browser.impasse("Function.Return", [astReturn]);
   }
@@ -79,6 +86,7 @@ export function parseExpressionFunction(
 
   // done, create ast
   return {
+    template: astTemplate,
     params: astParams,
     return: astReturn,
     block: astBlock,

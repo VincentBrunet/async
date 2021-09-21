@@ -6,9 +6,10 @@ export function recurseExpressionFunction<Param>(
   p: Param,
   ast: AstExpressionFunction,
 ) {
+  r.recurseAnnotationTemplate(r, p, ast.template);
   for (const param of ast.params) {
-    r.recurseAnnotation(r, p, param.annotation);
+    r.recurseAnnotationType(r, p, param.annotation);
   }
-  r.recurseAnnotation(r, p, ast.return);
+  r.recurseAnnotationType(r, p, ast.return);
   r.recurseBlock(r, p, ast.block);
 }

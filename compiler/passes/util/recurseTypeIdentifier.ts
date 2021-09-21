@@ -6,7 +6,7 @@ export function recurseTypeIdentifier<Param>(
   p: Param,
   ast: AstTypeIdentifier,
 ) {
-  for (const template of ast.templates) {
-    r.recurseType(r, p, template);
+  for (const param of ast.params) {
+    r.recurseType(r, p, param);
   }
 }

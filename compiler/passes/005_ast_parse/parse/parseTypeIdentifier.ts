@@ -15,39 +15,39 @@ export function parseTypeIdentifier(
   }
   browser.consume();
 
-  // template
-  const astTemplates = new Array<AstType>();
+  // param
+  const astParams = new Array<AstType>();
 
-  // template - open
-  const templateOpen = browser.peek();
-  if (templateOpen.str === "<") {
+  // param - open
+  const paramOpen = browser.peek();
+  if (paramOpen.str === "<") {
     browser.consume();
 
-    // template - loop
+    // param - loop
     while (true) {
-      // template - close
-      const templateClose = browser.peek();
-      if (templateClose.str === ">") {
+      // param - close
+      const paramClose = browser.peek();
+      if (paramClose.str === ">") {
         browser.consume();
         break;
       }
 
-      // template - type annotation
-      const templateType = browser.recurse(parseType);
-      if (templateType instanceof TokenImpasse) {
+      // param - type annotation
+      const paramType = browser.recurse(parseType);
+      if (paramType instanceof TokenImpasse) {
         return browser.impasse("TypeIdentifier.Template.Type", [
-          templateType,
+          paramType,
         ]);
       }
 
-      // template - validated
-      astTemplates.push(templateType);
+      // param - validated
+      astParams.push(paramType);
 
-      // template - separator, end
-      const templateDelim = browser.peek();
-      if (templateDelim.str === ",") {
+      // param - separator, end
+      const paramDelim = browser.peek();
+      if (paramDelim.str === ",") {
         browser.consume();
-      } else if (templateDelim.str === ">") {
+      } else if (paramDelim.str === ">") {
         browser.consume();
         break;
       } else {
@@ -59,6 +59,6 @@ export function parseTypeIdentifier(
   // done
   return {
     name: name.str,
-    templates: astTemplates,
+    params: astParams,
   };
 }

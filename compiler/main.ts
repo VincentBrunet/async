@@ -4,6 +4,7 @@ import { convertTokensToAst } from "./passes/005_ast_parse/convertTokensToAst.ts
 import { applyAstBinaryPrioritize } from "./passes/103_binary_prioritize/applyAstBinaryPrioritize.ts";
 import { applyAstClosureResolve } from "./passes/104_closure_resolve/applyAstClosureResolve.ts";
 import { applyAstReferenceResolve } from "./passes/105_reference_resolve/applyAstReferenceResolve.ts";
+import { applyAstShorthandResolve } from "./passes/106_shorthand_resolve/applyAstShorthandResolve.ts";
 import { convertAstToOutputModule } from "./passes/950_write_output/convertAstToOutputModule.ts";
 import { stringify } from "./util/debug/stringify.ts";
 
@@ -26,6 +27,7 @@ console.log("firstAst - 0", stringify(firstAst));
 applyAstBinaryPrioritize(firstAst);
 applyAstClosureResolve(firstAst);
 applyAstReferenceResolve(firstAst);
+applyAstShorthandResolve(firstAst);
 
 //console.log("firstAst - 1", stringify(firstAst));
 

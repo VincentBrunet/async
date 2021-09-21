@@ -6,7 +6,7 @@ import {
 import { TokenKind } from "../../../data/token/Token.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
-import { parseAnnotation } from "./parseAnnotation.ts";
+import { parseAnnotationType } from "./parseAnnotationType.ts";
 
 export function parseTypeObject(
   browser: TokenBrowser,
@@ -49,7 +49,7 @@ export function parseTypeObject(
     const name = fieldName.str;
 
     // field - type
-    const fieldAnnotation = browser.recurse(parseAnnotation);
+    const fieldAnnotation = browser.recurse(parseAnnotationType);
     if (fieldAnnotation instanceof TokenImpasse) {
       return browser.impasse("TypeObject.Field.Annotation", [
         fieldAnnotation,

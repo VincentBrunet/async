@@ -6,5 +6,6 @@ export function recurseStatementTypedef<Param>(
   p: Param,
   ast: AstStatementTypedef,
 ) {
+  r.recurseAnnotationTemplate(r, p, ast.template);
   r.recurseType(r, p, ast.type);
 }
