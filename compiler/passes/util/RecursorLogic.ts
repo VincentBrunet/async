@@ -27,142 +27,142 @@ import { AstTypeIdentifier } from "../../data/ast/AstTypeIdentifier.ts";
 import { AstTypeObject } from "../../data/ast/AstTypeObject.ts";
 
 export interface RecursorLogic<Scope> {
-  recurseModule: (
+  recurseModule?: (
     scope: Scope,
     ast: AstModule,
     next: () => void,
   ) => void;
 
-  recurseBlock: (
+  recurseBlock?: (
     scope: Scope,
     ast: AstBlock,
     next: () => void,
   ) => void;
 
-  recurseStatement: (
+  recurseStatement?: (
     scope: Scope,
     ast: AstStatement,
     next: () => void,
   ) => void;
-  recurseStatementVariable: (
+  recurseStatementVariable?: (
     scope: Scope,
     ast: AstStatementVariable,
     next: () => void,
   ) => void;
-  recurseStatementTypedef: (
+  recurseStatementTypedef?: (
     scope: Scope,
     ast: AstStatementTypedef,
     next: () => void,
   ) => void;
-  recurseStatementWhile: (
+  recurseStatementWhile?: (
     scope: Scope,
     ast: AstStatementWhile,
     next: () => void,
   ) => void;
-  recurseStatementReturn: (
+  recurseStatementReturn?: (
     scope: Scope,
     ast: AstStatementReturn,
     next: () => void,
   ) => void;
-  recurseStatementExpression: (
+  recurseStatementExpression?: (
     scope: Scope,
     ast: AstStatementExpression,
     next: () => void,
   ) => void;
 
-  recurseExpression: (
+  recurseExpression?: (
     scope: Scope,
     ast: AstExpression,
     next: () => void,
   ) => void;
-  recurseExpressionCall: (
+  recurseExpressionCall?: (
     scope: Scope,
     ast: AstExpressionCall,
     next: () => void,
   ) => void;
-  recurseExpressionIdentifier: (
+  recurseExpressionIdentifier?: (
     scope: Scope,
     ast: AstExpressionIdentifier,
     next: () => void,
   ) => void;
-  recurseExpressionLiteral: (
+  recurseExpressionLiteral?: (
     scope: Scope,
     ast: AstExpressionLiteral,
     next: () => void,
   ) => void;
-  recurseExpressionFunction: (
+  recurseExpressionFunction?: (
     scope: Scope,
     ast: AstExpressionFunction,
     next: () => void,
   ) => void;
-  recurseExpressionObject: (
+  recurseExpressionObject?: (
     scope: Scope,
     ast: AstExpressionObject,
     next: () => void,
   ) => void;
-  recurseExpressionRun: (
+  recurseExpressionRun?: (
     scope: Scope,
     ast: AstExpressionRun,
     next: () => void,
   ) => void;
-  recurseExpressionLookup: (
+  recurseExpressionLookup?: (
     scope: Scope,
     ast: AstExpressionLookup,
     next: () => void,
   ) => void;
-  recurseExpressionUnary: (
+  recurseExpressionUnary?: (
     scope: Scope,
     ast: AstExpressionUnary,
     next: () => void,
   ) => void;
-  recurseExpressionBinary: (
+  recurseExpressionBinary?: (
     scope: Scope,
     ast: AstExpressionBinary,
     next: () => void,
   ) => void;
-  recurseExpressionTyping: (
+  recurseExpressionTyping?: (
     scope: Scope,
     ast: AstExpressionTyping,
     next: () => void,
   ) => void;
-  recurseExpressionParenthesis: (
+  recurseExpressionParenthesis?: (
     scope: Scope,
     ast: AstExpressionParenthesis,
     next: () => void,
   ) => void;
 
-  recurseAnnotationType: (
+  recurseAnnotationType?: (
     scope: Scope,
     ast: AstAnnotationType,
     next: () => void,
   ) => void;
-  recurseAnnotationTemplate: (
+  recurseAnnotationTemplate?: (
     scope: Scope,
     ast: AstAnnotationTemplate,
     next: () => void,
   ) => void;
 
-  recurseType: (
+  recurseType?: (
     scope: Scope,
     ast: AstType,
     next: () => void,
   ) => void;
-  recurseTypeBinary: (
+  recurseTypeBinary?: (
     scope: Scope,
     ast: AstTypeBinary,
     next: () => void,
   ) => void;
-  recurseTypeIdentifier: (
+  recurseTypeIdentifier?: (
     scope: Scope,
     ast: AstTypeIdentifier,
     next: () => void,
   ) => void;
-  recurseTypeFunction: (
+  recurseTypeFunction?: (
     scope: Scope,
     ast: AstTypeFunction,
     next: () => void,
   ) => void;
-  recurseTypeObject: (
+  recurseTypeObject?: (
     scope: Scope,
     ast: AstTypeObject,
     next: () => void,

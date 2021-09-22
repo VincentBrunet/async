@@ -28,242 +28,177 @@ import { recurseTypeObject } from "./recurseTypeObject.ts";
 import { RecursorLogic } from "./RecursorLogic.ts";
 import { RecursorPass } from "./RecursorPass.ts";
 
-type RecursorFunction<Scope, Ast> = (
-  recursor: RecursorPass<Scope>,
+type RecursorNextFunction<Scope, Ast> = (
+  pass: RecursorPass<Scope>,
   scope: Scope,
   ast: Ast,
 ) => void;
 
-function makeRecurse<Scope, Ast>(
-  recurse: (parent: Scope) => Scope,
-  standard: RecursorFunction<Scope, Ast>,
-  custom?: RecursorFunction<Scope, Ast>,
-): RecursorFunction<Scope, Ast> {
-  const call = custom ?? standard;
-  return (recursor, scope, ast) => {
-    const child = recurse(scope);
-    call(recursor, child, ast);
+type RecursorPassFunction<Scope, Ast> = (
+  scope: Scope,
+  ast: Ast,
+) => void;
+
+type RecursorLogicFunction<Scope, Ast> = (
+  scope: Scope,
+  ast: Ast,
+  next: () => void,
+) => void;
+
+function fRec<Scope, Ast>(
+  deeper: (parent: Scope) => Scope,
+  pass: RecursorPass<Scope> | undefined,
+  call: RecursorNextFunction<Scope, Ast>,
+): RecursorPassFunction<Scope, Ast> {
+  return (scope, ast) => {
+    const child = deeper(scope);
+    call(pass!, child, ast);
   };
 }
 
-function makeCustom<Scope, Ast>(
-  fn?: RecursorFunction<Scope, Ast>,
-): RecursorFunction<Scope, Ast> | undefined {
-  return fn;
-}
-function makeStandard<Scope, Ast>(
-  fn?: RecursorFunction<Scope, Ast>,
-): RecursorFunction<Scope, Ast> | undefined {
-  return fn;
+function fLog<Scope, Ast>(
+  recurse: RecursorPassFunction<Scope, Ast>,
+  logic?: RecursorLogicFunction<Scope, Ast>,
+): RecursorPassFunction<Scope, Ast> {
+  return (scope, ast) => {
+    if (logic) {
+      logic(scope, ast, () => {
+        recurse(scope, ast);
+      });
+    } else {
+      recurse(scope, ast);
+    }
+  };
 }
 
 export function makeRecursorPass<Scope>(
-  recurse: (parent: Scope) => Scope,
+  s: (parent: Scope) => Scope,
   logic: RecursorLogic<Scope>,
 ): RecursorPass<Scope> {
-  const standardPass = {
-    recurseModule: makeStandard(recurseModule),
-    recurseBlock: makeStandard(recurseBlock),
-    recurseExpression: makeStandard(recurseExpression),
-    recurseExpressionIdentifier: makeStandard(recurseExpressionIdentifier),
-    recurseExpressionFunction: makeStandard(recurseExpressionFunction),
-    recurseExpressionObject: makeStandard(recurseExpressionObject),
-    recurseExpressionRun: makeStandard(recurseExpressionRun),
-    recurseExpressionLookup: makeStandard(recurseExpressionLookup),
-    recurseExpressionCall: makeStandard(recurseExpressionCall),
-    recurseExpressionLiteral: makeStandard(recurseExpressionLiteral),
-    recurseExpressionUnary: makeStandard(recurseExpressionUnary),
-    recurseExpressionBinary: makeStandard(recurseExpressionBinary),
-    recurseExpressionTyping: makeStandard(recurseExpressionTyping),
-    recurseExpressionParenthesis: makeStandard(recurseExpressionParenthesis),
-    recurseAnnotationType: makeStandard(recurseAnnotationType),
-    recurseAnnotationTemplate: makeStandard(recurseAnnotationTemplate),
-    recurseType: makeStandard(recurseType),
-    recurseTypeIdentifier: makeStandard(recurseTypeIdentifier),
-    recurseTypeBinary: makeStandard(recurseTypeBinary),
-    recurseTypeFunction: makeStandard(recurseTypeFunction),
-    recurseTypeObject: makeStandard(recurseTypeObject),
-    recurseStatement: makeStandard(recurseStatement),
-    recurseStatementVariable: makeStandard(recurseStatementVariable),
-    recurseStatementTypedef: makeStandard(recurseStatementTypedef),
-    recurseStatementWhile: makeStandard(recurseStatementWhile),
-    recurseStatementReturn: makeStandard(recurseStatementReturn),
-    recurseStatementExpression: makeStandard(recurseStatementExpression),
+  // Pass with standard recursion
+  let pr: RecursorPass<Scope> | undefined = undefined;
+  // Pass with custom logic
+  let pl: RecursorPass<Scope> | undefined = undefined;
+
+  pr = {
+    recurseModule: fRec(s, pl, recurseModule),
+    recurseBlock: fRec(s, pl, recurseBlock),
+    recurseExpression: fRec(s, pl, recurseExpression),
+    recurseExpressionIdentifier: fRec(s, pl, recurseExpressionIdentifier),
+    recurseExpressionFunction: fRec(s, pl, recurseExpressionFunction),
+    recurseExpressionObject: fRec(s, pl, recurseExpressionObject),
+    recurseExpressionRun: fRec(s, pl, recurseExpressionRun),
+    recurseExpressionLookup: fRec(s, pl, recurseExpressionLookup),
+    recurseExpressionCall: fRec(s, pl, recurseExpressionCall),
+    recurseExpressionLiteral: fRec(s, pl, recurseExpressionLiteral),
+    recurseExpressionUnary: fRec(s, pl, recurseExpressionUnary),
+    recurseExpressionBinary: fRec(s, pl, recurseExpressionBinary),
+    recurseExpressionTyping: fRec(s, pl, recurseExpressionTyping),
+    recurseExpressionParenthesis: fRec(s, pl, recurseExpressionParenthesis),
+    recurseAnnotationType: fRec(s, pl, recurseAnnotationType),
+    recurseAnnotationTemplate: fRec(s, pl, recurseAnnotationTemplate),
+    recurseType: fRec(s, pl, recurseType),
+    recurseTypeIdentifier: fRec(s, pl, recurseTypeIdentifier),
+    recurseTypeBinary: fRec(s, pl, recurseTypeBinary),
+    recurseTypeFunction: fRec(s, pl, recurseTypeFunction),
+    recurseTypeObject: fRec(s, pl, recurseTypeObject),
+    recurseStatement: fRec(s, pl, recurseStatement),
+    recurseStatementVariable: fRec(s, pl, recurseStatementVariable),
+    recurseStatementTypedef: fRec(s, pl, recurseStatementTypedef),
+    recurseStatementWhile: fRec(s, pl, recurseStatementWhile),
+    recurseStatementReturn: fRec(s, pl, recurseStatementReturn),
+    recurseStatementExpression: fRec(s, pl, recurseStatementExpression),
   };
 
-  const customPass = {
-    recurseModule: makeCustom(partial.recurseModule),
-    recurseBlock: makeCustom(partial.recurseBlock),
-    recurseExpression: makeCustom(partial.recurseExpression),
-    recurseExpressionIdentifier: makeCustom(
-      partial.recurseExpressionIdentifier,
+  pl = {
+    recurseModule: fLog(pr.recurseModule, logic.recurseModule),
+    recurseBlock: fLog(pr.recurseBlock, logic.recurseBlock),
+    recurseExpression: fLog(pr.recurseExpression, logic.recurseExpression),
+    recurseExpressionIdentifier: fLog(
+      pr.recurseExpressionIdentifier,
+      logic.recurseExpressionIdentifier,
     ),
-    recurseExpressionFunction: makeCustom(partial.recurseExpressionFunction),
-    recurseExpressionObject: makeCustom(partial.recurseExpressionObject),
-    recurseExpressionRun: makeCustom(partial.recurseExpressionRun),
-    recurseExpressionLookup: makeCustom(partial.recurseExpressionLookup),
-    recurseExpressionCall: makeCustom(partial.recurseExpressionCall),
-    recurseExpressionLiteral: makeCustom(partial.recurseExpressionLiteral),
-    recurseExpressionUnary: makeCustom(partial.recurseExpressionUnary),
-    recurseExpressionBinary: makeCustom(partial.recurseExpressionBinary),
-    recurseExpressionTyping: makeCustom(partial.recurseExpressionTyping),
-    recurseExpressionParenthesis: makeCustom(
-      partial.recurseExpressionParenthesis,
+    recurseExpressionFunction: fLog(
+      pr.recurseExpressionFunction,
+      logic.recurseExpressionFunction,
     ),
-    recurseAnnotationType: makeCustom(partial.recurseAnnotationType),
-    recurseAnnotationTemplate: makeCustom(partial.recurseAnnotationTemplate),
-    recurseType: makeCustom(partial.recurseType),
-    recurseTypeIdentifier: makeCustom(partial.recurseTypeIdentifier),
-    recurseTypeBinary: makeCustom(partial.recurseTypeBinary),
-    recurseTypeFunction: makeCustom(partial.recurseTypeFunction),
-    recurseTypeObject: makeCustom(partial.recurseTypeObject),
-    recurseStatement: makeCustom(partial.recurseStatement),
-    recurseStatementVariable: makeCustom(partial.recurseStatementVariable),
-    recurseStatementTypedef: makeCustom(partial.recurseStatementTypedef),
-    recurseStatementWhile: makeCustom(partial.recurseStatementWhile),
-    recurseStatementReturn: makeCustom(partial.recurseStatementReturn),
-    recurseStatementExpression: makeCustom(partial.recurseStatementExpression),
-  };
-
-  return {
-    recurseModule: makeRecurse(
-      recurse,
-      recurseModule,
-      partial.recurseModule,
+    recurseExpressionObject: fLog(
+      pr.recurseExpressionObject,
+      logic.recurseExpressionObject,
     ),
-    recurseBlock: makeRecurse(
-      recurse,
-      recurseBlock,
-      partial.recurseBlock,
+    recurseExpressionRun: fLog(
+      pr.recurseExpressionRun,
+      logic.recurseExpressionRun,
     ),
-
-    recurseExpression: makeRecurse(
-      recurse,
-      recurseExpression,
-      partial.recurseExpression,
+    recurseExpressionLookup: fLog(
+      pr.recurseExpressionLookup,
+      logic.recurseExpressionLookup,
     ),
-    recurseExpressionIdentifier: makeRecurse(
-      recurse,
-      recurseExpressionIdentifier,
-      partial.recurseExpressionIdentifier,
+    recurseExpressionCall: fLog(
+      pr.recurseExpressionCall,
+      logic.recurseExpressionCall,
     ),
-    recurseExpressionFunction: makeRecurse(
-      recurse,
-      recurseExpressionFunction,
-      partial.recurseExpressionFunction,
+    recurseExpressionLiteral: fLog(
+      pr.recurseExpressionLiteral,
+      logic.recurseExpressionLiteral,
     ),
-    recurseExpressionObject: makeRecurse(
-      recurse,
-      recurseExpressionObject,
-      partial.recurseExpressionObject,
+    recurseExpressionUnary: fLog(
+      pr.recurseExpressionUnary,
+      logic.recurseExpressionUnary,
     ),
-    recurseExpressionRun: makeRecurse(
-      recurse,
-      recurseExpressionRun,
-      partial.recurseExpressionRun,
+    recurseExpressionBinary: fLog(
+      pr.recurseExpressionBinary,
+      logic.recurseExpressionBinary,
     ),
-    recurseExpressionLookup: makeRecurse(
-      recurse,
-      recurseExpressionLookup,
-      partial.recurseExpressionLookup,
+    recurseExpressionTyping: fLog(
+      pr.recurseExpressionTyping,
+      logic.recurseExpressionTyping,
     ),
-    recurseExpressionCall: makeRecurse(
-      recurse,
-      recurseExpressionCall,
-      partial.recurseExpressionCall,
+    recurseExpressionParenthesis: fLog(
+      pr.recurseExpressionParenthesis,
+      logic.recurseExpressionParenthesis,
     ),
-    recurseExpressionLiteral: makeRecurse(
-      recurse,
-      recurseExpressionLiteral,
-      partial.recurseExpressionLiteral,
+    recurseAnnotationType: fLog(
+      pr.recurseAnnotationType,
+      logic.recurseAnnotationType,
     ),
-    recurseExpressionUnary: makeRecurse(
-      recurse,
-      recurseExpressionUnary,
-      partial.recurseExpressionUnary,
+    recurseAnnotationTemplate: fLog(
+      pr.recurseAnnotationTemplate,
+      logic.recurseAnnotationTemplate,
     ),
-    recurseExpressionBinary: makeRecurse(
-      recurse,
-      recurseExpressionBinary,
-      partial.recurseExpressionBinary,
+    recurseType: fLog(pr.recurseType, logic.recurseType),
+    recurseTypeIdentifier: fLog(
+      pr.recurseTypeIdentifier,
+      logic.recurseTypeIdentifier,
     ),
-    recurseExpressionTyping: makeRecurse(
-      recurse,
-      recurseExpressionTyping,
-      partial.recurseExpressionTyping,
+    recurseTypeBinary: fLog(pr.recurseTypeBinary, logic.recurseTypeBinary),
+    recurseTypeFunction: fLog(
+      pr.recurseTypeFunction,
+      logic.recurseTypeFunction,
     ),
-    recurseExpressionParenthesis: makeRecurse(
-      recurse,
-      recurseExpressionParenthesis,
-      partial.recurseExpressionParenthesis,
+    recurseTypeObject: fLog(pr.recurseTypeObject, logic.recurseTypeObject),
+    recurseStatement: fLog(pr.recurseStatement, logic.recurseStatement),
+    recurseStatementVariable: fLog(
+      pr.recurseStatementVariable,
+      logic.recurseStatementVariable,
     ),
-
-    recurseAnnotationType: makeRecurse(
-      recurse,
-      recurseAnnotationType,
-      partial.recurseAnnotationType,
+    recurseStatementTypedef: fLog(
+      pr.recurseStatementTypedef,
+      logic.recurseStatementTypedef,
     ),
-    recurseAnnotationTemplate: makeRecurse(
-      recurse,
-      recurseAnnotationTemplate,
-      partial.recurseAnnotationTemplate,
+    recurseStatementWhile: fLog(
+      pr.recurseStatementWhile,
+      logic.recurseStatementWhile,
     ),
-
-    recurseType: makeRecurse(
-      recurse,
-      recurseType,
-      partial.recurseType,
+    recurseStatementReturn: fLog(
+      pr.recurseStatementReturn,
+      logic.recurseStatementReturn,
     ),
-    recurseTypeIdentifier: makeRecurse(
-      recurse,
-      recurseTypeIdentifier,
-      partial.recurseTypeIdentifier,
-    ),
-    recurseTypeBinary: makeRecurse(
-      recurse,
-      recurseTypeBinary,
-      partial.recurseTypeBinary,
-    ),
-    recurseTypeFunction: makeRecurse(
-      recurse,
-      recurseTypeFunction,
-      partial.recurseTypeFunction,
-    ),
-    recurseTypeObject: makeRecurse(
-      recurse,
-      recurseTypeObject,
-      partial.recurseTypeObject,
-    ),
-
-    recurseStatement: makeRecurse(
-      recurse,
-      recurseStatement,
-      partial.recurseStatement,
-    ),
-    recurseStatementVariable: makeRecurse(
-      recurse,
-      recurseStatementVariable,
-      partial.recurseStatementVariable,
-    ),
-    recurseStatementTypedef: makeRecurse(
-      recurse,
-      recurseStatementTypedef,
-      partial.recurseStatementTypedef,
-    ),
-    recurseStatementWhile: makeRecurse(
-      recurse,
-      recurseStatementWhile,
-      partial.recurseStatementWhile,
-    ),
-    recurseStatementReturn: makeRecurse(
-      recurse,
-      recurseStatementReturn,
-      partial.recurseStatementReturn,
-    ),
-    recurseStatementExpression: makeRecurse(
-      recurse,
-      recurseStatementExpression,
-      partial.recurseStatementExpression,
+    recurseStatementExpression: fLog(
+      pr.recurseStatementExpression,
+      logic.recurseStatementExpression,
     ),
   };
+
+  return pl;
 }

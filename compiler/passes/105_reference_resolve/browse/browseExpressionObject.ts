@@ -1,11 +1,10 @@
 import { AstExpressionObject } from "../../../data/ast/AstExpressionObject.ts";
-import { AstRecursor } from "../../util/AstRecursor.ts";
 import { BrowsedScope } from "../util/BrowsedScope.ts";
 
 export function browseExpressionObject(
-  recursor: AstRecursor<BrowsedScope>,
   scope: BrowsedScope,
   ast: AstExpressionObject,
+  next: () => void,
 ) {
   // Asserts
   if (!ast.closures) {
@@ -16,11 +15,9 @@ export function browseExpressionObject(
     astClosure.reference = scope.findReference(astClosure.name);
   }
 
-  const child = new BrowsedScope(scope);
-
   for (const astClosure of ast.closures) {
-    child.pushClosure(astClosure);
+    scope.pushClosure(astClosure);
   }
 
-  recursor.recurseBlock(recursor, child, ast.block);
+  next();
 }
