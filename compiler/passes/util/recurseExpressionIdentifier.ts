@@ -1,9 +1,9 @@
 import { AstExpressionIdentifier } from "../../data/ast/AstExpressionIdentifier.ts";
-import { AstRecursor } from "./AstRecursor.ts";
+import { RecursorPass } from "./RecursorPass.ts";
 
-export function recurseExpressionIdentifier<Param>(
-  r: AstRecursor<Param>,
-  p: Param,
+export function recurseExpressionIdentifier<Scope>(
+  r: RecursorPass<Scope>,
+  p: Scope,
   ast: AstExpressionIdentifier,
 ) {
 }

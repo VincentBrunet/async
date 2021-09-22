@@ -1,11 +1,11 @@
 import { AstExpressionObject } from "../../data/ast/AstExpressionObject.ts";
-import { AstRecursor } from "./AstRecursor.ts";
+import { RecursorPass } from "./RecursorPass.ts";
 
-export function recurseExpressionObject<Param>(
-  r: AstRecursor<Param>,
-  p: Param,
+export function recurseExpressionObject<Scope>(
+  r: RecursorPass<Scope>,
+  p: Scope,
   ast: AstExpressionObject,
 ) {
-  r.recurseAnnotationType(r, p, ast.annotation);
-  r.recurseBlock(r, p, ast.block);
+  r.recurseAnnotationType(p, ast.annotation);
+  r.recurseBlock(p, ast.block);
 }

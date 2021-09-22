@@ -26,145 +26,145 @@ import { AstTypeFunction } from "../../data/ast/AstTypeFunction.ts";
 import { AstTypeIdentifier } from "../../data/ast/AstTypeIdentifier.ts";
 import { AstTypeObject } from "../../data/ast/AstTypeObject.ts";
 
-export interface AstRecursor<Param> {
+export interface RecursorLogic<Scope> {
   recurseModule: (
-    recursor: AstRecursor<Param>,
-    param: Param,
+    scope: Scope,
     ast: AstModule,
+    next: () => void,
   ) => void;
 
   recurseBlock: (
-    recursor: AstRecursor<Param>,
-    param: Param,
+    scope: Scope,
     ast: AstBlock,
+    next: () => void,
   ) => void;
 
   recurseStatement: (
-    recursor: AstRecursor<Param>,
-    param: Param,
+    scope: Scope,
     ast: AstStatement,
+    next: () => void,
   ) => void;
   recurseStatementVariable: (
-    recursor: AstRecursor<Param>,
-    param: Param,
+    scope: Scope,
     ast: AstStatementVariable,
+    next: () => void,
   ) => void;
   recurseStatementTypedef: (
-    recursor: AstRecursor<Param>,
-    param: Param,
+    scope: Scope,
     ast: AstStatementTypedef,
+    next: () => void,
   ) => void;
   recurseStatementWhile: (
-    recursor: AstRecursor<Param>,
-    param: Param,
+    scope: Scope,
     ast: AstStatementWhile,
+    next: () => void,
   ) => void;
   recurseStatementReturn: (
-    recursor: AstRecursor<Param>,
-    param: Param,
+    scope: Scope,
     ast: AstStatementReturn,
+    next: () => void,
   ) => void;
   recurseStatementExpression: (
-    recursor: AstRecursor<Param>,
-    param: Param,
+    scope: Scope,
     ast: AstStatementExpression,
+    next: () => void,
   ) => void;
 
   recurseExpression: (
-    recursor: AstRecursor<Param>,
-    param: Param,
+    scope: Scope,
     ast: AstExpression,
+    next: () => void,
   ) => void;
   recurseExpressionCall: (
-    recursor: AstRecursor<Param>,
-    param: Param,
+    scope: Scope,
     ast: AstExpressionCall,
+    next: () => void,
   ) => void;
   recurseExpressionIdentifier: (
-    recursor: AstRecursor<Param>,
-    param: Param,
+    scope: Scope,
     ast: AstExpressionIdentifier,
+    next: () => void,
   ) => void;
   recurseExpressionLiteral: (
-    recursor: AstRecursor<Param>,
-    param: Param,
+    scope: Scope,
     ast: AstExpressionLiteral,
+    next: () => void,
   ) => void;
   recurseExpressionFunction: (
-    recursor: AstRecursor<Param>,
-    param: Param,
+    scope: Scope,
     ast: AstExpressionFunction,
+    next: () => void,
   ) => void;
   recurseExpressionObject: (
-    recursor: AstRecursor<Param>,
-    param: Param,
+    scope: Scope,
     ast: AstExpressionObject,
+    next: () => void,
   ) => void;
   recurseExpressionRun: (
-    recursor: AstRecursor<Param>,
-    param: Param,
+    scope: Scope,
     ast: AstExpressionRun,
+    next: () => void,
   ) => void;
   recurseExpressionLookup: (
-    recursor: AstRecursor<Param>,
-    param: Param,
+    scope: Scope,
     ast: AstExpressionLookup,
+    next: () => void,
   ) => void;
   recurseExpressionUnary: (
-    recursor: AstRecursor<Param>,
-    param: Param,
+    scope: Scope,
     ast: AstExpressionUnary,
+    next: () => void,
   ) => void;
   recurseExpressionBinary: (
-    recursor: AstRecursor<Param>,
-    param: Param,
+    scope: Scope,
     ast: AstExpressionBinary,
+    next: () => void,
   ) => void;
   recurseExpressionTyping: (
-    recursor: AstRecursor<Param>,
-    param: Param,
+    scope: Scope,
     ast: AstExpressionTyping,
+    next: () => void,
   ) => void;
   recurseExpressionParenthesis: (
-    recursor: AstRecursor<Param>,
-    param: Param,
+    scope: Scope,
     ast: AstExpressionParenthesis,
+    next: () => void,
   ) => void;
 
   recurseAnnotationType: (
-    recursor: AstRecursor<Param>,
-    param: Param,
+    scope: Scope,
     ast: AstAnnotationType,
+    next: () => void,
   ) => void;
   recurseAnnotationTemplate: (
-    recursor: AstRecursor<Param>,
-    param: Param,
+    scope: Scope,
     ast: AstAnnotationTemplate,
+    next: () => void,
   ) => void;
 
   recurseType: (
-    recursor: AstRecursor<Param>,
-    param: Param,
+    scope: Scope,
     ast: AstType,
+    next: () => void,
   ) => void;
   recurseTypeBinary: (
-    recursor: AstRecursor<Param>,
-    param: Param,
+    scope: Scope,
     ast: AstTypeBinary,
+    next: () => void,
   ) => void;
   recurseTypeIdentifier: (
-    recursor: AstRecursor<Param>,
-    param: Param,
+    scope: Scope,
     ast: AstTypeIdentifier,
+    next: () => void,
   ) => void;
   recurseTypeFunction: (
-    recursor: AstRecursor<Param>,
-    param: Param,
+    scope: Scope,
     ast: AstTypeFunction,
+    next: () => void,
   ) => void;
   recurseTypeObject: (
-    recursor: AstRecursor<Param>,
-    param: Param,
+    scope: Scope,
     ast: AstTypeObject,
+    next: () => void,
   ) => void;
 }

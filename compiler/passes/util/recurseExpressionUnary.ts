@@ -1,10 +1,10 @@
 import { AstExpressionUnary } from "../../data/ast/AstExpressionUnary.ts";
-import { AstRecursor } from "./AstRecursor.ts";
+import { RecursorPass } from "./RecursorPass.ts";
 
-export function recurseExpressionUnary<Param>(
-  r: AstRecursor<Param>,
-  p: Param,
+export function recurseExpressionUnary<Scope>(
+  r: RecursorPass<Scope>,
+  p: Scope,
   ast: AstExpressionUnary,
 ) {
-  r.recurseExpression(r, p, ast.expression);
+  r.recurseExpression(p, ast.expression);
 }

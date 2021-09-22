@@ -1,11 +1,10 @@
 import { AstTypeBinary } from "../../data/ast/AstTypeBinary.ts";
-import { AstRecursor } from "./AstRecursor.ts";
 
-export function recurseTypeBinary<Param>(
-  r: AstRecursor<Param>,
-  p: Param,
+export function recurseTypeBinary<Scope>(
+  r: RecursorPass<Scope>,
+  p: Scope,
   ast: AstTypeBinary,
 ) {
-  r.recurseType(r, p, ast.type1);
-  r.recurseType(r, p, ast.type2);
+  r.recurseType(p, ast.type1);
+  r.recurseType(p, ast.type2);
 }

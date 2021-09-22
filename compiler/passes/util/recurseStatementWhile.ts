@@ -1,11 +1,10 @@
 import { AstStatementWhile } from "../../data/ast/AstStatementWhile.ts";
-import { AstRecursor } from "./AstRecursor.ts";
 
-export function recurseStatementWhile<Param>(
-  r: AstRecursor<Param>,
-  p: Param,
+export function recurseStatementWhile<Scope>(
+  r: RecursorPass<Scope>,
+  p: Scope,
   ast: AstStatementWhile,
 ) {
-  r.recurseExpression(r, p, ast.condition);
-  r.recurseBlock(r, p, ast.block);
+  r.recurseExpression(p, ast.condition);
+  r.recurseBlock(p, ast.block);
 }

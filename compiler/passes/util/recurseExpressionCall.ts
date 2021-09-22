@@ -1,13 +1,13 @@
 import { AstExpressionCall } from "../../data/ast/AstExpressionCall.ts";
-import { AstRecursor } from "./AstRecursor.ts";
+import { RecursorPass } from "./RecursorPass.ts";
 
-export function recurseExpressionCall<Param>(
-  r: AstRecursor<Param>,
-  p: Param,
+export function recurseExpressionCall<Scope>(
+  r: RecursorPass<Scope>,
+  p: Scope,
   ast: AstExpressionCall,
 ) {
-  r.recurseExpression(r, p, ast.callee);
+  r.recurseExpression(p, ast.callee);
   for (const param of ast.params) {
-    r.recurseExpression(r, p, param);
+    r.recurseExpression(p, param);
   }
 }

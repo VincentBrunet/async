@@ -1,11 +1,11 @@
 import { AstExpressionTyping } from "../../data/ast/AstExpressionTyping.ts";
-import { AstRecursor } from "./AstRecursor.ts";
+import { RecursorPass } from "./RecursorPass.ts";
 
-export function recurseExpressionTyping<Param>(
-  r: AstRecursor<Param>,
-  p: Param,
+export function recurseExpressionTyping<Scope>(
+  r: RecursorPass<Scope>,
+  p: Scope,
   ast: AstExpressionTyping,
 ) {
-  r.recurseExpression(r, p, ast.expression);
-  r.recurseType(r, p, ast.type);
+  r.recurseExpression(p, ast.expression);
+  r.recurseType(p, ast.type);
 }

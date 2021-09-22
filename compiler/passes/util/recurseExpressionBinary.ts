@@ -1,11 +1,11 @@
 import { AstExpressionBinary } from "../../data/ast/AstExpressionBinary.ts";
-import { AstRecursor } from "./AstRecursor.ts";
+import { RecursorPass } from "./RecursorPass.ts";
 
-export function recurseExpressionBinary<Param>(
-  r: AstRecursor<Param>,
-  p: Param,
+export function recurseExpressionBinary<Scope>(
+  r: RecursorPass<Scope>,
+  p: Scope,
   ast: AstExpressionBinary,
 ) {
-  r.recurseExpression(r, p, ast.expression1);
-  r.recurseExpression(r, p, ast.expression2);
+  r.recurseExpression(p, ast.expression1);
+  r.recurseExpression(p, ast.expression2);
 }

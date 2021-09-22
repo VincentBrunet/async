@@ -1,12 +1,11 @@
 import { AstTypeIdentifier } from "../../data/ast/AstTypeIdentifier.ts";
-import { AstRecursor } from "./AstRecursor.ts";
 
-export function recurseTypeIdentifier<Param>(
-  r: AstRecursor<Param>,
-  p: Param,
+export function recurseTypeIdentifier<Scope>(
+  r: RecursorPass<Scope>,
+  p: Scope,
   ast: AstTypeIdentifier,
 ) {
   for (const param of ast.params) {
-    r.recurseType(r, p, param);
+    r.recurseType(p, param);
   }
 }

@@ -1,12 +1,12 @@
 import { AstAnnotationTemplate } from "../../data/ast/AstAnnotationTemplate.ts";
-import { AstRecursor } from "./AstRecursor.ts";
+import { RecursorPass } from "./RecursorPass.ts";
 
-export function recurseAnnotationTemplate<Param>(
-  r: AstRecursor<Param>,
-  p: Param,
+export function recurseAnnotationTemplate<Scope>(
+  r: RecursorPass<Scope>,
+  p: Scope,
   ast: AstAnnotationTemplate,
 ) {
   for (const param of ast.params) {
-    r.recurseAnnotationType(r, p, param.annotation);
+    r.recurseAnnotationType(p, param.annotation);
   }
 }

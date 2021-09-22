@@ -1,12 +1,12 @@
 import { AstModule } from "../../data/ast/AstModule.ts";
-import { AstRecursor } from "./AstRecursor.ts";
+import { RecursorPass } from "./RecursorPass.ts";
 
-export function recurseModule<Param>(
-  r: AstRecursor<Param>,
-  p: Param,
+export function recurseModule<Scope>(
+  r: RecursorPass<Scope>,
+  p: Scope,
   ast: AstModule,
 ) {
   for (const statement of ast.statements) {
-    r.recurseStatement(r, p, statement);
+    r.recurseStatement(p, statement);
   }
 }

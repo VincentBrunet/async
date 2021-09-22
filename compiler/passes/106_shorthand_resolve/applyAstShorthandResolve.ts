@@ -1,11 +1,13 @@
 import { AstModule } from "../../data/ast/AstModule.ts";
-import { makeRecursor } from "../util/makeRecursor.ts";
+import { makeRecursorPass } from "../util/makeRecursorPass.ts";
 import { browseModule } from "./browse/browseModule.ts";
 import { browseStatementTypedef } from "./browse/browseStatementTypedef.ts";
 import { browseTypeIdentifier } from "./browse/browseTypeIdentifier.ts";
 import { BrowsedScope } from "./util/BrowsedScope.ts";
 
-const recursor = makeRecursor<BrowsedScope>({
+const recursor = makeRecursorPass((scope) => {
+  return new BrowsedScope(scope);
+}, {
   recurseModule: browseModule,
   recurseStatementTypedef: browseStatementTypedef,
   recurseTypeIdentifier: browseTypeIdentifier,

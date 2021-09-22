@@ -4,34 +4,34 @@ import { AstStatementReturn } from "../../data/ast/AstStatementReturn.ts";
 import { AstStatementTypedef } from "../../data/ast/AstStatementTypedef.ts";
 import { AstStatementVariable } from "../../data/ast/AstStatementVariable.ts";
 import { AstStatementWhile } from "../../data/ast/AstStatementWhile.ts";
-import { AstRecursor } from "./AstRecursor.ts";
+import { RecursorPass } from "./RecursorPass.ts";
 
-export function recurseStatement<Param>(
-  r: AstRecursor<Param>,
-  p: Param,
+export function recurseStatement<Scope>(
+  r: RecursorPass<Scope>,
+  p: Scope,
   ast: AstStatement,
 ) {
   const kind = ast.kind;
   const data = ast.data;
   switch (kind) {
     case AstStatementKind.Variable: {
-      r.recurseStatementVariable(r, p, data as AstStatementVariable);
+      r.recurseStatementVariable(p, data as AstStatementVariable);
       break;
     }
     case AstStatementKind.Typedef: {
-      r.recurseStatementTypedef(r, p, data as AstStatementTypedef);
+      r.recurseStatementTypedef(p, data as AstStatementTypedef);
       break;
     }
     case AstStatementKind.While: {
-      r.recurseStatementWhile(r, p, data as AstStatementWhile);
+      r.recurseStatementWhile(p, data as AstStatementWhile);
       break;
     }
     case AstStatementKind.Return: {
-      r.recurseStatementReturn(r, p, data as AstStatementReturn);
+      r.recurseStatementReturn(p, data as AstStatementReturn);
       break;
     }
     case AstStatementKind.Expression: {
-      r.recurseStatementExpression(r, p, data as AstStatementExpression);
+      r.recurseStatementExpression(p, data as AstStatementExpression);
       break;
     }
   }

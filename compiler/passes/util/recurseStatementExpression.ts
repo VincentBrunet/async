@@ -1,10 +1,9 @@
 import { AstStatementExpression } from "../../data/ast/AstStatementExpression.ts";
-import { AstRecursor } from "./AstRecursor.ts";
 
-export function recurseStatementExpression<Param>(
-  r: AstRecursor<Param>,
-  p: Param,
+export function recurseStatementExpression<Scope>(
+  r: RecursorPass<Scope>,
+  p: Scope,
   ast: AstStatementExpression,
 ) {
-  r.recurseExpression(r, p, ast.expression);
+  r.recurseExpression(p, ast.expression);
 }

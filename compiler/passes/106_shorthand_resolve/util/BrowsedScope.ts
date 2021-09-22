@@ -7,7 +7,7 @@ import { AstStatementTypedef } from "../../../data/ast/AstStatementTypedef.ts";
 export class BrowsedScope {
   private parent?: BrowsedScope;
 
-  private references = new Map<string, AstResolvedShorthand>();
+  private shorthands = new Map<string, AstResolvedShorthand>();
 
   constructor(parent?: BrowsedScope) {
     this.parent = parent;
@@ -22,17 +22,17 @@ export class BrowsedScope {
   }
 
   private pushShorthand(name: string, reference: AstResolvedShorthand) {
-    if (this.references.get(name)) {
+    if (this.shorthands.get(name)) {
       throw new Error(
-        "Already defined: " + (this.references.get(name)) +
+        "Already defined: " + (this.shorthands.get(name)) +
           " + " + (reference.data.name),
       );
     }
-    this.references.set(name, reference);
+    this.shorthands.set(name, reference);
   }
 
   findShorthand(name: string): AstResolvedShorthand | undefined {
-    const reference = this.references.get(name);
+    const reference = this.shorthands.get(name);
     if (reference) {
       return reference;
     }

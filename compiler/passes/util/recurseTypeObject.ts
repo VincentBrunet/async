@@ -1,12 +1,12 @@
 import { AstTypeObject } from "../../data/ast/AstTypeObject.ts";
-import { AstRecursor } from "./AstRecursor.ts";
+import { RecursorPass } from "./RecursorPass.ts";
 
-export function recurseTypeObject<Param>(
-  r: AstRecursor<Param>,
-  p: Param,
+export function recurseTypeObject<Scope>(
+  r: RecursorPass<Scope>,
+  p: Scope,
   ast: AstTypeObject,
 ) {
   for (const field of ast.fields) {
-    r.recurseType(r, p, field.type);
+    r.recurseType(p, field.type);
   }
 }
