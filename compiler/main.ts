@@ -22,12 +22,40 @@ const firstTokens = convertCodeToTokens(firstCode);
 
 const firstAst = convertTokensToAst(firstTokens);
 
-console.log("firstAst - 0", stringify(firstAst));
+//console.log("firstAst - 0", stringify(firstAst));
+
+Deno.writeTextFile(
+  files[0] + ".compiled.1.json",
+  stringify(firstAst),
+);
 
 applyAstBinaryPrioritize(firstAst);
+
+Deno.writeTextFile(
+  files[0] + ".compiled.2.json",
+  stringify(firstAst),
+);
+
 applyAstClosureResolve(firstAst);
+
+Deno.writeTextFile(
+  files[0] + ".compiled.3.json",
+  stringify(firstAst),
+);
+
 applyAstReferenceResolve(firstAst);
+
+Deno.writeTextFile(
+  files[0] + ".compiled.4.json",
+  stringify(firstAst),
+);
+
 applyAstShorthandResolve(firstAst);
+
+Deno.writeTextFile(
+  files[0] + ".compiled.5.json",
+  stringify(firstAst),
+);
 
 //console.log("firstAst - 1", stringify(firstAst));
 

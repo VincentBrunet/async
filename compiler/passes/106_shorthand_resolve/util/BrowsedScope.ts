@@ -1,3 +1,4 @@
+import { AstAnnotationTemplateParam } from "../../../data/ast/AstAnnotationTemplate.ts";
 import {
   AstResolvedShorthand,
   AstResolvedShorthandKind,
@@ -5,7 +6,7 @@ import {
 import { AstStatementTypedef } from "../../../data/ast/AstStatementTypedef.ts";
 
 export class BrowsedScope {
-  private parent?: BrowsedScope;
+  public parent?: BrowsedScope;
 
   private shorthands = new Map<string, AstResolvedShorthand>();
 
@@ -18,6 +19,13 @@ export class BrowsedScope {
     this.pushShorthand(name, {
       kind: AstResolvedShorthandKind.Typedef,
       data: variable,
+    });
+  }
+
+  pushTemplateParam(template: AstAnnotationTemplateParam) {
+    this.pushShorthand(template.name, {
+      kind: AstResolvedShorthandKind.TemplateParam,
+      data: template,
     });
   }
 

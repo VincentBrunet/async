@@ -1,8 +1,10 @@
 
+typedef Int = f32;
 
 typedef MyType<A, B> = {
   const a: A;
   const b: B;
+  const c: Int;
 }
 
 

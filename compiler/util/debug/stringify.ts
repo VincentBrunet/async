@@ -4,16 +4,16 @@ function contentJoin(values: Array<string>, ident: number) {
   if (values.length <= 0) {
     return "";
   }
-  const minimal = values.join(" ");
+  const minimal = values.join(", ");
   if (minimal.length <= 64) {
     return " " + minimal + " ";
   }
   const pad0 = repeat(" ", ident);
   const pad1 = repeat(" ", ident + 1);
-  return "\n" + pad1 + values.join("\n" + pad1) + "\n" + pad0;
+  return "\n" + pad1 + values.join(",\n" + pad1) + "\n" + pad0;
 }
 
-export function stringify(v: any, id?: number): string {
+export function stringify(v: any, id?: number, br?: Set<any>): string {
   const ident = id ?? 0;
 
   if (v === undefined) {
@@ -34,9 +34,15 @@ export function stringify(v: any, id?: number): string {
     return '"' + v.replace(/[\n]/g, "\n") + '"';
   }
 
+  const browsed = br ?? new Set();
+  if (browsed.has(v)) {
+    return "<circular/>";
+  }
+  browsed.add(v);
+
   if (Array.isArray(v)) {
     const content = v.map((item) => {
-      return stringify(item, ident + 1) + ",";
+      return stringify(item, ident + 1, browsed);
     });
     return "[" + contentJoin(content, ident) + "]";
   }
@@ -44,7 +50,7 @@ export function stringify(v: any, id?: number): string {
   if (v instanceof Map) {
     const keys = [...v.keys()];
     const content = keys.map((key) => {
-      return key + ": " + stringify(v.get(key), ident + 1) + ",";
+      return key + ": " + stringify(v.get(key), ident + 1, browsed);
     });
     return "Map<{" + contentJoin(content, ident) + "}>";
   }
@@ -52,7 +58,7 @@ export function stringify(v: any, id?: number): string {
   if (type === "object") {
     const keys = Object.keys(v);
     const content = keys.map((key) => {
-      return key + ": " + stringify(v[key], ident + 1) + ",";
+      return '"' + key + '"' + ": " + stringify(v[key], ident + 1, browsed);
     });
     return "{" + contentJoin(content, ident) + "}";
   }

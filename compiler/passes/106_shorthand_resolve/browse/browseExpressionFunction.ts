@@ -1,12 +1,11 @@
-import { AstStatementTypedef } from "../../../data/ast/AstStatementTypedef.ts";
+import { AstExpressionFunction } from "../../../data/ast/AstExpressionFunction.ts";
 import { BrowsedScope } from "../util/BrowsedScope.ts";
 
-export function browseStatementTypedef(
+export function browseExpressionFunction(
   scope: BrowsedScope,
-  ast: AstStatementTypedef,
+  ast: AstExpressionFunction,
   next: () => void,
 ) {
-  scope.parent?.pushTypedef(ast);
   for (const param of ast.template.params) {
     scope.pushTemplateParam(param);
   }

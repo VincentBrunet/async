@@ -1,7 +1,7 @@
 import { AstResolvedClosure } from "../../../data/ast/AstResolvedClosure.ts";
 
 export class BrowsedScope {
-  private parent?: BrowsedScope;
+  public parent?: BrowsedScope;
 
   private names = new Set<string>();
 

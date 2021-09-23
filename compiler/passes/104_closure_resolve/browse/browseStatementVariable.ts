@@ -6,6 +6,6 @@ export function browseStatementVariable(
   ast: AstStatementVariable,
   next: () => void,
 ) {
-  scope.pushName(ast.name);
+  scope.parent?.pushName(ast.name);
   next();
 }

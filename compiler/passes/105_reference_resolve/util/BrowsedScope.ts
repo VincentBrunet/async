@@ -7,7 +7,7 @@ import {
 import { AstStatementVariable } from "../../../data/ast/AstStatementVariable.ts";
 
 export class BrowsedScope {
-  private parent?: BrowsedScope;
+  public parent?: BrowsedScope;
 
   private references = new Map<string, AstResolvedReference>();
 

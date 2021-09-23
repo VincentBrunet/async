@@ -1,0 +1,208 @@
+{
+ "statements": [
+  {
+   "kind": "Typedef",
+   "data": {
+    "name": "Int",
+    "type": {
+     "kind": "Identifier",
+     "data": { "name": "f32", "params": [], "resolved": undefined }
+    },
+    "template": { "params": [] }
+   }
+  },
+  {
+   "kind": "Typedef",
+   "data": {
+    "name": "MyType",
+    "type": {
+     "kind": "Object",
+     "data": {
+      "fields": [
+       {
+        "mutable": false,
+        "name": "a",
+        "hash": "0xCA978112CA1BBDCA",
+        "type": {
+         "kind": "Identifier",
+         "data": {
+          "name": "A",
+          "params": [],
+          "resolved": {
+           "kind": "TemplateParam",
+           "data": { "name": "A", "annotation": {} }
+          }
+         }
+        }
+       },
+       {
+        "mutable": false,
+        "name": "b",
+        "hash": "0x3E23E8160039594A",
+        "type": {
+         "kind": "Identifier",
+         "data": {
+          "name": "B",
+          "params": [],
+          "resolved": {
+           "kind": "TemplateParam",
+           "data": { "name": "B", "annotation": {} }
+          }
+         }
+        }
+       },
+       {
+        "mutable": false,
+        "name": "c",
+        "hash": "0x2E7D2C03A9507AE2",
+        "type": {
+         "kind": "Identifier",
+         "data": {
+          "name": "Int",
+          "params": [],
+          "resolved": { "kind": "Typedef", "data": <circular/> }
+         }
+        }
+       }
+      ]
+     }
+    },
+    "template": { "params": [ <circular/>, <circular/> ] }
+   }
+  },
+  {
+   "kind": "Variable",
+   "data": {
+    "mutable": false,
+    "name": "myValue",
+    "hash": "0x9F3ABBE372AF6F7D",
+    "annotation": {},
+    "value": {
+     "kind": "Function",
+     "data": {
+      "template": { "params": [] },
+      "params": [],
+      "return": {
+       "type": {
+        "kind": "Identifier",
+        "data": {
+         "name": "MyType",
+         "params": [
+          {
+           "kind": "Identifier",
+           "data": { "name": "Int", "params": [], "resolved": <circular/> }
+          },
+          {
+           "kind": "Identifier",
+           "data": { "name": "Int", "params": [], "resolved": <circular/> }
+          }
+         ],
+         "resolved": { "kind": "Typedef", "data": <circular/> }
+        }
+       }
+      },
+      "block": {
+       "statements": [
+        {
+         "kind": "Return",
+         "data": {
+          "expression": {
+           "kind": "Object",
+           "data": {
+            "annotation": {},
+            "block": {
+             "statements": [
+              {
+               "kind": "Variable",
+               "data": {
+                "mutable": false,
+                "name": "a",
+                "hash": "0xCA978112CA1BBDCA",
+                "annotation": {},
+                "value": { "kind": "Literal", "data": { "kind": "Integer32", "data": "42" } }
+               }
+              },
+              {
+               "kind": "Variable",
+               "data": {
+                "mutable": false,
+                "name": "b",
+                "hash": "0x3E23E8160039594A",
+                "annotation": {},
+                "value": { "kind": "Literal", "data": { "kind": "Integer32", "data": "44" } }
+               }
+              }
+             ]
+            },
+            "closures": []
+           }
+          }
+         }
+        }
+       ]
+      },
+      "closures": []
+     }
+    }
+   }
+  },
+  {
+   "kind": "Variable",
+   "data": {
+    "mutable": false,
+    "name": "myValue2",
+    "hash": "0x64104263853D745F",
+    "annotation": {},
+    "value": {
+     "kind": "Function",
+     "data": {
+      "template": {
+       "params": [
+        {
+         "name": "A",
+         "annotation": {
+          "type": {
+           "kind": "Identifier",
+           "data": { "name": "MyType", "params": [], "resolved": <circular/> }
+          }
+         }
+        },
+        { "name": "B", "annotation": {} }
+       ]
+      },
+      "params": [],
+      "return": {
+       "type": {
+        "kind": "Identifier",
+        "data": {
+         "name": "MyType",
+         "params": [
+          {
+           "kind": "Identifier",
+           "data": {
+            "name": "A",
+            "params": [],
+            "resolved": { "kind": "TemplateParam", "data": <circular/> }
+           }
+          },
+          {
+           "kind": "Identifier",
+           "data": {
+            "name": "B",
+            "params": [],
+            "resolved": { "kind": "TemplateParam", "data": <circular/> }
+           }
+          }
+         ],
+         "resolved": <circular/>
+        }
+       }
+      },
+      "block": { "statements": [] },
+      "closures": []
+     }
+    }
+   }
+  }
+ ]
+}
