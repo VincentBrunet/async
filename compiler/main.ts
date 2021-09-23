@@ -14,60 +14,59 @@ const files = (await getConfig()).files;
 
 const firstCode = await Deno.readTextFile(files[0]);
 
-//console.log("firstCode", firstCode);
+Deno.mkdirSync(files[0] + ".compiled");
 
 const firstTokens = convertCodeToTokens(firstCode);
 
-//console.log("firstTokens", stringify(firstTokens));
+Deno.writeTextFileSync(
+  files[0] + ".compiled/pass.001.json",
+  stringify(firstTokens),
+);
 
 const firstAst = convertTokensToAst(firstTokens);
 
-//console.log("firstAst - 0", stringify(firstAst));
-
-Deno.writeTextFile(
-  files[0] + ".compiled.1.json",
+Deno.writeTextFileSync(
+  files[0] + ".compiled/pass.005.json",
   stringify(firstAst),
 );
 
 applyAstBinaryPrioritize(firstAst);
 
-Deno.writeTextFile(
-  files[0] + ".compiled.2.json",
+Deno.writeTextFileSync(
+  files[0] + ".compiled/pass.103.json",
   stringify(firstAst),
 );
 
 applyAstClosureResolve(firstAst);
 
-Deno.writeTextFile(
-  files[0] + ".compiled.3.json",
+Deno.writeTextFileSync(
+  files[0] + ".compiled/pass.104.json",
   stringify(firstAst),
 );
 
 applyAstReferenceResolve(firstAst);
 
-Deno.writeTextFile(
-  files[0] + ".compiled.4.json",
+Deno.writeTextFileSync(
+  files[0] + ".compiled/pass.105.json",
   stringify(firstAst),
 );
 
 applyAstShorthandResolve(firstAst);
 
-Deno.writeTextFile(
-  files[0] + ".compiled.5.json",
+Deno.writeTextFileSync(
+  files[0] + ".compiled/pass.106.json",
   stringify(firstAst),
 );
-
-//console.log("firstAst - 1", stringify(firstAst));
 
 const firstOutputModule = convertAstToOutputModule(firstAst);
 
 //console.log("firstOutputModule", stringify(firstOutputModule));
 
-Deno.writeTextFile(
-  files[0] + ".compiled.h",
+Deno.writeTextFileSync(
+  files[0] + ".compiled/output.h",
   firstOutputModule.generateHeader(),
 );
-Deno.writeTextFile(
-  files[0] + ".compiled.c",
+Deno.writeTextFileSync(
+  files[0] + ".compiled/output.c",
   firstOutputModule.generateSource(),
 );

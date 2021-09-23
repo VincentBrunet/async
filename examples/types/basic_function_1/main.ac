@@ -1,4 +1,7 @@
 
+typedef Int = i32;
+typedef Float = f32;
+
 typedef Func1 = (a: Int, b: Int): Float;
 
 typedef Func2 = (a: Int, b: Int): Float;

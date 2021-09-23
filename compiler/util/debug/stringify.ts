@@ -36,7 +36,7 @@ export function stringify(v: any, id?: number, br?: Set<any>): string {
 
   const browsed = br ?? new Set();
   if (browsed.has(v)) {
-    return "<circular/>";
+    return "{/* circular */}";
   }
   browsed.add(v);
 
