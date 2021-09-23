@@ -1,4 +1,5 @@
 import { AstStatementTypedef } from "../../data/ast/AstStatementTypedef.ts";
+import { RecursorPass } from "./RecursorPass.ts";
 
 export function recurseStatementTypedef<Scope>(
   r: RecursorPass<Scope>,

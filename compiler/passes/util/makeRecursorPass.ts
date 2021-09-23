@@ -28,6 +28,10 @@ import { recurseTypeObject } from "./recurseTypeObject.ts";
 import { RecursorLogic } from "./RecursorLogic.ts";
 import { RecursorPass } from "./RecursorPass.ts";
 
+type RecursorPassHolder<Scope> = {
+  value?: RecursorPass<Scope>;
+};
+
 type RecursorNextFunction<Scope, Ast> = (
   pass: RecursorPass<Scope>,
   scope: Scope,
@@ -45,17 +49,27 @@ type RecursorLogicFunction<Scope, Ast> = (
   next: () => void,
 ) => void;
 
+/**
+ * Make a recursion pass function:
+ *  - deepen the scope
+ *  - call the standard recursion logic that will call custom logic
+ */
 function fRec<Scope, Ast>(
   deeper: (parent: Scope) => Scope,
-  pass: RecursorPass<Scope> | undefined,
+  pass: RecursorPassHolder<Scope>,
   call: RecursorNextFunction<Scope, Ast>,
 ): RecursorPassFunction<Scope, Ast> {
   return (scope, ast) => {
     const child = deeper(scope);
-    call(pass!, child, ast);
+    call(pass.value!, child, ast);
   };
 }
 
+/**
+ * Make a logic pass function:
+ *  - no-op and go back to standard if undefined
+ *  - if defined, call logic with recursion call as parameter
+ */
 function fLog<Scope, Ast>(
   recurse: RecursorPassFunction<Scope, Ast>,
   logic?: RecursorLogicFunction<Scope, Ast>,
@@ -76,129 +90,150 @@ export function makeRecursorPass<Scope>(
   logic: RecursorLogic<Scope>,
 ): RecursorPass<Scope> {
   // Pass with standard recursion
-  let pr: RecursorPass<Scope> | undefined = undefined;
+  let passRecurse: RecursorPassHolder<Scope> = {};
   // Pass with custom logic
-  let pl: RecursorPass<Scope> | undefined = undefined;
+  let pass: RecursorPassHolder<Scope> = {};
 
-  pr = {
-    recurseModule: fRec(s, pl, recurseModule),
-    recurseBlock: fRec(s, pl, recurseBlock),
-    recurseExpression: fRec(s, pl, recurseExpression),
-    recurseExpressionIdentifier: fRec(s, pl, recurseExpressionIdentifier),
-    recurseExpressionFunction: fRec(s, pl, recurseExpressionFunction),
-    recurseExpressionObject: fRec(s, pl, recurseExpressionObject),
-    recurseExpressionRun: fRec(s, pl, recurseExpressionRun),
-    recurseExpressionLookup: fRec(s, pl, recurseExpressionLookup),
-    recurseExpressionCall: fRec(s, pl, recurseExpressionCall),
-    recurseExpressionLiteral: fRec(s, pl, recurseExpressionLiteral),
-    recurseExpressionUnary: fRec(s, pl, recurseExpressionUnary),
-    recurseExpressionBinary: fRec(s, pl, recurseExpressionBinary),
-    recurseExpressionTyping: fRec(s, pl, recurseExpressionTyping),
-    recurseExpressionParenthesis: fRec(s, pl, recurseExpressionParenthesis),
-    recurseAnnotationType: fRec(s, pl, recurseAnnotationType),
-    recurseAnnotationTemplate: fRec(s, pl, recurseAnnotationTemplate),
-    recurseType: fRec(s, pl, recurseType),
-    recurseTypeIdentifier: fRec(s, pl, recurseTypeIdentifier),
-    recurseTypeBinary: fRec(s, pl, recurseTypeBinary),
-    recurseTypeFunction: fRec(s, pl, recurseTypeFunction),
-    recurseTypeObject: fRec(s, pl, recurseTypeObject),
-    recurseStatement: fRec(s, pl, recurseStatement),
-    recurseStatementVariable: fRec(s, pl, recurseStatementVariable),
-    recurseStatementTypedef: fRec(s, pl, recurseStatementTypedef),
-    recurseStatementWhile: fRec(s, pl, recurseStatementWhile),
-    recurseStatementReturn: fRec(s, pl, recurseStatementReturn),
-    recurseStatementExpression: fRec(s, pl, recurseStatementExpression),
+  passRecurse.value = {
+    recurseModule: fRec(s, pass, recurseModule),
+    recurseBlock: fRec(s, pass, recurseBlock),
+    recurseExpression: fRec(s, pass, recurseExpression),
+    recurseExpressionIdentifier: fRec(s, pass, recurseExpressionIdentifier),
+    recurseExpressionFunction: fRec(s, pass, recurseExpressionFunction),
+    recurseExpressionObject: fRec(s, pass, recurseExpressionObject),
+    recurseExpressionRun: fRec(s, pass, recurseExpressionRun),
+    recurseExpressionLookup: fRec(s, pass, recurseExpressionLookup),
+    recurseExpressionCall: fRec(s, pass, recurseExpressionCall),
+    recurseExpressionLiteral: fRec(s, pass, recurseExpressionLiteral),
+    recurseExpressionUnary: fRec(s, pass, recurseExpressionUnary),
+    recurseExpressionBinary: fRec(s, pass, recurseExpressionBinary),
+    recurseExpressionTyping: fRec(s, pass, recurseExpressionTyping),
+    recurseExpressionParenthesis: fRec(s, pass, recurseExpressionParenthesis),
+    recurseAnnotationType: fRec(s, pass, recurseAnnotationType),
+    recurseAnnotationTemplate: fRec(s, pass, recurseAnnotationTemplate),
+    recurseType: fRec(s, pass, recurseType),
+    recurseTypeIdentifier: fRec(s, pass, recurseTypeIdentifier),
+    recurseTypeBinary: fRec(s, pass, recurseTypeBinary),
+    recurseTypeFunction: fRec(s, pass, recurseTypeFunction),
+    recurseTypeObject: fRec(s, pass, recurseTypeObject),
+    recurseStatement: fRec(s, pass, recurseStatement),
+    recurseStatementVariable: fRec(s, pass, recurseStatementVariable),
+    recurseStatementTypedef: fRec(s, pass, recurseStatementTypedef),
+    recurseStatementWhile: fRec(s, pass, recurseStatementWhile),
+    recurseStatementReturn: fRec(s, pass, recurseStatementReturn),
+    recurseStatementExpression: fRec(s, pass, recurseStatementExpression),
   };
 
-  pl = {
-    recurseModule: fLog(pr.recurseModule, logic.recurseModule),
-    recurseBlock: fLog(pr.recurseBlock, logic.recurseBlock),
-    recurseExpression: fLog(pr.recurseExpression, logic.recurseExpression),
+  pass.value = {
+    recurseModule: fLog(
+      passRecurse.value.recurseModule,
+      logic.recurseModule,
+    ),
+    recurseBlock: fLog(
+      passRecurse.value.recurseBlock,
+      logic.recurseBlock,
+    ),
+    recurseExpression: fLog(
+      passRecurse.value.recurseExpression,
+      logic.recurseExpression,
+    ),
     recurseExpressionIdentifier: fLog(
-      pr.recurseExpressionIdentifier,
+      passRecurse.value.recurseExpressionIdentifier,
       logic.recurseExpressionIdentifier,
     ),
     recurseExpressionFunction: fLog(
-      pr.recurseExpressionFunction,
+      passRecurse.value.recurseExpressionFunction,
       logic.recurseExpressionFunction,
     ),
     recurseExpressionObject: fLog(
-      pr.recurseExpressionObject,
+      passRecurse.value.recurseExpressionObject,
       logic.recurseExpressionObject,
     ),
     recurseExpressionRun: fLog(
-      pr.recurseExpressionRun,
+      passRecurse.value.recurseExpressionRun,
       logic.recurseExpressionRun,
     ),
     recurseExpressionLookup: fLog(
-      pr.recurseExpressionLookup,
+      passRecurse.value.recurseExpressionLookup,
       logic.recurseExpressionLookup,
     ),
     recurseExpressionCall: fLog(
-      pr.recurseExpressionCall,
+      passRecurse.value.recurseExpressionCall,
       logic.recurseExpressionCall,
     ),
     recurseExpressionLiteral: fLog(
-      pr.recurseExpressionLiteral,
+      passRecurse.value.recurseExpressionLiteral,
       logic.recurseExpressionLiteral,
     ),
     recurseExpressionUnary: fLog(
-      pr.recurseExpressionUnary,
+      passRecurse.value.recurseExpressionUnary,
       logic.recurseExpressionUnary,
     ),
     recurseExpressionBinary: fLog(
-      pr.recurseExpressionBinary,
+      passRecurse.value.recurseExpressionBinary,
       logic.recurseExpressionBinary,
     ),
     recurseExpressionTyping: fLog(
-      pr.recurseExpressionTyping,
+      passRecurse.value.recurseExpressionTyping,
       logic.recurseExpressionTyping,
     ),
     recurseExpressionParenthesis: fLog(
-      pr.recurseExpressionParenthesis,
+      passRecurse.value.recurseExpressionParenthesis,
       logic.recurseExpressionParenthesis,
     ),
     recurseAnnotationType: fLog(
-      pr.recurseAnnotationType,
+      passRecurse.value.recurseAnnotationType,
       logic.recurseAnnotationType,
     ),
     recurseAnnotationTemplate: fLog(
-      pr.recurseAnnotationTemplate,
+      passRecurse.value.recurseAnnotationTemplate,
       logic.recurseAnnotationTemplate,
     ),
-    recurseType: fLog(pr.recurseType, logic.recurseType),
+    recurseType: fLog(
+      passRecurse.value.recurseType,
+      logic.recurseType,
+    ),
     recurseTypeIdentifier: fLog(
-      pr.recurseTypeIdentifier,
+      passRecurse.value.recurseTypeIdentifier,
       logic.recurseTypeIdentifier,
     ),
-    recurseTypeBinary: fLog(pr.recurseTypeBinary, logic.recurseTypeBinary),
+    recurseTypeBinary: fLog(
+      passRecurse.value.recurseTypeBinary,
+      logic.recurseTypeBinary,
+    ),
     recurseTypeFunction: fLog(
-      pr.recurseTypeFunction,
+      passRecurse.value.recurseTypeFunction,
       logic.recurseTypeFunction,
     ),
-    recurseTypeObject: fLog(pr.recurseTypeObject, logic.recurseTypeObject),
-    recurseStatement: fLog(pr.recurseStatement, logic.recurseStatement),
+    recurseTypeObject: fLog(
+      passRecurse.value.recurseTypeObject,
+      logic.recurseTypeObject,
+    ),
+    recurseStatement: fLog(
+      passRecurse.value.recurseStatement,
+      logic.recurseStatement,
+    ),
     recurseStatementVariable: fLog(
-      pr.recurseStatementVariable,
+      passRecurse.value.recurseStatementVariable,
       logic.recurseStatementVariable,
     ),
     recurseStatementTypedef: fLog(
-      pr.recurseStatementTypedef,
+      passRecurse.value.recurseStatementTypedef,
       logic.recurseStatementTypedef,
     ),
     recurseStatementWhile: fLog(
-      pr.recurseStatementWhile,
+      passRecurse.value.recurseStatementWhile,
       logic.recurseStatementWhile,
     ),
     recurseStatementReturn: fLog(
-      pr.recurseStatementReturn,
+      passRecurse.value.recurseStatementReturn,
       logic.recurseStatementReturn,
     ),
     recurseStatementExpression: fLog(
-      pr.recurseStatementExpression,
+      passRecurse.value.recurseStatementExpression,
       logic.recurseStatementExpression,
     ),
   };
 
-  return pl;
+  return pass.value;
 }

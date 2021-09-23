@@ -1,4 +1,5 @@
 import { AstTypeFunction } from "../../data/ast/AstTypeFunction.ts";
+import { RecursorPass } from "./RecursorPass.ts";
 
 export function recurseTypeFunction<Scope>(
   r: RecursorPass<Scope>,

@@ -6,8 +6,6 @@ import {
   AstExpressionBinary,
   AstExpressionBinaryOperator,
 } from "../../../data/ast/AstExpressionBinary.ts";
-import { AstRecursor } from "../../util/AstRecursor.ts";
-import { BrowsedScope } from "../util/BrowsedScope.ts";
 
 /**
  * Supported symbol priority map
@@ -79,10 +77,16 @@ function listBinaryNodes(
  * Build a new binary operation tree by reading the inputs and operators
  */
 export function browseExpressionBinary(
-  recursor: AstRecursor<BrowsedScope>,
-  scope: BrowsedScope,
+  scope: undefined,
   ast: AstExpressionBinary,
+  next: () => void,
 ) {
+  // Skip if already prioritized
+  if (ast.prioritized) {
+    next();
+    return;
+  }
+
   // existing state of ast
   const leafs = new Array<AstExpression>();
   const nodes = new Array<AstExpressionBinary>();
@@ -120,6 +124,7 @@ export function browseExpressionBinary(
         operator: node.operator,
         expression1: expression1,
         expression2: expression2,
+        prioritized: true,
       },
     };
     while (expressions[idx1] === expression1) {
@@ -144,8 +149,6 @@ export function browseExpressionBinary(
   ast.expression1 = binary.expression1;
   ast.expression2 = binary.expression2;
 
-  // Recurse on the leafs only
-  for (const leaf of leafs) {
-    recursor.recurseExpression(recursor, scope, leaf);
-  }
+  // done
+  next();
 }

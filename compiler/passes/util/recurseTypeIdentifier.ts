@@ -1,4 +1,5 @@
 import { AstTypeIdentifier } from "../../data/ast/AstTypeIdentifier.ts";
+import { RecursorPass } from "./RecursorPass.ts";
 
 export function recurseTypeIdentifier<Scope>(
   r: RecursorPass<Scope>,

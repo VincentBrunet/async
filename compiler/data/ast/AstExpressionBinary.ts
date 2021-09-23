@@ -21,4 +21,5 @@ export interface AstExpressionBinary {
   operator: AstExpressionBinaryOperator;
   expression1: AstExpression;
   expression2: AstExpression;
+  prioritized: boolean;
 }

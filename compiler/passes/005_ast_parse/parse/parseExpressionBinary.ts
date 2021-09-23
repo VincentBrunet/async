@@ -64,5 +64,6 @@ export function parseExpressionBinary(
     operator: operator,
     expression1: left,
     expression2: right,
+    prioritized: false,
   };
 }

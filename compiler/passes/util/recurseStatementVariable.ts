@@ -1,4 +1,5 @@
 import { AstStatementVariable } from "../../data/ast/AstStatementVariable.ts";
+import { RecursorPass } from "./RecursorPass.ts";
 
 export function recurseStatementVariable<Scope>(
   r: RecursorPass<Scope>,

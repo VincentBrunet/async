@@ -1,4 +1,5 @@
 import { AstTypeBinary } from "../../data/ast/AstTypeBinary.ts";
+import { RecursorPass } from "./RecursorPass.ts";
 
 export function recurseTypeBinary<Scope>(
   r: RecursorPass<Scope>,
