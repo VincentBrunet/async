@@ -7,15 +7,15 @@ export function browseExpressionRun(
   next: () => void,
 ) {
   // Asserts
-  if (!ast.closures) {
+  if (!ast.resolvedClosures) {
     throw new Error("Run doesn't have proper closure");
   }
 
-  for (const astClosure of ast.closures) {
-    astClosure.reference = scope.findReference(astClosure.name);
+  for (const astClosure of ast.resolvedClosures) {
+    astClosure.resolvedReference = scope.findReference(astClosure.name);
   }
 
-  for (const astClosure of ast.closures) {
+  for (const astClosure of ast.resolvedClosures) {
     scope.pushClosure(astClosure);
   }
 

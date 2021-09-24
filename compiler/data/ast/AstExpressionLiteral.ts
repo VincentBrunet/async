@@ -1,3 +1,5 @@
+import { AstType } from "./AstType.ts";
+
 export enum AstExpressionLiteralKind {
   String = "String", // TODO
   Boolean = "Boolean",
@@ -17,4 +19,6 @@ export enum AstExpressionLiteralKind {
 export interface AstExpressionLiteral {
   kind: AstExpressionLiteralKind;
   data: string;
+
+  resolvedType?: AstType;
 }

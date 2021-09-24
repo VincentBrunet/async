@@ -6,6 +6,6 @@ export function browseExpressionIdentifier(
   ast: AstExpressionIdentifier,
   next: () => void,
 ) {
-  ast.reference = scope.findReference(ast.name);
+  ast.resolvedReference = scope.findReference(ast.name);
   next();
 }

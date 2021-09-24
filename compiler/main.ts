@@ -1,10 +1,12 @@
+import { ensureDir } from "https://deno.land/std/fs/ensure_dir.ts";
 import { getConfig } from "./command/getConfig.ts";
 import { convertCodeToTokens } from "./passes/001_tokens_parse/convertCodeToTokens.ts";
 import { convertTokensToAst } from "./passes/005_ast_parse/convertTokensToAst.ts";
-import { applyAstBinaryPrioritize } from "./passes/103_binary_prioritize/applyAstBinaryPrioritize.ts";
-import { applyAstClosureResolve } from "./passes/104_closure_resolve/applyAstClosureResolve.ts";
-import { applyAstReferenceResolve } from "./passes/105_reference_resolve/applyAstReferenceResolve.ts";
-import { applyAstShorthandResolve } from "./passes/106_shorthand_resolve/applyAstShorthandResolve.ts";
+import { applyBinaryPrioritize } from "./passes/103_binary_prioritize/applyBinaryPrioritize.ts";
+import { applyClosureResolve } from "./passes/104_closure_resolve/applyClosureResolve.ts";
+import { applyReferenceResolve } from "./passes/105_reference_resolve/applyReferenceResolve.ts";
+import { applyShorthandResolve } from "./passes/106_shorthand_resolve/applyShorthandResolve.ts";
+import { applyTypeInference1 } from "./passes/201_type_inference_1/applyTypeInference1.ts";
 import { convertAstToOutputModule } from "./passes/950_write_output/convertAstToOutputModule.ts";
 import { stringify } from "./util/debug/stringify.ts";
 
@@ -14,7 +16,7 @@ const files = (await getConfig()).files;
 
 const firstCode = await Deno.readTextFile(files[0]);
 
-Deno.mkdirSync(files[0] + ".compiled");
+ensureDir(files[0] + ".compiled");
 
 const firstTokens = convertCodeToTokens(firstCode);
 
@@ -30,31 +32,38 @@ Deno.writeTextFileSync(
   stringify(firstAst),
 );
 
-applyAstBinaryPrioritize(firstAst);
+applyBinaryPrioritize(firstAst);
 
 Deno.writeTextFileSync(
   files[0] + ".compiled/pass.103.json",
   stringify(firstAst),
 );
 
-applyAstClosureResolve(firstAst);
+applyClosureResolve(firstAst);
 
 Deno.writeTextFileSync(
   files[0] + ".compiled/pass.104.json",
   stringify(firstAst),
 );
 
-applyAstReferenceResolve(firstAst);
+applyReferenceResolve(firstAst);
 
 Deno.writeTextFileSync(
   files[0] + ".compiled/pass.105.json",
   stringify(firstAst),
 );
 
-applyAstShorthandResolve(firstAst);
+applyShorthandResolve(firstAst);
 
 Deno.writeTextFileSync(
   files[0] + ".compiled/pass.106.json",
+  stringify(firstAst),
+);
+
+applyTypeInference1(firstAst);
+
+Deno.writeTextFileSync(
+  files[0] + ".compiled/pass.201.json",
   stringify(firstAst),
 );
 

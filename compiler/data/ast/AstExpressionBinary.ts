@@ -1,4 +1,5 @@
 import { AstExpression } from "./AstExpression.ts";
+import { AstType } from "./AstType.ts";
 
 export enum AstExpressionBinaryOperator {
   Addition = "Addition",
@@ -21,5 +22,7 @@ export interface AstExpressionBinary {
   operator: AstExpressionBinaryOperator;
   expression1: AstExpression;
   expression2: AstExpression;
-  prioritized: boolean;
+
+  resolvedType?: AstType;
+  resolvedPrioritization?: boolean;
 }

@@ -7,15 +7,15 @@ export function browseExpressionFunction(
   next: () => void,
 ) {
   // Asserts
-  if (!ast.closures) {
+  if (!ast.resolvedClosures) {
     throw new Error("Undefined ast function closure");
   }
 
-  for (const astClosure of ast.closures) {
-    astClosure.reference = scope.findReference(astClosure.name);
+  for (const astClosure of ast.resolvedClosures) {
+    astClosure.resolvedReference = scope.findReference(astClosure.name);
   }
 
-  for (const astClosure of ast.closures) {
+  for (const astClosure of ast.resolvedClosures) {
     scope.pushClosure(astClosure);
   }
   for (const astParam of ast.params) {

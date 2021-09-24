@@ -5,7 +5,7 @@ export class BrowsedScope {
 
   private names = new Set<string>();
 
-  private closures = new Set<string>();
+  private resolvedClosures = new Set<string>();
 
   constructor(parent?: BrowsedScope) {
     this.parent = parent;
@@ -25,16 +25,16 @@ export class BrowsedScope {
     if (this.parent) {
       this.parent.propagateName(name);
     }
-    this.closures.add(name);
+    this.resolvedClosures.add(name);
   }
 
   readClosures(): Array<AstResolvedClosure> {
-    const closures = [...this.closures];
+    const resolvedClosures = [...this.resolvedClosures];
     const astClosures = new Array<AstResolvedClosure>();
-    for (let idx = 0; idx < closures.length; idx++) {
+    for (let idx = 0; idx < resolvedClosures.length; idx++) {
       astClosures.push({
         idx: idx,
-        name: closures[idx],
+        name: resolvedClosures[idx],
       });
     }
     return astClosures;

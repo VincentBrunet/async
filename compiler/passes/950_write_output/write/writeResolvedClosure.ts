@@ -8,18 +8,18 @@ export function writeResolvedClosure(
   statement: OutputStatement,
   astClosure: AstResolvedClosure,
 ) {
-  const reference = astClosure.reference;
-  if (reference) {
-    switch (reference.kind) {
+  const resolvedReference = astClosure.resolvedReference;
+  if (resolvedReference) {
+    switch (resolvedReference.kind) {
       case AstResolvedReferenceKind.Closure: {
-        const closure = reference.data as AstResolvedClosure;
+        const closure = resolvedReference.data as AstResolvedClosure;
         statement.pushPart("closure[");
         statement.pushPart(closure.idx.toString());
         statement.pushPart("]");
         break;
       }
       case AstResolvedReferenceKind.Param: {
-        const param = reference.data as AstExpressionFunctionParam;
+        const param = resolvedReference.data as AstExpressionFunctionParam;
         statement.pushPart("ref_make(");
         statement.pushPart("__");
         statement.pushPart(param.name);
@@ -27,7 +27,7 @@ export function writeResolvedClosure(
         break;
       }
       case AstResolvedReferenceKind.Variable: {
-        const variable = reference.data as AstStatementVariable;
+        const variable = resolvedReference.data as AstStatementVariable;
         statement.pushPart("__");
         statement.pushPart(variable.name);
         break;

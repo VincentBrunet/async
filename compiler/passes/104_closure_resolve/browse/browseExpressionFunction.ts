@@ -10,5 +10,5 @@ export function browseExpressionFunction(
     scope.pushName(astParam.name);
   }
   next();
-  ast.closures = scope.readClosures();
+  ast.resolvedClosures = scope.readClosures();
 }

@@ -6,6 +6,6 @@ export function browseTypeIdentifier(
   ast: AstTypeIdentifier,
   next: () => void,
 ) {
-  ast.resolved = scope.findShorthand(ast.name);
+  ast.resolvedShorthand = scope.findShorthand(ast.name);
   next();
 }

@@ -15,7 +15,7 @@ export function writeExpressionRun(
   astRun: AstExpressionRun,
 ) {
   // Asserts
-  if (!astRun.closures) {
+  if (!astRun.resolvedClosures) {
     throw new Error("Invalid closure setup");
   }
 
@@ -27,8 +27,8 @@ export function writeExpressionRun(
   statement.pushPart("&");
   statement.pushPart(name);
   statement.pushPart(", ");
-  statement.pushPart(astRun.closures.length.toString());
-  for (const astClosure of astRun.closures) {
+  statement.pushPart(astRun.resolvedClosures.length.toString());
+  for (const astClosure of astRun.resolvedClosures) {
     statement.pushPart(", ");
     writeResolvedClosure(statement, astClosure);
   }

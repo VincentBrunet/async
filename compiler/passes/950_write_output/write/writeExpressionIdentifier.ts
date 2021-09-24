@@ -13,24 +13,24 @@ export function writeExpressionIdentifier(
   statement: OutputStatement,
   astIdentifier: AstExpressionIdentifier,
 ) {
-  const reference = astIdentifier.reference;
-  if (reference) {
-    switch (reference.kind) {
+  const resolvedReference = astIdentifier.resolvedReference;
+  if (resolvedReference) {
+    switch (resolvedReference.kind) {
       case AstResolvedReferenceKind.Closure: {
-        const closure = reference.data as AstResolvedClosure;
+        const closure = resolvedReference.data as AstResolvedClosure;
         statement.pushPart("closure[");
         statement.pushPart(closure.idx.toString());
         statement.pushPart("]->value");
         break;
       }
       case AstResolvedReferenceKind.Param: {
-        const param = reference.data as AstExpressionFunctionParam;
+        const param = resolvedReference.data as AstExpressionFunctionParam;
         statement.pushPart("__");
         statement.pushPart(param.name);
         break;
       }
       case AstResolvedReferenceKind.Variable: {
-        const variable = reference.data as AstStatementVariable;
+        const variable = resolvedReference.data as AstStatementVariable;
         statement.pushPart("__");
         statement.pushPart(variable.name);
         statement.pushPart("->value");

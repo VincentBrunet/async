@@ -9,4 +9,6 @@ export interface AstExpressionTyping {
   operator: AstExpressionTypingOperator;
   expression: AstExpression;
   type: AstType;
+
+  resolvedType?: AstType;
 }

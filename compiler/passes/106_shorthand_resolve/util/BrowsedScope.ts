@@ -29,20 +29,20 @@ export class BrowsedScope {
     });
   }
 
-  private pushShorthand(name: string, reference: AstResolvedShorthand) {
+  private pushShorthand(name: string, shorthand: AstResolvedShorthand) {
     if (this.shorthands.get(name)) {
       throw new Error(
         "Already defined: " + (this.shorthands.get(name)) +
-          " + " + (reference.data.name),
+          " + " + (shorthand.data.name),
       );
     }
-    this.shorthands.set(name, reference);
+    this.shorthands.set(name, shorthand);
   }
 
   findShorthand(name: string): AstResolvedShorthand | undefined {
-    const reference = this.shorthands.get(name);
-    if (reference) {
-      return reference;
+    const shorthand = this.shorthands.get(name);
+    if (shorthand) {
+      return shorthand;
     }
     return this.parent?.findShorthand(name);
   }

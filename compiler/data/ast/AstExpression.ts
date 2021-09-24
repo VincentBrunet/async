@@ -9,6 +9,7 @@ import { AstExpressionParenthesis } from "./AstExpressionParenthesis.ts";
 import { AstExpressionRun } from "./AstExpressionRun.ts";
 import { AstExpressionTyping } from "./AstExpressionTyping.ts";
 import { AstExpressionUnary } from "./AstExpressionUnary.ts";
+import { AstType } from "./AstType.ts";
 
 export enum AstExpressionKind {
   Call = "Call",
@@ -40,4 +41,6 @@ export type AstExpressionData =
 export interface AstExpression {
   kind: AstExpressionKind;
   data: AstExpressionData;
+
+  resolvedType?: AstType;
 }

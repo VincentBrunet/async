@@ -15,7 +15,7 @@ export function writeExpressionFunction(
   astFunction: AstExpressionFunction,
 ) {
   // Asserts
-  if (!astFunction.closures) {
+  if (!astFunction.resolvedClosures) {
     throw new Error("Invalid closure setup");
   }
 
@@ -29,8 +29,8 @@ export function writeExpressionFunction(
   statement.pushPart("&");
   statement.pushPart(name);
   statement.pushPart(", ");
-  statement.pushPart(astFunction.closures.length.toString());
-  for (const astClosure of astFunction.closures) {
+  statement.pushPart(astFunction.resolvedClosures.length.toString());
+  for (const astClosure of astFunction.resolvedClosures) {
     statement.pushPart(", ");
     writeResolvedClosure(statement, astClosure);
   }

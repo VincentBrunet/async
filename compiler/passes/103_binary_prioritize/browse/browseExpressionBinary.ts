@@ -81,8 +81,8 @@ export function browseExpressionBinary(
   ast: AstExpressionBinary,
   next: () => void,
 ) {
-  // Skip if already prioritized
-  if (ast.prioritized) {
+  // Skip if already resolved prioritization
+  if (ast.resolvedPrioritization) {
     next();
     return;
   }
@@ -93,7 +93,7 @@ export function browseExpressionBinary(
   listBinaryLeafs(ast, leafs);
   listBinaryNodes(ast, nodes);
 
-  // find the actual prioritized steps
+  // find the actual resolvedPrioritization steps
   interface Step {
     idx: number;
     priority: number;
@@ -124,7 +124,7 @@ export function browseExpressionBinary(
         operator: node.operator,
         expression1: expression1,
         expression2: expression2,
-        prioritized: true,
+        resolvedPrioritization: true,
       },
     };
     while (expressions[idx1] === expression1) {
