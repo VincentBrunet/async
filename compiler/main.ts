@@ -6,7 +6,7 @@ import { applyBinaryPrioritize } from "./passes/103_binary_prioritize/applyBinar
 import { applyClosureResolve } from "./passes/104_closure_resolve/applyClosureResolve.ts";
 import { applyReferenceResolve } from "./passes/105_reference_resolve/applyReferenceResolve.ts";
 import { applyShorthandResolve } from "./passes/106_shorthand_resolve/applyShorthandResolve.ts";
-import { applyReturnResolve } from "./passes/109_returns_resolve/applyReturnResolve.ts";
+import { applyStatementCollector } from "./passes/109_statement_collector/applyStatementCollector.ts";
 import { convertAstToOutputModule } from "./passes/950_write_output/convertAstToOutputModule.ts";
 import { stringify } from "./util/debug/stringify.ts";
 
@@ -21,14 +21,14 @@ ensureDirSync(firstOutputDirectory);
 const firstTokens = convertCodeToTokens(firstCode);
 
 Deno.writeTextFileSync(
-  firstOutputDirectory + "/pass.001.json",
+  firstOutputDirectory + "/pass.001.convertCodeToTokens.json",
   stringify(firstTokens),
 );
 
 const firstAst = convertTokensToAst(firstTokens);
 
 Deno.writeTextFileSync(
-  firstOutputDirectory + "/pass.005.json",
+  firstOutputDirectory + "/pass.005.convertTokensToAst.json",
   stringify(firstAst),
 );
 
@@ -37,14 +37,15 @@ const passes = [
   { key: "104", apply: applyClosureResolve },
   { key: "105", apply: applyReferenceResolve },
   { key: "106", apply: applyShorthandResolve },
-  { key: "109", apply: applyReturnResolve },
-  //{ key: "201", apply: applyTypeInference1 },
+  { key: "109", apply: applyStatementCollector },
+  //{ key: "201", apply: applyTypeInferenceUpward },
 ];
 
 for (const pass of passes) {
   pass.apply(firstAst);
   Deno.writeTextFileSync(
-    firstOutputDirectory + "/pass." + pass.key + ".json",
+    firstOutputDirectory + "/pass." + pass.key + "." + pass.apply.name +
+      ".json",
     stringify(firstAst),
   );
 }

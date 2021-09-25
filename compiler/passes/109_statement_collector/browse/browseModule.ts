@@ -1,12 +1,14 @@
-import { AstExpressionFunction } from "../../../data/ast/AstExpressionFunction.ts";
+import { AstModule } from "../../../data/ast/AstModule.ts";
 import { BrowsedScope } from "../util/BrowsedScope.ts";
 
-export function browseExpressionFunction(
+export function browseModule(
   scope: BrowsedScope,
-  ast: AstExpressionFunction,
+  ast: AstModule,
   next: () => void,
 ) {
+  scope.markCollectorStatementVariable();
   scope.markCollectorStatementReturn();
   next();
+  ast.resolvedVariables = scope.getStatementVariables();
   ast.resolvedReturns = scope.getStatementReturns();
 }

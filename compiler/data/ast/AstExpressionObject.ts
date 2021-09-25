@@ -3,6 +3,7 @@ import { AstAnnotationType } from "./AstAnnotationType.ts";
 import { AstBlock } from "./AstBlock.ts";
 import { AstResolvedClosure } from "./AstResolvedClosure.ts";
 import { AstStatementReturn } from "./AstStatementReturn.ts";
+import { AstStatementVariable } from "./AstStatementVariable.ts";
 import { AstType } from "./AstType.ts";
 
 export interface AstExpressionObject extends Ast {
@@ -11,5 +12,6 @@ export interface AstExpressionObject extends Ast {
 
   resolvedType?: AstType;
   resolvedClosures?: Array<AstResolvedClosure>;
+  resolvedVariables?: Array<AstStatementVariable>;
   resolvedReturns?: Array<AstStatementReturn>;
 }
