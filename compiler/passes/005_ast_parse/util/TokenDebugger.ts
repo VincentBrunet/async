@@ -1,6 +1,6 @@
-import { clamp } from "../../../util/numbers/clamp.ts";
-import { repeat } from "../../../util/strings/repeat.ts";
 import { Token } from "../../../data/token/Token.ts";
+import { clamp } from "../../../lib/numbers/clamp.ts";
+import { repeat } from "../../../lib/strings/repeat.ts";
 import { TokenImpasse } from "./TokenImpasse.ts";
 
 export class TokenDebugger {
