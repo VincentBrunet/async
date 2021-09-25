@@ -12,6 +12,9 @@ export function browseExpressionUnary(
   next: () => void,
 ) {
   next();
+
+  ast.resolvedType = ast.expression.resolvedType; // TODO
+
   if (ast.operator === AstExpressionUnaryOperator.Not) {
     ast.resolvedType = makeTypePrimitive(AstTypePrimitiveId.Boolean, [], ast);
   } else if (ast.operator === AstExpressionUnaryOperator.Negative) {

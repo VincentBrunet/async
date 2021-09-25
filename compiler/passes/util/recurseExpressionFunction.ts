@@ -10,6 +10,6 @@ export function recurseExpressionFunction<Scope>(
   for (const param of ast.params) {
     r.recurseAnnotationType(p, param.annotation);
   }
-  r.recurseAnnotationType(p, ast.return);
+  r.recurseAnnotationType(p, ast.ret);
   r.recurseBlock(p, ast.block);
 }

@@ -88,6 +88,6 @@ export function parseTypeFunction(
   // done, ast
   return {
     params: astParams,
-    return: returnAnnotation.type,
+    ret: returnAnnotation.type,
   };
 }

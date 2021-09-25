@@ -34,7 +34,7 @@
         "token": { "begin": 18, "end": 18 }
        }
       ],
-      "return": { "token": { "begin": 21, "end": 21 } },
+      "ret": { "token": { "begin": 21, "end": 21 } },
       "block": {
        "statements": [
         {
@@ -89,7 +89,7 @@
      "data": {
       "template": { "params": [], "token": { "begin": 38, "end": 38 } },
       "params": [],
-      "return": { "token": { "begin": 38, "end": 38 } },
+      "ret": { "token": { "begin": 38, "end": 38 } },
       "block": {
        "statements": [
         {
@@ -149,8 +149,8 @@
      "data": {
       "annotation": {
        "type": {
-        "kind": "Identifier",
-        "data": { "name": "Int", "params": [], "token": { "begin": 59, "end": 61 } },
+        "kind": "Primitive",
+        "data": { "id": "i32", "params": [], "token": { "begin": 59, "end": 61 } },
         "token": { "begin": 59, "end": 61 }
        },
        "token": { "begin": 58, "end": 61 }

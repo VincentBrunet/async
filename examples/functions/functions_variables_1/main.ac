@@ -9,7 +9,7 @@ const b = fn {
   stdout(true, a)
 }
 
-const val = expr :Int {
+const val = expr :i32 {
   /*
   if (a > b) {
     return 42

@@ -9,5 +9,5 @@ export function recurseTypeFunction<Scope>(
   for (const param of ast.params) {
     r.recurseType(p, param.type);
   }
-  r.recurseType(p, ast.return);
+  r.recurseType(p, ast.ret);
 }

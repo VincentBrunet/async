@@ -543,7 +543,7 @@
  },
  {
   "kind": "text",
-  "str": "Int",
+  "str": "i32",
   "location": {
    "index": { "begin": 112, "end": 114 },
    "column": { "begin": 19, "end": 21 },

@@ -8,5 +8,5 @@ export interface AstTypeFunctionParam extends Ast {
 
 export interface AstTypeFunction extends Ast {
   params: Array<AstTypeFunctionParam>;
-  return: AstType;
+  ret: AstType;
 }

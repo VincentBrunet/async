@@ -100,7 +100,7 @@ export function parseExpressionFunction(
   return {
     template: astTemplate,
     params: astParams,
-    return: astReturn,
+    ret: astReturn,
     block: astBlock,
   };
 }
