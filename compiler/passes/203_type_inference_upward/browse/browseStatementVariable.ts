@@ -7,4 +7,5 @@ export function browseStatementVariable(
   next: () => void,
 ) {
   next();
+  ast.resolvedType = ast.annotation.type ?? ast.value?.resolvedType;
 }

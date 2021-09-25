@@ -9,11 +9,7 @@
     "annotation": { "token": { "begin": 5, "end": 5 } },
     "value": {
      "kind": "Literal",
-     "data": {
-      "kind": "Integer32",
-      "data": "42",
-      "token": { "begin": 7, "end": 9 }
-     },
+     "data": { "id": "i32", "value": "42", "token": { "begin": 7, "end": 9 } },
      "token": { "begin": 7, "end": 9 }
     },
     "token": { "begin": 1, "end": 9 }
@@ -66,8 +62,8 @@
              {
               "kind": "Literal",
               "data": {
-               "kind": "Boolean",
-               "data": "true",
+               "id": "bool",
+               "value": "true",
                "token": { "begin": 25, "end": 26 }
               },
               "token": { "begin": 25, "end": 26 }
@@ -133,8 +129,8 @@
              {
               "kind": "Literal",
               "data": {
-               "kind": "Boolean",
-               "data": "true",
+               "id": "bool",
+               "value": "true",
                "token": { "begin": 42, "end": 43 }
               },
               "token": { "begin": 42, "end": 43 }
@@ -260,8 +256,8 @@
             "expression": {
              "kind": "Literal",
              "data": {
-              "kind": "Boolean",
-              "data": "true",
+              "id": "bool",
+              "value": "true",
               "token": { "begin": 106, "end": 107 }
              },
              "token": { "begin": 106, "end": 107 }

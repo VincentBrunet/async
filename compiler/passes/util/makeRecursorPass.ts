@@ -25,6 +25,7 @@ import { recurseTypeBinary } from "./recurseTypeBinary.ts";
 import { recurseTypeFunction } from "./recurseTypeFunction.ts";
 import { recurseTypeIdentifier } from "./recurseTypeIdentifier.ts";
 import { recurseTypeObject } from "./recurseTypeObject.ts";
+import { recurseTypePrimitive } from "./recurseTypePrimitive.ts";
 import { RecursorLogic } from "./RecursorLogic.ts";
 import { RecursorPass } from "./RecursorPass.ts";
 
@@ -113,6 +114,7 @@ export function makeRecursorPass<Scope>(
     recurseAnnotationTemplate: fRec(s, pass, recurseAnnotationTemplate),
     recurseType: fRec(s, pass, recurseType),
     recurseTypeIdentifier: fRec(s, pass, recurseTypeIdentifier),
+    recurseTypePrimitive: fRec(s, pass, recurseTypePrimitive),
     recurseTypeBinary: fRec(s, pass, recurseTypeBinary),
     recurseTypeFunction: fRec(s, pass, recurseTypeFunction),
     recurseTypeObject: fRec(s, pass, recurseTypeObject),
@@ -196,6 +198,10 @@ export function makeRecursorPass<Scope>(
     recurseTypeIdentifier: fLog(
       passRecurse.value.recurseTypeIdentifier,
       logic.recurseTypeIdentifier,
+    ),
+    recurseTypePrimitive: fLog(
+      passRecurse.value.recurseTypePrimitive,
+      logic.recurseTypePrimitive,
     ),
     recurseTypeBinary: fLog(
       passRecurse.value.recurseTypeBinary,

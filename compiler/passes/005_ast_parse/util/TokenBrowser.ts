@@ -1,6 +1,6 @@
 import { Ast } from "../../../data/ast/Ast.ts";
 import { Token, TokenKind } from "../../../data/token/Token.ts";
-import { repeat } from "../../../lib/strings/repeat.ts";
+import { repeat } from "../../../lib/core/strings/repeat.ts";
 import { TokenImpasse } from "./TokenImpasse.ts";
 
 export class TokenBrowser {

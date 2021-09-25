@@ -9,10 +9,21 @@
     "annotation": { "token": { "begin": 5, "end": 5 } },
     "value": {
      "kind": "Literal",
-     "data": { "id": "i32", "value": "42", "token": { "begin": 7, "end": 9 } },
-     "token": { "begin": 7, "end": 9 }
+     "data": {
+      "id": "i32",
+      "value": "42",
+      "token": { "begin": 7, "end": 9 },
+      "resolvedType": {
+       "kind": "Primitive",
+       "data": { "id": "i32", "params": [], "token": {/* circular */} },
+       "token": {/* circular */}
+      }
+     },
+     "token": { "begin": 7, "end": 9 },
+     "resolvedType": {/* circular */}
     },
-    "token": { "begin": 1, "end": 9 }
+    "token": { "begin": 1, "end": 9 },
+    "resolvedType": {/* circular */}
    },
    "token": { "begin": 1, "end": 9 }
   },
@@ -45,7 +56,19 @@
            "data": {
             "callee": {
              "kind": "Identifier",
-             "data": { "name": "stdout", "token": { "begin": 23, "end": 24 } }
+             "data": {
+              "name": "stdout",
+              "token": { "begin": 23, "end": 24 },
+              "resolvedReference": {
+               "kind": "Closure",
+               "data": {
+                "idx": 0,
+                "name": "stdout",
+                "resolvedReference": { "kind": "Variable", "data": {/* circular */} }
+               }
+              }
+             },
+             "resolvedType": undefined
             },
             "params": [
              {
@@ -53,14 +76,21 @@
               "data": {
                "id": "bool",
                "value": "true",
-               "token": { "begin": 25, "end": 26 }
+               "token": { "begin": 25, "end": 26 },
+               "resolvedType": {
+                "kind": "Primitive",
+                "data": { "id": "bool", "params": [], "token": {/* circular */} },
+                "token": {/* circular */}
+               }
               },
-              "token": { "begin": 25, "end": 26 }
+              "token": { "begin": 25, "end": 26 },
+              "resolvedType": {/* circular */}
              }
             ],
             "token": { "begin": 24, "end": 28 }
            },
-           "token": { "begin": 23, "end": 28 }
+           "token": { "begin": 23, "end": 28 },
+           "resolvedType": undefined
           },
           "token": { "begin": 23, "end": 28 }
          },
@@ -70,11 +100,15 @@
        "token": { "begin": 21, "end": 30 }
       },
       "token": { "begin": 15, "end": 30 },
-      "resolvedClosures": [ { "idx": 0, "name": "stdout" } ]
+      "resolvedClosures": [ {/* circular */} ],
+      "resolvedVariables": [],
+      "resolvedReturns": []
      },
-     "token": { "begin": 15, "end": 30 }
+     "token": { "begin": 15, "end": 30 },
+     "resolvedType": undefined
     },
-    "token": { "begin": 9, "end": 30 }
+    "token": { "begin": 9, "end": 30 },
+    "resolvedType": undefined
    },
    "token": { "begin": 9, "end": 30 }
   },
@@ -101,7 +135,19 @@
            "data": {
             "callee": {
              "kind": "Identifier",
-             "data": { "name": "stdout", "token": { "begin": 40, "end": 41 } }
+             "data": {
+              "name": "stdout",
+              "token": { "begin": 40, "end": 41 },
+              "resolvedReference": {
+               "kind": "Closure",
+               "data": {
+                "idx": 0,
+                "name": "stdout",
+                "resolvedReference": {/* circular */}
+               }
+              }
+             },
+             "resolvedType": undefined
             },
             "params": [
              {
@@ -109,19 +155,38 @@
               "data": {
                "id": "bool",
                "value": "true",
-               "token": { "begin": 42, "end": 43 }
+               "token": { "begin": 42, "end": 43 },
+               "resolvedType": {
+                "kind": "Primitive",
+                "data": { "id": "bool", "params": [], "token": {/* circular */} },
+                "token": {/* circular */}
+               }
               },
-              "token": { "begin": 42, "end": 43 }
+              "token": { "begin": 42, "end": 43 },
+              "resolvedType": {/* circular */}
              },
              {
               "kind": "Identifier",
-              "data": { "name": "a", "token": { "begin": 45, "end": 46 } },
-              "token": { "begin": 45, "end": 46 }
+              "data": {
+               "name": "a",
+               "token": { "begin": 45, "end": 46 },
+               "resolvedReference": {
+                "kind": "Closure",
+                "data": {
+                 "idx": 1,
+                 "name": "a",
+                 "resolvedReference": { "kind": "Variable", "data": {/* circular */} }
+                }
+               }
+              },
+              "token": { "begin": 45, "end": 46 },
+              "resolvedType": undefined
              }
             ],
             "token": { "begin": 41, "end": 48 }
            },
-           "token": { "begin": 40, "end": 48 }
+           "token": { "begin": 40, "end": 48 },
+           "resolvedType": undefined
           },
           "token": { "begin": 40, "end": 48 }
          },
@@ -131,11 +196,15 @@
        "token": { "begin": 38, "end": 50 }
       },
       "token": { "begin": 36, "end": 50 },
-      "resolvedClosures": [ { "idx": 0, "name": "stdout" }, { "idx": 1, "name": "a" } ]
+      "resolvedClosures": [ {/* circular */}, {/* circular */} ],
+      "resolvedVariables": [],
+      "resolvedReturns": []
      },
-     "token": { "begin": 36, "end": 50 }
+     "token": { "begin": 36, "end": 50 },
+     "resolvedType": undefined
     },
-    "token": { "begin": 30, "end": 50 }
+    "token": { "begin": 30, "end": 50 },
+    "resolvedType": undefined
    },
    "token": { "begin": 30, "end": 50 }
   },
@@ -152,7 +221,12 @@
       "annotation": {
        "type": {
         "kind": "Identifier",
-        "data": { "name": "Int", "params": [], "token": { "begin": 59, "end": 61 } },
+        "data": {
+         "name": "Int",
+         "params": [],
+         "token": { "begin": 59, "end": 61 },
+         "resolvedShorthand": undefined
+        },
         "token": { "begin": 59, "end": 61 }
        },
        "token": { "begin": 58, "end": 61 }
@@ -168,10 +242,19 @@
           "annotation": { "token": { "begin": 91, "end": 91 } },
           "value": {
            "kind": "Identifier",
-           "data": { "name": "a", "token": { "begin": 93, "end": 95 } },
-           "token": { "begin": 93, "end": 95 }
+           "data": {
+            "name": "a",
+            "token": { "begin": 93, "end": 95 },
+            "resolvedReference": {
+             "kind": "Closure",
+             "data": { "idx": 0, "name": "a", "resolvedReference": {/* circular */} }
+            }
+           },
+           "token": { "begin": 93, "end": 95 },
+           "resolvedType": undefined
           },
-          "token": { "begin": 87, "end": 95 }
+          "token": { "begin": 87, "end": 95 },
+          "resolvedType": undefined
          },
          "token": { "begin": 87, "end": 95 }
         },
@@ -184,10 +267,23 @@
           "annotation": { "token": { "begin": 99, "end": 99 } },
           "value": {
            "kind": "Identifier",
-           "data": { "name": "b", "token": { "begin": 101, "end": 103 } },
-           "token": { "begin": 101, "end": 103 }
+           "data": {
+            "name": "b",
+            "token": { "begin": 101, "end": 103 },
+            "resolvedReference": {
+             "kind": "Closure",
+             "data": {
+              "idx": 1,
+              "name": "b",
+              "resolvedReference": { "kind": "Variable", "data": {/* circular */} }
+             }
+            }
+           },
+           "token": { "begin": 101, "end": 103 },
+           "resolvedType": undefined
           },
-          "token": { "begin": 95, "end": 103 }
+          "token": { "begin": 95, "end": 103 },
+          "resolvedType": undefined
          },
          "token": { "begin": 95, "end": 103 }
         },
@@ -202,13 +298,20 @@
              "data": {
               "id": "bool",
               "value": "true",
-              "token": { "begin": 106, "end": 107 }
+              "token": { "begin": 106, "end": 107 },
+              "resolvedType": {
+               "kind": "Primitive",
+               "data": { "id": "bool", "params": [], "token": {/* circular */} },
+               "token": {/* circular */}
+              }
              },
-             "token": { "begin": 106, "end": 107 }
+             "token": { "begin": 106, "end": 107 },
+             "resolvedType": {/* circular */}
             },
             "token": { "begin": 105, "end": 109 }
            },
-           "token": { "begin": 105, "end": 109 }
+           "token": { "begin": 105, "end": 109 },
+           "resolvedType": undefined
           },
           "block": {
            "statements": [
@@ -224,14 +327,21 @@
                "data": {
                 "callee": {
                  "kind": "Identifier",
-                 "data": { "name": "totoA", "token": { "begin": 117, "end": 118 } }
+                 "data": {
+                  "name": "totoA",
+                  "token": { "begin": 117, "end": 118 },
+                  "resolvedReference": { "kind": "Variable", "data": {/* circular */} }
+                 },
+                 "resolvedType": undefined
                 },
                 "params": [],
                 "token": { "begin": 118, "end": 121 }
                },
-               "token": { "begin": 117, "end": 121 }
+               "token": { "begin": 117, "end": 121 },
+               "resolvedType": undefined
               },
-              "token": { "begin": 111, "end": 121 }
+              "token": { "begin": 111, "end": 121 },
+              "resolvedType": undefined
              },
              "token": { "begin": 111, "end": 121 }
             },
@@ -243,12 +353,18 @@
                "data": {
                 "callee": {
                  "kind": "Identifier",
-                 "data": { "name": "totoA", "token": { "begin": 121, "end": 122 } }
+                 "data": {
+                  "name": "totoA",
+                  "token": { "begin": 121, "end": 122 },
+                  "resolvedReference": {/* circular */}
+                 },
+                 "resolvedType": undefined
                 },
                 "params": [],
                 "token": { "begin": 122, "end": 124 }
                },
-               "token": { "begin": 121, "end": 124 }
+               "token": { "begin": 121, "end": 124 },
+               "resolvedType": undefined
               },
               "token": { "begin": 121, "end": 124 }
              },
@@ -265,11 +381,16 @@
        "token": { "begin": 61, "end": 130 }
       },
       "token": { "begin": 56, "end": 130 },
-      "resolvedClosures": [ { "idx": 0, "name": "a" }, { "idx": 1, "name": "b" } ]
+      "resolvedClosures": [ {/* circular */}, {/* circular */} ],
+      "resolvedVariables": [ {/* circular */}, {/* circular */}, {/* circular */} ],
+      "resolvedReturns": [],
+      "resolvedType": {/* circular */}
      },
-     "token": { "begin": 56, "end": 130 }
+     "token": { "begin": 56, "end": 130 },
+     "resolvedType": {/* circular */}
     },
-    "token": { "begin": 50, "end": 130 }
+    "token": { "begin": 50, "end": 130 },
+    "resolvedType": {/* circular */}
    },
    "token": { "begin": 50, "end": 130 }
   },
@@ -281,12 +402,18 @@
      "data": {
       "callee": {
        "kind": "Identifier",
-       "data": { "name": "a", "token": { "begin": 130, "end": 131 } }
+       "data": {
+        "name": "a",
+        "token": { "begin": 130, "end": 131 },
+        "resolvedReference": {/* circular */}
+       },
+       "resolvedType": undefined
       },
       "params": [],
       "token": { "begin": 131, "end": 134 }
      },
-     "token": { "begin": 130, "end": 134 }
+     "token": { "begin": 130, "end": 134 },
+     "resolvedType": undefined
     },
     "token": { "begin": 130, "end": 134 }
    },
@@ -300,16 +427,29 @@
      "data": {
       "callee": {
        "kind": "Identifier",
-       "data": { "name": "b", "token": { "begin": 134, "end": 135 } }
+       "data": {
+        "name": "b",
+        "token": { "begin": 134, "end": 135 },
+        "resolvedReference": {/* circular */}
+       },
+       "resolvedType": undefined
       },
       "params": [],
       "token": { "begin": 135, "end": 138 }
      },
-     "token": { "begin": 134, "end": 138 }
+     "token": { "begin": 134, "end": 138 },
+     "resolvedType": undefined
     },
     "token": { "begin": 134, "end": 138 }
    },
    "token": { "begin": 134, "end": 138 }
   }
- ]
+ ],
+ "resolvedVariables": [
+  {/* circular */},
+  {/* circular */},
+  {/* circular */},
+  {/* circular */}
+ ],
+ "resolvedReturns": []
 }

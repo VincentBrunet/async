@@ -1,7 +1,5 @@
-import {
-  AstExpressionLiteral,
-  AstExpressionLiteralKind,
-} from "../../../data/ast/AstExpressionLiteral.ts";
+import { AstExpressionLiteral } from "../../../data/ast/AstExpressionLiteral.ts";
+import { AstTypePrimitiveId } from "../../../data/ast/AstTypePrimitive.ts";
 import { TokenKind } from "../../../data/token/Token.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
@@ -19,12 +17,12 @@ digits.add("8");
 digits.add("9");
 
 function makeLiteral(
-  kind: AstExpressionLiteralKind,
-  data: string,
+  id: AstTypePrimitiveId,
+  value: string,
 ): AstExpressionLiteral {
   return {
-    kind: kind,
-    data: data,
+    id: id,
+    value: value,
   };
 }
 
@@ -41,15 +39,15 @@ export function parseExpressionLiteral(
 
   if (value === "true") {
     browser.consume();
-    return makeLiteral(AstExpressionLiteralKind.Boolean, "true");
+    return makeLiteral(AstTypePrimitiveId.Boolean, "true");
   }
   if (value === "false") {
     browser.consume();
-    return makeLiteral(AstExpressionLiteralKind.Boolean, "false");
+    return makeLiteral(AstTypePrimitiveId.Boolean, "false");
   }
   if (value === "null") {
     browser.consume();
-    return makeLiteral(AstExpressionLiteralKind.Null, "null");
+    return makeLiteral(AstTypePrimitiveId.Null, "null");
   }
 
   if (value.startsWith("0x")) {
@@ -61,7 +59,7 @@ export function parseExpressionLiteral(
 
   if (digits.has(value[0])) {
     browser.consume();
-    return makeLiteral(AstExpressionLiteralKind.Integer32, value);
+    return makeLiteral(AstTypePrimitiveId.Integer32, value);
   }
 
   return browser.impasse("Literal");

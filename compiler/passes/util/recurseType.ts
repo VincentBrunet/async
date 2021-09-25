@@ -3,6 +3,7 @@ import { AstTypeBinary } from "../../data/ast/AstTypeBinary.ts";
 import { AstTypeFunction } from "../../data/ast/AstTypeFunction.ts";
 import { AstTypeIdentifier } from "../../data/ast/AstTypeIdentifier.ts";
 import { AstTypeObject } from "../../data/ast/AstTypeObject.ts";
+import { AstTypePrimitive } from "../../data/ast/AstTypePrimitive.ts";
 import { RecursorPass } from "./RecursorPass.ts";
 
 export function recurseType<Scope>(
@@ -15,6 +16,10 @@ export function recurseType<Scope>(
   switch (kind) {
     case AstTypeKind.Identifier: {
       r.recurseTypeIdentifier(p, data as AstTypeIdentifier);
+      break;
+    }
+    case AstTypeKind.Primitive: {
+      r.recurseTypePrimitive(p, data as AstTypePrimitive);
       break;
     }
     case AstTypeKind.Function: {

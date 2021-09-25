@@ -1,5 +1,5 @@
 import { AstStatementVariable } from "../../../data/ast/AstStatementVariable.ts";
-import { MapArray } from "../../../lib/data/MapArray.ts";
+import { MapArray } from "../../../lib/core/data/MapArray.ts";
 import { OutputOrder } from "./OutputOrder.ts";
 import { OutputStatement } from "./OutputStatement.ts";
 

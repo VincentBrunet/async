@@ -2,8 +2,8 @@ import { Ast } from "./Ast.ts";
 import { AstType } from "./AstType.ts";
 
 export enum AstTypeBinaryOperator {
-  Or = "Or",
   And = "And",
+  Or = "Or",
 }
 
 export interface AstTypeBinary extends Ast {
