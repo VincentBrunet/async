@@ -1,9 +1,11 @@
+import { Ast } from "../../../data/ast/Ast.ts";
 import { Token, TokenKind } from "../../../data/token/Token.ts";
 import { repeat } from "../../../util/strings/repeat.ts";
 import { TokenImpasse } from "./TokenImpasse.ts";
 
 export class TokenBrowser {
   private depth = 0;
+
   private log = false;
 
   private tokens: Array<Token>;
@@ -15,6 +17,10 @@ export class TokenBrowser {
     this.fastForward();
   }
 
+  index(): number {
+    return this.getCurrentIndex();
+  }
+
   peek(offset?: number) {
     return this.readToken(offset);
   }
@@ -24,11 +30,12 @@ export class TokenBrowser {
     this.fastForward();
   }
 
-  recurse<T, V>(
+  recurse<T extends Ast, V>(
     recurser: (stack: TokenBrowser, param?: V) => T | TokenImpasse,
     param?: V,
   ): T | TokenImpasse {
-    this.indexes.push(this.getCurrentIndex());
+    const before = this.getCurrentIndex();
+    this.indexes.push(before);
     if (this.log) {
       console.log(
         repeat("  ", this.depth),
@@ -40,20 +47,26 @@ export class TokenBrowser {
       this.depth++;
     }
     const ast = recurser(this, param);
-    const success = !(ast instanceof TokenImpasse);
+    // on success
+    if (!(ast instanceof TokenImpasse)) {
+      const after = this.indexes.pop() ?? Infinity;
+      ast.token = {
+        begin: before,
+        end: after,
+      };
+      if (after !== undefined) {
+        this.indexes[this.getCurrentHeight()] = after;
+      }
+    }
     if (this.log) {
       this.depth--;
       console.log(
         repeat("  ", this.depth),
         "<-",
         recurser.name,
-        success ? "SUCCESS" : "FAIL",
+        !(ast instanceof TokenImpasse) ? "SUCCESS" : "FAIL",
         this.readToken().str,
       );
-    }
-    const after = this.indexes.pop();
-    if (success && after !== undefined) {
-      this.indexes[this.getCurrentHeight()] = after;
     }
     return ast;
   }

@@ -1,3 +1,5 @@
+import { Range } from "../util/Range.ts";
+
 export enum TokenKind {
   Whitespace = "whitespace",
   Special = "special",
@@ -5,15 +7,10 @@ export enum TokenKind {
   Invalid = "invalid",
 }
 
-export interface TokenRange {
-  begin: number;
-  end: number;
-}
-
 export interface TokenLocation {
-  index: TokenRange;
-  column: TokenRange;
-  line: TokenRange;
+  index: Range;
+  column: Range;
+  line: Range;
 }
 
 export interface Token {

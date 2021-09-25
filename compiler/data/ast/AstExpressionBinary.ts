@@ -1,3 +1,4 @@
+import { Ast } from "./Ast.ts";
 import { AstExpression } from "./AstExpression.ts";
 import { AstType } from "./AstType.ts";
 
@@ -18,7 +19,7 @@ export enum AstExpressionBinaryOperator {
   Assign = "Assign",
 }
 
-export interface AstExpressionBinary {
+export interface AstExpressionBinary extends Ast {
   operator: AstExpressionBinaryOperator;
   expression1: AstExpression;
   expression2: AstExpression;

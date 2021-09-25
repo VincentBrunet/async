@@ -1,3 +1,4 @@
+import { Ast } from "./Ast.ts";
 import { AstType } from "./AstType.ts";
 
 export enum AstExpressionLiteralKind {
@@ -16,7 +17,7 @@ export enum AstExpressionLiteralKind {
   Float64 = "Float64",
 }
 
-export interface AstExpressionLiteral {
+export interface AstExpressionLiteral extends Ast {
   kind: AstExpressionLiteralKind;
   data: string;
 

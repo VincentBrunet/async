@@ -1,3 +1,4 @@
+import { Ast } from "./Ast.ts";
 import { AstTypeBinary } from "./AstTypeBinary.ts";
 import { AstTypeFunction } from "./AstTypeFunction.ts";
 import { AstTypeIdentifier } from "./AstTypeIdentifier.ts";
@@ -16,7 +17,7 @@ export type AstTypeData =
   | AstTypeObject
   | AstTypeBinary;
 
-export interface AstType {
+export interface AstType extends Ast {
   kind: AstTypeKind;
   data: AstTypeData;
 }

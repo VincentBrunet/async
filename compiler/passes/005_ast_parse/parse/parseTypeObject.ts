@@ -28,6 +28,9 @@ export function parseTypeObject(
       break;
     }
 
+    // field - start
+    const fieldBegin = browser.index();
+
     // field - mutable
     let mutable = false;
     const fieldMutable = browser.peek();
@@ -63,12 +66,19 @@ export function parseTypeObject(
     const sha256 = createHash("sha256").update(name).toString();
     const hash = "0x" + sha256.slice(0, 16).toUpperCase();
 
+    // field - end
+    const fieldEnd = browser.index();
+
     // field - validated
     astFields.push({
       mutable: mutable,
       name: name,
       hash: hash,
       type: fieldAnnotation.type,
+      token: {
+        begin: fieldBegin,
+        end: fieldEnd,
+      },
     });
 
     // field - separator, end

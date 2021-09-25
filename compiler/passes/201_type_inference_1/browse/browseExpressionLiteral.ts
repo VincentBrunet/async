@@ -3,9 +3,10 @@ import {
   AstExpressionLiteralKind,
 } from "../../../data/ast/AstExpressionLiteral.ts";
 import { AstTypeKind } from "../../../data/ast/AstType.ts";
+import { BrowsedScope } from "../util/BrowsedScope.ts";
 
 export function browseExpressionLiteral(
-  scope: undefined,
+  scope: BrowsedScope,
   ast: AstExpressionLiteral,
   next: () => void,
 ) {

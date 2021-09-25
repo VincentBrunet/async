@@ -27,6 +27,9 @@ export function parseTypeFunction(
       break;
     }
 
+    // param - begin
+    const paramBegin = browser.index();
+
     // param - name
     let name: string | undefined;
     const paramName = browser.peek();
@@ -34,6 +37,7 @@ export function parseTypeFunction(
       browser.consume();
       name = paramName.str;
     }
+
     // param - type
     const paramAnnotation = browser.recurse(parseAnnotationType);
     if (paramAnnotation instanceof TokenImpasse) {
@@ -44,10 +48,18 @@ export function parseTypeFunction(
     if (paramAnnotation.type === undefined) {
       return browser.impasse("TypeFunction.Param.Type");
     }
+
+    // param - end
+    const paramEnd = browser.index();
+
     // param - validated
     astParams.push({
       name: name ?? ("p" + astParams.length),
       type: paramAnnotation.type,
+      token: {
+        begin: paramBegin,
+        end: paramEnd,
+      },
     });
 
     // params - separator, end

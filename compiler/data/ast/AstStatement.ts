@@ -1,3 +1,4 @@
+import { Ast } from "./Ast.ts";
 import { AstStatementExpression } from "./AstStatementExpression.ts";
 import { AstStatementReturn } from "./AstStatementReturn.ts";
 import { AstStatementTypedef } from "./AstStatementTypedef.ts";
@@ -19,7 +20,7 @@ export type AstStatementData =
   | AstStatementReturn
   | AstStatementExpression;
 
-export interface AstStatement {
+export interface AstStatement extends Ast {
   kind: AstStatementKind;
   data: AstStatementData;
 }

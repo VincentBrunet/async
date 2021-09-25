@@ -1,3 +1,4 @@
+import { Ast } from "./Ast.ts";
 import { AstAnnotationTemplateParam } from "./AstAnnotationTemplate.ts";
 import { AstStatementTypedef } from "./AstStatementTypedef.ts";
 
@@ -10,7 +11,7 @@ export type AstResolvedShorthandData =
   | AstStatementTypedef
   | AstAnnotationTemplateParam;
 
-export interface AstResolvedShorthand {
+export interface AstResolvedShorthand extends Ast {
   kind: AstResolvedShorthandKind;
   data: AstResolvedShorthandData;
 }

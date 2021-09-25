@@ -6,8 +6,7 @@ export function browseExpressionFunction(
   ast: AstExpressionFunction,
   next: () => void,
 ) {
-  scope.setFunction(ast);
+  scope.markCollectorStatementReturn();
   next();
-  const returns = scope.getStatementReturns();
-  //ast.resolvedType = ast.return.type;
+  ast.resolvedReturns = scope.getStatementReturns();
 }

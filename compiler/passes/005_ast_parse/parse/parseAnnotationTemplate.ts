@@ -27,6 +27,9 @@ export function parseAnnotationTemplate(
         break;
       }
 
+      // template - begin
+      const templateBegin = browser.index();
+
       // template - name
       const templateName = browser.peek();
       if (templateName.kind !== TokenKind.Text) {
@@ -40,10 +43,17 @@ export function parseAnnotationTemplate(
         return browser.impasse("AnnoationTemplate.Annotation");
       }
 
+      // template - end
+      const templateEnd = browser.index();
+
       // template - validated
       astTemplates.push({
         name: templateName.str,
         annotation: astAnnotation,
+        token: {
+          begin: templateBegin,
+          end: templateEnd,
+        },
       });
 
       // template - separator, end

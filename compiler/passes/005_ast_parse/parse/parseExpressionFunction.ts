@@ -25,41 +25,53 @@ export function parseExpressionFunction(
     return browser.impasse("Function.Templates", [astTemplate]);
   }
 
-  // params
+  // param
   const astParams = new Array<AstExpressionFunctionParam>();
 
-  // params - open
+  // param - open
   const paramOpen = browser.peek();
   if (paramOpen.str === "(") {
     browser.consume();
-    // params - loop
+    // param - loop
     while (true) {
-      // params - close
+      // param - close
       const paramClose = browser.peek();
       if (paramClose.str === ")") {
         browser.consume();
         break;
       }
 
-      // params - optional name
+      // param - begin
+      const paramBegin = browser.index();
+
+      // param - optional name
       let name: string | undefined;
       const paramName = browser.peek();
       if (paramName.kind === TokenKind.Text) {
         browser.consume();
         name = paramName.str;
       }
-      // params - type annotation
+
+      // param - type annotation
       const paramAnnotation = browser.recurse(parseAnnotationType);
       if (paramAnnotation instanceof TokenImpasse) {
         return browser.impasse("Function.Param.Annotation", [paramAnnotation]);
       }
+
+      // param - end
+      const paramEnd = browser.index();
+
       // param - validated
       astParams.push({
         name: name ?? ("p" + astParams.length),
         annotation: paramAnnotation,
+        token: {
+          begin: paramBegin,
+          end: paramEnd,
+        },
       });
 
-      // params - separator, end
+      // param - separator, end
       const paramDelim = browser.peek();
       if (paramDelim.str === ",") {
         browser.consume();

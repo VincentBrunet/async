@@ -1,3 +1,4 @@
+import { Ast } from "./Ast.ts";
 import { AstExpressionFunctionParam } from "./AstExpressionFunction.ts";
 import { AstResolvedClosure } from "./AstResolvedClosure.ts";
 import { AstStatementVariable } from "./AstStatementVariable.ts";
@@ -13,7 +14,7 @@ export type AstResolvedReferenceData =
   | AstExpressionFunctionParam
   | AstResolvedClosure;
 
-export interface AstResolvedReference {
+export interface AstResolvedReference extends Ast {
   kind: AstResolvedReferenceKind;
   data: AstResolvedReferenceData;
 }

@@ -1,3 +1,4 @@
+import { Ast } from "./Ast.ts";
 import { AstExpressionBinary } from "./AstExpressionBinary.ts";
 import { AstExpressionCall } from "./AstExpressionCall.ts";
 import { AstExpressionFunction } from "./AstExpressionFunction.ts";
@@ -38,7 +39,7 @@ export type AstExpressionData =
   | AstExpressionTyping
   | AstExpressionParenthesis;
 
-export interface AstExpression {
+export interface AstExpression extends Ast {
   kind: AstExpressionKind;
   data: AstExpressionData;
 

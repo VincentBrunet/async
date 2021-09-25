@@ -1,7 +1,8 @@
 import { AstTypeIdentifier } from "../../../data/ast/AstTypeIdentifier.ts";
+import { BrowsedScope } from "../util/BrowsedScope.ts";
 
 export function browseTypeIdentifier(
-  scope: undefined,
+  scope: BrowsedScope,
   ast: AstTypeIdentifier,
   next: () => void,
 ) {

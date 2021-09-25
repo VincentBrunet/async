@@ -1,3 +1,4 @@
+import { Ast } from "./Ast.ts";
 import { AstExpression } from "./AstExpression.ts";
 import { AstType } from "./AstType.ts";
 
@@ -7,7 +8,7 @@ export enum AstExpressionUnaryOperator {
   Not = "Not",
 }
 
-export interface AstExpressionUnary {
+export interface AstExpressionUnary extends Ast {
   operator: AstExpressionUnaryOperator;
   expression: AstExpression;
 

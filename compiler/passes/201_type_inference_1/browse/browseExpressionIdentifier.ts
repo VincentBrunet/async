@@ -1,7 +1,8 @@
 import { AstExpressionIdentifier } from "../../../data/ast/AstExpressionIdentifier.ts";
+import { BrowsedScope } from "../util/BrowsedScope.ts";
 
 export function browseExpressionIdentifier(
-  scope: undefined,
+  scope: BrowsedScope,
   ast: AstExpressionIdentifier,
   next: () => void,
 ) {
@@ -9,5 +10,5 @@ export function browseExpressionIdentifier(
   if (ast.resolvedReference === undefined) {
     throw new Error("Identifier unresolved");
   }
-  ast.resolvedType = ast.resolvedReference;
+  //ast.resolvedType = ast.resolvedReference;
 }
