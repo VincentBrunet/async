@@ -1,0 +1,435 @@
+{
+ "statements": [
+  {
+   "kind": "Typedef",
+   "data": {
+    "name": "Int",
+    "type": { "kind": "Primitive", "data": { "id": "i32", "params": [] } },
+    "template": { "params": [] }
+   }
+  },
+  {
+   "kind": "Typedef",
+   "data": {
+    "name": "Float",
+    "type": { "kind": "Primitive", "data": { "id": "f32", "params": [] } },
+    "template": { "params": [] }
+   }
+  },
+  {
+   "kind": "Typedef",
+   "data": {
+    "name": "Func1",
+    "type": {
+     "kind": "Function",
+     "data": {
+      "params": [
+       {
+        "name": "a",
+        "type": {
+         "kind": "Identifier",
+         "data": {
+          "name": "Int",
+          "params": [],
+          "resolvedShorthand": {
+           "kind": "Typedef",
+           "data": {
+            "name": "Int",
+            "type": { "kind": "Primitive", "data": {/* circular */} },
+            "template": { "params": {/* circular */} }
+           }
+          }
+         }
+        }
+       },
+       {
+        "name": "b",
+        "type": {
+         "kind": "Identifier",
+         "data": {
+          "name": "Int",
+          "params": [],
+          "resolvedShorthand": {
+           "kind": "Typedef",
+           "data": {
+            "name": "Int",
+            "type": {/* circular */},
+            "template": {/* circular */}
+           }
+          }
+         }
+        }
+       }
+      ],
+      "ret": {
+       "kind": "Identifier",
+       "data": {
+        "name": "Float",
+        "params": [],
+        "resolvedShorthand": {
+         "kind": "Typedef",
+         "data": {
+          "name": "Float",
+          "type": { "kind": "Primitive", "data": {/* circular */} },
+          "template": { "params": {/* circular */} }
+         }
+        }
+       }
+      }
+     }
+    },
+    "template": { "params": [] }
+   }
+  },
+  {
+   "kind": "Typedef",
+   "data": {
+    "name": "Func2",
+    "type": {
+     "kind": "Function",
+     "data": {
+      "params": [
+       {
+        "name": "a",
+        "type": {
+         "kind": "Identifier",
+         "data": {
+          "name": "Int",
+          "params": [],
+          "resolvedShorthand": {
+           "kind": "Typedef",
+           "data": {
+            "name": "Int",
+            "type": {/* circular */},
+            "template": {/* circular */}
+           }
+          }
+         }
+        }
+       },
+       {
+        "name": "b",
+        "type": {
+         "kind": "Identifier",
+         "data": {
+          "name": "Int",
+          "params": [],
+          "resolvedShorthand": {
+           "kind": "Typedef",
+           "data": {
+            "name": "Int",
+            "type": {/* circular */},
+            "template": {/* circular */}
+           }
+          }
+         }
+        }
+       }
+      ],
+      "ret": {
+       "kind": "Identifier",
+       "data": {
+        "name": "Float",
+        "params": [],
+        "resolvedShorthand": {
+         "kind": "Typedef",
+         "data": {
+          "name": "Float",
+          "type": {/* circular */},
+          "template": {/* circular */}
+         }
+        }
+       }
+      }
+     }
+    },
+    "template": { "params": [] }
+   }
+  },
+  {
+   "kind": "Variable",
+   "data": {
+    "mutable": false,
+    "name": "toto",
+    "hash": "0x31F7A65E315586AC",
+    "annotation": {
+     "type": {
+      "kind": "Function",
+      "data": {
+       "params": [
+        {
+         "name": "b",
+         "type": {
+          "kind": "Identifier",
+          "data": {
+           "name": "Int",
+           "params": [],
+           "resolvedShorthand": {
+            "kind": "Typedef",
+            "data": {
+             "name": "Int",
+             "type": {/* circular */},
+             "template": {/* circular */}
+            }
+           }
+          }
+         }
+        },
+        {
+         "name": "a",
+         "type": {
+          "kind": "Identifier",
+          "data": {
+           "name": "Int",
+           "params": [],
+           "resolvedShorthand": {
+            "kind": "Typedef",
+            "data": {
+             "name": "Int",
+             "type": {/* circular */},
+             "template": {/* circular */}
+            }
+           }
+          }
+         }
+        }
+       ],
+       "ret": {
+        "kind": "Identifier",
+        "data": {
+         "name": "Float",
+         "params": [],
+         "resolvedShorthand": {
+          "kind": "Typedef",
+          "data": {
+           "name": "Float",
+           "type": {/* circular */},
+           "template": {/* circular */}
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "value": {
+     "kind": "Function",
+     "data": {
+      "template": { "params": [] },
+      "params": [
+       { "name": "a", "annotation": {} },
+       { "name": "b", "annotation": {} }
+      ],
+      "ret": {},
+      "block": { "statements": [] },
+      "resolvedClosures": []
+     }
+    }
+   }
+  },
+  {
+   "kind": "Variable",
+   "data": {
+    "mutable": false,
+    "name": "tutu",
+    "hash": "0xEB0295D98F37AE9E",
+    "annotation": {
+     "type": {
+      "kind": "Binary",
+      "data": {
+       "operator": "Or",
+       "type1": {
+        "kind": "Identifier",
+        "data": {
+         "name": "Func1",
+         "params": [],
+         "resolvedShorthand": {
+          "kind": "Typedef",
+          "data": {
+           "name": "Func1",
+           "type": { "kind": "Function", "data": {/* circular */} },
+           "template": { "params": {/* circular */} }
+          }
+         }
+        }
+       },
+       "type2": {
+        "kind": "Identifier",
+        "data": {
+         "name": "Func2",
+         "params": [],
+         "resolvedShorthand": {
+          "kind": "Typedef",
+          "data": {
+           "name": "Func2",
+           "type": { "kind": "Function", "data": {/* circular */} },
+           "template": { "params": {/* circular */} }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "value": {
+     "kind": "Function",
+     "data": {
+      "template": { "params": [] },
+      "params": [
+       {
+        "name": "a",
+        "annotation": {
+         "type": {
+          "kind": "Identifier",
+          "data": {
+           "name": "Int",
+           "params": [],
+           "resolvedShorthand": {
+            "kind": "Typedef",
+            "data": {
+             "name": "Int",
+             "type": {/* circular */},
+             "template": {/* circular */}
+            }
+           }
+          }
+         }
+        }
+       },
+       {
+        "name": "b",
+        "annotation": {
+         "type": {
+          "kind": "Identifier",
+          "data": {
+           "name": "Int",
+           "params": [],
+           "resolvedShorthand": {
+            "kind": "Typedef",
+            "data": {
+             "name": "Int",
+             "type": {/* circular */},
+             "template": {/* circular */}
+            }
+           }
+          }
+         }
+        }
+       }
+      ],
+      "ret": {
+       "type": {
+        "kind": "Identifier",
+        "data": {
+         "name": "Float",
+         "params": [],
+         "resolvedShorthand": {
+          "kind": "Typedef",
+          "data": {
+           "name": "Float",
+           "type": {/* circular */},
+           "template": {/* circular */}
+          }
+         }
+        }
+       }
+      },
+      "block": { "statements": [] },
+      "resolvedClosures": []
+     }
+    }
+   }
+  },
+  {
+   "kind": "Variable",
+   "data": {
+    "mutable": false,
+    "name": "tfunc1",
+    "hash": "0xC2216749147EF551",
+    "annotation": {
+     "type": {
+      "kind": "Binary",
+      "data": {
+       "operator": "Or",
+       "type1": {
+        "kind": "Identifier",
+        "data": {
+         "name": "Func1",
+         "params": [],
+         "resolvedShorthand": {
+          "kind": "Typedef",
+          "data": {
+           "name": "Func1",
+           "type": {/* circular */},
+           "template": {/* circular */}
+          }
+         }
+        }
+       },
+       "type2": {
+        "kind": "Identifier",
+        "data": {
+         "name": "Func2",
+         "params": [],
+         "resolvedShorthand": {
+          "kind": "Typedef",
+          "data": {
+           "name": "Func2",
+           "type": {/* circular */},
+           "template": {/* circular */}
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "value": {
+     "kind": "Function",
+     "data": {
+      "template": { "params": [] },
+      "params": [],
+      "ret": {},
+      "block": { "statements": [] },
+      "resolvedClosures": []
+     }
+    }
+   }
+  },
+  {
+   "kind": "Variable",
+   "data": {
+    "mutable": false,
+    "name": "tfunc2",
+    "hash": "0xE4C2627889C58E60",
+    "annotation": {
+     "type": {
+      "kind": "Identifier",
+      "data": {
+       "name": "Func2",
+       "params": [],
+       "resolvedShorthand": {
+        "kind": "Typedef",
+        "data": {
+         "name": "Func2",
+         "type": {/* circular */},
+         "template": {/* circular */}
+        }
+       }
+      }
+     }
+    },
+    "value": {
+     "kind": "Function",
+     "data": {
+      "template": { "params": [] },
+      "params": [],
+      "ret": {},
+      "block": { "statements": [] },
+      "resolvedClosures": []
+     }
+    }
+   }
+  }
+ ]
+}

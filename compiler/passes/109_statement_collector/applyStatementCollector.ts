@@ -6,6 +6,7 @@ import { browseExpressionRun } from "./browse/browseExpressionRun.ts";
 import { browseModule } from "./browse/browseModule.ts";
 import { browseStatementReturn } from "./browse/browseStatementReturn.ts";
 import { browseStatementVariable } from "./browse/browseStatementVariable.ts";
+import { browseStatementWhile } from "./browse/browseStatementWhile.ts";
 import { BrowsedScope } from "./util/BrowsedScope.ts";
 
 const pass = makeRecursorPass<BrowsedScope>((scope) => {
@@ -16,6 +17,7 @@ const pass = makeRecursorPass<BrowsedScope>((scope) => {
   recurseExpressionRun: browseExpressionRun,
   recurseStatementReturn: browseStatementReturn,
   recurseStatementVariable: browseStatementVariable,
+  recurseStatementWhile: browseStatementWhile,
   recurseModule: browseModule,
 });
 

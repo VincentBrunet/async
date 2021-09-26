@@ -1,0 +1,286 @@
+{
+ "statements": [
+  {
+   "kind": "Typedef",
+   "data": {
+    "name": "Int",
+    "type": { "kind": "Primitive", "data": { "id": "i32", "params": [] } },
+    "template": { "params": [] }
+   }
+  },
+  {
+   "kind": "Typedef",
+   "data": {
+    "name": "MyObject",
+    "type": {
+     "kind": "Object",
+     "data": {
+      "fields": [
+       {
+        "mutable": false,
+        "name": "hello",
+        "hash": "0x2CF24DBA5FB0A30E",
+        "type": {
+         "kind": "Identifier",
+         "data": {
+          "name": "Int",
+          "params": [
+           { "kind": "Identifier", "data": { "name": "Int", "params": [] } }
+          ]
+         }
+        }
+       },
+       {
+        "mutable": false,
+        "name": "bubu",
+        "hash": "0xCB893729FEFFA2B3",
+        "type": { "kind": "Identifier", "data": { "name": "Int", "params": [] } }
+       }
+      ]
+     }
+    },
+    "template": { "params": [] }
+   }
+  },
+  {
+   "kind": "Typedef",
+   "data": {
+    "name": "MyObjectOther",
+    "type": {
+     "kind": "Object",
+     "data": {
+      "fields": [
+       {
+        "mutable": false,
+        "name": "vincent",
+        "hash": "0x65C3F75641B22925",
+        "type": { "kind": "Primitive", "data": { "id": "str", "params": [] } }
+       }
+      ]
+     }
+    },
+    "template": { "params": [] }
+   }
+  },
+  {
+   "kind": "Typedef",
+   "data": {
+    "name": "MyObjectCopy",
+    "type": {
+     "kind": "Object",
+     "data": {
+      "fields": [
+       {
+        "mutable": false,
+        "name": "hello",
+        "hash": "0x2CF24DBA5FB0A30E",
+        "type": { "kind": "Identifier", "data": { "name": "Int", "params": [] } }
+       },
+       {
+        "mutable": false,
+        "name": "bubu",
+        "hash": "0xCB893729FEFFA2B3",
+        "type": { "kind": "Identifier", "data": { "name": "Int", "params": [] } }
+       }
+      ]
+     }
+    },
+    "template": { "params": [] }
+   }
+  },
+  {
+   "kind": "Typedef",
+   "data": {
+    "name": "MyUnion",
+    "type": {
+     "kind": "Binary",
+     "data": {
+      "operator": "Or",
+      "type1": {
+       "kind": "Identifier",
+       "data": { "name": "MyObject", "params": [] }
+      },
+      "type2": {
+       "kind": "Identifier",
+       "data": { "name": "MyObjectOther", "params": [] }
+      }
+     }
+    },
+    "template": { "params": [] }
+   }
+  },
+  {
+   "kind": "Variable",
+   "data": {
+    "mutable": false,
+    "name": "myObject",
+    "hash": "0x30936838B2B6EFA2",
+    "annotation": {},
+    "value": {
+     "kind": "Object",
+     "data": {
+      "annotation": {
+       "type": {
+        "kind": "Identifier",
+        "data": { "name": "MyObject", "params": [] }
+       }
+      },
+      "block": {
+       "statements": [
+        {
+         "kind": "Variable",
+         "data": {
+          "mutable": false,
+          "name": "hello",
+          "hash": "0x2CF24DBA5FB0A30E",
+          "annotation": {
+           "type": { "kind": "Identifier", "data": { "name": "Int", "params": [] } }
+          },
+          "value": undefined
+         }
+        },
+        {
+         "kind": "Variable",
+         "data": {
+          "mutable": false,
+          "name": "bubu",
+          "hash": "0xCB893729FEFFA2B3",
+          "annotation": {
+           "type": { "kind": "Identifier", "data": { "name": "Int", "params": [] } }
+          },
+          "value": undefined
+         }
+        }
+       ]
+      }
+     }
+    }
+   }
+  },
+  {
+   "kind": "Variable",
+   "data": {
+    "mutable": false,
+    "name": "myObject2",
+    "hash": "0xCDCBB621A7F2B293",
+    "annotation": {},
+    "value": {
+     "kind": "Object",
+     "data": {
+      "annotation": {
+       "type": {
+        "kind": "Binary",
+        "data": {
+         "operator": "Or",
+         "type1": {
+          "kind": "Identifier",
+          "data": { "name": "MyObjectCopy", "params": [] }
+         },
+         "type2": {
+          "kind": "Identifier",
+          "data": { "name": "MyObject", "params": [] }
+         }
+        }
+       }
+      },
+      "block": { "statements": [] }
+     }
+    }
+   }
+  },
+  {
+   "kind": "Variable",
+   "data": {
+    "mutable": false,
+    "name": "factoryMyObject",
+    "hash": "0xDF7ADC5142B4C5FA",
+    "annotation": {},
+    "value": {
+     "kind": "Function",
+     "data": {
+      "template": { "params": [] },
+      "params": [],
+      "ret": {},
+      "block": {
+       "statements": [
+        {
+         "kind": "Return",
+         "data": {
+          "expression": { "kind": "Identifier", "data": { "name": "myObject" } }
+         }
+        }
+       ]
+      }
+     }
+    }
+   }
+  },
+  {
+   "kind": "Variable",
+   "data": {
+    "mutable": false,
+    "name": "factoryMyUnion",
+    "hash": "0xDD3D1D46180E8504",
+    "annotation": {},
+    "value": {
+     "kind": "Function",
+     "data": {
+      "template": { "params": [] },
+      "params": [],
+      "ret": {
+       "type": {
+        "kind": "Identifier",
+        "data": { "name": "MyUnion", "params": [] }
+       }
+      },
+      "block": {
+       "statements": [
+        {
+         "kind": "Variable",
+         "data": {
+          "mutable": false,
+          "name": "hello",
+          "hash": "0x2CF24DBA5FB0A30E",
+          "annotation": {},
+          "value": undefined
+         }
+        },
+        {
+         "kind": "Return",
+         "data": {
+          "expression": { "kind": "Identifier", "data": { "name": "myObject" } }
+         }
+        }
+       ]
+      }
+     }
+    }
+   }
+  },
+  {
+   "kind": "Variable",
+   "data": {
+    "mutable": false,
+    "name": "tt",
+    "hash": "0x0E07CF830957701D",
+    "annotation": {},
+    "value": {
+     "kind": "Typing",
+     "data": {
+      "operator": "Is",
+      "expression": { "kind": "Identifier", "data": { "name": "myObject" } },
+      "type": {
+       "kind": "Identifier",
+       "data": {
+        "name": "MyObject",
+        "params": [
+         { "kind": "Identifier", "data": { "name": "Int", "params": [] } }
+        ]
+       }
+      }
+     }
+    }
+   }
+  }
+ ]
+}

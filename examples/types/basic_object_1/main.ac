@@ -1,7 +1,13 @@
 
+typedef Int = i32;
+
 typedef MyObject = {
   const hello: Int<Int>;
   const bubu: Int;
+}
+
+typedef MyObjectOther = {
+  const vincent: str;
 }
 
 typedef MyObjectCopy = {
@@ -9,7 +15,7 @@ typedef MyObjectCopy = {
   const bubu: Int;
 }
 
-typedef MyUnion = MyObject | MyOtherObject;
+typedef MyUnion = MyObject | MyObjectOther;
 
 const myObject = obj : MyObject {
   const hello: Int;

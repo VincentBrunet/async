@@ -7,7 +7,7 @@ export function browseTypeIdentifier(
   next: () => void,
 ) {
   next();
-  if (ast.resolvedShorthand) {
-    throw new Error("Shorthand not resolved");
+  if (!ast.resolvedShorthand) {
+    throw new Error("Shorthand not resolved: " + ast.name);
   }
 }

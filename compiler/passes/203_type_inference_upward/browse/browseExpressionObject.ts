@@ -31,5 +31,8 @@ export function browseExpressionObject(
     }
   }
 
-  ast.resolvedType = ast.annotation.type ?? makeTypeObject(foundFields, ast);
+  ast.resolvedType = /* ast.annotation.type ?? */ makeTypeObject(
+    foundFields,
+    ast,
+  );
 }
