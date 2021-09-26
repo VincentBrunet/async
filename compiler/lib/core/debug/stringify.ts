@@ -37,7 +37,7 @@ export function stringify(
     return v.toString();
   }
   if (type === "string") {
-    return '"' + v.replace(/[\n]/g, "\n") + '"';
+    return '"' + v.replace(/[\n]/g, "\\n") + '"';
   }
 
   const browsed = br ?? new Set();
