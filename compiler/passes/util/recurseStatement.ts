@@ -1,4 +1,5 @@
 import { AstStatement, AstStatementKind } from "../../data/ast/AstStatement.ts";
+import { AstStatementCondition } from "../../data/ast/AstStatementCondition.ts";
 import { AstStatementExpression } from "../../data/ast/AstStatementExpression.ts";
 import { AstStatementReturn } from "../../data/ast/AstStatementReturn.ts";
 import { AstStatementTypedef } from "../../data/ast/AstStatementTypedef.ts";
@@ -24,6 +25,10 @@ export function recurseStatement<Scope>(
     }
     case AstStatementKind.While: {
       r.recurseStatementWhile(p, data as AstStatementWhile);
+      break;
+    }
+    case AstStatementKind.Condition: {
+      r.recurseStatementCondition(p, data as AstStatementCondition);
       break;
     }
     case AstStatementKind.Return: {

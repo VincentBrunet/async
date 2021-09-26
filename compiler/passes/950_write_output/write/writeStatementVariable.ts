@@ -10,8 +10,6 @@ export function writeStatementVariable(
   scope: OutputScope,
   astVariable: AstStatementVariable,
 ) {
-  scope.pushVariable(astVariable);
-
   if (astVariable.value) {
     const assignment = new OutputStatement();
     assignment.pushPart("__");

@@ -2,6 +2,7 @@ import { AstStatement } from "../../../data/ast/AstStatement.ts";
 import { switchOnStatement } from "../../../data/ast/util/switchOnStatement.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputScope } from "../util/OutputScope.ts";
+import { writeStatementCondition } from "./writeStatementCondition.ts";
 import { writeStatementExpression } from "./writeStatementExpression.ts";
 import { writeStatementReturn } from "./writeStatementReturn.ts";
 import { writeStatementTypedef } from "./writeStatementTypedef.ts";
@@ -25,6 +26,7 @@ const mapping = {
   caseVariable: makeCase(writeStatementVariable),
   caseTypedef: makeCase(writeStatementTypedef),
   caseWhile: makeCase(writeStatementWhile),
+  caseCondition: makeCase(writeStatementCondition),
   caseReturn: makeCase(writeStatementReturn),
   caseExpression: makeCase(writeStatementExpression),
 };

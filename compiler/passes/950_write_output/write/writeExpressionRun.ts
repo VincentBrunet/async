@@ -12,11 +12,14 @@ export function writeExpressionRun(
   module: OutputModule,
   scope: OutputScope,
   statement: OutputStatement,
-  astRun: AstExpressionRun,
+  ast: AstExpressionRun,
 ) {
   // Asserts
-  if (!astRun.resolvedClosures) {
+  if (!ast.resolvedClosures) {
     throw new Error("Invalid closure setup");
+  }
+  if (!ast.resolvedVariables) {
+    throw new Error("Unresolved Variables");
   }
 
   // TODO - Run name mangling
@@ -27,8 +30,8 @@ export function writeExpressionRun(
   statement.pushPart("&");
   statement.pushPart(name);
   statement.pushPart(", ");
-  statement.pushPart(astRun.resolvedClosures.length.toString());
-  for (const astClosure of astRun.resolvedClosures) {
+  statement.pushPart(ast.resolvedClosures.length.toString());
+  for (const astClosure of ast.resolvedClosures) {
     statement.pushPart(", ");
     writeResolvedClosure(statement, astClosure);
   }
@@ -38,13 +41,13 @@ export function writeExpressionRun(
   const child = new OutputScope(name);
 
   // Run the recursive writing
-  writeBlock(module, child, astRun.block);
+  writeBlock(module, child, ast.block);
 
   // Setup params
   child.pushParam("t_ref **closure");
 
   // Setup declarations
-  const variables = child.readVariables();
+  const variables = ast.resolvedVariables;
   for (const variable of variables) {
     const declaration = new OutputStatement();
     declaration.pushPart("t_ref *__");

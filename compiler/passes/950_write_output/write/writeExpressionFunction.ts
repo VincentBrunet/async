@@ -12,11 +12,14 @@ export function writeExpressionFunction(
   module: OutputModule,
   scope: OutputScope,
   statement: OutputStatement,
-  astFunction: AstExpressionFunction,
+  ast: AstExpressionFunction,
 ) {
   // Asserts
-  if (!astFunction.resolvedClosures) {
+  if (!ast.resolvedClosures) {
     throw new Error("Invalid closure setup");
+  }
+  if (!ast.resolvedVariables) {
+    throw new Error("Unresolved Variables");
   }
 
   // TODO - function name mangling
@@ -29,8 +32,8 @@ export function writeExpressionFunction(
   statement.pushPart("&");
   statement.pushPart(name);
   statement.pushPart(", ");
-  statement.pushPart(astFunction.resolvedClosures.length.toString());
-  for (const astClosure of astFunction.resolvedClosures) {
+  statement.pushPart(ast.resolvedClosures.length.toString());
+  for (const astClosure of ast.resolvedClosures) {
     statement.pushPart(", ");
     writeResolvedClosure(statement, astClosure);
   }
@@ -40,16 +43,16 @@ export function writeExpressionFunction(
   const child = new OutputScope(name);
 
   // Push statements
-  writeBlock(module, child, astFunction.block);
+  writeBlock(module, child, ast.block);
 
   // Setup params
   child.pushParam("t_ref **closure");
-  for (const astParam of astFunction.params) {
+  for (const astParam of ast.params) {
     child.pushParam("t_value *__" + astParam.name);
   }
 
   // Setup declarations
-  const variables = child.readVariables();
+  const variables = ast.resolvedVariables;
   for (const variable of variables) {
     const declaration = new OutputStatement();
     declaration.pushPart("t_ref *__");

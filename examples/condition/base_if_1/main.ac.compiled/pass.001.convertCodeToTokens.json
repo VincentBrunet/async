@@ -1,0 +1,68 @@
+[
+ { "kind": "whitespace", "str": "
+" },
+ { "kind": "text", "str": "const" },
+ { "kind": "whitespace", "str": " " },
+ { "kind": "text", "str": "toto" },
+ { "kind": "whitespace", "str": " " },
+ { "kind": "special", "str": "=" },
+ { "kind": "whitespace", "str": " " },
+ { "kind": "text", "str": "fn" },
+ { "kind": "whitespace", "str": " " },
+ { "kind": "special", "str": "{" },
+ { "kind": "whitespace", "str": "
+  " },
+ { "kind": "text", "str": "return" },
+ { "kind": "whitespace", "str": " " },
+ { "kind": "text", "str": "true" },
+ { "kind": "whitespace", "str": "
+" },
+ { "kind": "special", "str": "}" },
+ { "kind": "whitespace", "str": "
+
+" },
+ { "kind": "text", "str": "if" },
+ { "kind": "whitespace", "str": " " },
+ { "kind": "special", "str": "(" },
+ { "kind": "text", "str": "true" },
+ { "kind": "special", "str": ")" },
+ { "kind": "whitespace", "str": " " },
+ { "kind": "special", "str": "{" },
+ { "kind": "whitespace", "str": "
+  " },
+ { "kind": "text", "str": "return" },
+ { "kind": "whitespace", "str": " " },
+ { "kind": "text", "str": "42" },
+ { "kind": "whitespace", "str": "
+" },
+ { "kind": "special", "str": "}" },
+ { "kind": "whitespace", "str": "
+
+
+" },
+ { "kind": "text", "str": "if" },
+ { "kind": "whitespace", "str": " " },
+ { "kind": "text", "str": "false" },
+ { "kind": "whitespace", "str": " " },
+ { "kind": "special", "str": "{" },
+ { "kind": "whitespace", "str": "
+
+" },
+ { "kind": "special", "str": "}" },
+ { "kind": "whitespace", "str": "
+
+" },
+ { "kind": "text", "str": "if" },
+ { "kind": "whitespace", "str": " " },
+ { "kind": "text", "str": "toto" },
+ { "kind": "special", "str": "(" },
+ { "kind": "special", "str": ")" },
+ { "kind": "whitespace", "str": " " },
+ { "kind": "special", "str": "{" },
+ { "kind": "whitespace", "str": "
+
+" },
+ { "kind": "special", "str": "}" },
+ { "kind": "whitespace", "str": "
+" }
+]

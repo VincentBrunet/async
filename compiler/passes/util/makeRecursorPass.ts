@@ -15,6 +15,8 @@ import { recurseExpressionTyping } from "./recurseExpressionTyping.ts";
 import { recurseExpressionUnary } from "./recurseExpressionUnary.ts";
 import { recurseModule } from "./recurseModule.ts";
 import { recurseStatement } from "./recurseStatement.ts";
+import { recurseStatementCondition } from "./recurseStatementCondition.ts";
+import { recurseStatementConditionBranch } from "./recurseStatementConditionBranch.ts";
 import { recurseStatementExpression } from "./recurseStatementExpression.ts";
 import { recurseStatementReturn } from "./recurseStatementReturn.ts";
 import { recurseStatementTypedef } from "./recurseStatementTypedef.ts";
@@ -122,6 +124,12 @@ export function makeRecursorPass<Scope>(
     recurseStatementVariable: fRec(s, pass, recurseStatementVariable),
     recurseStatementTypedef: fRec(s, pass, recurseStatementTypedef),
     recurseStatementWhile: fRec(s, pass, recurseStatementWhile),
+    recurseStatementCondition: fRec(s, pass, recurseStatementCondition),
+    recurseStatementConditionBranch: fRec(
+      s,
+      pass,
+      recurseStatementConditionBranch,
+    ),
     recurseStatementReturn: fRec(s, pass, recurseStatementReturn),
     recurseStatementExpression: fRec(s, pass, recurseStatementExpression),
   };
@@ -230,6 +238,14 @@ export function makeRecursorPass<Scope>(
     recurseStatementWhile: fLog(
       passRecurse.value.recurseStatementWhile,
       logic.recurseStatementWhile,
+    ),
+    recurseStatementCondition: fLog(
+      passRecurse.value.recurseStatementCondition,
+      logic.recurseStatementCondition,
+    ),
+    recurseStatementConditionBranch: fLog(
+      passRecurse.value.recurseStatementConditionBranch,
+      logic.recurseStatementConditionBranch,
     ),
     recurseStatementReturn: fLog(
       passRecurse.value.recurseStatementReturn,

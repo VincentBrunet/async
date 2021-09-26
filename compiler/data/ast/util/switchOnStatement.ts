@@ -4,11 +4,13 @@ import { AstStatementReturn } from "../AstStatementReturn.ts";
 import { AstStatementTypedef } from "../AstStatementTypedef.ts";
 import { AstStatementVariable } from "../AstStatementVariable.ts";
 import { AstStatementWhile } from "../AstStatementWhile.ts";
+import { AstStatementCondition } from "../AstStatementCondition.ts";
 
 export interface StatementMapping<P, R> {
   caseVariable: (param: P, ast: AstStatementVariable) => R;
   caseTypedef: (param: P, ast: AstStatementTypedef) => R;
   caseWhile: (param: P, ast: AstStatementWhile) => R;
+  caseCondition: (param: P, ast: AstStatementCondition) => R;
   caseReturn: (param: P, ast: AstStatementReturn) => R;
   caseExpression: (param: P, ast: AstStatementExpression) => R;
 }
@@ -29,6 +31,9 @@ export function switchOnStatement<P, R>(
     }
     case AstStatementKind.While: {
       return mapping.caseWhile(param, data as AstStatementWhile);
+    }
+    case AstStatementKind.Condition: {
+      return mapping.caseCondition(param, data as AstStatementCondition);
     }
     case AstStatementKind.Return: {
       return mapping.caseReturn(param, data as AstStatementReturn);

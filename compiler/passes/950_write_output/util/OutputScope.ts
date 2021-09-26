@@ -1,4 +1,3 @@
-import { AstStatementVariable } from "../../../data/ast/AstStatementVariable.ts";
 import { MapArray } from "../../../lib/core/data/MapArray.ts";
 import { OutputOrder } from "./OutputOrder.ts";
 import { OutputStatement } from "./OutputStatement.ts";
@@ -6,7 +5,6 @@ import { OutputStatement } from "./OutputStatement.ts";
 export class OutputScope {
   private name: string;
   private params = new Array<string>();
-  private variables = new Array<AstStatementVariable>();
   private statements = new MapArray<OutputOrder, OutputStatement>();
 
   constructor(
@@ -19,25 +17,8 @@ export class OutputScope {
     this.params.push(param);
   }
 
-  pushVariable(variable: AstStatementVariable) {
-    this.variables.push(variable);
-  }
-
   pushStatement(order: OutputOrder, statement: OutputStatement) {
     this.statements.push(order, statement);
-  }
-
-  readVariables(): Array<AstStatementVariable> {
-    this.variables.sort((a: AstStatementVariable, b: AstStatementVariable) => {
-      if (a.hash < b.hash) {
-        return -1;
-      } else if (a.hash > b.hash) {
-        return 1;
-      } else {
-        return 0;
-      }
-    });
-    return this.variables;
   }
 
   generateHeader(): Array<string> {

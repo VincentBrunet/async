@@ -1,21 +1,36 @@
 import { AstModule } from "../../../data/ast/AstModule.ts";
-import { OutputScope } from "../util/OutputScope.ts";
+import { AstStatementVariable } from "../../../data/ast/AstStatementVariable.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputOrder } from "../util/OutputOrder.ts";
+import { OutputScope } from "../util/OutputScope.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
 import { writeStatement } from "./writeStatement.ts";
 
-export function writeModule(module: OutputModule, astModule: AstModule) {
+export function writeModule(module: OutputModule, ast: AstModule) {
+  // Asserts
+  if (!ast.resolvedVariables) {
+    throw new Error("Unresolved Variables");
+  }
+
   // New Scope
   const scope = new OutputScope("module_load");
 
   // Recurse in module content
-  for (const astStatement of astModule.statements) {
+  for (const astStatement of ast.statements) {
     writeStatement(module, scope, astStatement);
   }
 
   // Read the variables declared in the function
-  const variables = scope.readVariables();
+  const variables = ast.resolvedVariables;
+  variables.sort((a: AstStatementVariable, b: AstStatementVariable) => {
+    if (a.hash < b.hash) {
+      return -1;
+    } else if (a.hash > b.hash) {
+      return 1;
+    } else {
+      return 0;
+    }
+  });
 
   // Create the module object containing all declared variables
   const object = new OutputStatement();

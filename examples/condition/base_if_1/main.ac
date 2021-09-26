@@ -1,0 +1,17 @@
+
+const toto = fn {
+  return true
+}
+
+if (true) {
+  return 42
+}
+
+
+if false {
+
+}
+
+if toto() {
+
+}

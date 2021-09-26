@@ -1,4 +1,5 @@
 import { AstExpressionObject } from "../../../data/ast/AstExpressionObject.ts";
+import { AstStatementVariable } from "../../../data/ast/AstStatementVariable.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputOrder } from "../util/OutputOrder.ts";
 import { OutputScope } from "../util/OutputScope.ts";
@@ -12,11 +13,14 @@ export function writeExpressionObject(
   module: OutputModule,
   scope: OutputScope,
   statement: OutputStatement,
-  astObject: AstExpressionObject,
+  ast: AstExpressionObject,
 ) {
   // Asserts
-  if (!astObject.resolvedClosures) {
-    throw new Error("Invalid closure setup");
+  if (!ast.resolvedClosures) {
+    throw new Error("Unresolved Closures");
+  }
+  if (!ast.resolvedVariables) {
+    throw new Error("Unresolved Variables");
   }
 
   // TODO - Object name mangling
@@ -27,8 +31,8 @@ export function writeExpressionObject(
   statement.pushPart("&");
   statement.pushPart(name);
   statement.pushPart(", ");
-  statement.pushPart(astObject.resolvedClosures.length.toString());
-  for (const astClosure of astObject.resolvedClosures) {
+  statement.pushPart(ast.resolvedClosures.length.toString());
+  for (const astClosure of ast.resolvedClosures) {
     statement.pushPart(", ");
     writeResolvedClosure(statement, astClosure);
   }
@@ -38,13 +42,22 @@ export function writeExpressionObject(
   const child = new OutputScope(name);
 
   // Do the recursive writing
-  writeBlock(module, child, astObject.block);
+  writeBlock(module, child, ast.block);
 
   // Setup params
   child.pushParam("t_ref **closure");
 
   // Read the variables declared in the function
-  const variables = child.readVariables();
+  const variables = ast.resolvedVariables;
+  variables.sort((a: AstStatementVariable, b: AstStatementVariable) => {
+    if (a.hash < b.hash) {
+      return -1;
+    } else if (a.hash > b.hash) {
+      return 1;
+    } else {
+      return 0;
+    }
+  });
 
   // Create the module object containing all declared variables
   const object = new OutputStatement();
