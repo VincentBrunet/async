@@ -7,5 +7,6 @@ export function browseExpressionParenthesis(
   next: () => void,
 ) {
   next();
+
   ast.resolvedType = ast.expression.resolvedType;
 }

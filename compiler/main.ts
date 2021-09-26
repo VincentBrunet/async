@@ -22,14 +22,14 @@ const firstTokens = convertCodeToTokens(firstCode);
 
 Deno.writeTextFileSync(
   firstOutputDirectory + "/pass.001.convertCodeToTokens.json",
-  stringify(firstTokens),
+  stringify(firstTokens, new Set(["location"])),
 );
 
 const firstAst = convertTokensToAst(firstTokens);
 
 Deno.writeTextFileSync(
   firstOutputDirectory + "/pass.005.convertTokensToAst.json",
-  stringify(firstAst),
+  stringify(firstAst, new Set(["token"])),
 );
 
 const passes = [
@@ -46,7 +46,7 @@ for (const pass of passes) {
   Deno.writeTextFileSync(
     firstOutputDirectory + "/pass." + pass.key + "." + pass.apply.name +
       ".json",
-    stringify(firstAst),
+    stringify(firstAst, new Set(["token"])),
   );
 }
 

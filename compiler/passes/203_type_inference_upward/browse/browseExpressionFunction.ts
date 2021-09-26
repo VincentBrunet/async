@@ -1,8 +1,8 @@
 import { AstExpressionFunction } from "../../../data/ast/AstExpressionFunction.ts";
-import { AstTypePrimitiveId } from "../../../data/ast/AstTypePrimitive.ts";
 import { makeTypeFunction } from "../../../lib/typing/makeTypeFunction.ts";
 import { makeTypeOr } from "../../../lib/typing/makeTypeOr.ts";
-import { makeTypePrimitive } from "../../../lib/typing/makeTypePrimitive.ts";
+import { makeTypePrimitiveAny } from "../../../lib/typing/makeTypePrimitiveAny.ts";
+import { makeTypePrimitiveUnknown } from "../../../lib/typing/makeTypePrimitiveUnknown.ts";
 import { BrowsedScope } from "../util/BrowsedScope.ts";
 
 export function browseExpressionFunction(
@@ -12,7 +12,7 @@ export function browseExpressionFunction(
 ) {
   for (const param of ast.params) {
     param.resolvedType = param.annotation.type ??
-      makeTypePrimitive(AstTypePrimitiveId.Any, [], param);
+      makeTypePrimitiveAny(param);
   }
   const typeParams = ast.params.map((param) => {
     return {
@@ -43,7 +43,7 @@ export function browseExpressionFunction(
   }
 
   const typeReturn = ast.ret.type ?? currentReturn ??
-    makeTypePrimitive(AstTypePrimitiveId.Unknown, [], ast);
+    makeTypePrimitiveUnknown(ast.ret);
 
   /*
   if (typeReturn === undefined) {

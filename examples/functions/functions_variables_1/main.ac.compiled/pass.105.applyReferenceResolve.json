@@ -6,15 +6,9 @@
     "mutable": false,
     "name": "stdout",
     "hash": "0x63D42D26156FCC76",
-    "annotation": { "token": { "begin": 5, "end": 5 } },
-    "value": {
-     "kind": "Literal",
-     "data": { "id": "i32", "value": "42", "token": { "begin": 7, "end": 9 } },
-     "token": { "begin": 7, "end": 9 }
-    },
-    "token": { "begin": 1, "end": 9 }
-   },
-   "token": { "begin": 1, "end": 9 }
+    "annotation": {},
+    "value": { "kind": "Literal", "data": { "id": "i32", "value": "42" } }
+   }
   },
   {
    "kind": "Variable",
@@ -22,19 +16,13 @@
     "mutable": false,
     "name": "a",
     "hash": "0xCA978112CA1BBDCA",
-    "annotation": { "token": { "begin": 13, "end": 13 } },
+    "annotation": {},
     "value": {
      "kind": "Function",
      "data": {
-      "template": { "params": [], "token": { "begin": 17, "end": 17 } },
-      "params": [
-       {
-        "name": "p0",
-        "annotation": { "token": { "begin": 18, "end": 18 } },
-        "token": { "begin": 18, "end": 18 }
-       }
-      ],
-      "ret": { "token": { "begin": 21, "end": 21 } },
+      "template": { "params": [] },
+      "params": [ { "name": "p0", "annotation": {} } ],
+      "ret": {},
       "block": {
        "statements": [
         {
@@ -47,47 +35,42 @@
              "kind": "Identifier",
              "data": {
               "name": "stdout",
-              "token": { "begin": 23, "end": 24 },
               "resolvedReference": {
                "kind": "Closure",
                "data": {
                 "idx": 0,
                 "name": "stdout",
-                "resolvedReference": { "kind": "Variable", "data": {/* circular */} }
+                "resolvedReference": {
+                 "kind": "Variable",
+                 "data": {
+                  "mutable": false,
+                  "name": "stdout",
+                  "hash": "0x63D42D26156FCC76",
+                  "annotation": {},
+                  "value": { "kind": "Literal", "data": {/* circular */} }
+                 }
+                }
                }
               }
              }
             },
-            "params": [
-             {
-              "kind": "Literal",
-              "data": {
-               "id": "bool",
-               "value": "true",
-               "token": { "begin": 25, "end": 26 }
-              },
-              "token": { "begin": 25, "end": 26 }
-             }
-            ],
-            "token": { "begin": 24, "end": 28 }
-           },
-           "token": { "begin": 23, "end": 28 }
-          },
-          "token": { "begin": 23, "end": 28 }
-         },
-         "token": { "begin": 23, "end": 28 }
+            "params": [ { "kind": "Literal", "data": { "id": "bool", "value": "true" } } ]
+           }
+          }
+         }
         }
-       ],
-       "token": { "begin": 21, "end": 30 }
+       ]
       },
-      "token": { "begin": 15, "end": 30 },
-      "resolvedClosures": [ {/* circular */} ]
-     },
-     "token": { "begin": 15, "end": 30 }
-    },
-    "token": { "begin": 9, "end": 30 }
-   },
-   "token": { "begin": 9, "end": 30 }
+      "resolvedClosures": [
+       {
+        "idx": 0,
+        "name": "stdout",
+        "resolvedReference": { "kind": "Variable", "data": {/* circular */} }
+       }
+      ]
+     }
+    }
+   }
   },
   {
    "kind": "Variable",
@@ -95,13 +78,13 @@
     "mutable": false,
     "name": "b",
     "hash": "0x3E23E8160039594A",
-    "annotation": { "token": { "begin": 34, "end": 34 } },
+    "annotation": {},
     "value": {
      "kind": "Function",
      "data": {
-      "template": { "params": [], "token": { "begin": 38, "end": 38 } },
+      "template": { "params": [] },
       "params": [],
-      "ret": { "token": { "begin": 38, "end": 38 } },
+      "ret": {},
       "block": {
        "statements": [
         {
@@ -114,63 +97,72 @@
              "kind": "Identifier",
              "data": {
               "name": "stdout",
-              "token": { "begin": 40, "end": 41 },
               "resolvedReference": {
                "kind": "Closure",
                "data": {
                 "idx": 0,
                 "name": "stdout",
-                "resolvedReference": {/* circular */}
+                "resolvedReference": {
+                 "kind": "Variable",
+                 "data": {
+                  "mutable": false,
+                  "name": "stdout",
+                  "hash": "0x63D42D26156FCC76",
+                  "annotation": {/* circular */},
+                  "value": {/* circular */}
+                 }
+                }
                }
               }
              }
             },
             "params": [
-             {
-              "kind": "Literal",
-              "data": {
-               "id": "bool",
-               "value": "true",
-               "token": { "begin": 42, "end": 43 }
-              },
-              "token": { "begin": 42, "end": 43 }
-             },
+             { "kind": "Literal", "data": { "id": "bool", "value": "true" } },
              {
               "kind": "Identifier",
               "data": {
                "name": "a",
-               "token": { "begin": 45, "end": 46 },
                "resolvedReference": {
                 "kind": "Closure",
                 "data": {
                  "idx": 1,
                  "name": "a",
-                 "resolvedReference": { "kind": "Variable", "data": {/* circular */} }
+                 "resolvedReference": {
+                  "kind": "Variable",
+                  "data": {
+                   "mutable": false,
+                   "name": "a",
+                   "hash": "0xCA978112CA1BBDCA",
+                   "annotation": {},
+                   "value": { "kind": "Function", "data": {/* circular */} }
+                  }
+                 }
                 }
                }
-              },
-              "token": { "begin": 45, "end": 46 }
+              }
              }
-            ],
-            "token": { "begin": 41, "end": 48 }
-           },
-           "token": { "begin": 40, "end": 48 }
-          },
-          "token": { "begin": 40, "end": 48 }
-         },
-         "token": { "begin": 40, "end": 48 }
+            ]
+           }
+          }
+         }
         }
-       ],
-       "token": { "begin": 38, "end": 50 }
+       ]
       },
-      "token": { "begin": 36, "end": 50 },
-      "resolvedClosures": [ {/* circular */}, {/* circular */} ]
-     },
-     "token": { "begin": 36, "end": 50 }
-    },
-    "token": { "begin": 30, "end": 50 }
-   },
-   "token": { "begin": 30, "end": 50 }
+      "resolvedClosures": [
+       {
+        "idx": 0,
+        "name": "stdout",
+        "resolvedReference": { "kind": "Variable", "data": {/* circular */} }
+       },
+       {
+        "idx": 1,
+        "name": "a",
+        "resolvedReference": { "kind": "Variable", "data": {/* circular */} }
+       }
+      ]
+     }
+    }
+   }
   },
   {
    "kind": "Variable",
@@ -178,17 +170,12 @@
     "mutable": false,
     "name": "val",
     "hash": "0x97DFC65F74283F60",
-    "annotation": { "token": { "begin": 54, "end": 54 } },
+    "annotation": {},
     "value": {
      "kind": "Run",
      "data": {
       "annotation": {
-       "type": {
-        "kind": "Primitive",
-        "data": { "id": "i32", "params": [], "token": { "begin": 59, "end": 61 } },
-        "token": { "begin": 59, "end": 61 }
-       },
-       "token": { "begin": 58, "end": 61 }
+       "type": { "kind": "Primitive", "data": { "id": "i32", "params": [] } }
       },
       "block": {
        "statements": [
@@ -198,22 +185,31 @@
           "mutable": false,
           "name": "totoA",
           "hash": "0xE635F3828065BF03",
-          "annotation": { "token": { "begin": 91, "end": 91 } },
+          "annotation": {},
           "value": {
            "kind": "Identifier",
            "data": {
             "name": "a",
-            "token": { "begin": 93, "end": 95 },
             "resolvedReference": {
              "kind": "Closure",
-             "data": { "idx": 0, "name": "a", "resolvedReference": {/* circular */} }
+             "data": {
+              "idx": 0,
+              "name": "a",
+              "resolvedReference": {
+               "kind": "Variable",
+               "data": {
+                "mutable": false,
+                "name": "a",
+                "hash": "0xCA978112CA1BBDCA",
+                "annotation": {/* circular */},
+                "value": {/* circular */}
+               }
+              }
+             }
             }
-           },
-           "token": { "begin": 93, "end": 95 }
-          },
-          "token": { "begin": 87, "end": 95 }
-         },
-         "token": { "begin": 87, "end": 95 }
+           }
+          }
+         }
         },
         {
          "kind": "Variable",
@@ -221,26 +217,31 @@
           "mutable": false,
           "name": "totoB",
           "hash": "0x70C2CA4331315108",
-          "annotation": { "token": { "begin": 99, "end": 99 } },
+          "annotation": {},
           "value": {
            "kind": "Identifier",
            "data": {
             "name": "b",
-            "token": { "begin": 101, "end": 103 },
             "resolvedReference": {
              "kind": "Closure",
              "data": {
               "idx": 1,
               "name": "b",
-              "resolvedReference": { "kind": "Variable", "data": {/* circular */} }
+              "resolvedReference": {
+               "kind": "Variable",
+               "data": {
+                "mutable": false,
+                "name": "b",
+                "hash": "0x3E23E8160039594A",
+                "annotation": {},
+                "value": { "kind": "Function", "data": {/* circular */} }
+               }
+              }
              }
             }
-           },
-           "token": { "begin": 101, "end": 103 }
-          },
-          "token": { "begin": 95, "end": 103 }
-         },
-         "token": { "begin": 95, "end": 103 }
+           }
+          }
+         }
         },
         {
          "kind": "While",
@@ -248,18 +249,8 @@
           "condition": {
            "kind": " Parenthesis",
            "data": {
-            "expression": {
-             "kind": "Literal",
-             "data": {
-              "id": "bool",
-              "value": "true",
-              "token": { "begin": 106, "end": 107 }
-             },
-             "token": { "begin": 106, "end": 107 }
-            },
-            "token": { "begin": 105, "end": 109 }
-           },
-           "token": { "begin": 105, "end": 109 }
+            "expression": { "kind": "Literal", "data": { "id": "bool", "value": "true" } }
+           }
           },
           "block": {
            "statements": [
@@ -269,7 +260,7 @@
               "mutable": false,
               "name": "inner",
               "hash": "0x33BF6FBD7CD83797",
-              "annotation": { "token": { "begin": 115, "end": 115 } },
+              "annotation": {},
               "value": {
                "kind": "Call",
                "data": {
@@ -277,18 +268,22 @@
                  "kind": "Identifier",
                  "data": {
                   "name": "totoA",
-                  "token": { "begin": 117, "end": 118 },
-                  "resolvedReference": { "kind": "Variable", "data": {/* circular */} }
+                  "resolvedReference": {
+                   "kind": "Variable",
+                   "data": {
+                    "mutable": false,
+                    "name": "totoA",
+                    "hash": "0xE635F3828065BF03",
+                    "annotation": {},
+                    "value": { "kind": "Identifier", "data": {/* circular */} }
+                   }
+                  }
                  }
                 },
-                "params": [],
-                "token": { "begin": 118, "end": 121 }
-               },
-               "token": { "begin": 117, "end": 121 }
-              },
-              "token": { "begin": 111, "end": 121 }
-             },
-             "token": { "begin": 111, "end": 121 }
+                "params": []
+               }
+              }
+             }
             },
             {
              "kind": "Expression",
@@ -300,37 +295,44 @@
                  "kind": "Identifier",
                  "data": {
                   "name": "totoA",
-                  "token": { "begin": 121, "end": 122 },
-                  "resolvedReference": {/* circular */}
+                  "resolvedReference": {
+                   "kind": "Variable",
+                   "data": {
+                    "mutable": false,
+                    "name": "totoA",
+                    "hash": "0xE635F3828065BF03",
+                    "annotation": {/* circular */},
+                    "value": {/* circular */}
+                   }
+                  }
                  }
                 },
-                "params": [],
-                "token": { "begin": 122, "end": 124 }
-               },
-               "token": { "begin": 121, "end": 124 }
-              },
-              "token": { "begin": 121, "end": 124 }
-             },
-             "token": { "begin": 121, "end": 126 }
+                "params": []
+               }
+              }
+             }
             }
-           ],
-           "token": { "begin": 109, "end": 128 }
-          },
-          "token": { "begin": 103, "end": 128 }
-         },
-         "token": { "begin": 103, "end": 128 }
+           ]
+          }
+         }
         }
-       ],
-       "token": { "begin": 61, "end": 130 }
+       ]
       },
-      "token": { "begin": 56, "end": 130 },
-      "resolvedClosures": [ {/* circular */}, {/* circular */} ]
-     },
-     "token": { "begin": 56, "end": 130 }
-    },
-    "token": { "begin": 50, "end": 130 }
-   },
-   "token": { "begin": 50, "end": 130 }
+      "resolvedClosures": [
+       {
+        "idx": 0,
+        "name": "a",
+        "resolvedReference": { "kind": "Variable", "data": {/* circular */} }
+       },
+       {
+        "idx": 1,
+        "name": "b",
+        "resolvedReference": { "kind": "Variable", "data": {/* circular */} }
+       }
+      ]
+     }
+    }
+   }
   },
   {
    "kind": "Expression",
@@ -342,18 +344,22 @@
        "kind": "Identifier",
        "data": {
         "name": "a",
-        "token": { "begin": 130, "end": 131 },
-        "resolvedReference": {/* circular */}
+        "resolvedReference": {
+         "kind": "Variable",
+         "data": {
+          "mutable": false,
+          "name": "a",
+          "hash": "0xCA978112CA1BBDCA",
+          "annotation": {/* circular */},
+          "value": {/* circular */}
+         }
+        }
        }
       },
-      "params": [],
-      "token": { "begin": 131, "end": 134 }
-     },
-     "token": { "begin": 130, "end": 134 }
-    },
-    "token": { "begin": 130, "end": 134 }
-   },
-   "token": { "begin": 130, "end": 134 }
+      "params": []
+     }
+    }
+   }
   },
   {
    "kind": "Expression",
@@ -365,18 +371,22 @@
        "kind": "Identifier",
        "data": {
         "name": "b",
-        "token": { "begin": 134, "end": 135 },
-        "resolvedReference": {/* circular */}
+        "resolvedReference": {
+         "kind": "Variable",
+         "data": {
+          "mutable": false,
+          "name": "b",
+          "hash": "0x3E23E8160039594A",
+          "annotation": {/* circular */},
+          "value": {/* circular */}
+         }
+        }
        }
       },
-      "params": [],
-      "token": { "begin": 135, "end": 138 }
-     },
-     "token": { "begin": 134, "end": 138 }
-    },
-    "token": { "begin": 134, "end": 138 }
-   },
-   "token": { "begin": 134, "end": 138 }
+      "params": []
+     }
+    }
+   }
   }
  ]
 }
