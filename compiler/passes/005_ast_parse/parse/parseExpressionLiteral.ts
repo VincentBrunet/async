@@ -1,6 +1,5 @@
 import { AstExpressionLiteral } from "../../../data/ast/AstExpressionLiteral.ts";
 import { AstTypePrimitiveId } from "../../../data/ast/AstTypePrimitive.ts";
-import { TokenKind } from "../../../data/token/Token.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 
@@ -26,14 +25,71 @@ function makeLiteral(
   };
 }
 
+function makeStringUntil(
+  browser: TokenBrowser,
+  delimiter: string,
+): AstExpressionLiteral {
+  const parts = [];
+  let escaped = false;
+  while (true) {
+    if (browser.ended()) {
+      throw new Error("Unclosed string literal");
+    }
+    const str = browser.peek().str;
+    browser.consume();
+    for (let i = 0; i < str.length; i++) {
+      const char = str.charAt(i);
+      if (escaped) {
+        switch (char) {
+          case "n":
+            parts.push("\n");
+            break;
+          case "r":
+            parts.push("\r");
+            break;
+          case "t":
+            parts.push("\t");
+            break;
+          case "a":
+            parts.push("\a");
+            break;
+          case "r":
+            parts.push("\r");
+            break;
+          case "b":
+            parts.push("\b");
+            break;
+          case "'":
+            parts.push("'");
+            break;
+          case '"':
+            parts.push('"');
+            break;
+          default:
+            parts.push(char);
+            break;
+        }
+        escaped = false;
+      } else {
+        switch (char) {
+          case delimiter:
+            return makeLiteral(AstTypePrimitiveId.String, parts.join(""));
+          case "\\":
+            escaped = true;
+            break;
+          default:
+            parts.push(char);
+            break;
+        }
+      }
+    }
+  }
+}
+
 export function parseExpressionLiteral(
   browser: TokenBrowser,
 ): AstExpressionLiteral | TokenImpasse {
   const token = browser.peek();
-
-  if (token.kind !== TokenKind.Text) {
-    return browser.impasse("Literal");
-  }
 
   let value = token.str;
 
@@ -50,13 +106,21 @@ export function parseExpressionLiteral(
     return makeLiteral(AstTypePrimitiveId.Null, "null");
   }
 
+  if (value.startsWith('"')) {
+    browser.consume();
+    return makeStringUntil(browser, '"');
+  }
+  if (value.startsWith("'")) {
+    browser.consume();
+    return makeStringUntil(browser, "'");
+  }
+
   if (value.startsWith("0x")) {
     value = parseInt(value.slice(2), 16).toString(10);
   }
   if (value.startsWith("0b")) {
     value = parseInt(value.slice(2), 2).toString(10);
   }
-
   if (digits.has(value[0])) {
     browser.consume();
     return makeLiteral(AstTypePrimitiveId.Integer32, value);

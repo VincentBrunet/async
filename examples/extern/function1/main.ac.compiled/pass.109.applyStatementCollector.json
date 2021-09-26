@@ -1,0 +1,21 @@
+{
+ "statements": [
+  {
+   "kind": "Expression",
+   "data": {
+    "expression": {
+     "kind": "Call",
+     "data": {
+      "callee": {
+       "kind": "Identifier",
+       "data": { "name": "my_print", "resolvedReference": undefined }
+      },
+      "params": [ { "kind": "Literal", "data": { "id": "str", "value": "Hello" } } ]
+     }
+    }
+   }
+  }
+ ],
+ "resolvedVariables": [],
+ "resolvedReturns": []
+}

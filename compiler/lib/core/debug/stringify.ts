@@ -14,72 +14,92 @@ function contentJoin(values: Array<string>, ident: number) {
 }
 
 export function stringify(
-  v: any,
-  no?: Set<string>,
-  id?: number,
-  br?: Set<any>,
-  cr?: number,
+  value: any,
+  ignoreKeys?: Set<string>,
 ): string {
-  const ident = id ?? 0;
+  return stringifyInner(value, ignoreKeys ?? new Set(), 0, new Set(), 0);
+}
 
-  if (v === undefined) {
+function stringifyInner(
+  value: any,
+  ignoreKeys: Set<string>,
+  indentation: number,
+  alreadyBrowsed: Set<any>,
+  circularStage: number,
+): string {
+  if (value === undefined) {
     return "undefined";
   }
-  if (v === null) {
+  if (value === null) {
     return "null";
   }
 
-  const type = typeof v;
+  const type = typeof value;
   if (type === "boolean") {
-    return v ? "true" : "false";
+    return value ? "true" : "false";
   }
   if (type === "number") {
-    return v.toString();
+    return value.toString();
   }
   if (type === "string") {
-    return '"' + v.replace(/[\n]/g, "\\n") + '"';
+    return '"' + value.replace(/[\n]/g, "\\n").replace(/[\"]/g, '\\"') + '"';
   }
 
-  const browsed = br ?? new Set();
-  let circulars = cr ?? 0;
-
-  if (browsed.has(v)) {
-    circulars++;
+  if (alreadyBrowsed.has(value)) {
+    circularStage++;
   }
-  browsed.add(v);
+  alreadyBrowsed.add(value);
 
-  if (circulars > 2) {
+  if (circularStage > 2) {
     return "{/* circular */}";
   }
 
-  if (Array.isArray(v)) {
-    const content = v.map((item) => {
-      return stringify(item, no, ident + 1, browsed, circulars);
+  if (Array.isArray(value)) {
+    const content = value.map((item) => {
+      return stringifyInner(
+        item,
+        ignoreKeys,
+        indentation + 1,
+        alreadyBrowsed,
+        circularStage,
+      );
     });
-    return "[" + contentJoin(content, ident) + "]";
+    return "[" + contentJoin(content, indentation) + "]";
   }
 
-  if (v instanceof Map) {
-    const keys = [...v.keys()].filter((key) => {
-      return !no?.has(key);
+  if (value instanceof Map) {
+    const keys = [...value.keys()].filter((key) => {
+      return !ignoreKeys.has(key);
     });
     const content = keys.map((key) => {
       return key + ": " +
-        stringify(v.get(key), no, ident + 1, browsed, circulars);
+        stringifyInner(
+          value.get(key),
+          ignoreKeys,
+          indentation + 1,
+          alreadyBrowsed,
+          circularStage,
+        );
     });
-    return "Map<{" + contentJoin(content, ident) + "}>";
+    return "Map<{" + contentJoin(content, indentation) + "}>";
   }
 
   if (type === "object") {
-    const keys = Object.keys(v).filter((key) => {
-      return !no?.has(key);
+    const keys = Object.keys(value).filter((key) => {
+      return !ignoreKeys.has(key);
     });
     const content = keys.map((key) => {
       return '"' + key + '"' + ": " +
-        stringify(v[key], no, ident + 1, browsed, circulars);
+        stringifyInner(
+          value[key],
+          ignoreKeys,
+          indentation + 1,
+          alreadyBrowsed,
+          circularStage,
+        );
     });
-    return "{" + contentJoin(content, ident) + "}";
+    return "{" + contentJoin(content, indentation) + "}";
   }
 
-  return v.toString();
+  return value.toString();
 }
