@@ -1,5 +1,5 @@
 import { AstExpressionObject } from "../../../data/ast/AstExpressionObject.ts";
-import { AstStatementVariable } from "../../../data/ast/AstStatementVariable.ts";
+import { ensure } from "../../../lib/errors/ensure.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputOrder } from "../util/OutputOrder.ts";
 import { OutputScope } from "../util/OutputScope.ts";
@@ -15,13 +15,8 @@ export function writeExpressionObject(
   statement: OutputStatement,
   ast: AstExpressionObject,
 ) {
-  // Asserts
-  if (!ast.resolvedClosures) {
-    throw new Error("Unresolved Closures");
-  }
-  if (!ast.resolvedVariables) {
-    throw new Error("Unresolved Variables");
-  }
+  const resolvedClosures = ensure(ast.resolvedClosures);
+  const resolvedVariables = ensure(ast.resolvedVariables);
 
   // TODO - Object name mangling
   const name = "o_0x" + (_id++).toString(16);
@@ -31,8 +26,8 @@ export function writeExpressionObject(
   statement.pushPart("&");
   statement.pushPart(name);
   statement.pushPart(", ");
-  statement.pushPart(ast.resolvedClosures.length.toString());
-  for (const astClosure of ast.resolvedClosures) {
+  statement.pushPart(resolvedClosures.length.toString());
+  for (const astClosure of resolvedClosures) {
     statement.pushPart(", ");
     writeResolvedClosure(statement, astClosure);
   }
@@ -48,16 +43,7 @@ export function writeExpressionObject(
   child.pushParam("t_ref **closure");
 
   // Read the variables declared in the function
-  const variables = ast.resolvedVariables;
-  variables.sort((a: AstStatementVariable, b: AstStatementVariable) => {
-    if (a.hash < b.hash) {
-      return -1;
-    } else if (a.hash > b.hash) {
-      return 1;
-    } else {
-      return 0;
-    }
-  });
+  const variables = resolvedVariables;
 
   // Create the module object containing all declared variables
   const object = new OutputStatement();
@@ -74,7 +60,9 @@ export function writeExpressionObject(
 
   // Read a variable field pointer
   const shortcut = new OutputStatement();
-  shortcut.pushPart("t_variable *variables = object->data.object.variables");
+  shortcut.pushPart(
+    "t_variable *variables = object->data.object.variables",
+  );
   child.pushStatement(OutputOrder.Variables, shortcut);
 
   // Make local references to created variables
@@ -85,7 +73,7 @@ export function writeExpressionObject(
     named.pushPart("__");
     named.pushPart(variable.name);
     named.pushPart(" = ");
-    named.pushPart("&(variables[");
+    named.pushPart("(t_ref *)&(variables[");
     named.pushPart(i.toString());
     named.pushPart("])");
     child.pushStatement(OutputOrder.Variables, named);

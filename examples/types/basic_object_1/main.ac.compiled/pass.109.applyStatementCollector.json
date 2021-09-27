@@ -576,6 +576,13 @@
  "resolvedVariables": [
   {
    "mutable": false,
+   "name": "tt",
+   "hash": "0x0E07CF830957701D",
+   "annotation": {},
+   "value": { "kind": "Typing", "data": {/* circular */} }
+  },
+  {
+   "mutable": false,
    "name": "myObject",
    "hash": "0x30936838B2B6EFA2",
    "annotation": {},
@@ -590,13 +597,6 @@
   },
   {
    "mutable": false,
-   "name": "factoryMyObject",
-   "hash": "0xDF7ADC5142B4C5FA",
-   "annotation": {},
-   "value": { "kind": "Function", "data": {/* circular */} }
-  },
-  {
-   "mutable": false,
    "name": "factoryMyUnion",
    "hash": "0xDD3D1D46180E8504",
    "annotation": {},
@@ -604,10 +604,10 @@
   },
   {
    "mutable": false,
-   "name": "tt",
-   "hash": "0x0E07CF830957701D",
+   "name": "factoryMyObject",
+   "hash": "0xDF7ADC5142B4C5FA",
    "annotation": {},
-   "value": { "kind": "Typing", "data": {/* circular */} }
+   "value": { "kind": "Function", "data": {/* circular */} }
   }
  ],
  "resolvedReturns": []

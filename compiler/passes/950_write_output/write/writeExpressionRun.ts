@@ -1,4 +1,5 @@
 import { AstExpressionRun } from "../../../data/ast/AstExpressionRun.ts";
+import { ensure } from "../../../lib/errors/ensure.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputOrder } from "../util/OutputOrder.ts";
 import { OutputScope } from "../util/OutputScope.ts";
@@ -14,13 +15,8 @@ export function writeExpressionRun(
   statement: OutputStatement,
   ast: AstExpressionRun,
 ) {
-  // Asserts
-  if (!ast.resolvedClosures) {
-    throw new Error("Invalid closure setup");
-  }
-  if (!ast.resolvedVariables) {
-    throw new Error("Unresolved Variables");
-  }
+  const resolvedClosures = ensure(ast.resolvedClosures);
+  const resolvedVariables = ensure(ast.resolvedVariables);
 
   // TODO - Run name mangling
   const name = "r_0x" + (_id++).toString(16);
@@ -30,8 +26,8 @@ export function writeExpressionRun(
   statement.pushPart("&");
   statement.pushPart(name);
   statement.pushPart(", ");
-  statement.pushPart(ast.resolvedClosures.length.toString());
-  for (const astClosure of ast.resolvedClosures) {
+  statement.pushPart(resolvedClosures.length.toString());
+  for (const astClosure of resolvedClosures) {
     statement.pushPart(", ");
     writeResolvedClosure(statement, astClosure);
   }
@@ -47,10 +43,10 @@ export function writeExpressionRun(
   child.pushParam("t_ref **closure");
 
   // Setup declarations
-  const variables = ast.resolvedVariables;
-  for (const variable of variables) {
+  for (const variable of resolvedVariables) {
     const declaration = new OutputStatement();
     declaration.pushPart("t_ref *__");
+    declaration.pushPart("__");
     declaration.pushPart(variable.name);
     declaration.pushPart(" = ");
     declaration.pushPart("ref_make(NULL)");

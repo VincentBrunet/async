@@ -1,6 +1,5 @@
 [
- { "kind": "whitespace", "str": "
-" },
+ { "kind": "whitespace", "str": "\n" },
  { "kind": "text", "str": "typedef" },
  { "kind": "whitespace", "str": " " },
  { "kind": "text", "str": "Int" },
@@ -9,9 +8,7 @@
  { "kind": "whitespace", "str": " " },
  { "kind": "text", "str": "i32" },
  { "kind": "special", "str": ";" },
- { "kind": "whitespace", "str": "
-
-" },
+ { "kind": "whitespace", "str": "\n\n" },
  { "kind": "text", "str": "typedef" },
  { "kind": "whitespace", "str": " " },
  { "kind": "text", "str": "MyObject" },
@@ -19,8 +16,7 @@
  { "kind": "special", "str": "=" },
  { "kind": "whitespace", "str": " " },
  { "kind": "special", "str": "{" },
- { "kind": "whitespace", "str": "
-  " },
+ { "kind": "whitespace", "str": "\n  " },
  { "kind": "text", "str": "const" },
  { "kind": "whitespace", "str": " " },
  { "kind": "text", "str": "hello" },
@@ -31,8 +27,7 @@
  { "kind": "text", "str": "Int" },
  { "kind": "special", "str": ">" },
  { "kind": "special", "str": ";" },
- { "kind": "whitespace", "str": "
-  " },
+ { "kind": "whitespace", "str": "\n  " },
  { "kind": "text", "str": "const" },
  { "kind": "whitespace", "str": " " },
  { "kind": "text", "str": "bubu" },
@@ -40,12 +35,9 @@
  { "kind": "whitespace", "str": " " },
  { "kind": "text", "str": "Int" },
  { "kind": "special", "str": ";" },
- { "kind": "whitespace", "str": "
-" },
+ { "kind": "whitespace", "str": "\n" },
  { "kind": "special", "str": "}" },
- { "kind": "whitespace", "str": "
-
-" },
+ { "kind": "whitespace", "str": "\n\n" },
  { "kind": "text", "str": "typedef" },
  { "kind": "whitespace", "str": " " },
  { "kind": "text", "str": "MyObjectOther" },
@@ -53,8 +45,7 @@
  { "kind": "special", "str": "=" },
  { "kind": "whitespace", "str": " " },
  { "kind": "special", "str": "{" },
- { "kind": "whitespace", "str": "
-  " },
+ { "kind": "whitespace", "str": "\n  " },
  { "kind": "text", "str": "const" },
  { "kind": "whitespace", "str": " " },
  { "kind": "text", "str": "vincent" },
@@ -62,12 +53,9 @@
  { "kind": "whitespace", "str": " " },
  { "kind": "text", "str": "str" },
  { "kind": "special", "str": ";" },
- { "kind": "whitespace", "str": "
-" },
+ { "kind": "whitespace", "str": "\n" },
  { "kind": "special", "str": "}" },
- { "kind": "whitespace", "str": "
-
-" },
+ { "kind": "whitespace", "str": "\n\n" },
  { "kind": "text", "str": "typedef" },
  { "kind": "whitespace", "str": " " },
  { "kind": "text", "str": "MyObjectCopy" },
@@ -75,8 +63,7 @@
  { "kind": "special", "str": "=" },
  { "kind": "whitespace", "str": " " },
  { "kind": "special", "str": "{" },
- { "kind": "whitespace", "str": "
-  " },
+ { "kind": "whitespace", "str": "\n  " },
  { "kind": "text", "str": "const" },
  { "kind": "whitespace", "str": " " },
  { "kind": "text", "str": "hello" },
@@ -84,8 +71,7 @@
  { "kind": "whitespace", "str": " " },
  { "kind": "text", "str": "Int" },
  { "kind": "special", "str": ";" },
- { "kind": "whitespace", "str": "
-  " },
+ { "kind": "whitespace", "str": "\n  " },
  { "kind": "text", "str": "const" },
  { "kind": "whitespace", "str": " " },
  { "kind": "text", "str": "bubu" },
@@ -93,12 +79,9 @@
  { "kind": "whitespace", "str": " " },
  { "kind": "text", "str": "Int" },
  { "kind": "special", "str": ";" },
- { "kind": "whitespace", "str": "
-" },
+ { "kind": "whitespace", "str": "\n" },
  { "kind": "special", "str": "}" },
- { "kind": "whitespace", "str": "
-
-" },
+ { "kind": "whitespace", "str": "\n\n" },
  { "kind": "text", "str": "typedef" },
  { "kind": "whitespace", "str": " " },
  { "kind": "text", "str": "MyUnion" },
@@ -111,9 +94,7 @@
  { "kind": "whitespace", "str": " " },
  { "kind": "text", "str": "MyObjectOther" },
  { "kind": "special", "str": ";" },
- { "kind": "whitespace", "str": "
-
-" },
+ { "kind": "whitespace", "str": "\n\n" },
  { "kind": "text", "str": "const" },
  { "kind": "whitespace", "str": " " },
  { "kind": "text", "str": "myObject" },
@@ -127,8 +108,7 @@
  { "kind": "text", "str": "MyObject" },
  { "kind": "whitespace", "str": " " },
  { "kind": "special", "str": "{" },
- { "kind": "whitespace", "str": "
-  " },
+ { "kind": "whitespace", "str": "\n  " },
  { "kind": "text", "str": "const" },
  { "kind": "whitespace", "str": " " },
  { "kind": "text", "str": "hello" },
@@ -136,8 +116,7 @@
  { "kind": "whitespace", "str": " " },
  { "kind": "text", "str": "Int" },
  { "kind": "special", "str": ";" },
- { "kind": "whitespace", "str": "
-  " },
+ { "kind": "whitespace", "str": "\n  " },
  { "kind": "text", "str": "const" },
  { "kind": "whitespace", "str": " " },
  { "kind": "text", "str": "bubu" },
@@ -145,12 +124,9 @@
  { "kind": "whitespace", "str": " " },
  { "kind": "text", "str": "Int" },
  { "kind": "special", "str": ";" },
- { "kind": "whitespace", "str": "
-" },
+ { "kind": "whitespace", "str": "\n" },
  { "kind": "special", "str": "}" },
- { "kind": "whitespace", "str": "
-
-" },
+ { "kind": "whitespace", "str": "\n\n" },
  { "kind": "text", "str": "const" },
  { "kind": "whitespace", "str": " " },
  { "kind": "text", "str": "myObject2" },
@@ -168,9 +144,7 @@
  { "kind": "whitespace", "str": " " },
  { "kind": "special", "str": "{" },
  { "kind": "special", "str": "}" },
- { "kind": "whitespace", "str": "
-
-" },
+ { "kind": "whitespace", "str": "\n\n" },
  { "kind": "text", "str": "const" },
  { "kind": "whitespace", "str": " " },
  { "kind": "text", "str": "factoryMyObject" },
@@ -183,17 +157,13 @@
  { "kind": "special", "str": ")" },
  { "kind": "whitespace", "str": " " },
  { "kind": "special", "str": "{" },
- { "kind": "whitespace", "str": "
-  " },
+ { "kind": "whitespace", "str": "\n  " },
  { "kind": "text", "str": "return" },
  { "kind": "whitespace", "str": " " },
  { "kind": "text", "str": "myObject" },
- { "kind": "whitespace", "str": "
-" },
+ { "kind": "whitespace", "str": "\n" },
  { "kind": "special", "str": "}" },
- { "kind": "whitespace", "str": "
-
-" },
+ { "kind": "whitespace", "str": "\n\n" },
  { "kind": "text", "str": "const" },
  { "kind": "whitespace", "str": " " },
  { "kind": "text", "str": "factoryMyUnion" },
@@ -206,24 +176,19 @@
  { "kind": "text", "str": "MyUnion" },
  { "kind": "whitespace", "str": " " },
  { "kind": "special", "str": "{" },
- { "kind": "whitespace", "str": "
-  " },
+ { "kind": "whitespace", "str": "\n  " },
  { "kind": "text", "str": "const" },
  { "kind": "whitespace", "str": " " },
  { "kind": "text", "str": "hello" },
  { "kind": "special", "str": ";" },
- { "kind": "whitespace", "str": "
-  " },
+ { "kind": "whitespace", "str": "\n  " },
  { "kind": "text", "str": "return" },
  { "kind": "whitespace", "str": " " },
  { "kind": "text", "str": "myObject" },
  { "kind": "special", "str": ";" },
- { "kind": "whitespace", "str": "
-" },
+ { "kind": "whitespace", "str": "\n" },
  { "kind": "special", "str": "}" },
- { "kind": "whitespace", "str": "
-
-" },
+ { "kind": "whitespace", "str": "\n\n" },
  { "kind": "text", "str": "const" },
  { "kind": "whitespace", "str": " " },
  { "kind": "text", "str": "tt" },
@@ -239,6 +204,5 @@
  { "kind": "text", "str": "Int" },
  { "kind": "special", "str": ">" },
  { "kind": "special", "str": ";" },
- { "kind": "whitespace", "str": "
-" }
+ { "kind": "whitespace", "str": "\n" }
 ]

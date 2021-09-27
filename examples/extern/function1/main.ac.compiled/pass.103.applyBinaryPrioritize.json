@@ -7,7 +7,9 @@
      "kind": "Call",
      "data": {
       "callee": { "kind": "Identifier", "data": { "name": "my_print" } },
-      "params": [ { "kind": "Literal", "data": { "id": "str", "value": "Hello" } } ]
+      "params": [
+       { "kind": "Literal", "data": { "id": "str", "value": "Hello😀" } }
+      ]
      }
     }
    }

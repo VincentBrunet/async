@@ -1,4 +1,5 @@
 import { AstExpressionObject } from "../../../data/ast/AstExpressionObject.ts";
+import { ensure } from "../../../lib/errors/ensure.ts";
 import { BrowsedScope } from "../util/BrowsedScope.ts";
 
 export function browseExpressionObject(
@@ -6,16 +7,13 @@ export function browseExpressionObject(
   ast: AstExpressionObject,
   next: () => void,
 ) {
-  // Asserts
-  if (!ast.resolvedClosures) {
-    throw new Error("Object doesn't have proper closure");
-  }
+  const resolvedClosures = ensure(ast.resolvedClosures);
 
-  for (const astClosure of ast.resolvedClosures) {
+  for (const astClosure of resolvedClosures) {
     astClosure.resolvedReference = scope.findReference(astClosure.name);
   }
 
-  for (const astClosure of ast.resolvedClosures) {
+  for (const astClosure of resolvedClosures) {
     scope.pushClosure(astClosure);
   }
 

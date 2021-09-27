@@ -63,7 +63,7 @@ export function parseExpressionFunction(
 
       // param - validated
       astParams.push({
-        name: name ?? ("p" + astParams.length),
+        name: name,
         annotation: paramAnnotation,
         token: {
           begin: paramBegin,

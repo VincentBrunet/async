@@ -1,5 +1,5 @@
 import { AstModule } from "../../../data/ast/AstModule.ts";
-import { AstStatementVariable } from "../../../data/ast/AstStatementVariable.ts";
+import { ensure } from "../../../lib/errors/ensure.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputOrder } from "../util/OutputOrder.ts";
 import { OutputScope } from "../util/OutputScope.ts";
@@ -7,10 +7,7 @@ import { OutputStatement } from "../util/OutputStatement.ts";
 import { writeStatement } from "./writeStatement.ts";
 
 export function writeModule(module: OutputModule, ast: AstModule) {
-  // Asserts
-  if (!ast.resolvedVariables) {
-    throw new Error("Unresolved Variables");
-  }
+  const resolvedVariables = ensure(ast.resolvedVariables);
 
   // New Scope
   const scope = new OutputScope("module_load");
@@ -21,16 +18,7 @@ export function writeModule(module: OutputModule, ast: AstModule) {
   }
 
   // Read the variables declared in the function
-  const variables = ast.resolvedVariables;
-  variables.sort((a: AstStatementVariable, b: AstStatementVariable) => {
-    if (a.hash < b.hash) {
-      return -1;
-    } else if (a.hash > b.hash) {
-      return 1;
-    } else {
-      return 0;
-    }
-  });
+  const variables = resolvedVariables;
 
   // Create the module object containing all declared variables
   const object = new OutputStatement();
@@ -58,7 +46,7 @@ export function writeModule(module: OutputModule, ast: AstModule) {
     named.pushPart("__");
     named.pushPart(variable.name);
     named.pushPart(" = ");
-    named.pushPart("&(variables[");
+    named.pushPart("(t_ref *)&(variables[");
     named.pushPart(i.toString());
     named.pushPart("])");
     scope.pushStatement(OutputOrder.Variables, named);

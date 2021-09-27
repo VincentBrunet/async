@@ -7,7 +7,9 @@ export function browseExpressionFunction(
   next: () => void,
 ) {
   for (const astParam of ast.params) {
-    scope.pushName(astParam.name);
+    if (astParam.name) {
+      scope.pushName(astParam.name);
+    }
   }
   next();
   ast.resolvedClosures = scope.readClosures();

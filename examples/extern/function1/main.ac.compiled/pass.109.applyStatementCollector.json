@@ -10,7 +10,9 @@
        "kind": "Identifier",
        "data": { "name": "my_print", "resolvedReference": undefined }
       },
-      "params": [ { "kind": "Literal", "data": { "id": "str", "value": "Hello" } } ]
+      "params": [
+       { "kind": "Literal", "data": { "id": "str", "value": "Hello😀" } }
+      ]
      }
     }
    }

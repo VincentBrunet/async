@@ -23,6 +23,17 @@ export class BrowsedScope {
   }
 
   getStatementVariables() {
+    this.statementVariables.sort(
+      (a: AstStatementVariable, b: AstStatementVariable) => {
+        if (a.hash < b.hash) {
+          return -1;
+        } else if (a.hash > b.hash) {
+          return 1;
+        } else {
+          return 0;
+        }
+      },
+    );
     return this.statementVariables;
   }
 

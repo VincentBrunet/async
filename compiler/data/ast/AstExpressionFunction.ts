@@ -8,7 +8,7 @@ import { AstStatementVariable } from "./AstStatementVariable.ts";
 import { AstType } from "./AstType.ts";
 
 export interface AstExpressionFunctionParam extends Ast {
-  name: string;
+  name?: string;
   annotation: AstAnnotationType;
 
   resolvedType?: AstType;

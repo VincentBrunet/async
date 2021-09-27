@@ -14,7 +14,7 @@ export function writeExpressionTyping(
   statement.pushPart("(");
   writeExpression(module, scope, statement, astTyping.expression);
   statement.pushPart("/*");
-  statement.pushPart(JSON.stringify(astTyping.type));
+  //statement.pushPart(JSON.stringify(astTyping.type));
   statement.pushPart("*/");
   statement.pushPart(")");
 }

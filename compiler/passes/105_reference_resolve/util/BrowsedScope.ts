@@ -5,6 +5,7 @@ import {
   AstResolvedReferenceKind,
 } from "../../../data/ast/AstResolvedReference.ts";
 import { AstStatementVariable } from "../../../data/ast/AstStatementVariable.ts";
+import { ensure } from "../../../lib/errors/ensure.ts";
 
 export class BrowsedScope {
   public parent?: BrowsedScope;
@@ -32,7 +33,7 @@ export class BrowsedScope {
   }
 
   pushParam(param: AstExpressionFunctionParam) {
-    const name = param.name;
+    const name = ensure(param.name);
     this.pushReference(name, {
       kind: AstResolvedReferenceKind.Param,
       data: param,

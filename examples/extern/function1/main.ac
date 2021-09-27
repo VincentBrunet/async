@@ -1,6 +1,13 @@
 
 
+const my_print = fn (a: i32, b: i32): i32 {
 
-// extern(C) my_print: (str:String):void;
+  unsafe {
+    dlopen(a->value.i32, b->value.i32);
+  }
 
-my_print("Hello");
+}
+
+// extern(C) my_print: (p:str):void;
+
+my_print("Hello 😀");
