@@ -1,4 +1,7 @@
-import { AstExpressionBinary } from "../../../data/ast/AstExpressionBinary.ts";
+import {
+  AstExpressionBinary,
+  AstExpressionBinaryOperator,
+} from "../../../data/ast/AstExpressionBinary.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputScope } from "../util/OutputScope.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
@@ -8,12 +11,18 @@ export function writeExpressionBinary(
   module: OutputModule,
   scope: OutputScope,
   statement: OutputStatement,
-  astBinary: AstExpressionBinary,
+  ast: AstExpressionBinary,
 ) {
-  statement.pushPart(astBinary.operator); // TODO
-  statement.pushPart("(");
-  writeExpression(module, scope, statement, astBinary.expression1);
-  statement.pushPart(", ");
-  writeExpression(module, scope, statement, astBinary.expression2);
-  statement.pushPart(")");
+  if (ast.operator === AstExpressionBinaryOperator.Assign) {
+    writeExpression(module, scope, statement, ast.expression1);
+    statement.pushPart(" = ");
+    writeExpression(module, scope, statement, ast.expression2);
+  } else {
+    statement.pushPart(ast.operator); // TODO
+    statement.pushPart("(");
+    writeExpression(module, scope, statement, ast.expression1);
+    statement.pushPart(", ");
+    writeExpression(module, scope, statement, ast.expression2);
+    statement.pushPart(")");
+  }
 }

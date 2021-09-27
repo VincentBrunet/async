@@ -91,7 +91,7 @@
   {
    "kind": "Variable",
    "data": {
-    "mutable": false,
+    "mutable": true,
     "name": "res",
     "hash": "0x6EEB55F76600D4AD",
     "annotation": {},
@@ -126,43 +126,65 @@
    "kind": "Expression",
    "data": {
     "expression": {
-     "kind": "Call",
+     "kind": "Binary",
      "data": {
-      "callee": {
+      "operator": "Assign",
+      "expression1": {
        "kind": "Identifier",
        "data": {
-        "name": "my_print",
+        "name": "res",
         "resolvedReference": {
          "kind": "Variable",
          "data": {
-          "mutable": false,
-          "name": "my_print",
-          "hash": "0xEB759C75BAE1C8B6",
-          "annotation": {/* circular */},
-          "value": {/* circular */}
+          "mutable": true,
+          "name": "res",
+          "hash": "0x6EEB55F76600D4AD",
+          "annotation": {},
+          "value": { "kind": "Call", "data": {/* circular */} }
          }
         }
        }
       },
-      "params": [
-       {
-        "kind": "Identifier",
-        "data": {
-         "name": "res",
-         "resolvedReference": {
-          "kind": "Variable",
-          "data": {
-           "mutable": false,
-           "name": "res",
-           "hash": "0x6EEB55F76600D4AD",
-           "annotation": {},
-           "value": { "kind": "Call", "data": {/* circular */} }
+      "expression2": {
+       "kind": "Call",
+       "data": {
+        "callee": {
+         "kind": "Identifier",
+         "data": {
+          "name": "my_print",
+          "resolvedReference": {
+           "kind": "Variable",
+           "data": {
+            "mutable": false,
+            "name": "my_print",
+            "hash": "0xEB759C75BAE1C8B6",
+            "annotation": {/* circular */},
+            "value": {/* circular */}
+           }
           }
          }
-        }
-       },
-       { "kind": "Literal", "data": { "id": "i32", "value": "2" } }
-      ]
+        },
+        "params": [
+         {
+          "kind": "Identifier",
+          "data": {
+           "name": "res",
+           "resolvedReference": {
+            "kind": "Variable",
+            "data": {
+             "mutable": true,
+             "name": "res",
+             "hash": "0x6EEB55F76600D4AD",
+             "annotation": {/* circular */},
+             "value": {/* circular */}
+            }
+           }
+          }
+         },
+         { "kind": "Literal", "data": { "id": "i32", "value": "2" } }
+        ]
+       }
+      }
      }
     }
    }
@@ -171,43 +193,65 @@
    "kind": "Expression",
    "data": {
     "expression": {
-     "kind": "Call",
+     "kind": "Binary",
      "data": {
-      "callee": {
+      "operator": "Assign",
+      "expression1": {
        "kind": "Identifier",
        "data": {
-        "name": "my_print",
+        "name": "res",
         "resolvedReference": {
          "kind": "Variable",
          "data": {
-          "mutable": false,
-          "name": "my_print",
-          "hash": "0xEB759C75BAE1C8B6",
+          "mutable": true,
+          "name": "res",
+          "hash": "0x6EEB55F76600D4AD",
           "annotation": {/* circular */},
           "value": {/* circular */}
          }
         }
        }
       },
-      "params": [
-       {
-        "kind": "Identifier",
-        "data": {
-         "name": "res",
-         "resolvedReference": {
-          "kind": "Variable",
-          "data": {
-           "mutable": false,
-           "name": "res",
-           "hash": "0x6EEB55F76600D4AD",
-           "annotation": {/* circular */},
-           "value": {/* circular */}
+      "expression2": {
+       "kind": "Call",
+       "data": {
+        "callee": {
+         "kind": "Identifier",
+         "data": {
+          "name": "my_print",
+          "resolvedReference": {
+           "kind": "Variable",
+           "data": {
+            "mutable": false,
+            "name": "my_print",
+            "hash": "0xEB759C75BAE1C8B6",
+            "annotation": {/* circular */},
+            "value": {/* circular */}
+           }
           }
          }
-        }
-       },
-       { "kind": "Literal", "data": { "id": "i32", "value": "3" } }
-      ]
+        },
+        "params": [
+         {
+          "kind": "Identifier",
+          "data": {
+           "name": "res",
+           "resolvedReference": {
+            "kind": "Variable",
+            "data": {
+             "mutable": true,
+             "name": "res",
+             "hash": "0x6EEB55F76600D4AD",
+             "annotation": {/* circular */},
+             "value": {/* circular */}
+            }
+           }
+          }
+         },
+         { "kind": "Literal", "data": { "id": "i32", "value": "3" } }
+        ]
+       }
+      }
      }
     }
    }
@@ -215,7 +259,7 @@
  ],
  "resolvedVariables": [
   {
-   "mutable": false,
+   "mutable": true,
    "name": "res",
    "hash": "0x6EEB55F76600D4AD",
    "annotation": {},

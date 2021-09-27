@@ -14,8 +14,8 @@ const my_print = fn (a: i32, b: i32): i32 {
 
 }
 
-const res = my_print(32, 1);
+mutable res = my_print(32, 1);
 
-my_print(res, 2);
+res = my_print(res, 2);
 
-my_print(res, 3);
+res = my_print(res, 3);
