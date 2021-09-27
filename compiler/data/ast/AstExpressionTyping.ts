@@ -4,6 +4,7 @@ import { AstType } from "./AstType.ts";
 
 export enum AstExpressionTypingOperator {
   Is = "Is",
+  As = "As",
 }
 
 export interface AstExpressionTyping extends Ast {

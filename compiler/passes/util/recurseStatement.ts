@@ -3,6 +3,7 @@ import { AstStatementCondition } from "../../data/ast/AstStatementCondition.ts";
 import { AstStatementExpression } from "../../data/ast/AstStatementExpression.ts";
 import { AstStatementReturn } from "../../data/ast/AstStatementReturn.ts";
 import { AstStatementTypedef } from "../../data/ast/AstStatementTypedef.ts";
+import { AstStatementUnsafe } from "../../data/ast/AstStatementUnsafe.ts";
 import { AstStatementVariable } from "../../data/ast/AstStatementVariable.ts";
 import { AstStatementWhile } from "../../data/ast/AstStatementWhile.ts";
 import { RecursorPass } from "./RecursorPass.ts";
@@ -33,6 +34,10 @@ export function recurseStatement<Scope>(
     }
     case AstStatementKind.Return: {
       r.recurseStatementReturn(p, data as AstStatementReturn);
+      break;
+    }
+    case AstStatementKind.Unsafe: {
+      r.recurseStatementUnsafe(p, data as AstStatementUnsafe);
       break;
     }
     case AstStatementKind.Expression: {

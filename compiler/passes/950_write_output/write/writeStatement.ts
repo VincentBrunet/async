@@ -6,6 +6,7 @@ import { writeStatementCondition } from "./writeStatementCondition.ts";
 import { writeStatementExpression } from "./writeStatementExpression.ts";
 import { writeStatementReturn } from "./writeStatementReturn.ts";
 import { writeStatementTypedef } from "./writeStatementTypedef.ts";
+import { writeStatementUnsafe } from "./writeStatementUnsafe.ts";
 import { writeStatementVariable } from "./writeStatementVariable.ts";
 import { writeStatementWhile } from "./writeStatementWhile.ts";
 
@@ -28,6 +29,7 @@ const mapping = {
   caseWhile: makeCase(writeStatementWhile),
   caseCondition: makeCase(writeStatementCondition),
   caseReturn: makeCase(writeStatementReturn),
+  caseUnsafe: makeCase(writeStatementUnsafe),
   caseExpression: makeCase(writeStatementExpression),
 };
 

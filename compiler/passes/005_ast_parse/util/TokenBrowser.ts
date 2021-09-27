@@ -14,7 +14,7 @@ export class TokenBrowser {
   constructor(tokens: Array<Token>) {
     this.tokens = tokens;
     this.indexes = [0];
-    this.fastForward();
+    this.forward();
   }
 
   index(): number {
@@ -27,7 +27,7 @@ export class TokenBrowser {
 
   consume() {
     this.increment();
-    this.fastForward();
+    this.forward();
   }
 
   recurse<T extends Ast, V>(
@@ -47,6 +47,10 @@ export class TokenBrowser {
       this.depth++;
     }
     const ast = recurser(this, param);
+    // on failure
+    if (ast instanceof TokenImpasse) {
+      this.indexes.pop();
+    }
     // on success
     if (!(ast instanceof TokenImpasse)) {
       const after = this.indexes.pop() ?? Infinity;
@@ -102,7 +106,7 @@ export class TokenBrowser {
     return this.getCurrentIndex() >= this.tokens.length;
   }
 
-  private increment() {
+  increment() {
     const height = this.getCurrentHeight();
     this.indexes[height] = this.indexes[height] + 1;
   }
@@ -125,23 +129,23 @@ export class TokenBrowser {
     return this.indexes.length - 1;
   }
 
-  private fastForward() {
+  forward() {
     while (true) {
       const curr = this.readToken(0);
       const next = this.readToken(1);
       if (curr.kind === TokenKind.Whitespace) {
         this.increment();
       } else if (curr.str === "/" && next.str === "/") {
-        this.fastForwardLineComment();
+        this.forwardLineComment();
       } else if (curr.str === "/" && next.str === "*") {
-        this.fastForwardBlockComment();
+        this.forwardBlockComment();
       } else {
         return;
       }
     }
   }
 
-  private fastForwardLineComment() {
+  private forwardLineComment() {
     this.increment(); // consume first dash
     this.increment(); // consume second dash
     let it = this.readToken();
@@ -155,7 +159,7 @@ export class TokenBrowser {
     this.increment(); // consume line return
   }
 
-  private fastForwardBlockComment() {
+  private forwardBlockComment() {
     this.increment(); // consume dash
     this.increment(); // consume dot
     let curr = this.readToken(0);

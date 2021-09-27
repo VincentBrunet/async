@@ -5,9 +5,9 @@
  * Entrypoint
  */
 int main() {
-  ///*
   types_init();
 
+  /*
   printf(" -- interfaces -- \n");
   printf("type_i32: %p\n", (void *)type_i32);
   printf("type_i64: %p\n", (void *)type_i64);
@@ -53,8 +53,8 @@ int main() {
   //*/
 
   if (entry_module != NULL) {
-    printf(" -- main module -- \n");
+    //printf(" -- main module -- \n");
     entry_module();
-    printf(" -- end module -- \n");
+    //printf(" -- end module -- \n");
   }
 }

@@ -2,12 +2,20 @@
 
 const my_print = fn (a: i32, b: i32): i32 {
 
+  const output: i32;
+
   unsafe {
-    dlopen(a->value.i32, b->value.i32);
+    printf("Hello, %d\n", __a->data.i32);
+    printf("Hello, %d\n", __b->data.i32);
+    __output->value = __a;
   }
+
+  return output;
 
 }
 
-// extern(C) my_print: (p:str):void;
+const res = my_print(32, 1);
 
-my_print("Hello 😀");
+my_print(res, 2);
+
+my_print(res, 3);

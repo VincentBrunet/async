@@ -22,6 +22,7 @@ import {
 import { AstStatementExpression } from "../../data/ast/AstStatementExpression.ts";
 import { AstStatementReturn } from "../../data/ast/AstStatementReturn.ts";
 import { AstStatementTypedef } from "../../data/ast/AstStatementTypedef.ts";
+import { AstStatementUnsafe } from "../../data/ast/AstStatementUnsafe.ts";
 import { AstStatementVariable } from "../../data/ast/AstStatementVariable.ts";
 import { AstStatementWhile } from "../../data/ast/AstStatementWhile.ts";
 import { AstType } from "../../data/ast/AstType.ts";
@@ -69,6 +70,10 @@ export interface RecursorPass<Scope> {
   recurseStatementReturn: (
     scope: Scope,
     ast: AstStatementReturn,
+  ) => void;
+  recurseStatementUnsafe: (
+    scope: Scope,
+    ast: AstStatementUnsafe,
   ) => void;
   recurseStatementExpression: (
     scope: Scope,

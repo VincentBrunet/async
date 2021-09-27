@@ -9,6 +9,7 @@ import { parseStatementCondition } from "./parseStatementCondition.ts";
 import { parseStatementExpression } from "./parseStatementExpression.ts";
 import { parseStatementReturn } from "./parseStatementReturn.ts";
 import { parseStatementTypedef } from "./parseStatementTypedef.ts";
+import { parseStatementUnsafe } from "./parseStatementUnsafe.ts";
 import { parseStatementVariable } from "./parseStatementVariable.ts";
 import { parseStatementWhile } from "./parseStatementWhile.ts";
 
@@ -59,6 +60,12 @@ export function parseStatement(
     consumeEnd(browser);
     return finishStatement(AstStatementKind.Return, astStatementReturn);
   }
+  // unsafe { c }
+  const astStatementUnsafe = browser.recurse(parseStatementUnsafe);
+  if (!(astStatementUnsafe instanceof TokenImpasse)) {
+    consumeEnd(browser);
+    return finishStatement(AstStatementKind.Unsafe, astStatementUnsafe);
+  }
   // expression
   const astStatementExpression = browser.recurse(parseStatementExpression);
   if (!(astStatementExpression instanceof TokenImpasse)) {
@@ -72,6 +79,7 @@ export function parseStatement(
     astStatementWhile,
     astStatementCondition,
     astStatementReturn,
+    astStatementUnsafe,
     astStatementExpression,
   ]);
 }

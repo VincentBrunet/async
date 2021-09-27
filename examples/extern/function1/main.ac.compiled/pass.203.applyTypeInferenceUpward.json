@@ -1,0 +1,429 @@
+{
+ "statements": [
+  {
+   "kind": "Variable",
+   "data": {
+    "mutable": false,
+    "name": "my_print",
+    "hash": "0xEB759C75BAE1C8B6",
+    "annotation": {},
+    "value": {
+     "kind": "Function",
+     "data": {
+      "template": { "params": [] },
+      "params": [
+       {
+        "name": "a",
+        "annotation": {
+         "type": { "kind": "Primitive", "data": { "id": "i32", "params": [] } }
+        },
+        "resolvedType": {
+         "kind": "Primitive",
+         "data": { "id": "i32", "params": {/* circular */} }
+        }
+       },
+       {
+        "name": "b",
+        "annotation": {
+         "type": { "kind": "Primitive", "data": { "id": "i32", "params": [] } }
+        },
+        "resolvedType": {
+         "kind": "Primitive",
+         "data": { "id": "i32", "params": {/* circular */} }
+        }
+       }
+      ],
+      "ret": {
+       "type": { "kind": "Primitive", "data": { "id": "i32", "params": [] } }
+      },
+      "block": {
+       "statements": [
+        {
+         "kind": "Variable",
+         "data": {
+          "mutable": false,
+          "name": "output",
+          "hash": "0xE0EE8BB50685E05F",
+          "annotation": {
+           "type": { "kind": "Primitive", "data": { "id": "i32", "params": [] } }
+          },
+          "value": undefined,
+          "resolvedType": {
+           "kind": "Primitive",
+           "data": { "id": "i32", "params": {/* circular */} }
+          }
+         }
+        },
+        {
+         "kind": "Unsafe",
+         "data": {
+          "content": "\n    printf(\"Hello, %d\n\", __a->data.i32);\n    printf(\"Hello, %d\n\", __b->data.i32);\n    __output->value = __a;\n  "
+         }
+        },
+        {
+         "kind": "Return",
+         "data": {
+          "expression": {
+           "kind": "Identifier",
+           "data": {
+            "name": "output",
+            "resolvedReference": {
+             "kind": "Variable",
+             "data": {
+              "mutable": false,
+              "name": "output",
+              "hash": "0xE0EE8BB50685E05F",
+              "annotation": { "type": {/* circular */} },
+              "value": undefined,
+              "resolvedType": { "kind": "Primitive", "data": {/* circular */} }
+             }
+            },
+            "resolvedType": {
+             "kind": "Primitive",
+             "data": { "id": "i32", "params": {/* circular */} }
+            }
+           },
+           "resolvedType": {
+            "kind": "Primitive",
+            "data": { "id": "i32", "params": {/* circular */} }
+           }
+          }
+         }
+        }
+       ]
+      },
+      "resolvedClosures": [],
+      "resolvedVariables": [
+       {
+        "mutable": false,
+        "name": "output",
+        "hash": "0xE0EE8BB50685E05F",
+        "annotation": { "type": {/* circular */} },
+        "value": undefined,
+        "resolvedType": { "kind": "Primitive", "data": {/* circular */} }
+       }
+      ],
+      "resolvedReturns": [
+       {
+        "expression": {
+         "kind": "Identifier",
+         "data": {/* circular */},
+         "resolvedType": {/* circular */}
+        }
+       }
+      ],
+      "resolvedType": {
+       "kind": "Function",
+       "data": {
+        "params": [
+         {
+          "name": "a",
+          "type": {
+           "kind": "Primitive",
+           "data": { "id": "i32", "params": {/* circular */} }
+          }
+         },
+         {
+          "name": "b",
+          "type": {
+           "kind": "Primitive",
+           "data": { "id": "i32", "params": {/* circular */} }
+          }
+         }
+        ],
+        "ret": {
+         "kind": "Primitive",
+         "data": { "id": "i32", "params": {/* circular */} }
+        }
+       }
+      }
+     },
+     "resolvedType": {
+      "kind": "Function",
+      "data": { "params": {/* circular */}, "ret": {/* circular */} }
+     }
+    },
+    "resolvedType": {
+     "kind": "Function",
+     "data": { "params": {/* circular */}, "ret": {/* circular */} }
+    }
+   }
+  },
+  {
+   "kind": "Variable",
+   "data": {
+    "mutable": false,
+    "name": "res",
+    "hash": "0x6EEB55F76600D4AD",
+    "annotation": {},
+    "value": {
+     "kind": "Call",
+     "data": {
+      "callee": {
+       "kind": "Identifier",
+       "data": {
+        "name": "my_print",
+        "resolvedReference": {
+         "kind": "Variable",
+         "data": {
+          "mutable": false,
+          "name": "my_print",
+          "hash": "0xEB759C75BAE1C8B6",
+          "annotation": {},
+          "value": {
+           "kind": "Function",
+           "data": {/* circular */},
+           "resolvedType": {/* circular */}
+          },
+          "resolvedType": { "kind": "Function", "data": {/* circular */} }
+         }
+        },
+        "resolvedType": {
+         "kind": "Function",
+         "data": { "params": {/* circular */}, "ret": {/* circular */} }
+        }
+       },
+       "resolvedType": {
+        "kind": "Function",
+        "data": { "params": {/* circular */}, "ret": {/* circular */} }
+       }
+      },
+      "params": [
+       {
+        "kind": "Literal",
+        "data": {
+         "id": "i32",
+         "value": "32",
+         "resolvedType": { "kind": "Primitive", "data": { "id": "i32", "params": [] } }
+        },
+        "resolvedType": {
+         "kind": "Primitive",
+         "data": { "id": "i32", "params": {/* circular */} }
+        }
+       },
+       {
+        "kind": "Literal",
+        "data": {
+         "id": "i32",
+         "value": "1",
+         "resolvedType": { "kind": "Primitive", "data": { "id": "i32", "params": [] } }
+        },
+        "resolvedType": {
+         "kind": "Primitive",
+         "data": { "id": "i32", "params": {/* circular */} }
+        }
+       }
+      ],
+      "resolvedType": {
+       "kind": "Function",
+       "data": { "params": {/* circular */}, "ret": {/* circular */} }
+      }
+     },
+     "resolvedType": {
+      "kind": "Function",
+      "data": { "params": {/* circular */}, "ret": {/* circular */} }
+     }
+    },
+    "resolvedType": {
+     "kind": "Function",
+     "data": { "params": {/* circular */}, "ret": {/* circular */} }
+    }
+   }
+  },
+  {
+   "kind": "Expression",
+   "data": {
+    "expression": {
+     "kind": "Call",
+     "data": {
+      "callee": {
+       "kind": "Identifier",
+       "data": {
+        "name": "my_print",
+        "resolvedReference": {
+         "kind": "Variable",
+         "data": {
+          "mutable": false,
+          "name": "my_print",
+          "hash": "0xEB759C75BAE1C8B6",
+          "annotation": {/* circular */},
+          "value": {/* circular */},
+          "resolvedType": {/* circular */}
+         }
+        },
+        "resolvedType": {
+         "kind": "Function",
+         "data": { "params": {/* circular */}, "ret": {/* circular */} }
+        }
+       },
+       "resolvedType": {
+        "kind": "Function",
+        "data": { "params": {/* circular */}, "ret": {/* circular */} }
+       }
+      },
+      "params": [
+       {
+        "kind": "Identifier",
+        "data": {
+         "name": "res",
+         "resolvedReference": {
+          "kind": "Variable",
+          "data": {
+           "mutable": false,
+           "name": "res",
+           "hash": "0x6EEB55F76600D4AD",
+           "annotation": {},
+           "value": {
+            "kind": "Call",
+            "data": {/* circular */},
+            "resolvedType": {/* circular */}
+           },
+           "resolvedType": { "kind": "Function", "data": {/* circular */} }
+          }
+         },
+         "resolvedType": {
+          "kind": "Function",
+          "data": { "params": {/* circular */}, "ret": {/* circular */} }
+         }
+        },
+        "resolvedType": {
+         "kind": "Function",
+         "data": { "params": {/* circular */}, "ret": {/* circular */} }
+        }
+       },
+       {
+        "kind": "Literal",
+        "data": {
+         "id": "i32",
+         "value": "2",
+         "resolvedType": { "kind": "Primitive", "data": { "id": "i32", "params": [] } }
+        },
+        "resolvedType": {
+         "kind": "Primitive",
+         "data": { "id": "i32", "params": {/* circular */} }
+        }
+       }
+      ],
+      "resolvedType": {
+       "kind": "Function",
+       "data": { "params": {/* circular */}, "ret": {/* circular */} }
+      }
+     },
+     "resolvedType": {
+      "kind": "Function",
+      "data": { "params": {/* circular */}, "ret": {/* circular */} }
+     }
+    }
+   }
+  },
+  {
+   "kind": "Expression",
+   "data": {
+    "expression": {
+     "kind": "Call",
+     "data": {
+      "callee": {
+       "kind": "Identifier",
+       "data": {
+        "name": "my_print",
+        "resolvedReference": {
+         "kind": "Variable",
+         "data": {
+          "mutable": false,
+          "name": "my_print",
+          "hash": "0xEB759C75BAE1C8B6",
+          "annotation": {/* circular */},
+          "value": {/* circular */},
+          "resolvedType": {/* circular */}
+         }
+        },
+        "resolvedType": {
+         "kind": "Function",
+         "data": { "params": {/* circular */}, "ret": {/* circular */} }
+        }
+       },
+       "resolvedType": {
+        "kind": "Function",
+        "data": { "params": {/* circular */}, "ret": {/* circular */} }
+       }
+      },
+      "params": [
+       {
+        "kind": "Identifier",
+        "data": {
+         "name": "res",
+         "resolvedReference": {
+          "kind": "Variable",
+          "data": {
+           "mutable": false,
+           "name": "res",
+           "hash": "0x6EEB55F76600D4AD",
+           "annotation": {/* circular */},
+           "value": {/* circular */},
+           "resolvedType": {/* circular */}
+          }
+         },
+         "resolvedType": {
+          "kind": "Function",
+          "data": { "params": {/* circular */}, "ret": {/* circular */} }
+         }
+        },
+        "resolvedType": {
+         "kind": "Function",
+         "data": { "params": {/* circular */}, "ret": {/* circular */} }
+        }
+       },
+       {
+        "kind": "Literal",
+        "data": {
+         "id": "i32",
+         "value": "3",
+         "resolvedType": { "kind": "Primitive", "data": { "id": "i32", "params": [] } }
+        },
+        "resolvedType": {
+         "kind": "Primitive",
+         "data": { "id": "i32", "params": {/* circular */} }
+        }
+       }
+      ],
+      "resolvedType": {
+       "kind": "Function",
+       "data": { "params": {/* circular */}, "ret": {/* circular */} }
+      }
+     },
+     "resolvedType": {
+      "kind": "Function",
+      "data": { "params": {/* circular */}, "ret": {/* circular */} }
+     }
+    }
+   }
+  }
+ ],
+ "resolvedVariables": [
+  {
+   "mutable": false,
+   "name": "res",
+   "hash": "0x6EEB55F76600D4AD",
+   "annotation": {},
+   "value": {
+    "kind": "Call",
+    "data": {/* circular */},
+    "resolvedType": {/* circular */}
+   },
+   "resolvedType": { "kind": "Function", "data": {/* circular */} }
+  },
+  {
+   "mutable": false,
+   "name": "my_print",
+   "hash": "0xEB759C75BAE1C8B6",
+   "annotation": {},
+   "value": {
+    "kind": "Function",
+    "data": {/* circular */},
+    "resolvedType": {/* circular */}
+   },
+   "resolvedType": { "kind": "Function", "data": {/* circular */} }
+  }
+ ],
+ "resolvedReturns": []
+}

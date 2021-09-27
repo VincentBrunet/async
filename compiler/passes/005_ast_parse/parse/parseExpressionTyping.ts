@@ -13,6 +13,7 @@ import { parseType } from "./parseType.ts";
 const symbolMap = new Map<string, AstExpressionTypingOperator>();
 
 symbolMap.set("is", AstExpressionTypingOperator.Is);
+symbolMap.set("as", AstExpressionTypingOperator.As);
 
 /**
  * Do the parsing using an already-parsed left handside

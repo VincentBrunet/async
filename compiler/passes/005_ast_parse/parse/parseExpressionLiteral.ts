@@ -16,9 +16,11 @@ digits.add("8");
 digits.add("9");
 
 function makeLiteral(
+  browser: TokenBrowser,
   id: AstTypePrimitiveId,
   value: string,
 ): AstExpressionLiteral {
+  browser.forward();
   return {
     id: id,
     value: value,
@@ -36,7 +38,7 @@ function makeStringUntil(
       throw new Error("Unclosed string literal");
     }
     const str = browser.peek().str;
-    browser.consume();
+    browser.increment();
     for (let i = 0; i < str.length; i++) {
       const char = str.charAt(i);
       if (escaped) {
@@ -73,7 +75,11 @@ function makeStringUntil(
       } else {
         switch (char) {
           case delimiter:
-            return makeLiteral(AstTypePrimitiveId.String, parts.join(""));
+            return makeLiteral(
+              browser,
+              AstTypePrimitiveId.String,
+              parts.join(""),
+            );
           case "\\":
             escaped = true;
             break;
@@ -90,28 +96,24 @@ export function parseExpressionLiteral(
   browser: TokenBrowser,
 ): AstExpressionLiteral | TokenImpasse {
   const token = browser.peek();
+  browser.increment();
 
   let value = token.str;
 
   if (value === "true") {
-    browser.consume();
-    return makeLiteral(AstTypePrimitiveId.Boolean, "true");
+    return makeLiteral(browser, AstTypePrimitiveId.Boolean, "true");
   }
   if (value === "false") {
-    browser.consume();
-    return makeLiteral(AstTypePrimitiveId.Boolean, "false");
+    return makeLiteral(browser, AstTypePrimitiveId.Boolean, "false");
   }
   if (value === "null") {
-    browser.consume();
-    return makeLiteral(AstTypePrimitiveId.Null, "null");
+    return makeLiteral(browser, AstTypePrimitiveId.Null, "null");
   }
 
   if (value.startsWith('"')) {
-    browser.consume();
     return makeStringUntil(browser, '"');
   }
   if (value.startsWith("'")) {
-    browser.consume();
     return makeStringUntil(browser, "'");
   }
 
@@ -122,8 +124,7 @@ export function parseExpressionLiteral(
     value = parseInt(value.slice(2), 2).toString(10);
   }
   if (digits.has(value[0])) {
-    browser.consume();
-    return makeLiteral(AstTypePrimitiveId.Integer32, value);
+    return makeLiteral(browser, AstTypePrimitiveId.Integer32, value);
   }
 
   return browser.impasse("Literal");

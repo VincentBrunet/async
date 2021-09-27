@@ -17,4 +17,7 @@ export function browseExpressionTyping(
   if (ast.operator === AstExpressionTypingOperator.Is) {
     ast.resolvedType = makeTypePrimitiveBoolean(ast);
   }
+  if (ast.operator === AstExpressionTypingOperator.As) {
+    ast.resolvedType = ast.type;
+  }
 }

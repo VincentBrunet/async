@@ -8,12 +8,12 @@ export function writeExpressionLiteral(
   module: OutputModule,
   scope: OutputScope,
   statement: OutputStatement,
-  astLiteral: AstExpressionLiteral,
+  ast: AstExpressionLiteral,
 ) {
-  switch (astLiteral.id) {
+  switch (ast.id) {
     // Bool
     case AstTypePrimitiveId.Boolean:
-      if (astLiteral.value === "false") {
+      if (ast.value === "false") {
         statement.pushPart("boolean_make(FALSE)");
       } else {
         statement.pushPart("boolean_make(TRUE)");
@@ -22,6 +22,14 @@ export function writeExpressionLiteral(
     // Null
     case AstTypePrimitiveId.Null:
       statement.pushPart("null_make()");
+      break;
+    // String
+    case AstTypePrimitiveId.String:
+      statement.pushPart("str_make(");
+      statement.pushPart('"');
+      statement.pushPart(ast.value);
+      statement.pushPart('"');
+      statement.pushPart(")");
       break;
     // Number
     case AstTypePrimitiveId.Integer8:
@@ -35,7 +43,7 @@ export function writeExpressionLiteral(
     case AstTypePrimitiveId.Float32:
     case AstTypePrimitiveId.Float64:
       statement.pushPart("i32_make(");
-      statement.pushPart(astLiteral.value);
+      statement.pushPart(ast.value);
       statement.pushPart(")");
       break;
   }
