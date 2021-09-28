@@ -1,8 +1,9 @@
 import { Ast } from "./Ast.ts";
+import { AstExpression } from "./AstExpression.ts";
 import { AstType } from "./AstType.ts";
 
 export interface AstExpressionImport extends Ast {
-  url: string;
+  expression: AstExpression;
 
   resolvedType?: AstType;
 }

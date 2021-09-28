@@ -9,7 +9,12 @@
     "annotation": {},
     "value": {
      "kind": "Import",
-     "data": { "url": "https://google.com/didi/tutu.ac" }
+     "data": {
+      "expression": {
+       "kind": "Literal",
+       "data": { "id": "str", "value": "https://google.com/didi/tutu.ac" }
+      }
+     }
     }
    }
   },
@@ -20,7 +25,12 @@
     "name": "dada",
     "hash": "0x47C7EF39CFA6B7BD",
     "annotation": {},
-    "value": { "kind": "Import", "data": { "url": "../hello" } }
+    "value": {
+     "kind": "Import",
+     "data": {
+      "expression": { "kind": "Literal", "data": { "id": "str", "value": "../hello" } }
+     }
+    }
    }
   },
   {
@@ -322,9 +332,44 @@
         "name": "my_print",
         "hash": "0xEB759C75BAE1C8B6",
         "expression": { "kind": "Identifier", "data": { "name": "my_print" } }
+       },
+       {
+        "mutable": false,
+        "name": "change",
+        "hash": "0x12EA12EACE7D655F",
+        "expression": {
+         "kind": "Function",
+         "data": {
+          "template": { "params": [] },
+          "params": [],
+          "ret": {},
+          "block": {
+           "statements": [
+            {
+             "kind": "Expression",
+             "data": {
+              "expression": {
+               "kind": "Binary",
+               "data": {
+                "operator": "Assign",
+                "expression1": { "kind": "Identifier", "data": { "name": "res1" } },
+                "expression2": { "kind": "Identifier", "data": { "name": "res2" } }
+               }
+              }
+             }
+            }
+           ]
+          },
+          "resolvedClosures": [ { "idx": 0, "name": "res1" }, { "idx": 1, "name": "res2" } ]
+         }
+        }
        }
       ],
-      "resolvedClosures": [ { "idx": 0, "name": "my_print" } ]
+      "resolvedClosures": [
+       { "idx": 0, "name": "my_print" },
+       { "idx": 1, "name": "res1" },
+       { "idx": 2, "name": "res2" }
+      ]
      }
     }
    }

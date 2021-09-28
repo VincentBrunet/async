@@ -33,4 +33,7 @@ my_print(res3.b, res3.a)
 
 return {
   mutable my_print = my_print,
+  change = fn {
+    res1 = res2;
+  }
 }

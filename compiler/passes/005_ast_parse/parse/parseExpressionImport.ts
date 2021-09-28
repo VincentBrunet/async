@@ -1,8 +1,7 @@
 import { AstExpressionImport } from "../../../data/ast/AstExpressionImport.ts";
-import { AstTypePrimitiveId } from "../../../data/ast/AstTypePrimitive.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
-import { parseExpressionLiteral } from "./parseExpressionLiteral.ts";
+import { parseExpression } from "./parseExpression.ts";
 
 export function parseExpressionImport(
   browser: TokenBrowser,
@@ -15,16 +14,13 @@ export function parseExpressionImport(
   browser.consume();
 
   // url
-  const literal = browser.recurse(parseExpressionLiteral);
-  if (literal instanceof TokenImpasse) {
-    return browser.impasse("ExpressionImport.Url", [literal]);
-  }
-  if (literal.id !== AstTypePrimitiveId.String) {
-    return browser.impasse("ExpressionImport.Url.String");
+  const expression = browser.recurse(parseExpression);
+  if (expression instanceof TokenImpasse) {
+    return browser.impasse("ExpressionImport.Url", [expression]);
   }
 
   // Content
   return {
-    url: literal.value,
+    expression: expression,
   };
 }

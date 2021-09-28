@@ -9,7 +9,12 @@
     "annotation": {},
     "value": {
      "kind": "Import",
-     "data": { "url": "https://google.com/didi/tutu.ac" },
+     "data": {
+      "expression": {
+       "kind": "Literal",
+       "data": { "id": "str", "value": "https://google.com/didi/tutu.ac" }
+      }
+     },
      "resolvedType": undefined
     },
     "resolvedType": undefined
@@ -24,7 +29,9 @@
     "annotation": {},
     "value": {
      "kind": "Import",
-     "data": { "url": "../hello" },
+     "data": {
+      "expression": { "kind": "Literal", "data": { "id": "str", "value": "../hello" } }
+     },
      "resolvedType": undefined
     },
     "resolvedType": undefined
@@ -1036,12 +1043,180 @@
           "data": { "params": {/* circular */}, "ret": {/* circular */} }
          }
         }
+       },
+       {
+        "mutable": false,
+        "name": "change",
+        "hash": "0x12EA12EACE7D655F",
+        "expression": {
+         "kind": "Function",
+         "data": {
+          "template": { "params": [] },
+          "params": [],
+          "ret": {},
+          "block": {
+           "statements": [
+            {
+             "kind": "Expression",
+             "data": {
+              "expression": {
+               "kind": "Binary",
+               "data": {
+                "operator": "Assign",
+                "expression1": {
+                 "kind": "Identifier",
+                 "data": {
+                  "name": "res1",
+                  "resolvedReference": {
+                   "kind": "Closure",
+                   "data": {
+                    "idx": 0,
+                    "name": "res1",
+                    "resolvedReference": {
+                     "kind": "Closure",
+                     "data": {
+                      "idx": 1,
+                      "name": "res1",
+                      "resolvedReference": {
+                       "kind": "Variable",
+                       "data": {
+                        "mutable": false,
+                        "name": "res1",
+                        "hash": "0x0E405B9869CEFA2C",
+                        "annotation": {/* circular */},
+                        "value": {/* circular */},
+                        "resolvedType": {/* circular */}
+                       }
+                      },
+                      "resolvedType": {
+                       "kind": "Function",
+                       "data": { "params": {/* circular */}, "ret": {/* circular */} }
+                      }
+                     }
+                    },
+                    "resolvedType": {
+                     "kind": "Function",
+                     "data": { "params": {/* circular */}, "ret": {/* circular */} }
+                    }
+                   }
+                  },
+                  "resolvedType": {
+                   "kind": "Function",
+                   "data": { "params": {/* circular */}, "ret": {/* circular */} }
+                  }
+                 },
+                 "resolvedType": {
+                  "kind": "Function",
+                  "data": { "params": {/* circular */}, "ret": {/* circular */} }
+                 }
+                },
+                "expression2": {
+                 "kind": "Identifier",
+                 "data": {
+                  "name": "res2",
+                  "resolvedReference": {
+                   "kind": "Closure",
+                   "data": {
+                    "idx": 1,
+                    "name": "res2",
+                    "resolvedReference": {
+                     "kind": "Closure",
+                     "data": {
+                      "idx": 2,
+                      "name": "res2",
+                      "resolvedReference": {
+                       "kind": "Variable",
+                       "data": {
+                        "mutable": false,
+                        "name": "res2",
+                        "hash": "0x1DB7EFD18753FBF0",
+                        "annotation": {/* circular */},
+                        "value": {/* circular */},
+                        "resolvedType": {/* circular */}
+                       }
+                      },
+                      "resolvedType": {
+                       "kind": "Function",
+                       "data": { "params": {/* circular */}, "ret": {/* circular */} }
+                      }
+                     }
+                    },
+                    "resolvedType": {
+                     "kind": "Function",
+                     "data": { "params": {/* circular */}, "ret": {/* circular */} }
+                    }
+                   }
+                  },
+                  "resolvedType": {
+                   "kind": "Function",
+                   "data": { "params": {/* circular */}, "ret": {/* circular */} }
+                  }
+                 },
+                 "resolvedType": {
+                  "kind": "Function",
+                  "data": { "params": {/* circular */}, "ret": {/* circular */} }
+                 }
+                },
+                "resolvedType": {
+                 "kind": "Function",
+                 "data": { "params": {/* circular */}, "ret": {/* circular */} }
+                }
+               },
+               "resolvedType": {
+                "kind": "Function",
+                "data": { "params": {/* circular */}, "ret": {/* circular */} }
+               }
+              }
+             }
+            }
+           ]
+          },
+          "resolvedClosures": [
+           {
+            "idx": 0,
+            "name": "res1",
+            "resolvedReference": { "kind": "Closure", "data": {/* circular */} },
+            "resolvedType": { "kind": "Function", "data": {/* circular */} }
+           },
+           {
+            "idx": 1,
+            "name": "res2",
+            "resolvedReference": { "kind": "Closure", "data": {/* circular */} },
+            "resolvedType": { "kind": "Function", "data": {/* circular */} }
+           }
+          ],
+          "resolvedReturns": [],
+          "resolvedType": {
+           "kind": "Function",
+           "data": {
+            "params": [],
+            "ret": { "kind": "Primitive", "data": { "id": "unknown", "params": [] } }
+           }
+          }
+         },
+         "resolvedType": {
+          "kind": "Function",
+          "data": { "params": {/* circular */}, "ret": {/* circular */} }
+         }
+        }
        }
       ],
       "resolvedClosures": [
        {
         "idx": 0,
         "name": "my_print",
+        "resolvedReference": { "kind": "Variable", "data": {/* circular */} },
+        "resolvedType": { "kind": "Function", "data": {/* circular */} }
+       },
+       {
+        "idx": 1,
+        "name": "res1",
+        "resolvedReference": { "kind": "Variable", "data": {/* circular */} },
+        "resolvedType": { "kind": "Function", "data": {/* circular */} }
+       },
+       {
+        "idx": 2,
+        "name": "res2",
         "resolvedReference": { "kind": "Variable", "data": {/* circular */} },
         "resolvedType": { "kind": "Function", "data": {/* circular */} }
        }
@@ -1054,6 +1229,15 @@
           "mutable": true,
           "name": "my_print",
           "hash": "0xEB759C75BAE1C8B6",
+          "type": {
+           "kind": "Function",
+           "data": { "params": {/* circular */}, "ret": {/* circular */} }
+          }
+         },
+         {
+          "mutable": false,
+          "name": "change",
+          "hash": "0x12EA12EACE7D655F",
           "type": {
            "kind": "Function",
            "data": { "params": {/* circular */}, "ret": {/* circular */} }
