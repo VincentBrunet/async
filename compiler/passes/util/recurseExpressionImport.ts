@@ -6,4 +6,5 @@ export function recurseExpressionImport<Scope>(
   p: Scope,
   ast: AstExpressionImport,
 ) {
+  r.recurseExpression(p, ast.expression);
 }
