@@ -1,17 +1,18 @@
 import { Ast } from "./Ast.ts";
-import { AstAnnotationType } from "./AstAnnotationType.ts";
-import { AstBlock } from "./AstBlock.ts";
+import { AstExpression } from "./AstExpression.ts";
 import { AstResolvedClosure } from "./AstResolvedClosure.ts";
-import { AstStatementReturn } from "./AstStatementReturn.ts";
-import { AstStatementVariable } from "./AstStatementVariable.ts";
 import { AstType } from "./AstType.ts";
 
+export interface AstExpressionObjectField extends Ast {
+  mutable: boolean;
+  name: string;
+  hash: string;
+  expression: AstExpression;
+}
+
 export interface AstExpressionObject extends Ast {
-  annotation: AstAnnotationType;
-  block: AstBlock;
+  fields: Array<AstExpressionObjectField>;
 
   resolvedType?: AstType;
   resolvedClosures?: Array<AstResolvedClosure>;
-  resolvedVariables?: Array<AstStatementVariable>;
-  resolvedReturns?: Array<AstStatementReturn>;
 }

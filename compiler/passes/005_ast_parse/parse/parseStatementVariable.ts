@@ -1,7 +1,7 @@
-import { createHash } from "https://deno.land/std@0.106.0/hash/mod.ts";
 import { AstExpression } from "../../../data/ast/AstExpression.ts";
 import { AstStatementVariable } from "../../../data/ast/AstStatementVariable.ts";
 import { TokenKind } from "../../../data/token/Token.ts";
+import { hash64 } from "../../../lib/core/strings/hash64.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseAnnotationType } from "./parseAnnotationType.ts";
@@ -49,8 +49,7 @@ export function parseStatementVariable(
   }
 
   // hashed name
-  const sha256 = createHash("sha256").update(name).toString();
-  const hash = "0x" + sha256.slice(0, 16).toUpperCase();
+  const hash = hash64(name);
 
   // Done
   return {

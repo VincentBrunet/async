@@ -1,10 +1,13 @@
-import { AstExpressionObject } from "../../../data/ast/AstExpressionObject.ts";
+import {
+  AstExpressionObject,
+  AstExpressionObjectField,
+} from "../../../data/ast/AstExpressionObject.ts";
 import { ensure } from "../../../lib/errors/ensure.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputOrder } from "../util/OutputOrder.ts";
 import { OutputScope } from "../util/OutputScope.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
-import { writeBlock } from "./writeBlock.ts";
+import { writeExpression } from "./writeExpression.ts";
 import { writeResolvedClosure } from "./writeResolvedClosure.ts";
 
 let _id = 0;
@@ -16,7 +19,6 @@ export function writeExpressionObject(
   ast: AstExpressionObject,
 ) {
   const resolvedClosures = ensure(ast.resolvedClosures);
-  const resolvedVariables = ensure(ast.resolvedVariables);
 
   // TODO - Object name mangling
   const name = "o_0x" + (_id++).toString(16);
@@ -36,24 +38,32 @@ export function writeExpressionObject(
   // New scope
   const child = new OutputScope(name);
 
-  // Do the recursive writing
-  writeBlock(module, child, ast.block);
+  // Fields
+  const unsortedFields = ast.fields;
+  const sortedFields = [...unsortedFields].sort(
+    (a: AstExpressionObjectField, b: AstExpressionObjectField) => {
+      if (a.hash < b.hash) {
+        return -1;
+      } else if (a.hash > b.hash) {
+        return 1;
+      } else {
+        return 0;
+      }
+    },
+  );
 
   // Setup params
   child.pushParam("t_ref **closure");
 
-  // Read the variables declared in the function
-  const variables = resolvedVariables;
-
-  // Create the module object containing all declared variables
+  // Create the module object containing all declared fields
   const object = new OutputStatement();
   object.pushPart("t_value *object = object_make_x(");
   object.pushPart("type_object"); // TODO
   object.pushPart(", ");
-  object.pushPart(variables.length.toString());
-  for (const variable of variables) {
+  object.pushPart(sortedFields.length.toString());
+  for (const field of sortedFields) {
     object.pushPart(", ");
-    object.pushPart(variable.hash);
+    object.pushPart(field.hash);
   }
   object.pushPart(")");
   child.pushStatement(OutputOrder.Variables, object);
@@ -61,22 +71,34 @@ export function writeExpressionObject(
   // Read a variable field pointer
   const shortcut = new OutputStatement();
   shortcut.pushPart(
-    "t_variable *variables = object->data.object.variables",
+    "t_variable *fields = object->data.object.fields",
   );
   child.pushStatement(OutputOrder.Variables, shortcut);
 
-  // Make local references to created variables
-  for (let i = 0; i < variables.length; i++) {
-    const variable = variables[i];
+  // Make local references to created fields
+  for (let i = 0; i < sortedFields.length; i++) {
+    const sortedField = sortedFields[i];
     const named = new OutputStatement();
     named.pushPart("t_ref *");
     named.pushPart("__");
-    named.pushPart(variable.name);
+    named.pushPart(sortedField.name);
     named.pushPart(" = ");
-    named.pushPart("(t_ref *)&(variables[");
+    named.pushPart("(t_ref *)&(fields[");
     named.pushPart(i.toString());
     named.pushPart("])");
     child.pushStatement(OutputOrder.Variables, named);
+  }
+
+  // Do the assignation
+  for (const unsortedField of unsortedFields) {
+    const assigned = new OutputStatement();
+    assigned.pushPart("__");
+    assigned.pushPart(unsortedField.name);
+    assigned.pushPart("->value");
+    assigned.pushPart(" = ");
+    writeExpression(module, child, assigned, unsortedField.expression);
+    assigned.pushPart("");
+    child.pushStatement(OutputOrder.Logic, assigned);
   }
 
   // We simply return the object

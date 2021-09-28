@@ -1,5 +1,6 @@
 import { Ast } from "./Ast.ts";
 import { AstStatementCondition } from "./AstStatementCondition.ts";
+import { AstStatementEmpty } from "./AstStatementEmpty.ts";
 import { AstStatementExpression } from "./AstStatementExpression.ts";
 import { AstStatementReturn } from "./AstStatementReturn.ts";
 import { AstStatementTypedef } from "./AstStatementTypedef.ts";
@@ -15,6 +16,7 @@ export enum AstStatementKind {
   Return = "Return",
   Unsafe = "Unsafe",
   Expression = "Expression",
+  Empty = "Empty",
 }
 
 export type AstStatementData =
@@ -24,7 +26,8 @@ export type AstStatementData =
   | AstStatementCondition
   | AstStatementReturn
   | AstStatementUnsafe
-  | AstStatementExpression;
+  | AstStatementExpression
+  | AstStatementEmpty;
 
 export interface AstStatement extends Ast {
   kind: AstStatementKind;

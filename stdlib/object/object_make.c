@@ -119,7 +119,7 @@ t_value *object_make_x(t_type *type, t_u32 size, ...) {
     va_list keys;
     va_start(keys, size);
     for (t_u32 idx = 0; idx < size; idx++) {
-      variables[idx].key = va_arg(keys, t_u32);
+      variables[idx].key = va_arg(keys, t_u64);
     }
     va_end(keys);
   }

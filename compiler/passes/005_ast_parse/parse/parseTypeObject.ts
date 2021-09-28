@@ -1,9 +1,9 @@
-import { createHash } from "https://deno.land/std@0.106.0/hash/mod.ts";
 import {
   AstTypeObject,
   AstTypeObjectField,
 } from "../../../data/ast/AstTypeObject.ts";
 import { TokenKind } from "../../../data/token/Token.ts";
+import { hash64 } from "../../../lib/core/strings/hash64.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseAnnotationType } from "./parseAnnotationType.ts";
@@ -36,12 +36,11 @@ export function parseTypeObject(
     const fieldMutable = browser.peek();
     if (fieldMutable.str === "const") {
       mutable = false;
+      browser.consume();
     } else if (fieldMutable.str === "mutable") {
       mutable = true;
-    } else {
-      return browser.impasse("TypeObject.Field.Modifier");
+      browser.consume();
     }
-    browser.consume();
 
     // field - name
     const fieldName = browser.peek();
@@ -62,9 +61,8 @@ export function parseTypeObject(
       return browser.impasse("TypeObject.Field.Type");
     }
 
-    // hashed name
-    const sha256 = createHash("sha256").update(name).toString();
-    const hash = "0x" + sha256.slice(0, 16).toUpperCase();
+    // field - hash
+    const hash = hash64(name);
 
     // field - end
     const fieldEnd = browser.index();

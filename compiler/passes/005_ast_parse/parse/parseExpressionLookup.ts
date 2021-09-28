@@ -1,7 +1,7 @@
-import { createHash } from "https://deno.land/std@0.106.0/hash/mod.ts";
 import { AstExpression } from "../../../data/ast/AstExpression.ts";
 import { AstExpressionLookup } from "../../../data/ast/AstExpressionLookup.ts";
 import { TokenKind } from "../../../data/token/Token.ts";
+import { hash64 } from "../../../lib/core/strings/hash64.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 
@@ -15,6 +15,7 @@ export function parseExpressionLookup(
     return browser.impasse("Lookup.Dot");
   }
   browser.consume();
+
   // name (required)
   const key = browser.peek();
   if (key.kind !== TokenKind.Text) {
@@ -22,9 +23,10 @@ export function parseExpressionLookup(
   }
   browser.consume();
   const name = key.str;
+
   // hashed name
-  const sha256 = createHash("sha256").update(name).toString();
-  const hash = "0x" + sha256.slice(0, 16).toUpperCase();
+  const hash = hash64(name);
+
   // done
   return {
     expression: astExpression,

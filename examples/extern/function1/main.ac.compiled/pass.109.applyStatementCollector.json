@@ -26,45 +26,176 @@
        }
       ],
       "ret": {
-       "type": { "kind": "Primitive", "data": { "id": "i32", "params": [] } }
+       "type": {
+        "kind": "Object",
+        "data": {
+         "fields": [
+          {
+           "mutable": false,
+           "name": "a",
+           "hash": "0xCA978112CA1BBDCA",
+           "type": { "kind": "Primitive", "data": { "id": "i32", "params": [] } }
+          },
+          {
+           "mutable": false,
+           "name": "b",
+           "hash": "0x3E23E8160039594A",
+           "type": { "kind": "Primitive", "data": { "id": "i32", "params": [] } }
+          }
+         ]
+        }
+       }
       },
       "block": {
        "statements": [
         {
-         "kind": "Variable",
+         "kind": "Unsafe",
          "data": {
-          "mutable": false,
-          "name": "output",
-          "hash": "0xE0EE8BB50685E05F",
-          "annotation": {
-           "type": { "kind": "Primitive", "data": { "id": "i32", "params": [] } }
-          },
-          "value": undefined
+          "content": "\n    printf(\"Hello, A:%d\n\", __a->data.i32);\n    printf(\"Hello, B:%d\n\", __b->data.i32);\n  "
          }
         },
         {
-         "kind": "Unsafe",
+         "kind": "Variable",
          "data": {
-          "content": "\n    printf(\"Hello, %d\n\", __a->data.i32);\n    printf(\"Hello, %d\n\", __b->data.i32);\n    __output->value = __a;\n  "
+          "mutable": false,
+          "name": "pa",
+          "hash": "0x9513229D43597826",
+          "annotation": {},
+          "value": {
+           "kind": "Identifier",
+           "data": {
+            "name": "a",
+            "resolvedReference": {
+             "kind": "Param",
+             "data": { "name": "a", "annotation": { "type": {/* circular */} } }
+            }
+           }
+          }
+         }
+        },
+        {
+         "kind": "Variable",
+         "data": {
+          "mutable": false,
+          "name": "pb",
+          "hash": "0x3315F44DA4A7AAAF",
+          "annotation": {},
+          "value": {
+           "kind": "Identifier",
+           "data": {
+            "name": "b",
+            "resolvedReference": {
+             "kind": "Param",
+             "data": { "name": "b", "annotation": { "type": {/* circular */} } }
+            }
+           }
+          }
          }
         },
         {
          "kind": "Return",
          "data": {
           "expression": {
-           "kind": "Identifier",
+           "kind": "Object",
            "data": {
-            "name": "output",
-            "resolvedReference": {
-             "kind": "Variable",
-             "data": {
-              "mutable": false,
-              "name": "output",
-              "hash": "0xE0EE8BB50685E05F",
-              "annotation": { "type": {/* circular */} },
-              "value": undefined
+            "annotation": {},
+            "block": {
+             "statements": [
+              {
+               "kind": "Variable",
+               "data": {
+                "mutable": false,
+                "name": "a",
+                "hash": "0xCA978112CA1BBDCA",
+                "annotation": {},
+                "value": {
+                 "kind": "Identifier",
+                 "data": {
+                  "name": "pa",
+                  "resolvedReference": {
+                   "kind": "Closure",
+                   "data": {
+                    "idx": 0,
+                    "name": "pa",
+                    "resolvedReference": {
+                     "kind": "Variable",
+                     "data": {
+                      "mutable": false,
+                      "name": "pa",
+                      "hash": "0x9513229D43597826",
+                      "annotation": {},
+                      "value": { "kind": "Identifier", "data": {/* circular */} }
+                     }
+                    }
+                   }
+                  }
+                 }
+                }
+               }
+              },
+              {
+               "kind": "Variable",
+               "data": {
+                "mutable": false,
+                "name": "b",
+                "hash": "0x3E23E8160039594A",
+                "annotation": {},
+                "value": {
+                 "kind": "Identifier",
+                 "data": {
+                  "name": "pb",
+                  "resolvedReference": {
+                   "kind": "Closure",
+                   "data": {
+                    "idx": 1,
+                    "name": "pb",
+                    "resolvedReference": {
+                     "kind": "Variable",
+                     "data": {
+                      "mutable": false,
+                      "name": "pb",
+                      "hash": "0x3315F44DA4A7AAAF",
+                      "annotation": {},
+                      "value": { "kind": "Identifier", "data": {/* circular */} }
+                     }
+                    }
+                   }
+                  }
+                 }
+                }
+               }
+              }
+             ]
+            },
+            "resolvedClosures": [
+             {
+              "idx": 0,
+              "name": "pa",
+              "resolvedReference": { "kind": "Variable", "data": {/* circular */} }
+             },
+             {
+              "idx": 1,
+              "name": "pb",
+              "resolvedReference": { "kind": "Variable", "data": {/* circular */} }
              }
-            }
+            ],
+            "resolvedVariables": [
+             {
+              "mutable": false,
+              "name": "b",
+              "hash": "0x3E23E8160039594A",
+              "annotation": {},
+              "value": { "kind": "Identifier", "data": {/* circular */} }
+             },
+             {
+              "mutable": false,
+              "name": "a",
+              "hash": "0xCA978112CA1BBDCA",
+              "annotation": {},
+              "value": { "kind": "Identifier", "data": {/* circular */} }
+             }
+            ],
+            "resolvedReturns": []
            }
           }
          }
@@ -75,15 +206,20 @@
       "resolvedVariables": [
        {
         "mutable": false,
-        "name": "output",
-        "hash": "0xE0EE8BB50685E05F",
-        "annotation": { "type": {/* circular */} },
-        "value": undefined
+        "name": "pb",
+        "hash": "0x3315F44DA4A7AAAF",
+        "annotation": {},
+        "value": { "kind": "Identifier", "data": {/* circular */} }
+       },
+       {
+        "mutable": false,
+        "name": "pa",
+        "hash": "0x9513229D43597826",
+        "annotation": {},
+        "value": { "kind": "Identifier", "data": {/* circular */} }
        }
       ],
-      "resolvedReturns": [
-       { "expression": { "kind": "Identifier", "data": {/* circular */} } }
-      ]
+      "resolvedReturns": [ { "expression": { "kind": "Object", "data": {/* circular */} } } ]
      }
     }
    }
@@ -91,9 +227,9 @@
   {
    "kind": "Variable",
    "data": {
-    "mutable": true,
-    "name": "res",
-    "hash": "0x6EEB55F76600D4AD",
+    "mutable": false,
+    "name": "res1",
+    "hash": "0x0E405B9869CEFA2C",
     "annotation": {},
     "value": {
      "kind": "Call",
@@ -115,8 +251,8 @@
        }
       },
       "params": [
-       { "kind": "Literal", "data": { "id": "i32", "value": "32" } },
-       { "kind": "Literal", "data": { "id": "i32", "value": "1" } }
+       { "kind": "Literal", "data": { "id": "i32", "value": "1" } },
+       { "kind": "Literal", "data": { "id": "i32", "value": "2" } }
       ]
      }
     }
@@ -126,65 +262,106 @@
    "kind": "Expression",
    "data": {
     "expression": {
-     "kind": "Binary",
+     "kind": "Call",
      "data": {
-      "operator": "Assign",
-      "expression1": {
+      "callee": {
        "kind": "Identifier",
        "data": {
-        "name": "res",
+        "name": "my_print",
         "resolvedReference": {
          "kind": "Variable",
          "data": {
-          "mutable": true,
-          "name": "res",
-          "hash": "0x6EEB55F76600D4AD",
-          "annotation": {},
-          "value": { "kind": "Call", "data": {/* circular */} }
+          "mutable": false,
+          "name": "my_print",
+          "hash": "0xEB759C75BAE1C8B6",
+          "annotation": {/* circular */},
+          "value": {/* circular */}
          }
         }
        }
       },
-      "expression2": {
-       "kind": "Call",
-       "data": {
-        "callee": {
-         "kind": "Identifier",
-         "data": {
-          "name": "my_print",
-          "resolvedReference": {
-           "kind": "Variable",
-           "data": {
-            "mutable": false,
-            "name": "my_print",
-            "hash": "0xEB759C75BAE1C8B6",
-            "annotation": {/* circular */},
-            "value": {/* circular */}
-           }
-          }
-         }
-        },
-        "params": [
-         {
+      "params": [
+       {
+        "kind": "Lookup",
+        "data": {
+         "expression": {
           "kind": "Identifier",
           "data": {
-           "name": "res",
+           "name": "res1",
            "resolvedReference": {
             "kind": "Variable",
             "data": {
-             "mutable": true,
-             "name": "res",
-             "hash": "0x6EEB55F76600D4AD",
+             "mutable": false,
+             "name": "res1",
+             "hash": "0x0E405B9869CEFA2C",
+             "annotation": {},
+             "value": { "kind": "Call", "data": {/* circular */} }
+            }
+           }
+          }
+         },
+         "name": "b",
+         "hash": "0x3E23E8160039594A"
+        }
+       },
+       {
+        "kind": "Lookup",
+        "data": {
+         "expression": {
+          "kind": "Identifier",
+          "data": {
+           "name": "res1",
+           "resolvedReference": {
+            "kind": "Variable",
+            "data": {
+             "mutable": false,
+             "name": "res1",
+             "hash": "0x0E405B9869CEFA2C",
              "annotation": {/* circular */},
              "value": {/* circular */}
             }
            }
           }
          },
-         { "kind": "Literal", "data": { "id": "i32", "value": "2" } }
-        ]
+         "name": "a",
+         "hash": "0xCA978112CA1BBDCA"
+        }
        }
-      }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "kind": "Variable",
+   "data": {
+    "mutable": false,
+    "name": "res2",
+    "hash": "0x1DB7EFD18753FBF0",
+    "annotation": {},
+    "value": {
+     "kind": "Call",
+     "data": {
+      "callee": {
+       "kind": "Identifier",
+       "data": {
+        "name": "my_print",
+        "resolvedReference": {
+         "kind": "Variable",
+         "data": {
+          "mutable": false,
+          "name": "my_print",
+          "hash": "0xEB759C75BAE1C8B6",
+          "annotation": {/* circular */},
+          "value": {/* circular */}
+         }
+        }
+       }
+      },
+      "params": [
+       { "kind": "Literal", "data": { "id": "i32", "value": "3" } },
+       { "kind": "Literal", "data": { "id": "i32", "value": "4" } }
+      ]
      }
     }
    }
@@ -193,65 +370,180 @@
    "kind": "Expression",
    "data": {
     "expression": {
-     "kind": "Binary",
+     "kind": "Call",
      "data": {
-      "operator": "Assign",
-      "expression1": {
+      "callee": {
        "kind": "Identifier",
        "data": {
-        "name": "res",
+        "name": "my_print",
         "resolvedReference": {
          "kind": "Variable",
          "data": {
-          "mutable": true,
-          "name": "res",
-          "hash": "0x6EEB55F76600D4AD",
+          "mutable": false,
+          "name": "my_print",
+          "hash": "0xEB759C75BAE1C8B6",
           "annotation": {/* circular */},
           "value": {/* circular */}
          }
         }
        }
       },
-      "expression2": {
-       "kind": "Call",
-       "data": {
-        "callee": {
-         "kind": "Identifier",
-         "data": {
-          "name": "my_print",
-          "resolvedReference": {
-           "kind": "Variable",
-           "data": {
-            "mutable": false,
-            "name": "my_print",
-            "hash": "0xEB759C75BAE1C8B6",
-            "annotation": {/* circular */},
-            "value": {/* circular */}
-           }
-          }
-         }
-        },
-        "params": [
-         {
+      "params": [
+       {
+        "kind": "Lookup",
+        "data": {
+         "expression": {
           "kind": "Identifier",
           "data": {
-           "name": "res",
+           "name": "res2",
            "resolvedReference": {
             "kind": "Variable",
             "data": {
-             "mutable": true,
-             "name": "res",
-             "hash": "0x6EEB55F76600D4AD",
+             "mutable": false,
+             "name": "res2",
+             "hash": "0x1DB7EFD18753FBF0",
+             "annotation": {},
+             "value": { "kind": "Call", "data": {/* circular */} }
+            }
+           }
+          }
+         },
+         "name": "b",
+         "hash": "0x3E23E8160039594A"
+        }
+       },
+       {
+        "kind": "Lookup",
+        "data": {
+         "expression": {
+          "kind": "Identifier",
+          "data": {
+           "name": "res2",
+           "resolvedReference": {
+            "kind": "Variable",
+            "data": {
+             "mutable": false,
+             "name": "res2",
+             "hash": "0x1DB7EFD18753FBF0",
              "annotation": {/* circular */},
              "value": {/* circular */}
             }
            }
           }
          },
-         { "kind": "Literal", "data": { "id": "i32", "value": "3" } }
-        ]
+         "name": "a",
+         "hash": "0xCA978112CA1BBDCA"
+        }
        }
-      }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "kind": "Variable",
+   "data": {
+    "mutable": false,
+    "name": "res3",
+    "hash": "0x1D648848FD3C789C",
+    "annotation": {},
+    "value": {
+     "kind": "Call",
+     "data": {
+      "callee": {
+       "kind": "Identifier",
+       "data": {
+        "name": "my_print",
+        "resolvedReference": {
+         "kind": "Variable",
+         "data": {
+          "mutable": false,
+          "name": "my_print",
+          "hash": "0xEB759C75BAE1C8B6",
+          "annotation": {/* circular */},
+          "value": {/* circular */}
+         }
+        }
+       }
+      },
+      "params": [
+       { "kind": "Literal", "data": { "id": "i32", "value": "5" } },
+       { "kind": "Literal", "data": { "id": "i32", "value": "6" } }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "kind": "Expression",
+   "data": {
+    "expression": {
+     "kind": "Call",
+     "data": {
+      "callee": {
+       "kind": "Identifier",
+       "data": {
+        "name": "my_print",
+        "resolvedReference": {
+         "kind": "Variable",
+         "data": {
+          "mutable": false,
+          "name": "my_print",
+          "hash": "0xEB759C75BAE1C8B6",
+          "annotation": {/* circular */},
+          "value": {/* circular */}
+         }
+        }
+       }
+      },
+      "params": [
+       {
+        "kind": "Lookup",
+        "data": {
+         "expression": {
+          "kind": "Identifier",
+          "data": {
+           "name": "res3",
+           "resolvedReference": {
+            "kind": "Variable",
+            "data": {
+             "mutable": false,
+             "name": "res3",
+             "hash": "0x1D648848FD3C789C",
+             "annotation": {},
+             "value": { "kind": "Call", "data": {/* circular */} }
+            }
+           }
+          }
+         },
+         "name": "b",
+         "hash": "0x3E23E8160039594A"
+        }
+       },
+       {
+        "kind": "Lookup",
+        "data": {
+         "expression": {
+          "kind": "Identifier",
+          "data": {
+           "name": "res3",
+           "resolvedReference": {
+            "kind": "Variable",
+            "data": {
+             "mutable": false,
+             "name": "res3",
+             "hash": "0x1D648848FD3C789C",
+             "annotation": {/* circular */},
+             "value": {/* circular */}
+            }
+           }
+          }
+         },
+         "name": "a",
+         "hash": "0xCA978112CA1BBDCA"
+        }
+       }
+      ]
      }
     }
    }
@@ -259,9 +551,23 @@
  ],
  "resolvedVariables": [
   {
-   "mutable": true,
-   "name": "res",
-   "hash": "0x6EEB55F76600D4AD",
+   "mutable": false,
+   "name": "res1",
+   "hash": "0x0E405B9869CEFA2C",
+   "annotation": {},
+   "value": { "kind": "Call", "data": {/* circular */} }
+  },
+  {
+   "mutable": false,
+   "name": "res3",
+   "hash": "0x1D648848FD3C789C",
+   "annotation": {},
+   "value": { "kind": "Call", "data": {/* circular */} }
+  },
+  {
+   "mutable": false,
+   "name": "res2",
+   "hash": "0x1DB7EFD18753FBF0",
    "annotation": {},
    "value": { "kind": "Call", "data": {/* circular */} }
   },

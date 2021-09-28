@@ -6,7 +6,7 @@ import { TokenImpasse } from "./TokenImpasse.ts";
 export class TokenBrowser {
   private depth = 0;
 
-  private log = false;
+  private log = true;
 
   private tokens: Array<Token>;
   private indexes: Array<number>;

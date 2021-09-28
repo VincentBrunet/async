@@ -6,6 +6,7 @@ import {
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseStatementCondition } from "./parseStatementCondition.ts";
+import { parseStatementEmpty } from "./parseStatementEmpty.ts";
 import { parseStatementExpression } from "./parseStatementExpression.ts";
 import { parseStatementReturn } from "./parseStatementReturn.ts";
 import { parseStatementTypedef } from "./parseStatementTypedef.ts";
@@ -30,6 +31,12 @@ function finishStatement(
 export function parseStatement(
   browser: TokenBrowser,
 ): AstStatement | TokenImpasse {
+  // empty ;
+  const astStatementEmpty = browser.recurse(parseStatementEmpty);
+  if (!(astStatementEmpty instanceof TokenImpasse)) {
+    consumeEnd(browser);
+    return finishStatement(AstStatementKind.Empty, astStatementEmpty);
+  }
   // const hello = expresion
   const astStatementVariable = browser.recurse(parseStatementVariable);
   if (!(astStatementVariable instanceof TokenImpasse)) {
@@ -74,6 +81,7 @@ export function parseStatement(
   }
   // unknown
   return browser.impasse("Statement", [
+    astStatementEmpty,
     astStatementVariable,
     astStatementTypedef,
     astStatementWhile,

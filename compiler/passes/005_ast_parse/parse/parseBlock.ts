@@ -20,7 +20,7 @@ export function parseBlock(browser: TokenBrowser): AstBlock | TokenImpasse {
       browser.consume();
       break;
     }
-    // statement
+    // parse statement
     const astStatement = browser.recurse(parseStatement);
     if (astStatement instanceof TokenImpasse) {
       console.log("Block.Previous", JSON.stringify(statements, null, 4));
