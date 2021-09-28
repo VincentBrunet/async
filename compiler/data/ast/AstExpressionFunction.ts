@@ -4,7 +4,6 @@ import { AstAnnotationType } from "./AstAnnotationType.ts";
 import { AstBlock } from "./AstBlock.ts";
 import { AstResolvedClosure } from "./AstResolvedClosure.ts";
 import { AstStatementReturn } from "./AstStatementReturn.ts";
-import { AstStatementVariable } from "./AstStatementVariable.ts";
 import { AstType } from "./AstType.ts";
 
 export interface AstExpressionFunctionParam extends Ast {
@@ -22,6 +21,5 @@ export interface AstExpressionFunction extends Ast {
 
   resolvedType?: AstType;
   resolvedClosures?: Array<AstResolvedClosure>;
-  resolvedVariables?: Array<AstStatementVariable>;
   resolvedReturns?: Array<AstStatementReturn>;
 }

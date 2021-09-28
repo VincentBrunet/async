@@ -6,9 +6,7 @@ export function browseModule(
   ast: AstModule,
   next: () => void,
 ) {
-  scope.markCollectorStatementVariable();
   scope.markCollectorStatementReturn();
   next();
-  ast.resolvedVariables = scope.getStatementVariables();
   ast.resolvedReturns = scope.getStatementReturns();
 }

@@ -14,8 +14,8 @@ const my_print = fn (a :i32, b :i32) :MyObject {
   }
 
   return {
-    mutable a = a,
-    mutable b = b,
+    a = a + 10,
+    b = b + 10,
   }
 
 }

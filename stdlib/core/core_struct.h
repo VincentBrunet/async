@@ -31,8 +31,8 @@ typedef uint8_t t_boolean;
  */
 
 typedef struct t_ref t_ref;
-typedef struct t_field t_field;
 
+typedef struct t_field t_field;
 typedef struct t_object t_object;
 
 typedef struct t_function t_function;
@@ -58,7 +58,7 @@ typedef struct t_field {
   t_u64 key;
 } t_field;
 
-// Set of fields (compacted in memory)
+// Set of fields compacted in memory
 typedef struct t_object {
   t_u32 size;
   t_field* fields;

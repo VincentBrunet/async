@@ -3,10 +3,7 @@ import { makeRecursorPass } from "../util/makeRecursorPass.ts";
 import { browseExpressionFunction } from "./browse/browseExpressionFunction.ts";
 import { browseExpressionRun } from "./browse/browseExpressionRun.ts";
 import { browseModule } from "./browse/browseModule.ts";
-import { browseStatementConditionBranch } from "./browse/browseStatementConditionBranch.ts";
 import { browseStatementReturn } from "./browse/browseStatementReturn.ts";
-import { browseStatementVariable } from "./browse/browseStatementVariable.ts";
-import { browseStatementWhile } from "./browse/browseStatementWhile.ts";
 import { BrowsedScope } from "./util/BrowsedScope.ts";
 
 const pass = makeRecursorPass<BrowsedScope>((scope) => {
@@ -15,9 +12,6 @@ const pass = makeRecursorPass<BrowsedScope>((scope) => {
   recurseExpressionFunction: browseExpressionFunction,
   recurseExpressionRun: browseExpressionRun,
   recurseStatementReturn: browseStatementReturn,
-  recurseStatementVariable: browseStatementVariable,
-  recurseStatementWhile: browseStatementWhile,
-  recurseStatementConditionBranch: browseStatementConditionBranch,
   recurseModule: browseModule,
 });
 

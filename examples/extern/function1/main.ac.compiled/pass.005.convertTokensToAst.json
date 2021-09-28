@@ -97,16 +97,30 @@
            "data": {
             "fields": [
              {
-              "mutable": true,
+              "mutable": false,
               "name": "a",
               "hash": "0xCA978112CA1BBDCA",
-              "expression": { "kind": "Identifier", "data": { "name": "a" } }
+              "expression": {
+               "kind": "Binary",
+               "data": {
+                "operator": "Addition",
+                "expression1": { "kind": "Identifier", "data": { "name": "a" } },
+                "expression2": { "kind": "Literal", "data": { "id": "i32", "value": "10" } }
+               }
+              }
              },
              {
-              "mutable": true,
+              "mutable": false,
               "name": "b",
               "hash": "0x3E23E8160039594A",
-              "expression": { "kind": "Identifier", "data": { "name": "b" } }
+              "expression": {
+               "kind": "Binary",
+               "data": {
+                "operator": "Addition",
+                "expression1": { "kind": "Identifier", "data": { "name": "b" } },
+                "expression2": { "kind": "Literal", "data": { "id": "i32", "value": "10" } }
+               }
+              }
              }
             ]
            }

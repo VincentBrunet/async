@@ -2,6 +2,8 @@ import {
   AstExpressionBinary,
   AstExpressionBinaryOperator,
 } from "../../../data/ast/AstExpressionBinary.ts";
+import { AstTypePrimitiveId } from "../../../data/ast/AstTypePrimitive.ts";
+import { isTypePrimitive } from "../../../lib/typing/isTypePrimitive.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputScope } from "../util/OutputScope.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
@@ -17,12 +19,25 @@ export function writeExpressionBinary(
     writeExpression(module, scope, statement, ast.expression1);
     statement.pushPart(" = ");
     writeExpression(module, scope, statement, ast.expression2);
-  } else {
-    statement.pushPart(ast.operator); // TODO
-    statement.pushPart("(");
-    writeExpression(module, scope, statement, ast.expression1);
-    statement.pushPart(", ");
-    writeExpression(module, scope, statement, ast.expression2);
-    statement.pushPart(")");
+    return;
   }
+
+  let callName = ast.operator.toString();
+
+  if (ast.operator === AstExpressionBinaryOperator.Addition) {
+    const i32id = AstTypePrimitiveId.Integer32;
+    if (
+      isTypePrimitive(ast.expression1.resolvedType, i32id) &&
+      isTypePrimitive(ast.expression2.resolvedType, i32id)
+    ) {
+      callName = "i32_add";
+    }
+  }
+
+  statement.pushPart(callName);
+  statement.pushPart("(");
+  writeExpression(module, scope, statement, ast.expression1);
+  statement.pushPart(", ");
+  writeExpression(module, scope, statement, ast.expression2);
+  statement.pushPart(")");
 }

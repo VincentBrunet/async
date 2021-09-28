@@ -16,7 +16,6 @@ export function writeExpressionFunction(
   ast: AstExpressionFunction,
 ) {
   const resolvedClosures = ensure(ast.resolvedClosures);
-  const resolvedVariables = ensure(ast.resolvedVariables);
 
   // TODO - function name mangling
   const name = "f_0x" + (_id++).toString(16);
@@ -45,17 +44,6 @@ export function writeExpressionFunction(
   child.pushParam("t_ref **closure");
   for (const astParam of ast.params) {
     child.pushParam("t_value *__" + astParam.name);
-  }
-
-  // Setup declarations
-  for (const variable of resolvedVariables) {
-    const declaration = new OutputStatement();
-    declaration.pushPart("t_ref *");
-    declaration.pushPart("__");
-    declaration.pushPart(variable.name);
-    declaration.pushPart(" = ");
-    declaration.pushPart("ref_make(NULL)");
-    child.pushStatement(OutputOrder.Variables, declaration);
   }
 
   // Add a return statement - TODO (this should be added by user)

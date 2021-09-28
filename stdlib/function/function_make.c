@@ -3,7 +3,9 @@
 
 t_value *function_make(t_type *type, void *callable, t_u32 size) {
   t_value *value = value_make(type);
-  value->data.function.closure = calloc(size, sizeof(t_ref *));
+  if (size > 0) {
+    value->data.function.closure = calloc(size, sizeof(t_ref *));
+  }
   value->data.function.callable = callable;
   return value;
 }

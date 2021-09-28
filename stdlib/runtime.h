@@ -6,6 +6,7 @@
 #include <core/core_struct.h>
 #include <function/function_call.h>
 #include <function/function_make.h>
+#include <i32/i32_add.h>
 #include <i32/i32_make.h>
 #include <null/null_make.h>
 #include <object/object_call.h>
