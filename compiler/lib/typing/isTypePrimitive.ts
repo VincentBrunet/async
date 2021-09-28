@@ -5,15 +5,19 @@ import {
 } from "../../data/ast/AstTypePrimitive.ts";
 
 export function isTypePrimitive(
-  type: AstType | undefined,
-  id: AstTypePrimitiveId,
+  type?: AstType,
+  id?: AstTypePrimitiveId,
 ) {
   if (type === undefined) {
     return false;
   }
   if (type.kind === AstTypeKind.Primitive) {
-    const data = type.data as AstTypePrimitive;
-    if (data.id === id) {
+    if (id) {
+      const data = type.data as AstTypePrimitive;
+      if (data.id === id) {
+        return true;
+      }
+    } else {
       return true;
     }
   }

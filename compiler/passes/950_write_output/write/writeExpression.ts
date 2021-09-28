@@ -7,6 +7,7 @@ import { writeExpressionBinary } from "./writeExpressionBinary.ts";
 import { writeExpressionCall } from "./writeExpressionCall.ts";
 import { writeExpressionFunction } from "./writeExpressionFunction.ts";
 import { writeExpressionIdentifier } from "./writeExpressionIdentifier.ts";
+import { writeExpressionImport } from "./writeExpressionImport.ts";
 import { writeExpressionLiteral } from "./writeExpressionLiteral.ts";
 import { writeExpressionLookup } from "./writeExpressionLookup.ts";
 import { writeExpressionObject } from "./writeExpressionObject.ts";
@@ -35,6 +36,7 @@ function makeCase<T>(
 }
 
 const mapping = {
+  caseImport: makeCase(writeExpressionImport),
   caseCall: makeCase(writeExpressionCall),
   caseIdentifier: makeCase(writeExpressionIdentifier),
   caseLiteral: makeCase(writeExpressionLiteral),

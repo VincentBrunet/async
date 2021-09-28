@@ -1,5 +1,6 @@
 import { AstStatement, AstStatementKind } from "../AstStatement.ts";
 import { AstStatementCondition } from "../AstStatementCondition.ts";
+import { AstStatementEmpty } from "../AstStatementEmpty.ts";
 import { AstStatementExpression } from "../AstStatementExpression.ts";
 import { AstStatementReturn } from "../AstStatementReturn.ts";
 import { AstStatementTypedef } from "../AstStatementTypedef.ts";
@@ -15,6 +16,7 @@ export interface StatementMapping<P, R> {
   caseReturn: (param: P, ast: AstStatementReturn) => R;
   caseUnsafe: (param: P, ast: AstStatementUnsafe) => R;
   caseExpression: (param: P, ast: AstStatementExpression) => R;
+  caseEmpty: (param: P, ast: AstStatementEmpty) => R;
 }
 
 export function switchOnStatement<P, R>(
@@ -45,6 +47,9 @@ export function switchOnStatement<P, R>(
     }
     case AstStatementKind.Expression: {
       return mapping.caseExpression(param, data as AstStatementExpression);
+    }
+    case AstStatementKind.Empty: {
+      return mapping.caseEmpty(param, data as AstStatementEmpty);
     }
   }
 }

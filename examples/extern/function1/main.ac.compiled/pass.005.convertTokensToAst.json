@@ -1,6 +1,29 @@
 {
  "statements": [
   {
+   "kind": "Variable",
+   "data": {
+    "mutable": false,
+    "name": "dudu",
+    "hash": "0x4FC75659C5DAF27D",
+    "annotation": {},
+    "value": {
+     "kind": "Import",
+     "data": { "url": "https://google.com/didi/tutu.ac" }
+    }
+   }
+  },
+  {
+   "kind": "Variable",
+   "data": {
+    "mutable": false,
+    "name": "dada",
+    "hash": "0x47C7EF39CFA6B7BD",
+    "annotation": {},
+    "value": { "kind": "Import", "data": { "url": "../hello" } }
+   }
+  },
+  {
    "kind": "Typedef",
    "data": {
     "name": "MyFunc",
@@ -105,7 +128,14 @@
                "data": {
                 "operator": "Addition",
                 "expression1": { "kind": "Identifier", "data": { "name": "a" } },
-                "expression2": { "kind": "Literal", "data": { "id": "i32", "value": "10" } }
+                "expression2": {
+                 "kind": "Binary",
+                 "data": {
+                  "operator": "Substraction",
+                  "expression1": { "kind": "Literal", "data": { "id": "i32", "value": "10" } },
+                  "expression2": { "kind": "Identifier", "data": { "name": "b" } }
+                 }
+                }
                }
               }
              },

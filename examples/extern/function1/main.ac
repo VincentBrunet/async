@@ -1,3 +1,5 @@
+const dudu = import "https://google.com/didi/tutu.ac";
+const dada = import "../hello";
 
 typedef MyFunc = (a :i32, b :i32) :i32
 
@@ -14,7 +16,7 @@ const my_print = fn (a :i32, b :i32) :MyObject {
   }
 
   return {
-    a = a + 10,
+    a = a + 10 - b,
     b = b + 10,
   }
 

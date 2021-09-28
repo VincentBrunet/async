@@ -3,6 +3,7 @@ import { AstExpressionBinary } from "../AstExpressionBinary.ts";
 import { AstExpressionCall } from "../AstExpressionCall.ts";
 import { AstExpressionFunction } from "../AstExpressionFunction.ts";
 import { AstExpressionIdentifier } from "../AstExpressionIdentifier.ts";
+import { AstExpressionImport } from "../AstExpressionImport.ts";
 import { AstExpressionLiteral } from "../AstExpressionLiteral.ts";
 import { AstExpressionLookup } from "../AstExpressionLookup.ts";
 import { AstExpressionObject } from "../AstExpressionObject.ts";
@@ -12,6 +13,7 @@ import { AstExpressionTyping } from "../AstExpressionTyping.ts";
 import { AstExpressionUnary } from "../AstExpressionUnary.ts";
 
 export interface ExpressionMapping<P, R> {
+  caseImport: (param: P, ast: AstExpressionImport) => R;
   caseCall: (param: P, ast: AstExpressionCall) => R;
   caseIdentifier: (param: P, ast: AstExpressionIdentifier) => R;
   caseLiteral: (param: P, ast: AstExpressionLiteral) => R;
@@ -33,6 +35,9 @@ export function switchOnExpression<P, R>(
   const kind = astExpression.kind;
   const data = astExpression.data;
   switch (kind) {
+    case AstExpressionKind.Import: {
+      return mapping.caseImport(param, data as AstExpressionImport);
+    }
     case AstExpressionKind.Call: {
       return mapping.caseCall(param, data as AstExpressionCall);
     }

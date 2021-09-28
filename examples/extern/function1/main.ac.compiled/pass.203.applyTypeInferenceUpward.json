@@ -1,6 +1,36 @@
 {
  "statements": [
   {
+   "kind": "Variable",
+   "data": {
+    "mutable": false,
+    "name": "dudu",
+    "hash": "0x4FC75659C5DAF27D",
+    "annotation": {},
+    "value": {
+     "kind": "Import",
+     "data": { "url": "https://google.com/didi/tutu.ac" },
+     "resolvedType": undefined
+    },
+    "resolvedType": undefined
+   }
+  },
+  {
+   "kind": "Variable",
+   "data": {
+    "mutable": false,
+    "name": "dada",
+    "hash": "0x47C7EF39CFA6B7BD",
+    "annotation": {},
+    "value": {
+     "kind": "Import",
+     "data": { "url": "../hello" },
+     "resolvedType": undefined
+    },
+    "resolvedType": undefined
+   }
+  },
+  {
    "kind": "Typedef",
    "data": {
     "name": "MyFunc",
@@ -122,20 +152,80 @@
               "expression": {
                "kind": "Binary",
                "data": {
-                "operator": "Addition",
+                "operator": "Substraction",
                 "expression1": {
+                 "kind": "Binary",
+                 "data": {
+                  "operator": "Addition",
+                  "expression1": {
+                   "kind": "Identifier",
+                   "data": {
+                    "name": "a",
+                    "resolvedReference": {
+                     "kind": "Closure",
+                     "data": {
+                      "idx": 0,
+                      "name": "a",
+                      "resolvedReference": {
+                       "kind": "Param",
+                       "data": {
+                        "name": "a",
+                        "annotation": { "type": {/* circular */} },
+                        "resolvedType": { "kind": "Primitive", "data": {/* circular */} }
+                       }
+                      },
+                      "resolvedType": {
+                       "kind": "Primitive",
+                       "data": { "id": "i32", "params": {/* circular */} }
+                      }
+                     }
+                    },
+                    "resolvedType": {
+                     "kind": "Primitive",
+                     "data": { "id": "i32", "params": {/* circular */} }
+                    }
+                   },
+                   "resolvedType": {
+                    "kind": "Primitive",
+                    "data": { "id": "i32", "params": {/* circular */} }
+                   }
+                  },
+                  "expression2": {
+                   "kind": "Literal",
+                   "data": {
+                    "id": "i32",
+                    "value": "10",
+                    "resolvedType": { "kind": "Primitive", "data": { "id": "i32", "params": [] } }
+                   },
+                   "resolvedType": {
+                    "kind": "Primitive",
+                    "data": { "id": "i32", "params": {/* circular */} }
+                   }
+                  },
+                  "resolvedPrioritization": true,
+                  "resolvedType": {
+                   "kind": "Primitive",
+                   "data": { "id": "i32", "params": {/* circular */} }
+                  }
+                 },
+                 "resolvedType": {
+                  "kind": "Primitive",
+                  "data": { "id": "i32", "params": {/* circular */} }
+                 }
+                },
+                "expression2": {
                  "kind": "Identifier",
                  "data": {
-                  "name": "a",
+                  "name": "b",
                   "resolvedReference": {
                    "kind": "Closure",
                    "data": {
-                    "idx": 0,
-                    "name": "a",
+                    "idx": 1,
+                    "name": "b",
                     "resolvedReference": {
                      "kind": "Param",
                      "data": {
-                      "name": "a",
+                      "name": "b",
                       "annotation": { "type": {/* circular */} },
                       "resolvedType": { "kind": "Primitive", "data": {/* circular */} }
                      }
@@ -150,18 +240,6 @@
                    "kind": "Primitive",
                    "data": { "id": "i32", "params": {/* circular */} }
                   }
-                 },
-                 "resolvedType": {
-                  "kind": "Primitive",
-                  "data": { "id": "i32", "params": {/* circular */} }
-                 }
-                },
-                "expression2": {
-                 "kind": "Literal",
-                 "data": {
-                  "id": "i32",
-                  "value": "10",
-                  "resolvedType": { "kind": "Primitive", "data": { "id": "i32", "params": [] } }
                  },
                  "resolvedType": {
                   "kind": "Primitive",
@@ -196,18 +274,8 @@
                    "data": {
                     "idx": 1,
                     "name": "b",
-                    "resolvedReference": {
-                     "kind": "Param",
-                     "data": {
-                      "name": "b",
-                      "annotation": { "type": {/* circular */} },
-                      "resolvedType": { "kind": "Primitive", "data": {/* circular */} }
-                     }
-                    },
-                    "resolvedType": {
-                     "kind": "Primitive",
-                     "data": { "id": "i32", "params": {/* circular */} }
-                    }
+                    "resolvedReference": {/* circular */},
+                    "resolvedType": {/* circular */}
                    }
                   },
                   "resolvedType": {

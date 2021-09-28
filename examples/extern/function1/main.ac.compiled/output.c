@@ -7,8 +7,8 @@ t_value *o_0x0(t_ref **closure) {
   t_ref *__b = (t_ref *)&(fields[0]);
   t_ref *__a = (t_ref *)&(fields[1]);
   // Logic
-  __a->value = i32_add(closure[0]->value, i32_make(10));
-  __b->value = i32_add(closure[1]->value, i32_make(10));
+  __a->value = i32_substraction(i32_addition(closure[0]->value, i32_make(10)), closure[1]->value);
+  __b->value = i32_addition(closure[1]->value, i32_make(10));
   // After
   return object;
 }
@@ -37,11 +37,15 @@ t_value *o_0x1(t_ref **closure) {
 
 t_value *module_load() {
   // Variables
+  t_ref *__dudu = ref_make(NULL);
+  t_ref *__dada = ref_make(NULL);
   t_ref *__my_print = ref_make(NULL);
   t_ref *__res1 = ref_make(NULL);
   t_ref *__res2 = ref_make(NULL);
   t_ref *__res3 = ref_make(NULL);
   // Logic
+  __dudu->value = import('https://google.com/didi/tutu.ac');
+  __dada->value = import('../hello');
   __my_print->value = function_make_x(type_function, &f_0x0, 0);
   __res1->value = function_call_2(__my_print->value, i32_make(1), i32_make(2));
   function_call_2(__my_print->value, object_read(__res1->value, 0x3E23E8160039594A)->value, object_read(__res1->value, 0xCA978112CA1BBDCA)->value);

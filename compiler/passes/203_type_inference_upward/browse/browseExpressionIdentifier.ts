@@ -8,7 +8,7 @@ export function browseExpressionIdentifier(
 ) {
   next();
   if (ast.resolvedReference === undefined) {
-    throw new Error("Identifier unresolved");
+    throw new Error("Identifier unresolved:" + ast.name);
   }
   ast.resolvedType = ast.resolvedReference.data.resolvedType;
 }

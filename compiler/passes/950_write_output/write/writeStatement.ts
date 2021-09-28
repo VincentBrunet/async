@@ -3,6 +3,7 @@ import { switchOnStatement } from "../../../data/ast/util/switchOnStatement.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputScope } from "../util/OutputScope.ts";
 import { writeStatementCondition } from "./writeStatementCondition.ts";
+import { writeStatementEmpty } from "./writeStatementEmpty.ts";
 import { writeStatementExpression } from "./writeStatementExpression.ts";
 import { writeStatementReturn } from "./writeStatementReturn.ts";
 import { writeStatementTypedef } from "./writeStatementTypedef.ts";
@@ -31,6 +32,7 @@ const mapping = {
   caseReturn: makeCase(writeStatementReturn),
   caseUnsafe: makeCase(writeStatementUnsafe),
   caseExpression: makeCase(writeStatementExpression),
+  caseEmpty: makeCase(writeStatementEmpty),
 };
 
 export function writeStatement(

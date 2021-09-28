@@ -6,6 +6,7 @@ import { AstExpressionBinary } from "../../data/ast/AstExpressionBinary.ts";
 import { AstExpressionCall } from "../../data/ast/AstExpressionCall.ts";
 import { AstExpressionFunction } from "../../data/ast/AstExpressionFunction.ts";
 import { AstExpressionIdentifier } from "../../data/ast/AstExpressionIdentifier.ts";
+import { AstExpressionImport } from "../../data/ast/AstExpressionImport.ts";
 import { AstExpressionLiteral } from "../../data/ast/AstExpressionLiteral.ts";
 import { AstExpressionLookup } from "../../data/ast/AstExpressionLookup.ts";
 import { AstExpressionObject } from "../../data/ast/AstExpressionObject.ts";
@@ -23,6 +24,10 @@ export function recurseExpression<Scope>(
   const kind = ast.kind;
   const data = ast.data;
   switch (kind) {
+    case AstExpressionKind.Import: {
+      r.recurseExpressionImport(p, data as AstExpressionImport);
+      break;
+    }
     case AstExpressionKind.Call: {
       r.recurseExpressionCall(p, data as AstExpressionCall);
       break;

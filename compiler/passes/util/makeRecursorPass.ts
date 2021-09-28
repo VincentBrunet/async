@@ -6,6 +6,7 @@ import { recurseExpressionBinary } from "./recurseExpressionBinary.ts";
 import { recurseExpressionCall } from "./recurseExpressionCall.ts";
 import { recurseExpressionFunction } from "./recurseExpressionFunction.ts";
 import { recurseExpressionIdentifier } from "./recurseExpressionIdentifier.ts";
+import { recurseExpressionImport } from "./recurseExpressionImport.ts";
 import { recurseExpressionLiteral } from "./recurseExpressionLiteral.ts";
 import { recurseExpressionLookup } from "./recurseExpressionLookup.ts";
 import { recurseExpressionObject } from "./recurseExpressionObject.ts";
@@ -17,6 +18,7 @@ import { recurseModule } from "./recurseModule.ts";
 import { recurseStatement } from "./recurseStatement.ts";
 import { recurseStatementCondition } from "./recurseStatementCondition.ts";
 import { recurseStatementConditionBranch } from "./recurseStatementConditionBranch.ts";
+import { recurseStatementEmpty } from "./recurseStatementEmpty.ts";
 import { recurseStatementExpression } from "./recurseStatementExpression.ts";
 import { recurseStatementReturn } from "./recurseStatementReturn.ts";
 import { recurseStatementTypedef } from "./recurseStatementTypedef.ts";
@@ -96,178 +98,203 @@ export function makeRecursorPass<Scope>(
   // Pass with standard recursion
   let passRecurse: RecursorPassHolder<Scope> = {};
   // Pass with custom logic
-  let pass: RecursorPassHolder<Scope> = {};
+  let passLogic: RecursorPassHolder<Scope> = {};
 
   passRecurse.value = {
     recurseModule: makeRecursion(
       s,
-      pass,
+      passLogic,
       recurseModule,
     ),
+
     recurseBlock: makeRecursion(
       s,
-      pass,
+      passLogic,
       recurseBlock,
     ),
+
     recurseExpression: makeRecursion(
       s,
-      pass,
+      passLogic,
       recurseExpression,
+    ),
+    recurseExpressionImport: makeRecursion(
+      s,
+      passLogic,
+      recurseExpressionImport,
+    ),
+    recurseExpressionCall: makeRecursion(
+      s,
+      passLogic,
+      recurseExpressionCall,
     ),
     recurseExpressionIdentifier: makeRecursion(
       s,
-      pass,
+      passLogic,
       recurseExpressionIdentifier,
     ),
     recurseExpressionFunction: makeRecursion(
       s,
-      pass,
+      passLogic,
       recurseExpressionFunction,
     ),
     recurseExpressionObject: makeRecursion(
       s,
-      pass,
+      passLogic,
       recurseExpressionObject,
     ),
     recurseExpressionRun: makeRecursion(
       s,
-      pass,
+      passLogic,
       recurseExpressionRun,
     ),
     recurseExpressionLookup: makeRecursion(
       s,
-      pass,
+      passLogic,
       recurseExpressionLookup,
-    ),
-    recurseExpressionCall: makeRecursion(
-      s,
-      pass,
-      recurseExpressionCall,
     ),
     recurseExpressionLiteral: makeRecursion(
       s,
-      pass,
+      passLogic,
       recurseExpressionLiteral,
     ),
     recurseExpressionUnary: makeRecursion(
       s,
-      pass,
+      passLogic,
       recurseExpressionUnary,
     ),
     recurseExpressionBinary: makeRecursion(
       s,
-      pass,
+      passLogic,
       recurseExpressionBinary,
     ),
     recurseExpressionTyping: makeRecursion(
       s,
-      pass,
+      passLogic,
       recurseExpressionTyping,
     ),
     recurseExpressionParenthesis: makeRecursion(
       s,
-      pass,
+      passLogic,
       recurseExpressionParenthesis,
     ),
+
     recurseAnnotationType: makeRecursion(
       s,
-      pass,
+      passLogic,
       recurseAnnotationType,
     ),
     recurseAnnotationTemplate: makeRecursion(
       s,
-      pass,
+      passLogic,
       recurseAnnotationTemplate,
     ),
+
     recurseType: makeRecursion(
       s,
-      pass,
+      passLogic,
       recurseType,
     ),
     recurseTypeIdentifier: makeRecursion(
       s,
-      pass,
+      passLogic,
       recurseTypeIdentifier,
     ),
     recurseTypePrimitive: makeRecursion(
       s,
-      pass,
+      passLogic,
       recurseTypePrimitive,
     ),
     recurseTypeBinary: makeRecursion(
       s,
-      pass,
+      passLogic,
       recurseTypeBinary,
     ),
     recurseTypeFunction: makeRecursion(
       s,
-      pass,
+      passLogic,
       recurseTypeFunction,
     ),
     recurseTypeObject: makeRecursion(
       s,
-      pass,
+      passLogic,
       recurseTypeObject,
     ),
+
     recurseStatement: makeRecursion(
       s,
-      pass,
+      passLogic,
       recurseStatement,
     ),
     recurseStatementVariable: makeRecursion(
       s,
-      pass,
+      passLogic,
       recurseStatementVariable,
     ),
     recurseStatementTypedef: makeRecursion(
       s,
-      pass,
+      passLogic,
       recurseStatementTypedef,
     ),
     recurseStatementWhile: makeRecursion(
       s,
-      pass,
+      passLogic,
       recurseStatementWhile,
     ),
     recurseStatementCondition: makeRecursion(
       s,
-      pass,
+      passLogic,
       recurseStatementCondition,
     ),
     recurseStatementConditionBranch: makeRecursion(
       s,
-      pass,
+      passLogic,
       recurseStatementConditionBranch,
     ),
     recurseStatementReturn: makeRecursion(
       s,
-      pass,
+      passLogic,
       recurseStatementReturn,
     ),
     recurseStatementUnsafe: makeRecursion(
       s,
-      pass,
+      passLogic,
       recurseStatementUnsafe,
     ),
     recurseStatementExpression: makeRecursion(
       s,
-      pass,
+      passLogic,
       recurseStatementExpression,
+    ),
+    recurseStatementEmpty: makeRecursion(
+      s,
+      passLogic,
+      recurseStatementEmpty,
     ),
   };
 
-  pass.value = {
+  passLogic.value = {
     recurseModule: makeLogic(
       passRecurse.value.recurseModule,
       logic.recurseModule,
     ),
+
     recurseBlock: makeLogic(
       passRecurse.value.recurseBlock,
       logic.recurseBlock,
     ),
+
     recurseExpression: makeLogic(
       passRecurse.value.recurseExpression,
       logic.recurseExpression,
+    ),
+    recurseExpressionImport: makeLogic(
+      passRecurse.value.recurseExpressionImport,
+      logic.recurseExpressionImport,
+    ),
+    recurseExpressionCall: makeLogic(
+      passRecurse.value.recurseExpressionCall,
+      logic.recurseExpressionCall,
     ),
     recurseExpressionIdentifier: makeLogic(
       passRecurse.value.recurseExpressionIdentifier,
@@ -289,10 +316,6 @@ export function makeRecursorPass<Scope>(
       passRecurse.value.recurseExpressionLookup,
       logic.recurseExpressionLookup,
     ),
-    recurseExpressionCall: makeLogic(
-      passRecurse.value.recurseExpressionCall,
-      logic.recurseExpressionCall,
-    ),
     recurseExpressionLiteral: makeLogic(
       passRecurse.value.recurseExpressionLiteral,
       logic.recurseExpressionLiteral,
@@ -313,6 +336,7 @@ export function makeRecursorPass<Scope>(
       passRecurse.value.recurseExpressionParenthesis,
       logic.recurseExpressionParenthesis,
     ),
+
     recurseAnnotationType: makeLogic(
       passRecurse.value.recurseAnnotationType,
       logic.recurseAnnotationType,
@@ -321,6 +345,7 @@ export function makeRecursorPass<Scope>(
       passRecurse.value.recurseAnnotationTemplate,
       logic.recurseAnnotationTemplate,
     ),
+
     recurseType: makeLogic(
       passRecurse.value.recurseType,
       logic.recurseType,
@@ -345,6 +370,7 @@ export function makeRecursorPass<Scope>(
       passRecurse.value.recurseTypeObject,
       logic.recurseTypeObject,
     ),
+
     recurseStatement: makeLogic(
       passRecurse.value.recurseStatement,
       logic.recurseStatement,
@@ -381,7 +407,11 @@ export function makeRecursorPass<Scope>(
       passRecurse.value.recurseStatementExpression,
       logic.recurseStatementExpression,
     ),
+    recurseStatementEmpty: makeLogic(
+      passRecurse.value.recurseStatementEmpty,
+      logic.recurseStatementEmpty,
+    ),
   };
 
-  return pass.value;
+  return passLogic.value;
 }

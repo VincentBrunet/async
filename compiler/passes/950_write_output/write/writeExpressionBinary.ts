@@ -22,15 +22,25 @@ export function writeExpressionBinary(
     return;
   }
 
+  const type1 = ast.expression1.resolvedType;
+  const type2 = ast.expression2.resolvedType;
+
   let callName = ast.operator.toString();
 
-  if (ast.operator === AstExpressionBinaryOperator.Addition) {
-    const i32id = AstTypePrimitiveId.Integer32;
-    if (
-      isTypePrimitive(ast.expression1.resolvedType, i32id) &&
-      isTypePrimitive(ast.expression2.resolvedType, i32id)
-    ) {
-      callName = "i32_add";
+  // i32
+  const i32id = AstTypePrimitiveId.Integer32;
+  if (
+    isTypePrimitive(type1, i32id) &&
+    isTypePrimitive(type2, i32id)
+  ) {
+    if (ast.operator === AstExpressionBinaryOperator.Addition) {
+      callName = "i32_addition";
+    }
+    if (ast.operator === AstExpressionBinaryOperator.Substraction) {
+      callName = "i32_substraction";
+    }
+    if (ast.operator === AstExpressionBinaryOperator.Multiplication) {
+      callName = "i32_multiplication";
     }
   }
 

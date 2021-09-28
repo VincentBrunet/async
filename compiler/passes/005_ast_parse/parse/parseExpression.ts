@@ -9,6 +9,7 @@ import { parseExpressionBinary } from "./parseExpressionBinary.ts";
 import { parseExpressionCall } from "./parseExpressionCall.ts";
 import { parseExpressionFunction } from "./parseExpressionFunction.ts";
 import { parseExpressionIdentifier } from "./parseExpressionIdentifier.ts";
+import { parseExpressionImport } from "./parseExpressionImport.ts";
 import { parseExpressionLiteral } from "./parseExpressionLiteral.ts";
 import { parseExpressionLookup } from "./parseExpressionLookup.ts";
 import { parseExpressionObject } from "./parseExpressionObject.ts";
@@ -25,6 +26,7 @@ function makeExpression(kind: AstExpressionKind, data: AstExpressionData) {
 const leafs = new Array<
   [AstExpressionKind, (b: TokenBrowser) => AstExpressionData | TokenImpasse]
 >();
+leafs.push([AstExpressionKind.Import, parseExpressionImport]);
 leafs.push([AstExpressionKind.Unary, parseExpressionUnary]);
 leafs.push([AstExpressionKind.Parenthesis, parseExpressionParenthesis]);
 leafs.push([AstExpressionKind.Function, parseExpressionFunction]);

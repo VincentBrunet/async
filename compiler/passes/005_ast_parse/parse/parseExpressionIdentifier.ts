@@ -12,6 +12,7 @@ forbidden.add("unsafe");
 forbidden.add("typedef");
 forbidden.add("const");
 forbidden.add("mutable");
+forbidden.add("import");
 
 export function parseExpressionIdentifier(
   browser: TokenBrowser,

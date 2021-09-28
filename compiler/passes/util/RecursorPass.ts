@@ -6,6 +6,7 @@ import { AstExpressionBinary } from "../../data/ast/AstExpressionBinary.ts";
 import { AstExpressionCall } from "../../data/ast/AstExpressionCall.ts";
 import { AstExpressionFunction } from "../../data/ast/AstExpressionFunction.ts";
 import { AstExpressionIdentifier } from "../../data/ast/AstExpressionIdentifier.ts";
+import { AstExpressionImport } from "../../data/ast/AstExpressionImport.ts";
 import { AstExpressionLiteral } from "../../data/ast/AstExpressionLiteral.ts";
 import { AstExpressionLookup } from "../../data/ast/AstExpressionLookup.ts";
 import { AstExpressionObject } from "../../data/ast/AstExpressionObject.ts";
@@ -19,6 +20,7 @@ import {
   AstStatementCondition,
   AstStatementConditionBranch,
 } from "../../data/ast/AstStatementCondition.ts";
+import { AstStatementEmpty } from "../../data/ast/AstStatementEmpty.ts";
 import { AstStatementExpression } from "../../data/ast/AstStatementExpression.ts";
 import { AstStatementReturn } from "../../data/ast/AstStatementReturn.ts";
 import { AstStatementTypedef } from "../../data/ast/AstStatementTypedef.ts";
@@ -79,10 +81,18 @@ export interface RecursorPass<Scope> {
     scope: Scope,
     ast: AstStatementExpression,
   ) => void;
+  recurseStatementEmpty: (
+    scope: Scope,
+    ast: AstStatementEmpty,
+  ) => void;
 
   recurseExpression: (
     scope: Scope,
     ast: AstExpression,
+  ) => void;
+  recurseExpressionImport: (
+    scope: Scope,
+    ast: AstExpressionImport,
   ) => void;
   recurseExpressionCall: (
     scope: Scope,
