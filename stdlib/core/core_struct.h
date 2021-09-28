@@ -31,7 +31,7 @@ typedef uint8_t t_boolean;
  */
 
 typedef struct t_ref t_ref;
-typedef struct t_variable t_variable;
+typedef struct t_field t_field;
 
 typedef struct t_object t_object;
 
@@ -53,15 +53,15 @@ typedef struct t_ref {
 } t_ref;
 
 // Named value holder
-typedef struct t_variable {
+typedef struct t_field {
   t_ref ref;
   t_u64 key;
-} t_variable;
+} t_field;
 
-// Set of variable (compacted in memory)
+// Set of fields (compacted in memory)
 typedef struct t_object {
   t_u32 size;
-  t_variable* variables;
+  t_field* fields;
 } t_object;
 
 // Runnable value with closure

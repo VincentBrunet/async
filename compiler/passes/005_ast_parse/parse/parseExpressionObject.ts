@@ -52,7 +52,7 @@ export function parseExpressionObject(
 
     // field - equal
     const fieldEqual = browser.peek();
-    if (fieldName.str !== "=") {
+    if (fieldEqual.str !== "=") {
       return browser.impasse("ExpressionObject.Field.Equal");
     }
     browser.consume();

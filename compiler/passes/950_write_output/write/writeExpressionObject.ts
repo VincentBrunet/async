@@ -71,7 +71,7 @@ export function writeExpressionObject(
   // Read a variable field pointer
   const shortcut = new OutputStatement();
   shortcut.pushPart(
-    "t_variable *fields = object->data.object.fields",
+    "t_field *fields = object->data.object.fields",
   );
   child.pushStatement(OutputOrder.Variables, shortcut);
 

@@ -42,7 +42,7 @@ int main() {
 
   printf(" -- runtime type -- \n");
   printf("sizeof(t_ref): %ld\n", sizeof(t_ref));
-  printf("sizeof(t_variable): %ld\n", sizeof(t_variable));
+  printf("sizeof(t_field): %ld\n", sizeof(t_field));
 
   printf(" -- type hierachy -- \n");
   printf("type_is(type_object, type_root): %hhu\n", type_is(type_object, type_root));

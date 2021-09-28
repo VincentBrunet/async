@@ -1,6 +1,56 @@
 {
  "statements": [
   {
+   "kind": "Typedef",
+   "data": {
+    "name": "MyFunc",
+    "type": {
+     "kind": "Function",
+     "data": {
+      "params": [
+       {
+        "name": "a",
+        "type": { "kind": "Primitive", "data": { "id": "i32", "params": [] } }
+       },
+       {
+        "name": "b",
+        "type": { "kind": "Primitive", "data": { "id": "i32", "params": [] } }
+       }
+      ],
+      "ret": { "kind": "Primitive", "data": { "id": "i32", "params": [] } }
+     }
+    },
+    "template": { "params": [] }
+   }
+  },
+  {
+   "kind": "Typedef",
+   "data": {
+    "name": "MyObject",
+    "type": {
+     "kind": "Object",
+     "data": {
+      "fields": [
+       {
+        "mutable": false,
+        "name": "a",
+        "hash": "0xCA978112CA1BBDCA",
+        "type": { "kind": "Primitive", "data": { "id": "i32", "params": [] } }
+       },
+       {
+        "mutable": false,
+        "name": "b",
+        "hash": "0x3E23E8160039594A",
+        "type": { "kind": "Primitive", "data": { "id": "i32", "params": [] } }
+       }
+      ]
+     }
+    },
+    "template": { "params": [] }
+   }
+  },
+  { "kind": "Empty", "data": {} },
+  {
    "kind": "Variable",
    "data": {
     "mutable": false,
@@ -27,23 +77,8 @@
       ],
       "ret": {
        "type": {
-        "kind": "Object",
-        "data": {
-         "fields": [
-          {
-           "mutable": false,
-           "name": "a",
-           "hash": "0xCA978112CA1BBDCA",
-           "type": { "kind": "Primitive", "data": { "id": "i32", "params": [] } }
-          },
-          {
-           "mutable": false,
-           "name": "b",
-           "hash": "0x3E23E8160039594A",
-           "type": { "kind": "Primitive", "data": { "id": "i32", "params": [] } }
-          }
-         ]
-        }
+        "kind": "Identifier",
+        "data": { "name": "MyObject", "params": [] }
        }
       },
       "block": {
@@ -55,56 +90,25 @@
          }
         },
         {
-         "kind": "Variable",
-         "data": {
-          "mutable": false,
-          "name": "pa",
-          "hash": "0x9513229D43597826",
-          "annotation": {},
-          "value": { "kind": "Identifier", "data": { "name": "a" } }
-         }
-        },
-        {
-         "kind": "Variable",
-         "data": {
-          "mutable": false,
-          "name": "pb",
-          "hash": "0x3315F44DA4A7AAAF",
-          "annotation": {},
-          "value": { "kind": "Identifier", "data": { "name": "b" } }
-         }
-        },
-        {
          "kind": "Return",
          "data": {
           "expression": {
            "kind": "Object",
            "data": {
-            "annotation": {},
-            "block": {
-             "statements": [
-              {
-               "kind": "Variable",
-               "data": {
-                "mutable": false,
-                "name": "a",
-                "hash": "0xCA978112CA1BBDCA",
-                "annotation": {},
-                "value": { "kind": "Identifier", "data": { "name": "pa" } }
-               }
-              },
-              {
-               "kind": "Variable",
-               "data": {
-                "mutable": false,
-                "name": "b",
-                "hash": "0x3E23E8160039594A",
-                "annotation": {},
-                "value": { "kind": "Identifier", "data": { "name": "pb" } }
-               }
-              }
-             ]
-            }
+            "fields": [
+             {
+              "mutable": true,
+              "name": "a",
+              "hash": "0xCA978112CA1BBDCA",
+              "expression": { "kind": "Identifier", "data": { "name": "a" } }
+             },
+             {
+              "mutable": true,
+              "name": "b",
+              "hash": "0x3E23E8160039594A",
+              "expression": { "kind": "Identifier", "data": { "name": "b" } }
+             }
+            ]
            }
           }
          }
@@ -253,6 +257,24 @@
          "name": "a",
          "hash": "0xCA978112CA1BBDCA"
         }
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "kind": "Return",
+   "data": {
+    "expression": {
+     "kind": "Object",
+     "data": {
+      "fields": [
+       {
+        "mutable": true,
+        "name": "my_print",
+        "hash": "0xEB759C75BAE1C8B6",
+        "expression": { "kind": "Identifier", "data": { "name": "my_print" } }
        }
       ]
      }

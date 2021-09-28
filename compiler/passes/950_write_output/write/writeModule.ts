@@ -35,7 +35,7 @@ export function writeModule(module: OutputModule, ast: AstModule) {
 
   // Read a variable field pointer
   const shortcut = new OutputStatement();
-  shortcut.pushPart("t_variable *variables = module->data.object.variables");
+  shortcut.pushPart("t_field *fields = module->data.object.fields");
   scope.pushStatement(OutputOrder.Variables, shortcut);
 
   // Make local references to created variables
@@ -46,7 +46,7 @@ export function writeModule(module: OutputModule, ast: AstModule) {
     named.pushPart("__");
     named.pushPart(variable.name);
     named.pushPart(" = ");
-    named.pushPart("(t_ref *)&(variables[");
+    named.pushPart("(t_ref *)&(fields[");
     named.pushPart(i.toString());
     named.pushPart("])");
     scope.pushStatement(OutputOrder.Variables, named);
