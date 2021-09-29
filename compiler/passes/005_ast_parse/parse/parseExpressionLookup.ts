@@ -1,7 +1,7 @@
 import { AstExpression } from "../../../data/ast/AstExpression.ts";
 import { AstExpressionLookup } from "../../../data/ast/AstExpressionLookup.ts";
 import { TokenKind } from "../../../data/token/Token.ts";
-import { hash64 } from "../../../lib/core/strings/hash64.ts";
+import { hashObjectKey } from "../../../lib/hash/hashObjectKey.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 
@@ -25,7 +25,7 @@ export function parseExpressionLookup(
   const name = key.str;
 
   // hashed name
-  const hash = hash64(name);
+  const hash = hashObjectKey(name);
 
   // done
   return {

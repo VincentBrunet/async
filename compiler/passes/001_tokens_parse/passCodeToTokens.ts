@@ -54,7 +54,7 @@ function makeToken(
 /**
  * Convert a code file into a token array
  */
-export function convertCodeToTokens(code: string): Array<Token> {
+export async function passCodeToTokens(code: string) {
   const tokens = new Array<Token>();
 
   // location counters

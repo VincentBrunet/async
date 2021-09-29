@@ -13,6 +13,7 @@ const pass = makeRecursorPass<BrowsedScope>((scope) => {
   recurseTypeIdentifier: browseTypeIdentifier,
 });
 
-export function applyShorthandResolve(astModule: AstModule) {
-  pass.recurseModule(new BrowsedScope(), astModule);
+export async function passShorthandResolve(ast: AstModule) {
+  pass.recurseModule(new BrowsedScope(), ast);
+  return ast;
 }

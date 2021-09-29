@@ -8,6 +8,7 @@ const pass = makeRecursorPass<undefined>((param) => {
   recurseExpressionBinary: browseExpressionBinary,
 });
 
-export function applyBinaryPrioritize(astModule: AstModule) {
-  pass.recurseModule(undefined, astModule);
+export async function passBinaryPrioritize(ast: AstModule) {
+  pass.recurseModule(undefined, ast);
+  return ast;
 }

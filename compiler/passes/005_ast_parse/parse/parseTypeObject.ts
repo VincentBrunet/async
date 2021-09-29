@@ -3,7 +3,7 @@ import {
   AstTypeObjectField,
 } from "../../../data/ast/AstTypeObject.ts";
 import { TokenKind } from "../../../data/token/Token.ts";
-import { hash64 } from "../../../lib/core/strings/hash64.ts";
+import { hashObjectKey } from "../../../lib/hash/hashObjectKey.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseAnnotationType } from "./parseAnnotationType.ts";
@@ -62,7 +62,7 @@ export function parseTypeObject(
     }
 
     // field - hash
-    const hash = hash64(name);
+    const hash = hashObjectKey(name);
 
     // field - end
     const fieldEnd = browser.index();

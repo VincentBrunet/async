@@ -8,6 +8,7 @@
 #include <function/function_make.h>
 #include <i32/i32_binary.h>
 #include <i32/i32_make.h>
+#include <i32/i32_unary.h>
 #include <null/null_make.h>
 #include <object/object_call.h>
 #include <object/object_make.h>

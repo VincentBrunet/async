@@ -17,6 +17,7 @@ const pass = makeRecursorPass<BrowsedScope>((scope) => {
   recurseExpressionIdentifier: browseExpressionIdentifier,
 });
 
-export function applyReferenceResolve(astModule: AstModule) {
-  pass.recurseModule(new BrowsedScope(), astModule);
+export async function passReferenceResolve(ast: AstModule) {
+  pass.recurseModule(new BrowsedScope(), ast);
+  return ast;
 }

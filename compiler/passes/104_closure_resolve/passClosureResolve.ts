@@ -1,20 +1,23 @@
 import { AstModule } from "../../data/ast/AstModule.ts";
 import { makeRecursorPass } from "../util/makeRecursorPass.ts";
 import { browseExpressionFunction } from "./browse/browseExpressionFunction.ts";
+import { browseExpressionIdentifier } from "./browse/browseExpressionIdentifier.ts";
+import { browseExpressionObject } from "./browse/browseExpressionObject.ts";
 import { browseExpressionRun } from "./browse/browseExpressionRun.ts";
-import { browseModule } from "./browse/browseModule.ts";
-import { browseStatementReturn } from "./browse/browseStatementReturn.ts";
+import { browseStatementVariable } from "./browse/browseStatementVariable.ts";
 import { BrowsedScope } from "./util/BrowsedScope.ts";
 
 const pass = makeRecursorPass<BrowsedScope>((scope) => {
   return new BrowsedScope(scope);
 }, {
+  recurseStatementVariable: browseStatementVariable,
   recurseExpressionFunction: browseExpressionFunction,
+  recurseExpressionObject: browseExpressionObject,
   recurseExpressionRun: browseExpressionRun,
-  recurseStatementReturn: browseStatementReturn,
-  recurseModule: browseModule,
+  recurseExpressionIdentifier: browseExpressionIdentifier,
 });
 
-export function applyStatementCollector(astModule: AstModule) {
-  pass.recurseModule(new BrowsedScope(), astModule);
+export async function passClosureResolve(ast: AstModule) {
+  pass.recurseModule(new BrowsedScope(), ast);
+  return ast;
 }
