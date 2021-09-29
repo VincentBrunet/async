@@ -1,3 +1,3 @@
-import { transpileToC } from "./transpileToC.ts";
+import { compile } from "./compile.ts";
 
-await transpileToC(Deno.args[0]);
+await compile(Deno.args[0]);

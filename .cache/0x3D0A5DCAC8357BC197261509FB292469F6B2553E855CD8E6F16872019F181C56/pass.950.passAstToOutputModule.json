@@ -1,0 +1,511 @@
+{
+ "scopes": [
+  {
+   "name": "o_0x0",
+   "params": [ "t_ref **closure" ],
+   "statements": {
+    "map": Map<{
+     1: [
+      {
+       "special": false,
+       "parts": [
+        "t_value *object = object_make_x(",
+        "type_object",
+        ", ",
+        "2",
+        ", ",
+        "0x3E23E8160039594A",
+        ", ",
+        "0xCA978112CA1BBDCA",
+        ")"
+       ]
+      },
+      {
+       "special": false,
+       "parts": [ "t_field *fields = object->data.object.fields" ]
+      },
+      {
+       "special": false,
+       "parts": [ "t_ref *", "__", "b", " = ", "(t_ref *)&(fields[", "0", "])" ]
+      },
+      {
+       "special": false,
+       "parts": [ "t_ref *", "__", "a", " = ", "(t_ref *)&(fields[", "1", "])" ]
+      }
+     ],
+     2: [
+      {
+       "special": false,
+       "parts": [
+        "__",
+        "a",
+        "->value",
+        " = ",
+        "i32_substraction",
+        "(",
+        "i32_addition",
+        "(",
+        "closure[",
+        "0",
+        "]->value",
+        ", ",
+        "i32_make(",
+        "10",
+        ")",
+        ")",
+        ", ",
+        "closure[",
+        "1",
+        "]->value",
+        ")",
+        ""
+       ]
+      },
+      {
+       "special": false,
+       "parts": [
+        "__",
+        "b",
+        "->value",
+        " = ",
+        "i32_addition",
+        "(",
+        "i32_negative",
+        "(",
+        "closure[",
+        "1",
+        "]->value",
+        ")",
+        ", ",
+        "i32_make(",
+        "10",
+        ")",
+        ")",
+        ""
+       ]
+      }
+     ],
+     3: [ { "special": false, "parts": [ "return object" ] } ]
+    }>
+   }
+  },
+  {
+   "name": "f_0x0",
+   "params": [ "t_ref **closure", "t_value *__a", "t_value *__b" ],
+   "statements": {
+    "map": Map<{
+     2: [
+      {
+       "special": false,
+       "parts": [
+        "{",
+        " ",
+        "\n    printf(\"Hello, A:%d\n\", __a->data.i32);\n    printf(\"Hello, B:%d\n\", __b->data.i32);\n  ",
+        " ",
+        "}"
+       ]
+      },
+      {
+       "special": false,
+       "parts": [
+        "return ",
+        "object_call_x(",
+        "&",
+        "o_0x0",
+        ", ",
+        "2",
+        ", ",
+        "ref_make(",
+        "__",
+        "a",
+        ")",
+        ", ",
+        "ref_make(",
+        "__",
+        "b",
+        ")",
+        ")"
+       ]
+      }
+     ],
+     3: [ { "special": false, "parts": [ "return null_make()" ] } ]
+    }>
+   }
+  },
+  {
+   "name": "f_0x1",
+   "params": [ "t_ref **closure" ],
+   "statements": {
+    "map": Map<{
+     2: [
+      {
+       "special": false,
+       "parts": [ "closure[", "0", "]->value", " = ", "closure[", "1", "]->value" ]
+      }
+     ],
+     3: [ { "special": false, "parts": [ "return null_make()" ] } ]
+    }>
+   }
+  },
+  {
+   "name": "o_0x1",
+   "params": [ "t_ref **closure" ],
+   "statements": {
+    "map": Map<{
+     1: [
+      {
+       "special": false,
+       "parts": [
+        "t_value *object = object_make_x(",
+        "type_object",
+        ", ",
+        "2",
+        ", ",
+        "0x12EA12EACE7D655F",
+        ", ",
+        "0xEB759C75BAE1C8B6",
+        ")"
+       ]
+      },
+      {
+       "special": false,
+       "parts": [ "t_field *fields = object->data.object.fields" ]
+      },
+      {
+       "special": false,
+       "parts": [
+        "t_ref *",
+        "__",
+        "change",
+        " = ",
+        "(t_ref *)&(fields[",
+        "0",
+        "])"
+       ]
+      },
+      {
+       "special": false,
+       "parts": [
+        "t_ref *",
+        "__",
+        "my_print",
+        " = ",
+        "(t_ref *)&(fields[",
+        "1",
+        "])"
+       ]
+      }
+     ],
+     2: [
+      {
+       "special": false,
+       "parts": [
+        "__",
+        "my_print",
+        "->value",
+        " = ",
+        "closure[",
+        "0",
+        "]->value",
+        ""
+       ]
+      },
+      {
+       "special": false,
+       "parts": [
+        "__",
+        "change",
+        "->value",
+        " = ",
+        "function_make_x(",
+        "type_function",
+        ", ",
+        "&",
+        "f_0x1",
+        ", ",
+        "2",
+        ", ",
+        "closure[",
+        "1",
+        "]",
+        ", ",
+        "closure[",
+        "2",
+        "]",
+        ")",
+        ""
+       ]
+      }
+     ],
+     3: [ { "special": false, "parts": [ "return object" ] } ]
+    }>
+   }
+  },
+  {
+   "name": "module_load",
+   "params": [],
+   "statements": {
+    "map": Map<{
+     1: [
+      {
+       "special": false,
+       "parts": [ "t_ref *", "__", "dudu", " = ", "ref_make(NULL)" ]
+      },
+      {
+       "special": false,
+       "parts": [ "t_ref *", "__", "dada", " = ", "ref_make(NULL)" ]
+      },
+      {
+       "special": false,
+       "parts": [ "t_ref *", "__", "my_print", " = ", "ref_make(NULL)" ]
+      },
+      {
+       "special": false,
+       "parts": [ "t_ref *", "__", "res1", " = ", "ref_make(NULL)" ]
+      },
+      {
+       "special": false,
+       "parts": [ "t_ref *", "__", "res2", " = ", "ref_make(NULL)" ]
+      },
+      {
+       "special": false,
+       "parts": [ "t_ref *", "__", "res3", " = ", "ref_make(NULL)" ]
+      }
+     ],
+     2: [
+      {
+       "special": false,
+       "parts": [
+        "__",
+        "dudu",
+        "->value",
+        " = ",
+        "import",
+        "(",
+        "(",
+        "str_make(",
+        "\"",
+        "https://google.com/didi/tutu.ac",
+        "\"",
+        ")",
+        ")",
+        ")"
+       ]
+      },
+      {
+       "special": false,
+       "parts": [
+        "__",
+        "dada",
+        "->value",
+        " = ",
+        "import",
+        "(",
+        "str_make(",
+        "\"",
+        "../hello",
+        "\"",
+        ")",
+        ")"
+       ]
+      },
+      {
+       "special": false,
+       "parts": [
+        "__",
+        "my_print",
+        "->value",
+        " = ",
+        "function_make_x(",
+        "type_function",
+        ", ",
+        "&",
+        "f_0x0",
+        ", ",
+        "0",
+        ")"
+       ]
+      },
+      {
+       "special": false,
+       "parts": [
+        "__",
+        "res1",
+        "->value",
+        " = ",
+        "function_call_",
+        "2",
+        "(",
+        "__",
+        "my_print",
+        "->value",
+        ", ",
+        "i32_make(",
+        "1",
+        ")",
+        ", ",
+        "i32_make(",
+        "2",
+        ")",
+        ")"
+       ]
+      },
+      {
+       "special": false,
+       "parts": [
+        "function_call_",
+        "2",
+        "(",
+        "__",
+        "my_print",
+        "->value",
+        ", ",
+        "object_read(",
+        "__",
+        "res1",
+        "->value",
+        ", ",
+        "0x3E23E8160039594A",
+        ")->value",
+        ", ",
+        "object_read(",
+        "__",
+        "res1",
+        "->value",
+        ", ",
+        "0xCA978112CA1BBDCA",
+        ")->value",
+        ")"
+       ]
+      },
+      {
+       "special": false,
+       "parts": [
+        "__",
+        "res2",
+        "->value",
+        " = ",
+        "function_call_",
+        "2",
+        "(",
+        "__",
+        "my_print",
+        "->value",
+        ", ",
+        "i32_make(",
+        "3",
+        ")",
+        ", ",
+        "i32_make(",
+        "4",
+        ")",
+        ")"
+       ]
+      },
+      {
+       "special": false,
+       "parts": [
+        "function_call_",
+        "2",
+        "(",
+        "__",
+        "my_print",
+        "->value",
+        ", ",
+        "object_read(",
+        "__",
+        "res2",
+        "->value",
+        ", ",
+        "0x3E23E8160039594A",
+        ")->value",
+        ", ",
+        "object_read(",
+        "__",
+        "res2",
+        "->value",
+        ", ",
+        "0xCA978112CA1BBDCA",
+        ")->value",
+        ")"
+       ]
+      },
+      {
+       "special": false,
+       "parts": [
+        "__",
+        "res3",
+        "->value",
+        " = ",
+        "function_call_",
+        "2",
+        "(",
+        "__",
+        "my_print",
+        "->value",
+        ", ",
+        "i32_make(",
+        "5",
+        ")",
+        ", ",
+        "i32_make(",
+        "6",
+        ")",
+        ")"
+       ]
+      },
+      {
+       "special": false,
+       "parts": [
+        "function_call_",
+        "2",
+        "(",
+        "__",
+        "my_print",
+        "->value",
+        ", ",
+        "object_read(",
+        "__",
+        "res3",
+        "->value",
+        ", ",
+        "0x3E23E8160039594A",
+        ")->value",
+        ", ",
+        "object_read(",
+        "__",
+        "res3",
+        "->value",
+        ", ",
+        "0xCA978112CA1BBDCA",
+        ")->value",
+        ")"
+       ]
+      },
+      {
+       "special": false,
+       "parts": [
+        "return ",
+        "object_call_x(",
+        "&",
+        "o_0x1",
+        ", ",
+        "3",
+        ", ",
+        "__",
+        "my_print",
+        ", ",
+        "__",
+        "res1",
+        ", ",
+        "__",
+        "res2",
+        ")"
+       ]
+      }
+     ]
+    }>
+   }
+  }
+ ]
+}
