@@ -1,0 +1,238 @@
+{
+ "scopes": [
+  {
+   "name": "o_0x0",
+   "params": [ "t_ref **closure" ],
+   "statements": {
+    "map": Map<{
+     1: [
+      {
+       "special": false,
+       "parts": [
+        "t_value *object = object_make_x(",
+        "type_object",
+        ", ",
+        "2",
+        ", ",
+        "0x3E23E8160039594A",
+        ", ",
+        "0xCA978112CA1BBDCA",
+        ")"
+       ]
+      },
+      {
+       "special": false,
+       "parts": [ "t_field *fields = object->data.object.fields" ]
+      },
+      {
+       "special": false,
+       "parts": [ "t_ref *", "__", "b", " = ", "(t_ref *)&(fields[", "0", "])" ]
+      },
+      {
+       "special": false,
+       "parts": [ "t_ref *", "__", "a", " = ", "(t_ref *)&(fields[", "1", "])" ]
+      }
+     ],
+     2: [
+      {
+       "special": false,
+       "parts": [
+        "__",
+        "a",
+        "->value",
+        " = ",
+        "i32_substraction",
+        "(",
+        "i32_addition",
+        "(",
+        "closure[",
+        "0",
+        "]->value",
+        ", ",
+        "i32_make(",
+        "10",
+        ")",
+        ")",
+        ", ",
+        "closure[",
+        "1",
+        "]->value",
+        ")",
+        ""
+       ]
+      },
+      {
+       "special": false,
+       "parts": [
+        "__",
+        "b",
+        "->value",
+        " = ",
+        "i32_addition",
+        "(",
+        "i32_negative",
+        "(",
+        "closure[",
+        "1",
+        "]->value",
+        ")",
+        ", ",
+        "i32_make(",
+        "10",
+        ")",
+        ")",
+        ""
+       ]
+      }
+     ],
+     3: [ { "special": false, "parts": [ "return object" ] } ]
+    }>
+   }
+  },
+  {
+   "name": "f_0x0",
+   "params": [ "t_ref **closure", "t_value *__a", "t_value *__b" ],
+   "statements": {
+    "map": Map<{
+     2: [
+      {
+       "special": false,
+       "parts": [
+        "{",
+        " ",
+        "\n    printf(\"Hello, A:%d\n\", __a->data.i32);\n    printf(\"Hello, B:%d\n\", __b->data.i32);\n  ",
+        " ",
+        "}"
+       ]
+      },
+      {
+       "special": false,
+       "parts": [
+        "return ",
+        "object_call_x(",
+        "&",
+        "o_0x0",
+        ", ",
+        "2",
+        ", ",
+        "ref_make(",
+        "__",
+        "a",
+        ")",
+        ", ",
+        "ref_make(",
+        "__",
+        "b",
+        ")",
+        ")"
+       ]
+      }
+     ],
+     3: [ { "special": false, "parts": [ "return null_make()" ] } ]
+    }>
+   }
+  },
+  {
+   "name": "o_0x1",
+   "params": [ "t_ref **closure" ],
+   "statements": {
+    "map": Map<{
+     1: [
+      {
+       "special": false,
+       "parts": [
+        "t_value *object = object_make_x(",
+        "type_object",
+        ", ",
+        "1",
+        ", ",
+        "0xEB759C75BAE1C8B6",
+        ")"
+       ]
+      },
+      {
+       "special": false,
+       "parts": [ "t_field *fields = object->data.object.fields" ]
+      },
+      {
+       "special": false,
+       "parts": [
+        "t_ref *",
+        "__",
+        "my_print",
+        " = ",
+        "(t_ref *)&(fields[",
+        "0",
+        "])"
+       ]
+      }
+     ],
+     2: [
+      {
+       "special": false,
+       "parts": [
+        "__",
+        "my_print",
+        "->value",
+        " = ",
+        "closure[",
+        "0",
+        "]->value",
+        ""
+       ]
+      }
+     ],
+     3: [ { "special": false, "parts": [ "return object" ] } ]
+    }>
+   }
+  },
+  {
+   "name": "module_load",
+   "params": [],
+   "statements": {
+    "map": Map<{
+     1: [
+      {
+       "special": false,
+       "parts": [ "t_ref *", "__", "my_print", " = ", "ref_make(NULL)" ]
+      }
+     ],
+     2: [
+      {
+       "special": false,
+       "parts": [
+        "__",
+        "my_print",
+        "->value",
+        " = ",
+        "function_make_x(",
+        "type_function",
+        ", ",
+        "&",
+        "f_0x0",
+        ", ",
+        "0",
+        ")"
+       ]
+      },
+      {
+       "special": false,
+       "parts": [
+        "return ",
+        "object_call_x(",
+        "&",
+        "o_0x1",
+        ", ",
+        "1",
+        ", ",
+        "__",
+        "my_print",
+        ")"
+       ]
+      }
+     ]
+    }>
+   }
+  }
+ ]
+}

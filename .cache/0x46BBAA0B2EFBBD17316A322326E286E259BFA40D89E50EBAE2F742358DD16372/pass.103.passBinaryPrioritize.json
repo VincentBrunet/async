@@ -107,24 +107,23 @@
               "expression": {
                "kind": "Binary",
                "data": {
-                "operator": "Addition",
-                "expression1": { "kind": "Identifier", "data": { "name": "a", "id": 26 } },
-                "expression2": {
+                "operator": "Substraction",
+                "expression1": {
                  "kind": "Binary",
                  "data": {
-                  "operator": "Substraction",
-                  "expression1": {
+                  "operator": "Addition",
+                  "expression1": { "kind": "Identifier", "data": { "name": "a", "id": 26 } },
+                  "expression2": {
                    "kind": "Literal",
                    "data": { "native": "i32", "value": "10", "id": 27 }
                   },
-                  "expression2": {
-                   "kind": "Identifier",
-                   "data": { "name": "b", "id": 28 },
-                   "id": 29
-                  },
-                  "id": 30
-                 },
-                 "id": 31
+                  "resolvedPrioritization": true
+                 }
+                },
+                "expression2": {
+                 "kind": "Identifier",
+                 "data": { "name": "b", "id": 28 },
+                 "id": 29
                 },
                 "id": 32
                },

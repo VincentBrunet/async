@@ -338,13 +338,19 @@
            ],
            "id": 88
           },
-          "id": 89
+          "id": 89,
+          "resolvedClosures": [ { "idx": 0, "name": "res1" }, { "idx": 1, "name": "res2" } ]
          },
          "id": 90
         }
        }
       ],
-      "id": 91
+      "id": 91,
+      "resolvedClosures": [
+       { "idx": 0, "name": "my_print" },
+       { "idx": 1, "name": "res1" },
+       { "idx": 2, "name": "res2" }
+      ]
      },
      "id": 92
     },

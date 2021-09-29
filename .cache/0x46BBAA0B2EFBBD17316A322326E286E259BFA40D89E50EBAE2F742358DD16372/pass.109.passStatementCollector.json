@@ -242,7 +242,13 @@
        "id": 45
       },
       "id": 46,
-      "resolvedClosures": []
+      "resolvedClosures": [],
+      "resolvedReturns": [
+       {
+        "expression": { "kind": "Object", "data": {/* circular */}, "id": 42 },
+        "id": 43
+       }
+      ]
      },
      "id": 47
     },

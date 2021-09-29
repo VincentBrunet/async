@@ -32,6 +32,5 @@ const pass = makeRecursorPass<BrowsedScope>((scope) => {
 });
 
 export async function passTypeInferenceUpward(ast: AstModule) {
-  pass.recurseModule(new BrowsedScope(), ast);
-  return ast;
+  await pass.recurseModule(new BrowsedScope(), ast);
 }

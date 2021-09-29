@@ -9,5 +9,5 @@ const pass = makeRecursorPass<undefined>((param) => {
 });
 
 export async function passBinaryPrioritize(ast: AstModule) {
-  pass.recurseModule(undefined, ast);
+  await pass.recurseModule(undefined, ast);
 }

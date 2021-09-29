@@ -637,7 +637,8 @@
             "name": "res2",
             "resolvedReference": { "kind": "Closure", "data": {/* circular */} }
            }
-          ]
+          ],
+          "resolvedReturns": []
          },
          "id": 90
         }

@@ -41,7 +41,24 @@
       "callee": {
        "kind": "Lookup",
        "data": {
-        "expression": { "kind": "Identifier", "data": { "name": "my_print", "id": 8 } },
+        "expression": {
+         "kind": "Identifier",
+         "data": {
+          "name": "my_print",
+          "id": 8,
+          "resolvedReference": {
+           "kind": "Variable",
+           "data": {
+            "mutable": false,
+            "name": "my_print",
+            "hash": "0xEB759C75BAE1C8B6",
+            "annotation": { "id": 0 },
+            "value": { "kind": "Import", "data": {/* circular */}, "id": 4 },
+            "id": 5
+           }
+          }
+         }
+        },
         "name": "my_print",
         "hash": "0xEB759C75BAE1C8B6",
         "id": 9
@@ -76,7 +93,24 @@
       "callee": {
        "kind": "Lookup",
        "data": {
-        "expression": { "kind": "Identifier", "data": { "name": "my_print", "id": 18 } },
+        "expression": {
+         "kind": "Identifier",
+         "data": {
+          "name": "my_print",
+          "id": 18,
+          "resolvedReference": {
+           "kind": "Variable",
+           "data": {
+            "mutable": false,
+            "name": "my_print",
+            "hash": "0xEB759C75BAE1C8B6",
+            "annotation": {/* circular */},
+            "value": {/* circular */},
+            "id": 5
+           }
+          }
+         }
+        },
         "name": "my_print",
         "hash": "0xEB759C75BAE1C8B6",
         "id": 19
@@ -86,7 +120,24 @@
        {
         "kind": "Lookup",
         "data": {
-         "expression": { "kind": "Identifier", "data": { "name": "res1", "id": 20 } },
+         "expression": {
+          "kind": "Identifier",
+          "data": {
+           "name": "res1",
+           "id": 20,
+           "resolvedReference": {
+            "kind": "Variable",
+            "data": {
+             "mutable": false,
+             "name": "res1",
+             "hash": "0x0E405B9869CEFA2C",
+             "annotation": { "id": 7 },
+             "value": { "kind": "Call", "data": {/* circular */}, "id": 15 },
+             "id": 16
+            }
+           }
+          }
+         },
          "name": "b",
          "hash": "0x3E23E8160039594A",
          "id": 21
@@ -96,7 +147,24 @@
        {
         "kind": "Lookup",
         "data": {
-         "expression": { "kind": "Identifier", "data": { "name": "res1", "id": 23 } },
+         "expression": {
+          "kind": "Identifier",
+          "data": {
+           "name": "res1",
+           "id": 23,
+           "resolvedReference": {
+            "kind": "Variable",
+            "data": {
+             "mutable": false,
+             "name": "res1",
+             "hash": "0x0E405B9869CEFA2C",
+             "annotation": {/* circular */},
+             "value": {/* circular */},
+             "id": 16
+            }
+           }
+          }
+         },
          "name": "a",
          "hash": "0xCA978112CA1BBDCA",
          "id": 24
@@ -125,7 +193,24 @@
       "callee": {
        "kind": "Lookup",
        "data": {
-        "expression": { "kind": "Identifier", "data": { "name": "my_print", "id": 31 } },
+        "expression": {
+         "kind": "Identifier",
+         "data": {
+          "name": "my_print",
+          "id": 31,
+          "resolvedReference": {
+           "kind": "Variable",
+           "data": {
+            "mutable": false,
+            "name": "my_print",
+            "hash": "0xEB759C75BAE1C8B6",
+            "annotation": {/* circular */},
+            "value": {/* circular */},
+            "id": 5
+           }
+          }
+         }
+        },
         "name": "my_print",
         "hash": "0xEB759C75BAE1C8B6",
         "id": 32
@@ -160,7 +245,24 @@
       "callee": {
        "kind": "Lookup",
        "data": {
-        "expression": { "kind": "Identifier", "data": { "name": "my_print", "id": 41 } },
+        "expression": {
+         "kind": "Identifier",
+         "data": {
+          "name": "my_print",
+          "id": 41,
+          "resolvedReference": {
+           "kind": "Variable",
+           "data": {
+            "mutable": false,
+            "name": "my_print",
+            "hash": "0xEB759C75BAE1C8B6",
+            "annotation": {/* circular */},
+            "value": {/* circular */},
+            "id": 5
+           }
+          }
+         }
+        },
         "name": "my_print",
         "hash": "0xEB759C75BAE1C8B6",
         "id": 42
@@ -170,7 +272,24 @@
        {
         "kind": "Lookup",
         "data": {
-         "expression": { "kind": "Identifier", "data": { "name": "res2", "id": 43 } },
+         "expression": {
+          "kind": "Identifier",
+          "data": {
+           "name": "res2",
+           "id": 43,
+           "resolvedReference": {
+            "kind": "Variable",
+            "data": {
+             "mutable": false,
+             "name": "res2",
+             "hash": "0x1DB7EFD18753FBF0",
+             "annotation": { "id": 30 },
+             "value": { "kind": "Call", "data": {/* circular */}, "id": 38 },
+             "id": 39
+            }
+           }
+          }
+         },
          "name": "b",
          "hash": "0x3E23E8160039594A",
          "id": 44
@@ -180,7 +299,24 @@
        {
         "kind": "Lookup",
         "data": {
-         "expression": { "kind": "Identifier", "data": { "name": "res2", "id": 46 } },
+         "expression": {
+          "kind": "Identifier",
+          "data": {
+           "name": "res2",
+           "id": 46,
+           "resolvedReference": {
+            "kind": "Variable",
+            "data": {
+             "mutable": false,
+             "name": "res2",
+             "hash": "0x1DB7EFD18753FBF0",
+             "annotation": {/* circular */},
+             "value": {/* circular */},
+             "id": 39
+            }
+           }
+          }
+         },
          "name": "a",
          "hash": "0xCA978112CA1BBDCA",
          "id": 47
@@ -209,7 +345,24 @@
       "callee": {
        "kind": "Lookup",
        "data": {
-        "expression": { "kind": "Identifier", "data": { "name": "my_print", "id": 54 } },
+        "expression": {
+         "kind": "Identifier",
+         "data": {
+          "name": "my_print",
+          "id": 54,
+          "resolvedReference": {
+           "kind": "Variable",
+           "data": {
+            "mutable": false,
+            "name": "my_print",
+            "hash": "0xEB759C75BAE1C8B6",
+            "annotation": {/* circular */},
+            "value": {/* circular */},
+            "id": 5
+           }
+          }
+         }
+        },
         "name": "my_print",
         "hash": "0xEB759C75BAE1C8B6",
         "id": 55
@@ -244,7 +397,24 @@
       "callee": {
        "kind": "Lookup",
        "data": {
-        "expression": { "kind": "Identifier", "data": { "name": "my_print", "id": 64 } },
+        "expression": {
+         "kind": "Identifier",
+         "data": {
+          "name": "my_print",
+          "id": 64,
+          "resolvedReference": {
+           "kind": "Variable",
+           "data": {
+            "mutable": false,
+            "name": "my_print",
+            "hash": "0xEB759C75BAE1C8B6",
+            "annotation": {/* circular */},
+            "value": {/* circular */},
+            "id": 5
+           }
+          }
+         }
+        },
         "name": "my_print",
         "hash": "0xEB759C75BAE1C8B6",
         "id": 65
@@ -254,7 +424,24 @@
        {
         "kind": "Lookup",
         "data": {
-         "expression": { "kind": "Identifier", "data": { "name": "res3", "id": 66 } },
+         "expression": {
+          "kind": "Identifier",
+          "data": {
+           "name": "res3",
+           "id": 66,
+           "resolvedReference": {
+            "kind": "Variable",
+            "data": {
+             "mutable": false,
+             "name": "res3",
+             "hash": "0x1D648848FD3C789C",
+             "annotation": { "id": 53 },
+             "value": { "kind": "Call", "data": {/* circular */}, "id": 61 },
+             "id": 62
+            }
+           }
+          }
+         },
          "name": "b",
          "hash": "0x3E23E8160039594A",
          "id": 67
@@ -264,7 +451,24 @@
        {
         "kind": "Lookup",
         "data": {
-         "expression": { "kind": "Identifier", "data": { "name": "res3", "id": 69 } },
+         "expression": {
+          "kind": "Identifier",
+          "data": {
+           "name": "res3",
+           "id": 69,
+           "resolvedReference": {
+            "kind": "Variable",
+            "data": {
+             "mutable": false,
+             "name": "res3",
+             "hash": "0x1D648848FD3C789C",
+             "annotation": {/* circular */},
+             "value": {/* circular */},
+             "id": 62
+            }
+           }
+          }
+         },
          "name": "a",
          "hash": "0xCA978112CA1BBDCA",
          "id": 70
@@ -294,7 +498,31 @@
         "expression": {
          "kind": "Lookup",
          "data": {
-          "expression": { "kind": "Identifier", "data": { "name": "my_print", "id": 76 } },
+          "expression": {
+           "kind": "Identifier",
+           "data": {
+            "name": "my_print",
+            "id": 76,
+            "resolvedReference": {
+             "kind": "Closure",
+             "data": {
+              "idx": 0,
+              "name": "my_print",
+              "resolvedReference": {
+               "kind": "Variable",
+               "data": {
+                "mutable": false,
+                "name": "my_print",
+                "hash": "0xEB759C75BAE1C8B6",
+                "annotation": {/* circular */},
+                "value": {/* circular */},
+                "id": 5
+               }
+              }
+             }
+            }
+           }
+          },
           "name": "my_print",
           "hash": "0xEB759C75BAE1C8B6",
           "id": 77
@@ -321,10 +549,69 @@
                "kind": "Binary",
                "data": {
                 "operator": "Assign",
-                "expression1": { "kind": "Identifier", "data": { "name": "res1", "id": 81 } },
+                "expression1": {
+                 "kind": "Identifier",
+                 "data": {
+                  "name": "res1",
+                  "id": 81,
+                  "resolvedReference": {
+                   "kind": "Closure",
+                   "data": {
+                    "idx": 0,
+                    "name": "res1",
+                    "resolvedReference": {
+                     "kind": "Closure",
+                     "data": {
+                      "idx": 1,
+                      "name": "res1",
+                      "resolvedReference": {
+                       "kind": "Variable",
+                       "data": {
+                        "mutable": false,
+                        "name": "res1",
+                        "hash": "0x0E405B9869CEFA2C",
+                        "annotation": {/* circular */},
+                        "value": {/* circular */},
+                        "id": 16
+                       }
+                      }
+                     }
+                    }
+                   }
+                  }
+                 }
+                },
                 "expression2": {
                  "kind": "Identifier",
-                 "data": { "name": "res2", "id": 82 },
+                 "data": {
+                  "name": "res2",
+                  "id": 82,
+                  "resolvedReference": {
+                   "kind": "Closure",
+                   "data": {
+                    "idx": 1,
+                    "name": "res2",
+                    "resolvedReference": {
+                     "kind": "Closure",
+                     "data": {
+                      "idx": 2,
+                      "name": "res2",
+                      "resolvedReference": {
+                       "kind": "Variable",
+                       "data": {
+                        "mutable": false,
+                        "name": "res2",
+                        "hash": "0x1DB7EFD18753FBF0",
+                        "annotation": {/* circular */},
+                        "value": {/* circular */},
+                        "id": 39
+                       }
+                      }
+                     }
+                    }
+                   }
+                  }
+                 },
                  "id": 83
                 },
                 "id": 84
@@ -339,7 +626,18 @@
            "id": 88
           },
           "id": 89,
-          "resolvedClosures": [ { "idx": 0, "name": "res1" }, { "idx": 1, "name": "res2" } ]
+          "resolvedClosures": [
+           {
+            "idx": 0,
+            "name": "res1",
+            "resolvedReference": { "kind": "Closure", "data": {/* circular */} }
+           },
+           {
+            "idx": 1,
+            "name": "res2",
+            "resolvedReference": { "kind": "Closure", "data": {/* circular */} }
+           }
+          ]
          },
          "id": 90
         }
@@ -347,9 +645,21 @@
       ],
       "id": 91,
       "resolvedClosures": [
-       { "idx": 0, "name": "my_print" },
-       { "idx": 1, "name": "res1" },
-       { "idx": 2, "name": "res2" }
+       {
+        "idx": 0,
+        "name": "my_print",
+        "resolvedReference": { "kind": "Variable", "data": {/* circular */} }
+       },
+       {
+        "idx": 1,
+        "name": "res1",
+        "resolvedReference": { "kind": "Variable", "data": {/* circular */} }
+       },
+       {
+        "idx": 2,
+        "name": "res2",
+        "resolvedReference": { "kind": "Variable", "data": {/* circular */} }
+       }
       ]
      },
      "id": 92

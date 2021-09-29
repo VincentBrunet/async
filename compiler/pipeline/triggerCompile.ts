@@ -41,6 +41,8 @@ export async function triggerCompile(url: string) {
   await doPass(dir, ast, "109", passStatementCollector);
   await doPass(dir, ast, "199", passImportResolve);
 
+  compileQueue.push(ast);
+
   return ast;
 }
 

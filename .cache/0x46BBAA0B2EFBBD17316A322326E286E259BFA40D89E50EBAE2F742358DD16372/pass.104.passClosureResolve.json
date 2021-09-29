@@ -161,7 +161,8 @@
               }
              }
             ],
-            "id": 41
+            "id": 41,
+            "resolvedClosures": [ { "idx": 0, "name": "a" }, { "idx": 1, "name": "b" } ]
            },
            "id": 42
           },
@@ -172,7 +173,8 @@
        ],
        "id": 45
       },
-      "id": 46
+      "id": 46,
+      "resolvedClosures": []
      },
      "id": 47
     },
@@ -198,7 +200,8 @@
         }
        }
       ],
-      "id": 52
+      "id": 52,
+      "resolvedClosures": [ { "idx": 0, "name": "my_print" } ]
      },
      "id": 53
     },

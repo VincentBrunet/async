@@ -78,7 +78,20 @@
       "ret": {
        "type": {
         "kind": "Identifier",
-        "data": { "name": "MyObject", "params": [], "id": 21 },
+        "data": {
+         "name": "MyObject",
+         "params": [],
+         "id": 21,
+         "resolvedShorthand": {
+          "kind": "Typedef",
+          "data": {
+           "name": "MyObject",
+           "type": { "kind": "Object", "data": {/* circular */}, "id": 8 },
+           "template": { "params": {/* circular */}, "id": 0 },
+           "id": 9
+          }
+         }
+        },
         "id": 22
        },
        "id": 23

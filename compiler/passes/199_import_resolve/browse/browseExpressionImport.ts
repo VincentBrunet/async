@@ -20,5 +20,7 @@ export async function browseExpressionImport(
 
   ast.resolvedModule = await triggerCompile(literal.value);
 
+  console.log("TEST", literal.value, ast.resolvedModule);
+
   await next();
 }
