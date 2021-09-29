@@ -3,12 +3,12 @@ import { AstTypeKind } from "../../../data/ast/AstType.ts";
 import { makeTypePrimitiveUnknown } from "../../../lib/typing/makeTypePrimitiveUnknown.ts";
 import { BrowsedScope } from "../util/BrowsedScope.ts";
 
-export function browseExpressionCall(
+export async function browseExpressionCall(
   scope: BrowsedScope,
   ast: AstExpressionCall,
-  next: () => void,
+  next: () => Promise<void>,
 ) {
-  next();
+  await next();
 
   const calleeType = ast.callee.resolvedType;
   if (calleeType?.kind !== AstTypeKind.Function) {

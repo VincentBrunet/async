@@ -4,10 +4,10 @@ import { makeTypeObject } from "../../../lib/typing/makeTypeObject.ts";
 import { makeTypePrimitiveUnknown } from "../../../lib/typing/makeTypePrimitiveUnknown.ts";
 import { BrowsedScope } from "../util/BrowsedScope.ts";
 
-export function browseExpressionObject(
+export async function browseExpressionObject(
   scope: BrowsedScope,
   ast: AstExpressionObject,
-  next: () => void,
+  next: () => Promise<void>,
 ) {
   if (ast.resolvedClosures) {
     for (const closure of ast.resolvedClosures) {
@@ -15,7 +15,7 @@ export function browseExpressionObject(
     }
   }
 
-  next();
+  await next();
 
   const foundFields: AstTypeObjectField[] = [];
   for (const field of ast.fields) {

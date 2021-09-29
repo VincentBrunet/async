@@ -1,11 +1,11 @@
 import { AstStatementWhile } from "../../data/ast/AstStatementWhile.ts";
 import { RecursorPass } from "./RecursorPass.ts";
 
-export function recurseStatementWhile<Scope>(
+export async function recurseStatementWhile<Scope>(
   r: RecursorPass<Scope>,
   p: Scope,
   ast: AstStatementWhile,
 ) {
-  r.recurseExpression(p, ast.condition);
-  r.recurseBlock(p, ast.block);
+  await r.recurseExpression(p, ast.condition);
+  await r.recurseBlock(p, ast.block);
 }

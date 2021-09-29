@@ -1,11 +1,11 @@
 import { AstExpressionObject } from "../../../data/ast/AstExpressionObject.ts";
 import { BrowsedScope } from "../util/BrowsedScope.ts";
 
-export function browseExpressionObject(
+export async function browseExpressionObject(
   scope: BrowsedScope,
   ast: AstExpressionObject,
-  next: () => void,
+  next: () => Promise<void>,
 ) {
-  next();
+  await next();
   ast.resolvedClosures = scope.readClosures();
 }

@@ -1,11 +1,11 @@
 import { AstTypeIdentifier } from "../../../data/ast/AstTypeIdentifier.ts";
 import { BrowsedScope } from "../util/BrowsedScope.ts";
 
-export function browseTypeIdentifier(
+export async function browseTypeIdentifier(
   scope: BrowsedScope,
   ast: AstTypeIdentifier,
-  next: () => void,
+  next: () => Promise<void>,
 ) {
   ast.resolvedShorthand = scope.findShorthand(ast.name);
-  next();
+  await next();
 }

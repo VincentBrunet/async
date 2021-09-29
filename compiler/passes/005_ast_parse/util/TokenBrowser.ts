@@ -4,6 +4,7 @@ import { repeat } from "../../../lib/core/strings/repeat.ts";
 import { TokenImpasse } from "./TokenImpasse.ts";
 
 export class TokenBrowser {
+  private id = 0;
   private depth = 0;
 
   private log = false;
@@ -54,6 +55,7 @@ export class TokenBrowser {
     // on success
     if (!(ast instanceof TokenImpasse)) {
       const after = this.indexes.pop() ?? Infinity;
+      ast.id = this.id++;
       ast.token = {
         begin: before,
         end: after,

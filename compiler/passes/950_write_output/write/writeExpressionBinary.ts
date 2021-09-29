@@ -2,7 +2,7 @@ import {
   AstExpressionBinary,
   AstExpressionBinaryOperator,
 } from "../../../data/ast/AstExpressionBinary.ts";
-import { AstTypePrimitiveId } from "../../../data/ast/AstTypePrimitive.ts";
+import { AstTypePrimitiveNative } from "../../../data/ast/AstTypePrimitive.ts";
 import { isTypePrimitive } from "../../../lib/typing/isTypePrimitive.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputScope } from "../util/OutputScope.ts";
@@ -28,10 +28,10 @@ export function writeExpressionBinary(
   let callName = ast.operator.toString();
 
   // i32
-  const i32id = AstTypePrimitiveId.Integer32;
+  const i32 = AstTypePrimitiveNative.Integer32;
   if (
-    isTypePrimitive(type1, i32id) &&
-    isTypePrimitive(type2, i32id)
+    isTypePrimitive(type1, i32) &&
+    isTypePrimitive(type2, i32)
   ) {
     if (ast.operator === AstExpressionBinaryOperator.Addition) {
       callName = "i32_addition";

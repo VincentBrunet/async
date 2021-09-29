@@ -1,16 +1,16 @@
 import { Ast } from "../../data/ast/Ast.ts";
 import { AstType, AstTypeKind } from "../../data/ast/AstType.ts";
-import { AstTypePrimitiveId } from "../../data/ast/AstTypePrimitive.ts";
+import { AstTypePrimitiveNative } from "../../data/ast/AstTypePrimitive.ts";
 
 export function makeTypePrimitive(
-  id: AstTypePrimitiveId,
+  native: AstTypePrimitiveNative,
   params?: Array<AstType>,
   source?: Ast,
 ) {
   return {
     kind: AstTypeKind.Primitive,
     data: {
-      id: id,
+      native: native,
       params: params ?? [],
       token: source?.token,
     },

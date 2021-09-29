@@ -5,20 +5,20 @@ import {
 import { makeTypePrimitiveBoolean } from "../../../lib/typing/makeTypePrimitiveBoolean.ts";
 import { BrowsedScope } from "../util/BrowsedScope.ts";
 
-export function browseExpressionUnary(
+export async function browseExpressionUnary(
   scope: BrowsedScope,
   ast: AstExpressionUnary,
-  next: () => void,
+  next: () => Promise<void>,
 ) {
-  next();
+  await next();
 
   ast.resolvedType = ast.expression.resolvedType; // TODO
 
   if (ast.operator === AstExpressionUnaryOperator.Not) {
     ast.resolvedType = makeTypePrimitiveBoolean(ast);
   } else if (ast.operator === AstExpressionUnaryOperator.Negative) {
-    //ast.resolvedType = makeTypePrimitive(AstTypePrimitiveId.Float32, [], ast);
+    //ast.resolvedType = makeTypePrimitive(AstTypePrimitiveNative.Float32, [], ast);
   } else if (ast.operator === AstExpressionUnaryOperator.Positive) {
-    //ast.resolvedType = makeTypePrimitive(AstTypePrimitiveId.Float32, [], ast);
+    //ast.resolvedType = makeTypePrimitive(AstTypePrimitiveNative.Float32, [], ast);
   }
 }

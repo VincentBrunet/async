@@ -2,10 +2,10 @@ import { AstExpressionObject } from "../../../data/ast/AstExpressionObject.ts";
 import { ensure } from "../../../lib/errors/ensure.ts";
 import { BrowsedScope } from "../util/BrowsedScope.ts";
 
-export function browseExpressionObject(
+export async function browseExpressionObject(
   scope: BrowsedScope,
   ast: AstExpressionObject,
-  next: () => void,
+  next: () => Promise<void>,
 ) {
   const resolvedClosures = ensure(ast.resolvedClosures);
 
@@ -17,5 +17,5 @@ export function browseExpressionObject(
     scope.pushClosure(astClosure);
   }
 
-  next();
+  await next();
 }

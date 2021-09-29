@@ -1,5 +1,5 @@
 import { AstExpressionLiteral } from "../../../data/ast/AstExpressionLiteral.ts";
-import { AstTypePrimitiveId } from "../../../data/ast/AstTypePrimitive.ts";
+import { AstTypePrimitiveNative } from "../../../data/ast/AstTypePrimitive.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 
@@ -17,12 +17,12 @@ digits.add("9");
 
 function makeLiteral(
   browser: TokenBrowser,
-  id: AstTypePrimitiveId,
+  native: AstTypePrimitiveNative,
   value: string,
 ): AstExpressionLiteral {
   browser.forward();
   return {
-    id: id,
+    native: native,
     value: value,
   };
 }
@@ -77,7 +77,7 @@ function makeStringUntil(
           case delimiter:
             return makeLiteral(
               browser,
-              AstTypePrimitiveId.String,
+              AstTypePrimitiveNative.String,
               parts.join(""),
             );
           case "\\":
@@ -101,13 +101,13 @@ export function parseExpressionLiteral(
   let value = token.str;
 
   if (value === "true") {
-    return makeLiteral(browser, AstTypePrimitiveId.Boolean, "true");
+    return makeLiteral(browser, AstTypePrimitiveNative.Boolean, "true");
   }
   if (value === "false") {
-    return makeLiteral(browser, AstTypePrimitiveId.Boolean, "false");
+    return makeLiteral(browser, AstTypePrimitiveNative.Boolean, "false");
   }
   if (value === "null") {
-    return makeLiteral(browser, AstTypePrimitiveId.Null, "null");
+    return makeLiteral(browser, AstTypePrimitiveNative.Null, "null");
   }
 
   if (value.startsWith('"')) {
@@ -124,7 +124,7 @@ export function parseExpressionLiteral(
     value = parseInt(value.slice(2), 2).toString(10);
   }
   if (digits.has(value[0])) {
-    return makeLiteral(browser, AstTypePrimitiveId.Integer32, value);
+    return makeLiteral(browser, AstTypePrimitiveNative.Integer32, value);
   }
 
   return browser.impasse("Literal");

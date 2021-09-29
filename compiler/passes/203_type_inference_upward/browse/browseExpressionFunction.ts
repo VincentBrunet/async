@@ -5,10 +5,10 @@ import { makeTypePrimitiveAny } from "../../../lib/typing/makeTypePrimitiveAny.t
 import { makeTypePrimitiveUnknown } from "../../../lib/typing/makeTypePrimitiveUnknown.ts";
 import { BrowsedScope } from "../util/BrowsedScope.ts";
 
-export function browseExpressionFunction(
+export async function browseExpressionFunction(
   scope: BrowsedScope,
   ast: AstExpressionFunction,
-  next: () => void,
+  next: () => Promise<void>,
 ) {
   for (const param of ast.params) {
     param.resolvedType = param.annotation.type ??
@@ -31,7 +31,7 @@ export function browseExpressionFunction(
     }
   }
 
-  next();
+  await next();
 
   const returns = ast.resolvedReturns ?? [];
   let currentReturn = returns[0]?.expression.resolvedType;

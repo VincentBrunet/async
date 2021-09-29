@@ -15,5 +15,4 @@ const pass = makeRecursorPass<BrowsedScope>((scope) => {
 
 export async function passShorthandResolve(ast: AstModule) {
   pass.recurseModule(new BrowsedScope(), ast);
-  return ast;
 }

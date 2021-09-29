@@ -42,18 +42,18 @@ type RecursorNextFunction<Scope, Ast> = (
   pass: RecursorPass<Scope>,
   scope: Scope,
   ast: Ast,
-) => void;
+) => Promise<void>;
 
 type RecursorPassFunction<Scope, Ast> = (
   scope: Scope,
   ast: Ast,
-) => void;
+) => Promise<void>;
 
 type RecursorLogicFunction<Scope, Ast> = (
   scope: Scope,
   ast: Ast,
-  next: () => void,
-) => void;
+  next: () => Promise<void>,
+) => Promise<void>;
 
 /**
  * Make a recursion pass function:
@@ -65,9 +65,9 @@ function makeRecursion<Scope, Ast>(
   pass: RecursorPassHolder<Scope>,
   call: RecursorNextFunction<Scope, Ast>,
 ): RecursorPassFunction<Scope, Ast> {
-  return (scope, ast) => {
+  return async (scope, ast) => {
     const child = deeper(scope);
-    call(pass.value!, child, ast);
+    await call(pass.value!, child, ast);
   };
 }
 
@@ -80,13 +80,13 @@ function makeLogic<Scope, Ast>(
   recurse: RecursorPassFunction<Scope, Ast>,
   logic?: RecursorLogicFunction<Scope, Ast>,
 ): RecursorPassFunction<Scope, Ast> {
-  return (scope, ast) => {
+  return async (scope, ast) => {
     if (logic) {
-      logic(scope, ast, () => {
-        recurse(scope, ast);
+      await logic(scope, ast, async () => {
+        await recurse(scope, ast);
       });
     } else {
-      recurse(scope, ast);
+      await recurse(scope, ast);
     }
   };
 }

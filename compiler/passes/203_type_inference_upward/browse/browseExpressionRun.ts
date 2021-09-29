@@ -2,10 +2,10 @@ import { AstExpressionRun } from "../../../data/ast/AstExpressionRun.ts";
 import { makeTypeOr } from "../../../lib/typing/makeTypeOr.ts";
 import { BrowsedScope } from "../util/BrowsedScope.ts";
 
-export function browseExpressionRun(
+export async function browseExpressionRun(
   scope: BrowsedScope,
   ast: AstExpressionRun,
-  next: () => void,
+  next: () => Promise<void>,
 ) {
   ast.resolvedType = ast.annotation.type;
   if (ast.resolvedClosures) {
@@ -14,7 +14,7 @@ export function browseExpressionRun(
     }
   }
 
-  next();
+  await next();
 
   const returns = ast.resolvedReturns ?? [];
   let current = returns[0]?.expression.resolvedType;

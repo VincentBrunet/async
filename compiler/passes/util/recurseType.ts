@@ -6,7 +6,7 @@ import { AstTypeObject } from "../../data/ast/AstTypeObject.ts";
 import { AstTypePrimitive } from "../../data/ast/AstTypePrimitive.ts";
 import { RecursorPass } from "./RecursorPass.ts";
 
-export function recurseType<Scope>(
+export async function recurseType<Scope>(
   r: RecursorPass<Scope>,
   p: Scope,
   ast: AstType,
@@ -15,23 +15,23 @@ export function recurseType<Scope>(
   const data = ast.data;
   switch (kind) {
     case AstTypeKind.Identifier: {
-      r.recurseTypeIdentifier(p, data as AstTypeIdentifier);
+      await r.recurseTypeIdentifier(p, data as AstTypeIdentifier);
       break;
     }
     case AstTypeKind.Primitive: {
-      r.recurseTypePrimitive(p, data as AstTypePrimitive);
+      await r.recurseTypePrimitive(p, data as AstTypePrimitive);
       break;
     }
     case AstTypeKind.Function: {
-      r.recurseTypeFunction(p, data as AstTypeFunction);
+      await r.recurseTypeFunction(p, data as AstTypeFunction);
       break;
     }
     case AstTypeKind.Object: {
-      r.recurseTypeObject(p, data as AstTypeObject);
+      await r.recurseTypeObject(p, data as AstTypeObject);
       break;
     }
     case AstTypeKind.Binary: {
-      r.recurseTypeBinary(p, data as AstTypeBinary);
+      await r.recurseTypeBinary(p, data as AstTypeBinary);
       break;
     }
   }

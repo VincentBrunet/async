@@ -1,9 +1,9 @@
 import { Ast } from "./Ast.ts";
 import { AstType } from "./AstType.ts";
-import { AstTypePrimitiveId } from "./AstTypePrimitive.ts";
+import { AstTypePrimitiveNative } from "./AstTypePrimitive.ts";
 
 export interface AstExpressionLiteral extends Ast {
-  id: AstTypePrimitiveId;
+  native: AstTypePrimitiveNative;
   value: string;
 
   resolvedType?: AstType;

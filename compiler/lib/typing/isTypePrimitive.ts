@@ -1,20 +1,20 @@
 import { AstType, AstTypeKind } from "../../data/ast/AstType.ts";
 import {
   AstTypePrimitive,
-  AstTypePrimitiveId,
+  AstTypePrimitiveNative,
 } from "../../data/ast/AstTypePrimitive.ts";
 
 export function isTypePrimitive(
   type?: AstType,
-  id?: AstTypePrimitiveId,
+  native?: AstTypePrimitiveNative,
 ) {
   if (type === undefined) {
     return false;
   }
   if (type.kind === AstTypeKind.Primitive) {
-    if (id) {
+    if (native) {
       const data = type.data as AstTypePrimitive;
-      if (data.id === id) {
+      if (data.native === native) {
         return true;
       }
     } else {

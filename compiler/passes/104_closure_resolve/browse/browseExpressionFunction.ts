@@ -1,16 +1,16 @@
 import { AstExpressionFunction } from "../../../data/ast/AstExpressionFunction.ts";
 import { BrowsedScope } from "../util/BrowsedScope.ts";
 
-export function browseExpressionFunction(
+export async function browseExpressionFunction(
   scope: BrowsedScope,
   ast: AstExpressionFunction,
-  next: () => void,
+  next: () => Promise<void>,
 ) {
   for (const astParam of ast.params) {
     if (astParam.name) {
       scope.pushName(astParam.name);
     }
   }
-  next();
+  await next();
   ast.resolvedClosures = scope.readClosures();
 }

@@ -1,12 +1,13 @@
 import { AstModule } from "../../../data/ast/AstModule.ts";
 import { BrowsedScope } from "../util/BrowsedScope.ts";
 
-export function browseModule(
+export async function browseModule(
   scope: BrowsedScope,
   ast: AstModule,
-  next: () => void,
+  next: () => Promise<void>,
 ) {
   scope.markCollectorStatementReturn();
-  next();
-  ast.resolvedReturns = scope.getStatementReturns();
+  await next();
+  const forbiddens = scope.getStatementReturns();
+  // TODO
 }

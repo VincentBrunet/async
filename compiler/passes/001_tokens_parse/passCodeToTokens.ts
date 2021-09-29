@@ -1,4 +1,6 @@
 import { Token, TokenKind } from "../../data/token/Token.ts";
+import { TokenModule } from "../../data/token/TokenModule.ts";
+import { hashModuleKey } from "../../lib/hash/hashModuleKey.ts";
 
 const invalidArray = ["\v", "\b", "\f"];
 const invalidSet = new Set(invalidArray);
@@ -54,7 +56,9 @@ function makeToken(
 /**
  * Convert a code file into a token array
  */
-export async function passCodeToTokens(code: string) {
+export async function passCodeToTokens(code: string): Promise<TokenModule> {
+  // Extracted info from code
+  const hash = hashModuleKey(code);
   const tokens = new Array<Token>();
 
   // location counters
@@ -123,5 +127,8 @@ export async function passCodeToTokens(code: string) {
   }
 
   // done
-  return tokens;
+  return {
+    hash: hash,
+    list: tokens,
+  };
 }

@@ -1,13 +1,13 @@
 import { AstExpressionFunction } from "../../../data/ast/AstExpressionFunction.ts";
 import { BrowsedScope } from "../util/BrowsedScope.ts";
 
-export function browseExpressionFunction(
+export async function browseExpressionFunction(
   scope: BrowsedScope,
   ast: AstExpressionFunction,
-  next: () => void,
+  next: () => Promise<void>,
 ) {
   for (const param of ast.template.params) {
     scope.pushTemplateParam(param);
   }
-  next();
+  await next();
 }

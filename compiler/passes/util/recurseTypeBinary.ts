@@ -1,11 +1,11 @@
 import { AstTypeBinary } from "../../data/ast/AstTypeBinary.ts";
 import { RecursorPass } from "./RecursorPass.ts";
 
-export function recurseTypeBinary<Scope>(
+export async function recurseTypeBinary<Scope>(
   r: RecursorPass<Scope>,
   p: Scope,
   ast: AstTypeBinary,
 ) {
-  r.recurseType(p, ast.type1);
-  r.recurseType(p, ast.type2);
+  await r.recurseType(p, ast.type1);
+  await r.recurseType(p, ast.type2);
 }

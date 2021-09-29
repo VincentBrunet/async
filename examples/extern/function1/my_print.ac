@@ -1,0 +1,22 @@
+typedef MyObject = {
+  a :i32;
+  b :i32;
+};;
+
+const my_print = fn (a :i32, b :i32) :MyObject {
+
+  unsafe {
+    printf("Hello, A:%d\n", __a->data.i32);
+    printf("Hello, B:%d\n", __b->data.i32);
+  }
+
+  return {
+    a = a + 10 - b,
+    b = -b + 10,
+  }
+
+}
+
+return {
+  my_print = my_print,
+}

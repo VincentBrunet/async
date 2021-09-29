@@ -1,12 +1,12 @@
 import { AstExpressionBinary } from "../../../data/ast/AstExpressionBinary.ts";
 import { BrowsedScope } from "../util/BrowsedScope.ts";
 
-export function browseExpressionBinary(
+export async function browseExpressionBinary(
   scope: BrowsedScope,
   ast: AstExpressionBinary,
-  next: () => void,
+  next: () => Promise<void>,
 ) {
-  next();
+  await next();
 
   ast.resolvedType = ast.expression2.resolvedType; // TODO
 }

@@ -1,3 +1,4 @@
-import { compile } from "./compile.ts";
+import { finishCompiles, triggerCompile } from "./pipeline/triggerCompile.ts";
 
-await compile(Deno.args[0]);
+await triggerCompile(Deno.args[0]);
+await finishCompiles();

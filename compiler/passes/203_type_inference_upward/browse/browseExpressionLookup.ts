@@ -1,12 +1,12 @@
 import { AstExpressionLookup } from "../../../data/ast/AstExpressionLookup.ts";
 import { BrowsedScope } from "../util/BrowsedScope.ts";
 
-export function browseExpressionLookup(
+export async function browseExpressionLookup(
   scope: BrowsedScope,
   ast: AstExpressionLookup,
-  next: () => void,
+  next: () => Promise<void>,
 ) {
-  next();
+  await next();
 
   ast.resolvedType = ast.expression.resolvedType; // TODO
 }

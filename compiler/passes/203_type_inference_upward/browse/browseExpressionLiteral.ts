@@ -2,11 +2,11 @@ import { AstExpressionLiteral } from "../../../data/ast/AstExpressionLiteral.ts"
 import { makeTypePrimitive } from "../../../lib/typing/makeTypePrimitive.ts";
 import { BrowsedScope } from "../util/BrowsedScope.ts";
 
-export function browseExpressionLiteral(
+export async function browseExpressionLiteral(
   scope: BrowsedScope,
   ast: AstExpressionLiteral,
-  next: () => void,
+  next: () => Promise<void>,
 ) {
-  next();
-  ast.resolvedType = makeTypePrimitive(ast.id, [], ast);
+  await next();
+  ast.resolvedType = makeTypePrimitive(ast.native, [], ast);
 }

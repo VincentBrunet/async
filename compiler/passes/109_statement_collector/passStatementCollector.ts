@@ -17,5 +17,4 @@ const pass = makeRecursorPass<BrowsedScope>((scope) => {
 
 export async function passStatementCollector(ast: AstModule) {
   pass.recurseModule(new BrowsedScope(), ast);
-  return ast;
 }

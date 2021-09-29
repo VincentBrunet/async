@@ -1,0 +1,213 @@
+{
+ "hash": "0x46BBAA0B2EFBBD17316A322326E286E259BFA40D89E50EBAE2F742358DD16372",
+ "statements": [
+  {
+   "kind": "Typedef",
+   "data": {
+    "name": "MyObject",
+    "type": {
+     "kind": "Object",
+     "data": {
+      "fields": [
+       {
+        "mutable": false,
+        "name": "a",
+        "hash": "0xCA978112CA1BBDCA",
+        "type": {
+         "kind": "Primitive",
+         "data": { "native": "i32", "params": [], "id": 1 },
+         "id": 2
+        }
+       },
+       {
+        "mutable": false,
+        "name": "b",
+        "hash": "0x3E23E8160039594A",
+        "type": {
+         "kind": "Primitive",
+         "data": { "native": "i32", "params": [], "id": 4 },
+         "id": 5
+        }
+       }
+      ],
+      "id": 7
+     },
+     "id": 8
+    },
+    "template": { "params": [], "id": 0 },
+    "id": 9
+   },
+   "id": 10
+  },
+  { "kind": "Empty", "data": { "id": 11 }, "id": 12 },
+  {
+   "kind": "Variable",
+   "data": {
+    "mutable": false,
+    "name": "my_print",
+    "hash": "0xEB759C75BAE1C8B6",
+    "annotation": { "id": 13 },
+    "value": {
+     "kind": "Function",
+     "data": {
+      "template": { "params": [], "id": 14 },
+      "params": [
+       {
+        "name": "a",
+        "annotation": {
+         "type": {
+          "kind": "Primitive",
+          "data": { "native": "i32", "params": [], "id": 15 },
+          "id": 16
+         },
+         "id": 17
+        }
+       },
+       {
+        "name": "b",
+        "annotation": {
+         "type": {
+          "kind": "Primitive",
+          "data": { "native": "i32", "params": [], "id": 18 },
+          "id": 19
+         },
+         "id": 20
+        }
+       }
+      ],
+      "ret": {
+       "type": {
+        "kind": "Identifier",
+        "data": { "name": "MyObject", "params": [], "id": 21 },
+        "id": 22
+       },
+       "id": 23
+      },
+      "block": {
+       "statements": [
+        {
+         "kind": "Unsafe",
+         "data": {
+          "content": "\n    printf(\"Hello, A:%d\n\", __a->data.i32);\n    printf(\"Hello, B:%d\n\", __b->data.i32);\n  ",
+          "id": 24
+         },
+         "id": 25
+        },
+        {
+         "kind": "Return",
+         "data": {
+          "expression": {
+           "kind": "Object",
+           "data": {
+            "fields": [
+             {
+              "mutable": false,
+              "name": "a",
+              "hash": "0xCA978112CA1BBDCA",
+              "expression": {
+               "kind": "Binary",
+               "data": {
+                "operator": "Substraction",
+                "expression1": {
+                 "kind": "Binary",
+                 "data": {
+                  "operator": "Addition",
+                  "expression1": { "kind": "Identifier", "data": { "name": "a", "id": 26 } },
+                  "expression2": {
+                   "kind": "Literal",
+                   "data": { "native": "i32", "value": "10", "id": 27 }
+                  },
+                  "resolvedPrioritization": true
+                 }
+                },
+                "expression2": {
+                 "kind": "Identifier",
+                 "data": { "name": "b", "id": 28 },
+                 "id": 29
+                },
+                "id": 32
+               },
+               "id": 33
+              }
+             },
+             {
+              "mutable": false,
+              "name": "b",
+              "hash": "0x3E23E8160039594A",
+              "expression": {
+               "kind": "Binary",
+               "data": {
+                "operator": "Addition",
+                "expression1": {
+                 "kind": "Unary",
+                 "data": {
+                  "operator": "Negative",
+                  "expression": {
+                   "kind": "Identifier",
+                   "data": { "name": "b", "id": 34 },
+                   "id": 35
+                  },
+                  "id": 36
+                 }
+                },
+                "expression2": {
+                 "kind": "Literal",
+                 "data": { "native": "i32", "value": "10", "id": 37 },
+                 "id": 38
+                },
+                "id": 39
+               },
+               "id": 40
+              }
+             }
+            ],
+            "id": 41,
+            "resolvedClosures": [ { "idx": 0, "name": "a" }, { "idx": 1, "name": "b" } ]
+           },
+           "id": 42
+          },
+          "id": 43
+         },
+         "id": 44
+        }
+       ],
+       "id": 45
+      },
+      "id": 46,
+      "resolvedClosures": []
+     },
+     "id": 47
+    },
+    "id": 48
+   },
+   "id": 49
+  },
+  {
+   "kind": "Return",
+   "data": {
+    "expression": {
+     "kind": "Object",
+     "data": {
+      "fields": [
+       {
+        "mutable": false,
+        "name": "my_print",
+        "hash": "0xEB759C75BAE1C8B6",
+        "expression": {
+         "kind": "Identifier",
+         "data": { "name": "my_print", "id": 50 },
+         "id": 51
+        }
+       }
+      ],
+      "id": 52,
+      "resolvedClosures": [ { "idx": 0, "name": "my_print" } ]
+     },
+     "id": 53
+    },
+    "id": 54
+   },
+   "id": 55
+  }
+ ]
+}

@@ -1,7 +1,7 @@
 import { Ast } from "./Ast.ts";
 import { AstType } from "./AstType.ts";
 
-export enum AstTypePrimitiveId {
+export enum AstTypePrimitiveNative {
   Any = "any",
   String = "str",
   Boolean = "bool",
@@ -20,6 +20,6 @@ export enum AstTypePrimitiveId {
 }
 
 export interface AstTypePrimitive extends Ast {
-  id: AstTypePrimitiveId;
+  native: AstTypePrimitiveNative;
   params: Array<AstType>;
 }

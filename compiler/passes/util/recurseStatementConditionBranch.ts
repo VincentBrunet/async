@@ -1,11 +1,11 @@
 import { AstStatementConditionBranch } from "../../data/ast/AstStatementCondition.ts";
 import { RecursorPass } from "./RecursorPass.ts";
 
-export function recurseStatementConditionBranch<Scope>(
+export async function recurseStatementConditionBranch<Scope>(
   r: RecursorPass<Scope>,
   p: Scope,
   ast: AstStatementConditionBranch,
 ) {
-  r.recurseExpression(p, ast.condition);
-  r.recurseBlock(p, ast.block);
+  await r.recurseExpression(p, ast.condition);
+  await r.recurseBlock(p, ast.block);
 }

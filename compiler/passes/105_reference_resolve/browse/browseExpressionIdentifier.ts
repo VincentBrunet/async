@@ -1,11 +1,11 @@
 import { AstExpressionIdentifier } from "../../../data/ast/AstExpressionIdentifier.ts";
 import { BrowsedScope } from "../util/BrowsedScope.ts";
 
-export function browseExpressionIdentifier(
+export async function browseExpressionIdentifier(
   scope: BrowsedScope,
   ast: AstExpressionIdentifier,
-  next: () => void,
+  next: () => Promise<void>,
 ) {
   ast.resolvedReference = scope.findReference(ast.name);
-  next();
+  await next();
 }

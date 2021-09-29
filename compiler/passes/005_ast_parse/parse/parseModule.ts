@@ -1,10 +1,14 @@
 import { AstModule } from "../../../data/ast/AstModule.ts";
 import { AstStatement } from "../../../data/ast/AstStatement.ts";
+import { TokenModule } from "../../../data/token/TokenModule.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseStatement } from "./parseStatement.ts";
 
-export function parseModule(browser: TokenBrowser): AstModule | TokenImpasse {
+export function parseModule(
+  browser: TokenBrowser,
+  tokens: TokenModule,
+): AstModule | TokenImpasse {
   // statements
   const statements = new Array<AstStatement>();
   while (true) {
@@ -21,6 +25,8 @@ export function parseModule(browser: TokenBrowser): AstModule | TokenImpasse {
   }
   // done
   return {
+    hash: tokens.hash,
+    tokens: tokens.list,
     statements: statements,
   };
 }

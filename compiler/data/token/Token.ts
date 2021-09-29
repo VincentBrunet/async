@@ -1,16 +1,10 @@
-import { Range } from "../util/Range.ts";
+import { TokenLocation } from "./TokenLocation.ts";
 
 export enum TokenKind {
   Whitespace = "whitespace",
   Special = "special",
   Text = "text",
   Invalid = "invalid",
-}
-
-export interface TokenLocation {
-  index: Range;
-  column: Range;
-  line: Range;
 }
 
 export interface Token {

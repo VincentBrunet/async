@@ -1,12 +1,12 @@
 import { AstTypePrimitive } from "../../data/ast/AstTypePrimitive.ts";
 import { RecursorPass } from "./RecursorPass.ts";
 
-export function recurseTypePrimitive<Scope>(
+export async function recurseTypePrimitive<Scope>(
   r: RecursorPass<Scope>,
   p: Scope,
   ast: AstTypePrimitive,
 ) {
   for (const param of ast.params) {
-    r.recurseType(p, param);
+    await r.recurseType(p, param);
   }
 }

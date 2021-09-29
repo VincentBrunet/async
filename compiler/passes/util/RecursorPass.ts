@@ -38,138 +38,138 @@ export interface RecursorPass<Scope> {
   recurseModule: (
     scope: Scope,
     ast: AstModule,
-  ) => void;
+  ) => Promise<void>;
 
   recurseBlock: (
     scope: Scope,
     ast: AstBlock,
-  ) => void;
+  ) => Promise<void>;
 
   recurseStatement: (
     scope: Scope,
     ast: AstStatement,
-  ) => void;
+  ) => Promise<void>;
   recurseStatementVariable: (
     scope: Scope,
     ast: AstStatementVariable,
-  ) => void;
+  ) => Promise<void>;
   recurseStatementTypedef: (
     scope: Scope,
     ast: AstStatementTypedef,
-  ) => void;
+  ) => Promise<void>;
   recurseStatementWhile: (
     scope: Scope,
     ast: AstStatementWhile,
-  ) => void;
+  ) => Promise<void>;
   recurseStatementCondition: (
     scope: Scope,
     ast: AstStatementCondition,
-  ) => void;
+  ) => Promise<void>;
   recurseStatementConditionBranch: (
     scope: Scope,
     ast: AstStatementConditionBranch,
-  ) => void;
+  ) => Promise<void>;
   recurseStatementReturn: (
     scope: Scope,
     ast: AstStatementReturn,
-  ) => void;
+  ) => Promise<void>;
   recurseStatementUnsafe: (
     scope: Scope,
     ast: AstStatementUnsafe,
-  ) => void;
+  ) => Promise<void>;
   recurseStatementExpression: (
     scope: Scope,
     ast: AstStatementExpression,
-  ) => void;
+  ) => Promise<void>;
   recurseStatementEmpty: (
     scope: Scope,
     ast: AstStatementEmpty,
-  ) => void;
+  ) => Promise<void>;
 
   recurseExpression: (
     scope: Scope,
     ast: AstExpression,
-  ) => void;
+  ) => Promise<void>;
   recurseExpressionImport: (
     scope: Scope,
     ast: AstExpressionImport,
-  ) => void;
+  ) => Promise<void>;
   recurseExpressionCall: (
     scope: Scope,
     ast: AstExpressionCall,
-  ) => void;
+  ) => Promise<void>;
   recurseExpressionIdentifier: (
     scope: Scope,
     ast: AstExpressionIdentifier,
-  ) => void;
+  ) => Promise<void>;
   recurseExpressionLiteral: (
     scope: Scope,
     ast: AstExpressionLiteral,
-  ) => void;
+  ) => Promise<void>;
   recurseExpressionFunction: (
     scope: Scope,
     ast: AstExpressionFunction,
-  ) => void;
+  ) => Promise<void>;
   recurseExpressionObject: (
     scope: Scope,
     ast: AstExpressionObject,
-  ) => void;
+  ) => Promise<void>;
   recurseExpressionRun: (
     scope: Scope,
     ast: AstExpressionRun,
-  ) => void;
+  ) => Promise<void>;
   recurseExpressionLookup: (
     scope: Scope,
     ast: AstExpressionLookup,
-  ) => void;
+  ) => Promise<void>;
   recurseExpressionUnary: (
     scope: Scope,
     ast: AstExpressionUnary,
-  ) => void;
+  ) => Promise<void>;
   recurseExpressionBinary: (
     scope: Scope,
     ast: AstExpressionBinary,
-  ) => void;
+  ) => Promise<void>;
   recurseExpressionTyping: (
     scope: Scope,
     ast: AstExpressionTyping,
-  ) => void;
+  ) => Promise<void>;
   recurseExpressionParenthesis: (
     scope: Scope,
     ast: AstExpressionParenthesis,
-  ) => void;
+  ) => Promise<void>;
 
   recurseAnnotationType: (
     scope: Scope,
     ast: AstAnnotationType,
-  ) => void;
+  ) => Promise<void>;
   recurseAnnotationTemplate: (
     scope: Scope,
     ast: AstAnnotationTemplate,
-  ) => void;
+  ) => Promise<void>;
 
   recurseType: (
     scope: Scope,
     ast: AstType,
-  ) => void;
+  ) => Promise<void>;
   recurseTypeBinary: (
     scope: Scope,
     ast: AstTypeBinary,
-  ) => void;
+  ) => Promise<void>;
   recurseTypePrimitive: (
     scope: Scope,
     ast: AstTypePrimitive,
-  ) => void;
+  ) => Promise<void>;
   recurseTypeIdentifier: (
     scope: Scope,
     ast: AstTypeIdentifier,
-  ) => void;
+  ) => Promise<void>;
   recurseTypeFunction: (
     scope: Scope,
     ast: AstTypeFunction,
-  ) => void;
+  ) => Promise<void>;
   recurseTypeObject: (
     scope: Scope,
     ast: AstTypeObject,
-  ) => void;
+  ) => Promise<void>;
 }

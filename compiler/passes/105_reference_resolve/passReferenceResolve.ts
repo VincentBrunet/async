@@ -19,5 +19,4 @@ const pass = makeRecursorPass<BrowsedScope>((scope) => {
 
 export async function passReferenceResolve(ast: AstModule) {
   pass.recurseModule(new BrowsedScope(), ast);
-  return ast;
 }

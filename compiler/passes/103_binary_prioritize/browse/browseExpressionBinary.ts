@@ -76,14 +76,14 @@ function listBinaryNodes(
 /**
  * Build a new binary operation tree by reading the inputs and operators
  */
-export function browseExpressionBinary(
+export async function browseExpressionBinary(
   scope: undefined,
   ast: AstExpressionBinary,
-  next: () => void,
+  next: () => Promise<void>,
 ) {
   // Skip if already resolved prioritization
   if (ast.resolvedPrioritization) {
-    next();
+    await next();
     return;
   }
 
@@ -150,5 +150,5 @@ export function browseExpressionBinary(
   ast.expression2 = binary.expression2;
 
   // done
-  next();
+  await next();
 }
