@@ -2,6 +2,7 @@ import { AstStatement, AstStatementKind } from "../../data/ast/AstStatement.ts";
 import { AstStatementCondition } from "../../data/ast/AstStatementCondition.ts";
 import { AstStatementEmpty } from "../../data/ast/AstStatementEmpty.ts";
 import { AstStatementExpression } from "../../data/ast/AstStatementExpression.ts";
+import { AstStatementImport } from "../../data/ast/AstStatementImport.ts";
 import { AstStatementReturn } from "../../data/ast/AstStatementReturn.ts";
 import { AstStatementTypedef } from "../../data/ast/AstStatementTypedef.ts";
 import { AstStatementUnsafe } from "../../data/ast/AstStatementUnsafe.ts";
@@ -17,6 +18,10 @@ export async function recurseStatement<Scope>(
   const kind = ast.kind;
   const data = ast.data;
   switch (kind) {
+    case AstStatementKind.Import: {
+      await r.recurseStatementImport(p, data as AstStatementImport);
+      break;
+    }
     case AstStatementKind.Variable: {
       await r.recurseStatementVariable(p, data as AstStatementVariable);
       break;

@@ -23,7 +23,7 @@ export function writeExpressionIdentifier(
       statement.pushPart("]->value");
       break;
     }
-    case AstResolvedReferenceKind.Param: {
+    case AstResolvedReferenceKind.FunctionParam: {
       const param = resolvedReference.data as AstExpressionFunctionParam;
       statement.pushPart("__");
       statement.pushPart(ensure(param.name));

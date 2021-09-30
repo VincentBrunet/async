@@ -123,7 +123,7 @@
                       "idx": 0,
                       "name": "a",
                       "resolvedReference": {
-                       "kind": "Param",
+                       "kind": "FunctionParam",
                        "data": {
                         "name": "a",
                         "annotation": { "type": {/* circular */}, "id": 17 }
@@ -151,7 +151,7 @@
                     "idx": 1,
                     "name": "b",
                     "resolvedReference": {
-                     "kind": "Param",
+                     "kind": "FunctionParam",
                      "data": {
                       "name": "b",
                       "annotation": { "type": {/* circular */}, "id": 20 }
@@ -210,12 +210,12 @@
              {
               "idx": 0,
               "name": "a",
-              "resolvedReference": { "kind": "Param", "data": {/* circular */} }
+              "resolvedReference": { "kind": "FunctionParam", "data": {/* circular */} }
              },
              {
               "idx": 1,
               "name": "b",
-              "resolvedReference": { "kind": "Param", "data": {/* circular */} }
+              "resolvedReference": { "kind": "FunctionParam", "data": {/* circular */} }
              }
             ]
            },

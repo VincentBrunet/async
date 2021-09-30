@@ -1,32 +1,22 @@
 {
- "hash": "0x4149EC12B780F09BBDEE2C18755742B620D392DD8385D1487ACCFE6D3B6903B7",
+ "hash": "0x8F09BFE964E2D381C5C3D8B005D20B0CCE75175226C0327C9EFF9B62B4BC17D6",
  "statements": [
   {
-   "kind": "Variable",
+   "kind": "Import",
    "data": {
-    "mutable": false,
-    "name": "my_print",
-    "hash": "0xEB759C75BAE1C8B6",
-    "annotation": { "id": 0 },
-    "value": {
-     "kind": "Import",
+    "slots": [],
+    "from": {
+     "kind": "Literal",
      "data": {
-      "expression": {
-       "kind": "Literal",
-       "data": {
-        "native": "str",
-        "value": "./examples/extern/function1/my_print.ac",
-        "id": 1
-       },
-       "id": 2
-      },
-      "id": 3
+      "native": "str",
+      "value": "./examples/extern/function1/my_print.ac",
+      "id": 0
      },
-     "id": 4
+     "id": 1
     },
-    "id": 5
+    "id": 2
    },
-   "id": 6
+   "id": 3
   },
   {
    "kind": "Variable",
@@ -34,38 +24,38 @@
     "mutable": false,
     "name": "res1",
     "hash": "0x0E405B9869CEFA2C",
-    "annotation": { "id": 7 },
+    "annotation": { "id": 4 },
     "value": {
      "kind": "Call",
      "data": {
       "callee": {
        "kind": "Lookup",
        "data": {
-        "expression": { "kind": "Identifier", "data": { "name": "my_print", "id": 8 } },
+        "expression": { "kind": "Identifier", "data": { "name": "my_print", "id": 5 } },
         "name": "my_print",
         "hash": "0xEB759C75BAE1C8B6",
-        "id": 9
+        "id": 6
        }
       },
       "params": [
        {
         "kind": "Literal",
-        "data": { "native": "i32", "value": "1", "id": 10 },
-        "id": 11
+        "data": { "native": "i32", "value": "1", "id": 7 },
+        "id": 8
        },
        {
         "kind": "Literal",
-        "data": { "native": "i32", "value": "2", "id": 12 },
-        "id": 13
+        "data": { "native": "i32", "value": "2", "id": 9 },
+        "id": 10
        }
       ],
-      "id": 14
+      "id": 11
      },
-     "id": 15
+     "id": 12
     },
-    "id": 16
+    "id": 13
    },
-   "id": 17
+   "id": 14
   },
   {
    "kind": "Expression",
@@ -76,41 +66,41 @@
       "callee": {
        "kind": "Lookup",
        "data": {
-        "expression": { "kind": "Identifier", "data": { "name": "my_print", "id": 18 } },
+        "expression": { "kind": "Identifier", "data": { "name": "my_print", "id": 15 } },
         "name": "my_print",
         "hash": "0xEB759C75BAE1C8B6",
-        "id": 19
+        "id": 16
        }
       },
       "params": [
        {
         "kind": "Lookup",
         "data": {
-         "expression": { "kind": "Identifier", "data": { "name": "res1", "id": 20 } },
+         "expression": { "kind": "Identifier", "data": { "name": "res1", "id": 17 } },
          "name": "b",
          "hash": "0x3E23E8160039594A",
-         "id": 21
+         "id": 18
         },
-        "id": 22
+        "id": 19
        },
        {
         "kind": "Lookup",
         "data": {
-         "expression": { "kind": "Identifier", "data": { "name": "res1", "id": 23 } },
+         "expression": { "kind": "Identifier", "data": { "name": "res1", "id": 20 } },
          "name": "a",
          "hash": "0xCA978112CA1BBDCA",
-         "id": 24
+         "id": 21
         },
-        "id": 25
+        "id": 22
        }
       ],
-      "id": 26
+      "id": 23
      },
-     "id": 27
+     "id": 24
     },
-    "id": 28
+    "id": 25
    },
-   "id": 29
+   "id": 26
   },
   {
    "kind": "Variable",
@@ -118,38 +108,38 @@
     "mutable": false,
     "name": "res2",
     "hash": "0x1DB7EFD18753FBF0",
-    "annotation": { "id": 30 },
+    "annotation": { "id": 27 },
     "value": {
      "kind": "Call",
      "data": {
       "callee": {
        "kind": "Lookup",
        "data": {
-        "expression": { "kind": "Identifier", "data": { "name": "my_print", "id": 31 } },
+        "expression": { "kind": "Identifier", "data": { "name": "my_print", "id": 28 } },
         "name": "my_print",
         "hash": "0xEB759C75BAE1C8B6",
-        "id": 32
+        "id": 29
        }
       },
       "params": [
        {
         "kind": "Literal",
-        "data": { "native": "i32", "value": "3", "id": 33 },
-        "id": 34
+        "data": { "native": "i32", "value": "3", "id": 30 },
+        "id": 31
        },
        {
         "kind": "Literal",
-        "data": { "native": "i32", "value": "4", "id": 35 },
-        "id": 36
+        "data": { "native": "i32", "value": "4", "id": 32 },
+        "id": 33
        }
       ],
-      "id": 37
+      "id": 34
      },
-     "id": 38
+     "id": 35
     },
-    "id": 39
+    "id": 36
    },
-   "id": 40
+   "id": 37
   },
   {
    "kind": "Expression",
@@ -160,41 +150,41 @@
       "callee": {
        "kind": "Lookup",
        "data": {
-        "expression": { "kind": "Identifier", "data": { "name": "my_print", "id": 41 } },
+        "expression": { "kind": "Identifier", "data": { "name": "my_print", "id": 38 } },
         "name": "my_print",
         "hash": "0xEB759C75BAE1C8B6",
-        "id": 42
+        "id": 39
        }
       },
       "params": [
        {
         "kind": "Lookup",
         "data": {
-         "expression": { "kind": "Identifier", "data": { "name": "res2", "id": 43 } },
+         "expression": { "kind": "Identifier", "data": { "name": "res2", "id": 40 } },
          "name": "b",
          "hash": "0x3E23E8160039594A",
-         "id": 44
+         "id": 41
         },
-        "id": 45
+        "id": 42
        },
        {
         "kind": "Lookup",
         "data": {
-         "expression": { "kind": "Identifier", "data": { "name": "res2", "id": 46 } },
+         "expression": { "kind": "Identifier", "data": { "name": "res2", "id": 43 } },
          "name": "a",
          "hash": "0xCA978112CA1BBDCA",
-         "id": 47
+         "id": 44
         },
-        "id": 48
+        "id": 45
        }
       ],
-      "id": 49
+      "id": 46
      },
-     "id": 50
+     "id": 47
     },
-    "id": 51
+    "id": 48
    },
-   "id": 52
+   "id": 49
   },
   {
    "kind": "Variable",
@@ -202,38 +192,38 @@
     "mutable": false,
     "name": "res3",
     "hash": "0x1D648848FD3C789C",
-    "annotation": { "id": 53 },
+    "annotation": { "id": 50 },
     "value": {
      "kind": "Call",
      "data": {
       "callee": {
        "kind": "Lookup",
        "data": {
-        "expression": { "kind": "Identifier", "data": { "name": "my_print", "id": 54 } },
+        "expression": { "kind": "Identifier", "data": { "name": "my_print", "id": 51 } },
         "name": "my_print",
         "hash": "0xEB759C75BAE1C8B6",
-        "id": 55
+        "id": 52
        }
       },
       "params": [
        {
         "kind": "Literal",
-        "data": { "native": "i32", "value": "5", "id": 56 },
-        "id": 57
+        "data": { "native": "i32", "value": "5", "id": 53 },
+        "id": 54
        },
        {
         "kind": "Literal",
-        "data": { "native": "i32", "value": "6", "id": 58 },
-        "id": 59
+        "data": { "native": "i32", "value": "6", "id": 55 },
+        "id": 56
        }
       ],
-      "id": 60
+      "id": 57
      },
-     "id": 61
+     "id": 58
     },
-    "id": 62
+    "id": 59
    },
-   "id": 63
+   "id": 60
   },
   {
    "kind": "Expression",
@@ -244,41 +234,41 @@
       "callee": {
        "kind": "Lookup",
        "data": {
-        "expression": { "kind": "Identifier", "data": { "name": "my_print", "id": 64 } },
+        "expression": { "kind": "Identifier", "data": { "name": "my_print", "id": 61 } },
         "name": "my_print",
         "hash": "0xEB759C75BAE1C8B6",
-        "id": 65
+        "id": 62
        }
       },
       "params": [
        {
         "kind": "Lookup",
         "data": {
-         "expression": { "kind": "Identifier", "data": { "name": "res3", "id": 66 } },
+         "expression": { "kind": "Identifier", "data": { "name": "res3", "id": 63 } },
          "name": "b",
          "hash": "0x3E23E8160039594A",
-         "id": 67
+         "id": 64
         },
-        "id": 68
+        "id": 65
        },
        {
         "kind": "Lookup",
         "data": {
-         "expression": { "kind": "Identifier", "data": { "name": "res3", "id": 69 } },
+         "expression": { "kind": "Identifier", "data": { "name": "res3", "id": 66 } },
          "name": "a",
          "hash": "0xCA978112CA1BBDCA",
-         "id": 70
+         "id": 67
         },
-        "id": 71
+        "id": 68
        }
       ],
-      "id": 72
+      "id": 69
      },
-     "id": 73
+     "id": 70
     },
-    "id": 74
+    "id": 71
    },
-   "id": 75
+   "id": 72
   },
   {
    "kind": "Return",
@@ -294,12 +284,12 @@
         "expression": {
          "kind": "Lookup",
          "data": {
-          "expression": { "kind": "Identifier", "data": { "name": "my_print", "id": 76 } },
+          "expression": { "kind": "Identifier", "data": { "name": "my_print", "id": 73 } },
           "name": "my_print",
           "hash": "0xEB759C75BAE1C8B6",
-          "id": 77
+          "id": 74
          },
-         "id": 78
+         "id": 75
         }
        },
        {
@@ -309,9 +299,9 @@
         "expression": {
          "kind": "Function",
          "data": {
-          "template": { "params": [], "id": 79 },
+          "template": { "params": [], "id": 76 },
           "params": [],
-          "ret": { "id": 80 },
+          "ret": { "id": 77 },
           "block": {
            "statements": [
             {
@@ -321,36 +311,42 @@
                "kind": "Binary",
                "data": {
                 "operator": "Assign",
-                "expression1": { "kind": "Identifier", "data": { "name": "res1", "id": 81 } },
+                "expression1": { "kind": "Identifier", "data": { "name": "res1", "id": 78 } },
                 "expression2": {
                  "kind": "Identifier",
-                 "data": { "name": "res2", "id": 82 },
-                 "id": 83
+                 "data": { "name": "res2", "id": 79 },
+                 "id": 80
                 },
-                "id": 84
+                "id": 81
                },
-               "id": 85
+               "id": 82
               },
-              "id": 86
+              "id": 83
              },
-             "id": 87
+             "id": 84
             }
            ],
-           "id": 88
+           "id": 85
           },
-          "id": 89
+          "id": 86,
+          "resolvedClosures": [ { "idx": 0, "name": "res1" }, { "idx": 1, "name": "res2" } ]
          },
-         "id": 90
+         "id": 87
         }
        }
       ],
-      "id": 91
+      "id": 88,
+      "resolvedClosures": [
+       { "idx": 0, "name": "my_print" },
+       { "idx": 1, "name": "res1" },
+       { "idx": 2, "name": "res2" }
+      ]
      },
-     "id": 92
+     "id": 89
     },
-    "id": 93
+    "id": 90
    },
-   "id": 94
+   "id": 91
   }
  ]
 }

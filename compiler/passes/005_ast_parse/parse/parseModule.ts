@@ -25,6 +25,7 @@ export function parseModule(
   }
   // done
   return {
+    url: tokens.url,
     hash: tokens.hash,
     tokens: tokens.list,
     statements: statements,

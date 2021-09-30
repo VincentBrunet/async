@@ -1,5 +1,5 @@
-import { ensureDir } from "https://deno.land/std/fs/ensure_dir.ts";
 import { AstModule } from "../data/ast/AstModule.ts";
+import { cacheDirFromHash } from "../lib/fs/cacheDirFromHash.ts";
 import { hashModuleKey } from "../lib/hash/hashModuleKey.ts";
 import { passUrlToCode } from "../passes/000_code_read/passUrlToCode.ts";
 import { passCodeToTokens } from "../passes/001_tokens_parse/passCodeToTokens.ts";
@@ -12,24 +12,16 @@ import { passStatementCollector } from "../passes/109_statement_collector/passSt
 import { passImportResolve } from "../passes/199_import_resolve/passImportResolve.ts";
 import { passTypeInferenceUpward } from "../passes/203_type_inference_upward/passTypeInferenceUpward.ts";
 import { passAstToOutputModule } from "../passes/950_write_output/passAstToOutputModule.ts";
+import { passOutputToObject } from "../passes/980_compile_output/passOutputToObject.ts";
 import { doPass } from "./doPass.ts";
-import { readToString } from "./readToString.ts";
-
-const cachePath = ".cache";
 
 const compileQueue: AstModule[] = [];
-
-async function dirFromHash(hash: string) {
-  const dir = cachePath + "/" + hash;
-  await ensureDir(dir);
-  return dir;
-}
 
 export async function triggerCompile(url: string) {
   const code = await passUrlToCode(url);
 
   const hash = hashModuleKey(code);
-  const dir = await dirFromHash(hash);
+  const dir = await cacheDirFromHash(hash);
 
   const tokens = await doPass(dir, code, "001", passCodeToTokens);
   const ast = await doPass(dir, tokens, "005", passTokensToAst);
@@ -53,33 +45,10 @@ export async function finishCompiles() {
 }
 
 export async function finishCompile(ast: AstModule) {
-  const dir = await dirFromHash(ast.hash);
+  const dir = await cacheDirFromHash(ast.hash);
 
   await doPass(dir, ast, "203", passTypeInferenceUpward);
 
   const output = await doPass(dir, ast, "950", passAstToOutputModule);
-
-  Deno.writeTextFileSync(
-    dir + "/output.h",
-    output.generateHeader(),
-  );
-  Deno.writeTextFileSync(
-    dir + "/output.c",
-    output.generateSource(),
-  );
-
-  const process = await Deno.run({
-    cmd: ["cc", dir + "/output.c"],
-    stdin: "piped",
-    stdout: "piped",
-    stderr: "piped",
-  });
-
-  const status = await process.status();
-  const stdout = await readToString(process.stdout);
-  const stderr = await readToString(process.stderr);
-
-  console.log("process.status", status);
-  console.log("process.stderr", stderr);
-  console.log("process.stdout", stdout);
+  const object = await doPass(dir, output, "980", passOutputToObject);
 }

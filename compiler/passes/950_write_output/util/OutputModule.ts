@@ -1,7 +1,17 @@
 import { OutputScope } from "./OutputScope.ts";
 
 export class OutputModule {
+  private hash: string;
+
   private scopes = new Array<OutputScope>();
+
+  constructor(hash: string) {
+    this.hash = hash;
+  }
+
+  getHash() {
+    return this.hash;
+  }
 
   pushScope(scope: OutputScope) {
     this.scopes.push(scope);

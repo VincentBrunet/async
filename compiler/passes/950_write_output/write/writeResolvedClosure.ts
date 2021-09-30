@@ -18,7 +18,7 @@ export function writeResolvedClosure(
       statement.pushPart("]");
       break;
     }
-    case AstResolvedReferenceKind.Param: {
+    case AstResolvedReferenceKind.FunctionParam: {
       const param = resolvedReference.data as AstExpressionFunctionParam;
       statement.pushPart("ref_make(");
       statement.pushPart("__");

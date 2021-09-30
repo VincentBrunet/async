@@ -1,11 +1,11 @@
 import { AstModule } from "../../data/ast/AstModule.ts";
 import { makeRecursorPass } from "../util/makeRecursorPass.ts";
-import { browseExpressionImport } from "./browse/browseExpressionImport.ts";
+import { browseStatementImport } from "./browse/browseStatementImport.ts";
 
 const pass = makeRecursorPass((scope) => {
   return scope;
 }, {
-  recurseExpressionImport: browseExpressionImport,
+  recurseStatementImport: browseStatementImport,
 });
 
 export async function passImportResolve(ast: AstModule) {

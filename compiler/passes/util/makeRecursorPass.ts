@@ -6,7 +6,6 @@ import { recurseExpressionBinary } from "./recurseExpressionBinary.ts";
 import { recurseExpressionCall } from "./recurseExpressionCall.ts";
 import { recurseExpressionFunction } from "./recurseExpressionFunction.ts";
 import { recurseExpressionIdentifier } from "./recurseExpressionIdentifier.ts";
-import { recurseExpressionImport } from "./recurseExpressionImport.ts";
 import { recurseExpressionLiteral } from "./recurseExpressionLiteral.ts";
 import { recurseExpressionLookup } from "./recurseExpressionLookup.ts";
 import { recurseExpressionObject } from "./recurseExpressionObject.ts";
@@ -20,6 +19,7 @@ import { recurseStatementCondition } from "./recurseStatementCondition.ts";
 import { recurseStatementConditionBranch } from "./recurseStatementConditionBranch.ts";
 import { recurseStatementEmpty } from "./recurseStatementEmpty.ts";
 import { recurseStatementExpression } from "./recurseStatementExpression.ts";
+import { recurseStatementImport } from "./recurseStatementImport.ts";
 import { recurseStatementReturn } from "./recurseStatementReturn.ts";
 import { recurseStatementTypedef } from "./recurseStatementTypedef.ts";
 import { recurseStatementUnsafe } from "./recurseStatementUnsafe.ts";
@@ -118,10 +118,10 @@ export function makeRecursorPass<Scope>(
       passLogic,
       recurseExpression,
     ),
-    recurseExpressionImport: makeRecursion(
+    recurseStatementImport: makeRecursion(
       s,
       passLogic,
-      recurseExpressionImport,
+      recurseStatementImport,
     ),
     recurseExpressionCall: makeRecursion(
       s,
@@ -288,9 +288,9 @@ export function makeRecursorPass<Scope>(
       passRecurse.value.recurseExpression,
       logic.recurseExpression,
     ),
-    recurseExpressionImport: makeLogic(
-      passRecurse.value.recurseExpressionImport,
-      logic.recurseExpressionImport,
+    recurseStatementImport: makeLogic(
+      passRecurse.value.recurseStatementImport,
+      logic.recurseStatementImport,
     ),
     recurseExpressionCall: makeLogic(
       passRecurse.value.recurseExpressionCall,

@@ -2,6 +2,7 @@ import { Ast } from "./Ast.ts";
 import { AstStatementCondition } from "./AstStatementCondition.ts";
 import { AstStatementEmpty } from "./AstStatementEmpty.ts";
 import { AstStatementExpression } from "./AstStatementExpression.ts";
+import { AstStatementImport } from "./AstStatementImport.ts";
 import { AstStatementReturn } from "./AstStatementReturn.ts";
 import { AstStatementTypedef } from "./AstStatementTypedef.ts";
 import { AstStatementUnsafe } from "./AstStatementUnsafe.ts";
@@ -9,6 +10,7 @@ import { AstStatementVariable } from "./AstStatementVariable.ts";
 import { AstStatementWhile } from "./AstStatementWhile.ts";
 
 export enum AstStatementKind {
+  Import = "Import",
   Variable = "Variable",
   Typedef = "Typedef",
   While = "While",
@@ -20,6 +22,7 @@ export enum AstStatementKind {
 }
 
 export type AstStatementData =
+  | AstStatementImport
   | AstStatementVariable
   | AstStatementTypedef
   | AstStatementWhile

@@ -3,6 +3,7 @@ import {
   AstResolvedShorthand,
   AstResolvedShorthandKind,
 } from "../../../data/ast/AstResolvedShorthand.ts";
+import { AstStatementImportSlot } from "../../../data/ast/AstStatementImport.ts";
 import { AstStatementTypedef } from "../../../data/ast/AstStatementTypedef.ts";
 
 export class BrowsedScope {
@@ -19,6 +20,13 @@ export class BrowsedScope {
     this.pushShorthand(name, {
       kind: AstResolvedShorthandKind.Typedef,
       data: variable,
+    });
+  }
+
+  pushImportSlot(slot: AstStatementImportSlot) {
+    this.pushShorthand(slot.name, {
+      kind: AstResolvedShorthandKind.ImportSlot,
+      data: slot,
     });
   }
 

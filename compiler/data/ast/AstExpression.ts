@@ -3,7 +3,6 @@ import { AstExpressionBinary } from "./AstExpressionBinary.ts";
 import { AstExpressionCall } from "./AstExpressionCall.ts";
 import { AstExpressionFunction } from "./AstExpressionFunction.ts";
 import { AstExpressionIdentifier } from "./AstExpressionIdentifier.ts";
-import { AstExpressionImport } from "./AstExpressionImport.ts";
 import { AstExpressionLiteral } from "./AstExpressionLiteral.ts";
 import { AstExpressionLookup } from "./AstExpressionLookup.ts";
 import { AstExpressionObject } from "./AstExpressionObject.ts";
@@ -14,7 +13,6 @@ import { AstExpressionUnary } from "./AstExpressionUnary.ts";
 import { AstType } from "./AstType.ts";
 
 export enum AstExpressionKind {
-  Import = "Import",
   Call = "Call",
   Identifier = "Identifier",
   Literal = "Literal",
@@ -29,7 +27,6 @@ export enum AstExpressionKind {
 }
 
 export type AstExpressionData =
-  | AstExpressionImport
   | AstExpressionCall
   | AstExpressionIdentifier
   | AstExpressionLiteral

@@ -4,6 +4,7 @@ import {
   AstResolvedReference,
   AstResolvedReferenceKind,
 } from "../../../data/ast/AstResolvedReference.ts";
+import { AstStatementImportSlot } from "../../../data/ast/AstStatementImport.ts";
 import { AstStatementVariable } from "../../../data/ast/AstStatementVariable.ts";
 import { ensure } from "../../../lib/errors/ensure.ts";
 
@@ -32,10 +33,18 @@ export class BrowsedScope {
     });
   }
 
-  pushParam(param: AstExpressionFunctionParam) {
+  pushImportSlot(slot: AstStatementImportSlot) {
+    const name = slot.name;
+    this.pushReference(name, {
+      kind: AstResolvedReferenceKind.ImportSlot,
+      data: slot,
+    });
+  }
+
+  pushFunctionParam(param: AstExpressionFunctionParam) {
     const name = ensure(param.name);
     this.pushReference(name, {
-      kind: AstResolvedReferenceKind.Param,
+      kind: AstResolvedReferenceKind.FunctionParam,
       data: param,
     });
   }

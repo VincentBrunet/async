@@ -2,6 +2,7 @@ import { AstStatement, AstStatementKind } from "../AstStatement.ts";
 import { AstStatementCondition } from "../AstStatementCondition.ts";
 import { AstStatementEmpty } from "../AstStatementEmpty.ts";
 import { AstStatementExpression } from "../AstStatementExpression.ts";
+import { AstStatementImport } from "../AstStatementImport.ts";
 import { AstStatementReturn } from "../AstStatementReturn.ts";
 import { AstStatementTypedef } from "../AstStatementTypedef.ts";
 import { AstStatementUnsafe } from "../AstStatementUnsafe.ts";
@@ -9,6 +10,7 @@ import { AstStatementVariable } from "../AstStatementVariable.ts";
 import { AstStatementWhile } from "../AstStatementWhile.ts";
 
 export interface StatementMapping<P, R> {
+  caseImport: (param: P, ast: AstStatementImport) => R;
   caseVariable: (param: P, ast: AstStatementVariable) => R;
   caseTypedef: (param: P, ast: AstStatementTypedef) => R;
   caseWhile: (param: P, ast: AstStatementWhile) => R;
@@ -27,6 +29,9 @@ export function switchOnStatement<P, R>(
   const kind = astStatement.kind;
   const data = astStatement.data;
   switch (kind) {
+    case AstStatementKind.Import: {
+      return mapping.caseImport(param, data as AstStatementImport);
+    }
     case AstStatementKind.Variable: {
       return mapping.caseVariable(param, data as AstStatementVariable);
     }

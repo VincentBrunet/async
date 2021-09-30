@@ -8,6 +8,7 @@ import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseStatementCondition } from "./parseStatementCondition.ts";
 import { parseStatementEmpty } from "./parseStatementEmpty.ts";
 import { parseStatementExpression } from "./parseStatementExpression.ts";
+import { parseStatementImport } from "./parseStatementImport.ts";
 import { parseStatementReturn } from "./parseStatementReturn.ts";
 import { parseStatementTypedef } from "./parseStatementTypedef.ts";
 import { parseStatementUnsafe } from "./parseStatementUnsafe.ts";
@@ -36,6 +37,12 @@ export function parseStatement(
   if (!(astStatementEmpty instanceof TokenImpasse)) {
     consumeEnd(browser);
     return finishStatement(AstStatementKind.Empty, astStatementEmpty);
+  }
+  // import ;
+  const astStatementImport = browser.recurse(parseStatementImport);
+  if (!(astStatementImport instanceof TokenImpasse)) {
+    consumeEnd(browser);
+    return finishStatement(AstStatementKind.Import, astStatementImport);
   }
   // const hello = expresion
   const astStatementVariable = browser.recurse(parseStatementVariable);

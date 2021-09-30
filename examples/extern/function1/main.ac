@@ -1,4 +1,4 @@
-const my_print = import "./examples/extern/function1/my_print.ac";
+import my_print from "./examples/extern/function1/my_print.ac";
 
 const res1 = my_print.my_print(1, 2);
 my_print.my_print(res1.b, res1.a)

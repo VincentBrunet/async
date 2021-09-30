@@ -18,7 +18,7 @@ export async function browseExpressionFunction(
   }
   for (const astParam of ast.params) {
     if (astParam.name) {
-      scope.pushParam(astParam);
+      scope.pushFunctionParam(astParam);
     }
   }
 
