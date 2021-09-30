@@ -1,3 +1,4 @@
+import { CodeModule } from "../../data/code/CodeModule.ts";
 import { Token, TokenKind } from "../../data/token/Token.ts";
 import { TokenModule } from "../../data/token/TokenModule.ts";
 import { hashModuleKey } from "../../lib/hash/hashModuleKey.ts";
@@ -56,9 +57,12 @@ function makeToken(
 /**
  * Convert a code file into a token array
  */
-export async function passCodeToTokens(code: string): Promise<TokenModule> {
+export async function passCodeToToken(code: CodeModule): Promise<TokenModule> {
   // Extracted info from code
-  const hash = hashModuleKey(code);
+
+  const url = code.url;
+  const file = code.file;
+  const hash = hashModuleKey(code.file);
   const tokens = new Array<Token>();
 
   // location counters
@@ -70,8 +74,8 @@ export async function passCodeToTokens(code: string): Promise<TokenModule> {
   let partialToken: PartialToken | undefined = undefined;
 
   // loop over all characters of the code
-  for (let i = 0; i < code.length; i++) {
-    const char = code.charAt(i);
+  for (let i = 0; i < file.length; i++) {
+    const char = file.charAt(i);
 
     // Find the kind of token this character belong to
     let kind;
@@ -128,6 +132,7 @@ export async function passCodeToTokens(code: string): Promise<TokenModule> {
 
   // done
   return {
+    url: url,
     hash: hash,
     list: tokens,
   };

@@ -24,7 +24,10 @@ export async function passUrlToCode(
 ) {
   for (const resolver of resolvers) {
     if (url.startsWith(resolver.protocol)) {
-      return resolver.call(url);
+      return {
+        url: url,
+        file: await resolver.call(url),
+      };
     }
   }
   throw new Error("Unknown URL content:" + url);

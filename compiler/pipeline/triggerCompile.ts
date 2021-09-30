@@ -2,7 +2,7 @@ import { AstModule } from "../data/ast/AstModule.ts";
 import { cacheDirFromHash } from "../lib/fs/cacheDirFromHash.ts";
 import { hashModuleKey } from "../lib/hash/hashModuleKey.ts";
 import { passUrlToCode } from "../passes/000_code_read/passUrlToCode.ts";
-import { passCodeToTokens } from "../passes/001_tokens_parse/passCodeToTokens.ts";
+import { passCodeToToken } from "../passes/001_tokens_parse/passCodeToToken.ts";
 import { passTokensToAst } from "../passes/005_ast_parse/passTokensToAst.ts";
 import { passBinaryPrioritize } from "../passes/103_binary_prioritize/passBinaryPrioritize.ts";
 import { passClosureResolve } from "../passes/104_closure_resolve/passClosureResolve.ts";
@@ -20,10 +20,10 @@ const compileQueue: AstModule[] = [];
 export async function triggerCompile(url: string) {
   const code = await passUrlToCode(url);
 
-  const hash = hashModuleKey(code);
+  const hash = hashModuleKey(code.file);
   const dir = await cacheDirFromHash(hash);
 
-  const tokens = await doPass(dir, code, "001", passCodeToTokens);
+  const tokens = await doPass(dir, code, "001", passCodeToToken);
   const ast = await doPass(dir, tokens, "005", passTokensToAst);
 
   await doPass(dir, ast, "103", passBinaryPrioritize);
