@@ -13,6 +13,7 @@ forbidden.add("typedef");
 forbidden.add("const");
 forbidden.add("mutable");
 forbidden.add("import");
+forbidden.add("from");
 
 export function parseExpressionIdentifier(
   browser: TokenBrowser,
@@ -23,10 +24,12 @@ export function parseExpressionIdentifier(
     return browser.impasse("Identifier.Text");
   }
   browser.consume();
+
   // Check if reserved keyword
   if (forbidden.has(token.str)) {
     return browser.impasse("Identifier.Forbidden");
   }
+
   // done
   return {
     name: token.str,

@@ -1,7 +1,6 @@
 import { CodeModule } from "../../data/code/CodeModule.ts";
 import { Token, TokenKind } from "../../data/token/Token.ts";
 import { TokenModule } from "../../data/token/TokenModule.ts";
-import { hashModuleKey } from "../../lib/hash/hashModuleKey.ts";
 
 const invalidArray = ["\v", "\b", "\f"];
 const invalidSet = new Set(invalidArray);
@@ -57,12 +56,9 @@ function makeToken(
 /**
  * Convert a code file into a token array
  */
-export async function passCodeToToken(code: CodeModule): Promise<TokenModule> {
+export async function passCodeToToken(meta: CodeModule): Promise<TokenModule> {
   // Extracted info from code
-
-  const url = code.url;
-  const file = code.file;
-  const hash = hashModuleKey(code.file);
+  const file = meta.file;
   const tokens = new Array<Token>();
 
   // location counters
@@ -132,8 +128,7 @@ export async function passCodeToToken(code: CodeModule): Promise<TokenModule> {
 
   // done
   return {
-    url: url,
-    hash: hash,
+    meta: meta,
     list: tokens,
   };
 }

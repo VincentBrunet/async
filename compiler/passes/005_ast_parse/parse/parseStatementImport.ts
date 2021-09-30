@@ -6,7 +6,7 @@ import { parseExpression } from "./parseExpression.ts";
 export function parseStatementImport(
   browser: TokenBrowser,
 ): AstStatementImport | TokenImpasse {
-  // leyword
+  // keyword
   const keyword = browser.peek();
   if (keyword.str !== "import") {
     return browser.impasse("StatementImport.Keyword");

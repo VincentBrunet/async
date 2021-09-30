@@ -9,5 +9,5 @@ const pass = makeRecursorPass((scope) => {
 });
 
 export async function passImportResolve(ast: AstModule) {
-  await pass.recurseModule(null, ast);
+  await pass.recurseModule(ast, ast);
 }

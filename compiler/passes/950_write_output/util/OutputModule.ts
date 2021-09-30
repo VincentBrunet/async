@@ -1,16 +1,17 @@
+import { AstModule } from "../../../data/ast/AstModule.ts";
 import { OutputScope } from "./OutputScope.ts";
 
 export class OutputModule {
-  private hash: string;
+  private meta: AstModule;
 
   private scopes = new Array<OutputScope>();
 
-  constructor(hash: string) {
-    this.hash = hash;
+  constructor(meta: AstModule) {
+    this.meta = meta;
   }
 
-  getHash() {
-    return this.hash;
+  getMeta() {
+    return this.meta;
   }
 
   pushScope(scope: OutputScope) {

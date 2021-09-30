@@ -1,32 +1,41 @@
+import { CodeModule } from "../../data/code/CodeModule.ts";
+import { hashModuleKey } from "../../lib/hash/hashModuleKey.ts";
+import { cacheDirFromHash } from "../../lib/io/cacheDirFromHash.ts";
+
+/**
+ * Resolvers
+ */
 interface Resolver {
   protocol: string;
-  call: (url: string) => Promise<string>;
+  call: (url: URL) => Promise<string>;
 }
 
 const resolvers: Resolver[] = [];
-resolvers.push({ protocol: "http", call: readHttp });
-resolvers.push({ protocol: "https", call: readHttp });
-resolvers.push({ protocol: "file", call: readFile });
-resolvers.push({ protocol: "", call: readFile });
 
-async function readHttp(url: string) {
+resolvers.push({ protocol: "http:", call: readHttp });
+resolvers.push({ protocol: "https:", call: readHttp });
+resolvers.push({ protocol: "file:", call: readFile });
+
+async function readHttp(url: URL) {
   const response = await fetch(url);
-  const text = await response.text();
-  return text;
+  return await response.text();
 }
 
-async function readFile(url: string) {
+async function readFile(url: URL) {
   return await Deno.readTextFile(url);
 }
 
-export async function passUrlToCode(
-  url: string,
-) {
+export async function passUrlToCode(url: URL): Promise<CodeModule> {
   for (const resolver of resolvers) {
-    if (url.startsWith(resolver.protocol)) {
+    if (url.protocol === resolver.protocol) {
+      const file = await resolver.call(url);
+      const hash = hashModuleKey(file);
+      const cache = await cacheDirFromHash(hash);
       return {
         url: url,
-        file: await resolver.call(url),
+        hash: hash,
+        file: file,
+        cache: cache,
       };
     }
   }

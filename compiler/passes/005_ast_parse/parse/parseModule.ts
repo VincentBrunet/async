@@ -7,7 +7,7 @@ import { parseStatement } from "./parseStatement.ts";
 
 export function parseModule(
   browser: TokenBrowser,
-  tokens: TokenModule,
+  meta: TokenModule,
 ): AstModule | TokenImpasse {
   // statements
   const statements = new Array<AstStatement>();
@@ -25,9 +25,7 @@ export function parseModule(
   }
   // done
   return {
-    url: tokens.url,
-    hash: tokens.hash,
-    tokens: tokens.list,
+    meta: meta,
     statements: statements,
   };
 }

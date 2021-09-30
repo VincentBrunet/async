@@ -1,7 +1,8 @@
+import { CodeModule } from "../code/CodeModule.ts";
 import { Token } from "./Token.ts";
 
 export interface TokenModule {
-  url: string;
-  hash: string;
+  meta: CodeModule;
+
   list: Array<Token>;
 }

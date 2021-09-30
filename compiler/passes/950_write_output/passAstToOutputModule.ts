@@ -5,7 +5,7 @@ import { writeModule } from "./write/writeModule.ts";
 export async function passAstToOutputModule(
   ast: AstModule,
 ) {
-  const output = new OutputModule(ast.hash);
+  const output = new OutputModule(ast);
   writeModule(output, ast);
   return output;
 }
