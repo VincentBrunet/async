@@ -11,7 +11,7 @@ export interface AstStatementImportSlot extends Ast {
 
 export interface AstStatementImport extends Ast {
   slots: Array<AstStatementImportSlot>;
-  from: AstExpression;
+  url: AstExpression;
 
   resolvedModule?: AstModule;
 }

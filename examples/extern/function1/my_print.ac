@@ -16,7 +16,3 @@ const my_print = fn (a :i32, b :i32) :MyObject {
   }
 
 }
-
-return {
-  my_print = my_print,
-}

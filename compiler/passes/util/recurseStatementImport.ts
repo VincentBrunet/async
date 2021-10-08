@@ -6,5 +6,5 @@ export async function recurseStatementImport<Scope>(
   p: Scope,
   ast: AstStatementImport,
 ) {
-  await r.recurseExpression(p, ast.from);
+  await r.recurseExpression(p, ast.url);
 }

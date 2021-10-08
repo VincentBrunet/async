@@ -21,15 +21,13 @@ export function parseExpressionIdentifier(
   // Read text
   const token = browser.peek();
   if (token.kind !== TokenKind.Text) {
-    return browser.impasse("Identifier.Text");
+    return browser.impasse("ExpressionIdentifier.Text");
   }
   browser.consume();
-
   // Check if reserved keyword
   if (forbidden.has(token.str)) {
-    return browser.impasse("Identifier.Forbidden");
+    return browser.impasse("ExpressionIdentifier.Forbidden");
   }
-
   // done
   return {
     name: token.str,

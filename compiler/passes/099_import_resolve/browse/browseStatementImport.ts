@@ -11,11 +11,11 @@ export async function browseStatementImport(
   ast: AstStatementImport,
   next: () => Promise<void>,
 ) {
-  if (ast.from.kind !== AstExpressionKind.Literal) {
-    throw new Error("Unknown import non literal:" + ast.from.kind);
+  if (ast.url.kind !== AstExpressionKind.Literal) {
+    throw new Error("Unknown import non literal:" + ast.url.kind);
   }
 
-  const literal = ast.from.data as AstExpressionLiteral;
+  const literal = ast.url.data as AstExpressionLiteral;
   if (literal.native !== AstTypePrimitiveNative.String) {
     throw new Error("Unknown literal non string:" + literal.native);
   }

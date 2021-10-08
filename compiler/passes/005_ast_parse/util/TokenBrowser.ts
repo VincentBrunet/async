@@ -7,7 +7,7 @@ export class TokenBrowser {
   private id = 0;
   private depth = 0;
 
-  private log = false;
+  private log = true;
 
   private tokens: Array<Token>;
   private indexes: Array<number>;
@@ -16,10 +16,6 @@ export class TokenBrowser {
     this.tokens = tokens;
     this.indexes = [0];
     this.forward();
-  }
-
-  index(): number {
-    return this.getCurrentIndex();
   }
 
   peek(offset?: number) {
@@ -37,6 +33,7 @@ export class TokenBrowser {
   ): T | TokenImpasse {
     const before = this.getCurrentIndex();
     this.indexes.push(before);
+    this.depth++;
     if (this.log) {
       console.log(
         repeat("  ", this.depth),
@@ -45,15 +42,33 @@ export class TokenBrowser {
         "TRY",
         this.readToken().str,
       );
-      this.depth++;
     }
     const ast = recurser(this, param);
     // on failure
     if (ast instanceof TokenImpasse) {
+      if (this.log) {
+        console.log(
+          repeat("  ", this.depth),
+          "<-",
+          recurser.name,
+          "FAIL",
+          this.readToken().str,
+          ast.message,
+        );
+      }
       this.indexes.pop();
     }
     // on success
     if (!(ast instanceof TokenImpasse)) {
+      if (this.log) {
+        console.log(
+          repeat("  ", this.depth),
+          "<-",
+          recurser.name,
+          "SUCCESS",
+          this.readToken().str,
+        );
+      }
       const after = this.indexes.pop() ?? Infinity;
       ast.id = this.id++;
       ast.token = {
@@ -64,17 +79,58 @@ export class TokenBrowser {
         this.indexes[this.getCurrentHeight()] = after;
       }
     }
-    if (this.log) {
-      this.depth--;
-      console.log(
-        repeat("  ", this.depth),
-        "<-",
-        recurser.name,
-        !(ast instanceof TokenImpasse) ? "SUCCESS" : "FAIL",
-        this.readToken().str,
-      );
-    }
+    this.depth--;
     return ast;
+  }
+
+  recurseArray<T extends Ast>(
+    mandatory: boolean,
+    validOpen: Set<string>,
+    validClose: Set<string>,
+    validDelim: Set<string>,
+    recurseItem: (stack: TokenBrowser) => T | TokenImpasse,
+  ): Array<T> | TokenImpasse {
+    // initial open
+    const tokenOpen = this.peek();
+    if (!validOpen.has(tokenOpen.str)) {
+      if (mandatory) {
+        return this.impasse("Array.Open");
+      } else {
+        return [];
+      }
+    }
+    this.consume();
+    // until close
+    const items = new Array<T>();
+    while (true) {
+      // failed
+      if (this.ended()) {
+        return this.impasse("Array.EOF");
+      }
+      // initial close
+      const tokenClose = this.peek();
+      if (validClose.has(tokenClose.str)) {
+        this.consume();
+        break;
+      }
+      // item
+      const item = this.recurse(recurseItem);
+      if (item instanceof TokenImpasse) {
+        return item;
+      }
+      items.push(item);
+      // delim
+      const tokenDelim = this.peek();
+      if (validDelim.has(tokenDelim.str)) {
+        this.consume();
+      } else if (validClose.has(tokenDelim.str)) {
+        this.consume();
+        break;
+      } else {
+        return this.impasse("Array.Close");
+      }
+    }
+    return items;
   }
 
   /*

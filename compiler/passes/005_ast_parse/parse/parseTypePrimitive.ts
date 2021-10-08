@@ -1,4 +1,3 @@
-import { AstType } from "../../../data/ast/AstType.ts";
 import {
   AstTypePrimitive,
   AstTypePrimitiveNative,
@@ -23,6 +22,10 @@ strToNative.set("u64", AstTypePrimitiveNative.Unsigned64);
 strToNative.set("f32", AstTypePrimitiveNative.Float32);
 strToNative.set("f64", AstTypePrimitiveNative.Float64);
 
+const templateOpen = new Set(["<"]);
+const templateClose = new Set([">"]);
+const templateDelim = new Set([","]);
+
 export function parseTypePrimitive(
   browser: TokenBrowser,
 ): AstTypePrimitive | TokenImpasse {
@@ -30,54 +33,25 @@ export function parseTypePrimitive(
   const name = browser.peek();
   const native = strToNative.get(name.str);
   if (native === undefined) {
-    return browser.impasse("TypePrimitive");
+    return browser.impasse("TypePrimitive.NativeName");
   }
   browser.consume();
-
   // param
-  const astParams = new Array<AstType>();
-
-  // param - open
-  const paramOpen = browser.peek();
-  if (paramOpen.str === "<") {
-    browser.consume();
-
-    // param - loop
-    while (true) {
-      // param - close
-      const paramClose = browser.peek();
-      if (paramClose.str === ">") {
-        browser.consume();
-        break;
-      }
-
-      // param - type annotation
-      const paramType = browser.recurse(parseType);
-      if (paramType instanceof TokenImpasse) {
-        return browser.impasse("TypePrimitive.Template.Type", [
-          paramType,
-        ]);
-      }
-
-      // param - validated
-      astParams.push(paramType);
-
-      // param - separator, end
-      const paramDelim = browser.peek();
-      if (paramDelim.str === ",") {
-        browser.consume();
-      } else if (paramDelim.str === ">") {
-        browser.consume();
-        break;
-      } else {
-        return browser.impasse("TypePrimitive.Template.Separator");
-      }
-    }
+  const params = browser.recurseArray(
+    false,
+    templateOpen,
+    templateClose,
+    templateDelim,
+    parseType,
+  );
+  if (params instanceof TokenImpasse) {
+    return browser.impasse("TypePrimitive.Template", [
+      params,
+    ]);
   }
-
   // done
   return {
     native: native,
-    params: astParams,
+    params: params,
   };
 }

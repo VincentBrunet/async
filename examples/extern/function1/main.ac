@@ -1,4 +1,4 @@
-import my_print from "./my_print.ac";
+import [ my_print ] from "./my_print.ac";
 
 const res1 = my_print.my_print(1, 2);
 my_print.my_print(res1.b, res1.a)
@@ -9,9 +9,6 @@ my_print.my_print(res2.b, res2.a)
 const res3 = my_print.my_print(5, 6);
 my_print.my_print(res3.b, res3.a)
 
-return {
-  mutable my_print = my_print.my_print,
-  change = fn {
-    res1 = res2;
-  }
-}
+typedef MyType = {};
+
+//const test = MyType;

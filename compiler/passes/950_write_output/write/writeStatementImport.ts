@@ -14,7 +14,7 @@ export function writeStatementImport(
   statement.pushPart("import");
   statement.pushPart("(");
   //statement.pushPart('"');
-  writeExpression(module, scope, statement, ast.from);
+  writeExpression(module, scope, statement, ast.url);
   //statement.pushPart('"');
   statement.pushPart(")");
   scope.pushStatement(OutputOrder.Variables, statement);
