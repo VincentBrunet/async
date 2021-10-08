@@ -9,7 +9,7 @@ export async function passTokensToAst(module: TokenModule) {
 
   const browser = new TokenBrowser(tokens);
 
-  const ast = parseModule(browser, module);
+  const ast = browser.recurse(parseModule, module);
 
   if (ast instanceof TokenImpasse) {
     const debug = new TokenDebugger(tokens);

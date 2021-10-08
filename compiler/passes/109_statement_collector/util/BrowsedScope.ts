@@ -29,6 +29,9 @@ export class BrowsedScope {
   markCollectorStatementReturn() {
     this.collectorStatementReturn = true;
   }
+  markCollectorStatementVariable() {
+    this.collectorStatementVariable = true;
+  }
 
   getStatementImports() {
     return this.statementImports;

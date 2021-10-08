@@ -1,14 +1,17 @@
 import { AstModule } from "../../../data/ast/AstModule.ts";
 import { AstStatement } from "../../../data/ast/AstStatement.ts";
 import { TokenModule } from "../../../data/token/TokenModule.ts";
+import { ensure } from "../../../lib/errors/ensure.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseStatement } from "./parseStatement.ts";
 
 export function parseModule(
   browser: TokenBrowser,
-  meta: TokenModule,
+  module?: TokenModule,
 ): AstModule | TokenImpasse {
+  // meta
+  const meta = ensure(module);
   // statements
   const statements = new Array<AstStatement>();
   while (true) {

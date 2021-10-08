@@ -10,7 +10,7 @@ export interface AstModule extends Ast {
 
   statements: Array<AstStatement>;
 
-  resolvedVariables?: Array<AstStatementVariable>;
   resolvedImports?: Array<AstStatementImport>;
   resolvedExports?: Array<AstStatementExport>;
+  resolvedVariables?: Array<AstStatementVariable>;
 }

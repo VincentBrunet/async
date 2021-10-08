@@ -1,13 +1,12 @@
 import { AstExpressionFunction } from "../../../data/ast/AstExpressionFunction.ts";
 import { ensure } from "../../../lib/errors/ensure.ts";
+import { hashAstKey } from "../../../lib/hash/hashAstKey.ts";
 import { OutputModule } from "../util/OutputModule.ts";
 import { OutputOrder } from "../util/OutputOrder.ts";
 import { OutputScope } from "../util/OutputScope.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
 import { writeBlock } from "./writeBlock.ts";
 import { writeResolvedClosure } from "./writeResolvedClosure.ts";
-
-let _id = 0;
 
 export function writeExpressionFunction(
   module: OutputModule,
@@ -17,17 +16,27 @@ export function writeExpressionFunction(
 ) {
   const resolvedClosures = ensure(ast.resolvedClosures);
 
-  // TODO - function name mangling
-  const name = "f_0x" + (_id++).toString(16);
+  // Generate a stable unique name
+  const name = hashAstKey(module, ast, "function");
 
   // Simply call the function factory
-  statement.pushPart("function_make_x(");
+  const callLength = resolvedClosures.length.toString();
+  const callVariadic = resolvedClosures.length > 9;
+  statement.pushPart("function_make_");
+  if (callVariadic) {
+    statement.pushPart("x");
+  } else {
+    statement.pushPart(callLength);
+  }
+  statement.pushPart("(");
   statement.pushPart("type_function"); // TODO,
   statement.pushPart(", ");
   statement.pushPart("&");
   statement.pushPart(name);
-  statement.pushPart(", ");
-  statement.pushPart(resolvedClosures.length.toString());
+  if (callVariadic) {
+    statement.pushPart(", ");
+    statement.pushPart(resolvedClosures.length.toString());
+  }
   for (const astClosure of resolvedClosures) {
     statement.pushPart(", ");
     writeResolvedClosure(statement, astClosure);

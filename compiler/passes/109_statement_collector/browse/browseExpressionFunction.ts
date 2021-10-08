@@ -9,9 +9,12 @@ export async function browseExpressionFunction(
 ) {
   scope.markCollectorStatementExport();
   scope.markCollectorStatementReturn();
+  scope.markCollectorStatementVariable();
 
   await next();
 
-  ast.resolvedReturns = scope.getStatementReturns();
   assert(scope.getStatementExports().length === 0);
+
+  ast.resolvedVariables = scope.getStatementVariables();
+  ast.resolvedReturns = scope.getStatementReturns();
 }
