@@ -1,4 +1,5 @@
 import { AstModule } from "../../../data/ast/AstModule.ts";
+import { assert } from "../../../lib/errors/assert.ts";
 import { BrowsedScope } from "../util/BrowsedScope.ts";
 
 export async function browseModule(
@@ -6,8 +7,13 @@ export async function browseModule(
   ast: AstModule,
   next: () => Promise<void>,
 ) {
+  scope.markCollectorStatementImport();
+  scope.markCollectorStatementExport();
   scope.markCollectorStatementReturn();
+
   await next();
-  const forbiddens = scope.getStatementReturns();
-  // TODO
+
+  assert(scope.getStatementReturns().length === 0);
+  ast.resolvedImports = scope.getStatementImports();
+  ast.resolvedExports = scope.getStatementExports();
 }

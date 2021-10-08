@@ -1,6 +1,7 @@
 import { AstStatementExport } from "../../../data/ast/AstStatementExport.ts";
 import { AstStatementImport } from "../../../data/ast/AstStatementImport.ts";
 import { AstStatementReturn } from "../../../data/ast/AstStatementReturn.ts";
+import { AstStatementVariable } from "../../../data/ast/AstStatementVariable.ts";
 
 export class BrowsedScope {
   public parent?: BrowsedScope;
@@ -8,10 +9,12 @@ export class BrowsedScope {
   private collectorStatementImport = false;
   private collectorStatementExport = false;
   private collectorStatementReturn = false;
+  private collectorStatementVariable = false;
 
-  private statementImports: AstStatementImport[] = [];
-  private statementExports: AstStatementExport[] = [];
-  private statementReturns: AstStatementReturn[] = [];
+  private statementImports = new Array<AstStatementImport>();
+  private statementExports = new Array<AstStatementExport>();
+  private statementReturns = new Array<AstStatementReturn>();
+  private statementVariables = new Array<AstStatementVariable>();
 
   constructor(parent?: BrowsedScope) {
     this.parent = parent;
@@ -36,6 +39,9 @@ export class BrowsedScope {
   getStatementReturns() {
     return this.statementReturns;
   }
+  getStatementVariables() {
+    return this.statementVariables;
+  }
 
   propagateImport(statementImport: AstStatementImport) {
     if (this.collectorStatementImport) {
@@ -57,5 +63,12 @@ export class BrowsedScope {
       return;
     }
     this.parent?.propagateReturn(statementReturn);
+  }
+  propagateVariable(statementVariable: AstStatementVariable) {
+    if (this.collectorStatementVariable) {
+      this.statementVariables.push(statementVariable);
+      return;
+    }
+    this.parent?.propagateVariable(statementVariable);
   }
 }

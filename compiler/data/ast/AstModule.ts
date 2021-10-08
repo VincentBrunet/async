@@ -3,12 +3,14 @@ import { Ast } from "./Ast.ts";
 import { AstStatement } from "./AstStatement.ts";
 import { AstStatementExport } from "./AstStatementExport.ts";
 import { AstStatementImport } from "./AstStatementImport.ts";
+import { AstStatementVariable } from "./AstStatementVariable.ts";
 
 export interface AstModule extends Ast {
   meta: TokenModule;
 
   statements: Array<AstStatement>;
 
+  resolvedVariables?: Array<AstStatementVariable>;
   resolvedImports?: Array<AstStatementImport>;
   resolvedExports?: Array<AstStatementExport>;
 }
