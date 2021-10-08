@@ -4,6 +4,7 @@ import { OutputModule } from "../util/OutputModule.ts";
 import { OutputScope } from "../util/OutputScope.ts";
 import { writeStatementCondition } from "./writeStatementCondition.ts";
 import { writeStatementEmpty } from "./writeStatementEmpty.ts";
+import { writeStatementExport } from "./writeStatementExport.ts";
 import { writeStatementExpression } from "./writeStatementExpression.ts";
 import { writeStatementImport } from "./writeStatementImport.ts";
 import { writeStatementReturn } from "./writeStatementReturn.ts";
@@ -27,6 +28,7 @@ function makeCase<T>(
 
 const mapping = {
   caseImport: makeCase(writeStatementImport),
+  caseExport: makeCase(writeStatementExport),
   caseVariable: makeCase(writeStatementVariable),
   caseTypedef: makeCase(writeStatementTypedef),
   caseWhile: makeCase(writeStatementWhile),

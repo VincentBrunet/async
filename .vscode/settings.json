@@ -22,14 +22,13 @@
     "editor.defaultFormatter": "ms-vscode.cpptools"
   },
   "editor.rulers": [
-    { "column": 0, "color": "#5a5a5a80" },
-    { "column": 80, "color": "#5a5a5a80" }
+    {
+      "column": 0,
+      "color": "#5a5a5a80"
+    },
+    {
+      "column": 80,
+      "color": "#5a5a5a80"
+    }
   ],
-  "files.associations": {
-    "runtime.h": "c",
-    "values.h": "c",
-    "function_call.h": "c",
-    "types.h": "c",
-    "core.h": "c"
-  }
 }

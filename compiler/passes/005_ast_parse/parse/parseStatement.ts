@@ -7,6 +7,7 @@ import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseStatementCondition } from "./parseStatementCondition.ts";
 import { parseStatementEmpty } from "./parseStatementEmpty.ts";
+import { parseStatementExport } from "./parseStatementExport.ts";
 import { parseStatementExpression } from "./parseStatementExpression.ts";
 import { parseStatementImport } from "./parseStatementImport.ts";
 import { parseStatementReturn } from "./parseStatementReturn.ts";
@@ -43,6 +44,12 @@ export function parseStatement(
   if (!(astStatementImport instanceof TokenImpasse)) {
     consumeEnd(browser);
     return finishStatement(AstStatementKind.Import, astStatementImport);
+  }
+  // export statement
+  const astStatementExport = browser.recurse(parseStatementExport);
+  if (!(astStatementExport instanceof TokenImpasse)) {
+    consumeEnd(browser);
+    return finishStatement(AstStatementKind.Export, astStatementExport);
   }
   // const hello = expresion
   const astStatementVariable = browser.recurse(parseStatementVariable);

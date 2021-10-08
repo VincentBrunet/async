@@ -42,7 +42,11 @@ function stringifyInner(
     return value.toString();
   }
   if (type === "string") {
-    return '"' + value.replace(/[\n]/g, "\\n").replace(/[\"]/g, '\\"') + '"';
+    return '"' + value
+      .replace(/[\n]/g, "\\n")
+      .replace(/[\\]/g, "\\\\")
+      .replace(/[\"]/g, '\\"') +
+      '"';
   }
 
   if (alreadyBrowsed.has(value)) {

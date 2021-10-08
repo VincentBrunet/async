@@ -18,6 +18,7 @@ import { recurseStatement } from "./recurseStatement.ts";
 import { recurseStatementCondition } from "./recurseStatementCondition.ts";
 import { recurseStatementConditionBranch } from "./recurseStatementConditionBranch.ts";
 import { recurseStatementEmpty } from "./recurseStatementEmpty.ts";
+import { recurseStatementExport } from "./recurseStatementExport.ts";
 import { recurseStatementExpression } from "./recurseStatementExpression.ts";
 import { recurseStatementImport } from "./recurseStatementImport.ts";
 import { recurseStatementReturn } from "./recurseStatementReturn.ts";
@@ -122,6 +123,11 @@ export function makeRecursorPass<Scope>(
       s,
       passLogic,
       recurseStatementImport,
+    ),
+    recurseStatementExport: makeRecursion(
+      s,
+      passLogic,
+      recurseStatementExport,
     ),
     recurseExpressionCall: makeRecursion(
       s,
@@ -291,6 +297,10 @@ export function makeRecursorPass<Scope>(
     recurseStatementImport: makeLogic(
       passRecurse.value.recurseStatementImport,
       logic.recurseStatementImport,
+    ),
+    recurseStatementExport: makeLogic(
+      passRecurse.value.recurseStatementExport,
+      logic.recurseStatementExport,
     ),
     recurseExpressionCall: makeLogic(
       passRecurse.value.recurseExpressionCall,

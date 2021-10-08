@@ -3,6 +3,7 @@ import { passUrlToCode } from "../passes/000_code_read/passUrlToCode.ts";
 import { passCodeToToken } from "../passes/001_tokens_parse/passCodeToToken.ts";
 import { passTokensToAst } from "../passes/005_ast_parse/passTokensToAst.ts";
 import { passImportResolve } from "../passes/099_import_resolve/passImportResolve.ts";
+import { passParentRef } from "../passes/102_parent_ref/passParentRef.ts";
 import { passBinaryPrioritize } from "../passes/103_binary_prioritize/passBinaryPrioritize.ts";
 import { passClosureResolve } from "../passes/104_closure_resolve/passClosureResolve.ts";
 import { passReferenceResolve } from "../passes/105_reference_resolve/passReferenceResolve.ts";
@@ -37,6 +38,7 @@ export async function finishCompiles() {
 export async function finishCompile(ast: AstModule) {
   const dir = ast.meta.meta.cache;
 
+  await doPass(dir, ast, "102", passParentRef);
   await doPass(dir, ast, "103", passBinaryPrioritize);
   await doPass(dir, ast, "104", passClosureResolve);
   await doPass(dir, ast, "105", passReferenceResolve);

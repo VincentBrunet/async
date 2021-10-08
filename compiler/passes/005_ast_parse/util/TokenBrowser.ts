@@ -7,7 +7,7 @@ export class TokenBrowser {
   private id = 0;
   private depth = 0;
 
-  private log = true;
+  private log = false;
 
   private tokens: Array<Token>;
   private indexes: Array<number>;
@@ -52,8 +52,8 @@ export class TokenBrowser {
           "<-",
           recurser.name,
           "FAIL",
-          this.readToken().str,
           ast.message,
+          this.readToken().str,
         );
       }
       this.indexes.pop();

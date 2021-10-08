@@ -3,6 +3,7 @@ import {
   AstStatementImportSlot,
 } from "../../../data/ast/AstStatementImport.ts";
 import { TokenKind } from "../../../data/token/Token.ts";
+import { hashObjectKey } from "../../../lib/hash/hashObjectKey.ts";
 import { TokenBrowser } from "../util/TokenBrowser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseExpression } from "./parseExpression.ts";
@@ -14,15 +15,19 @@ const slotDelim = new Set([","]);
 function parseStatementImportSlot(
   browser: TokenBrowser,
 ): AstStatementImportSlot | TokenImpasse {
-  // slot - name
+  // name
   const slotName = browser.peek();
   if (slotName.kind !== TokenKind.Text) {
     return browser.impasse("StatementImport.Slot.Name");
   }
   browser.consume();
+  // prep
+  const name = slotName.str;
+  const hash = hashObjectKey(name);
   // ast
   return {
-    name: slotName.str,
+    name: name,
+    hash: hash,
   };
 }
 
@@ -57,7 +62,7 @@ export function parseStatementImport(
   if (url instanceof TokenImpasse) {
     return browser.impasse("StatementImport.Url", [url]);
   }
-  // Content
+  // done
   return {
     slots: slots,
     url: url,

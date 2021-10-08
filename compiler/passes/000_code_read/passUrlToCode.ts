@@ -25,6 +25,9 @@ async function readFile(url: URL) {
   return await Deno.readTextFile(url);
 }
 
+/**
+ * Find resolver and fetch code
+ */
 export async function passUrlToCode(url: URL): Promise<CodeModule> {
   for (const resolver of resolvers) {
     if (url.protocol === resolver.protocol) {

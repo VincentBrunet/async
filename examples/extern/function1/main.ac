@@ -11,4 +11,3 @@ my_print.my_print(res3.b, res3.a)
 
 typedef MyType = {};
 
-//const test = MyType;

@@ -2,6 +2,7 @@ import { AstExpressionFunctionParam } from "../../../data/ast/AstExpressionFunct
 import { AstExpressionIdentifier } from "../../../data/ast/AstExpressionIdentifier.ts";
 import { AstResolvedClosure } from "../../../data/ast/AstResolvedClosure.ts";
 import { AstResolvedReferenceKind } from "../../../data/ast/AstResolvedReference.ts";
+import { AstStatementImportSlot } from "../../../data/ast/AstStatementImport.ts";
 import { AstStatementVariable } from "../../../data/ast/AstStatementVariable.ts";
 import { ensure } from "../../../lib/errors/ensure.ts";
 import { OutputModule } from "../util/OutputModule.ts";
@@ -33,6 +34,13 @@ export function writeExpressionIdentifier(
       const variable = resolvedReference.data as AstStatementVariable;
       statement.pushPart("__");
       statement.pushPart(variable.name);
+      statement.pushPart("->value");
+      break;
+    }
+    case AstResolvedReferenceKind.ImportSlot: {
+      const slot = resolvedReference.data as AstStatementImportSlot;
+      statement.pushPart("_import_");
+      statement.pushPart(slot.name);
       statement.pushPart("->value");
       break;
     }

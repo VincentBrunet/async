@@ -20,6 +20,7 @@ import {
   AstStatementConditionBranch,
 } from "../../data/ast/AstStatementCondition.ts";
 import { AstStatementEmpty } from "../../data/ast/AstStatementEmpty.ts";
+import { AstStatementExport } from "../../data/ast/AstStatementExport.ts";
 import { AstStatementExpression } from "../../data/ast/AstStatementExpression.ts";
 import { AstStatementImport } from "../../data/ast/AstStatementImport.ts";
 import { AstStatementReturn } from "../../data/ast/AstStatementReturn.ts";
@@ -93,6 +94,10 @@ export interface RecursorPass<Scope> {
   recurseStatementImport: (
     scope: Scope,
     ast: AstStatementImport,
+  ) => Promise<void>;
+  recurseStatementExport: (
+    scope: Scope,
+    ast: AstStatementExport,
   ) => Promise<void>;
   recurseExpressionCall: (
     scope: Scope,

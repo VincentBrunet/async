@@ -20,6 +20,7 @@ import {
   AstStatementConditionBranch,
 } from "../../data/ast/AstStatementCondition.ts";
 import { AstStatementEmpty } from "../../data/ast/AstStatementEmpty.ts";
+import { AstStatementExport } from "../../data/ast/AstStatementExport.ts";
 import { AstStatementExpression } from "../../data/ast/AstStatementExpression.ts";
 import { AstStatementImport } from "../../data/ast/AstStatementImport.ts";
 import { AstStatementReturn } from "../../data/ast/AstStatementReturn.ts";
@@ -106,6 +107,11 @@ export interface RecursorLogic<Scope> {
   recurseStatementImport?: (
     scope: Scope,
     ast: AstStatementImport,
+    next: () => Promise<void>,
+  ) => Promise<void>;
+  recurseStatementExport?: (
+    scope: Scope,
+    ast: AstStatementExport,
     next: () => Promise<void>,
   ) => Promise<void>;
   recurseExpressionCall?: (

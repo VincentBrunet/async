@@ -12,14 +12,12 @@ export function parseStatementReturn(
     return browser.impasse("Return.Keyword");
   }
   browser.consume();
-
   // type
   const astExpression = browser.recurse(parseExpression);
   if (astExpression instanceof TokenImpasse) {
     return browser.impasse("Return.Expression", [astExpression]);
   }
-
-  // Done
+  // done
   return {
     expression: astExpression,
   };

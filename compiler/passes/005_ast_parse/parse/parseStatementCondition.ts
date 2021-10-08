@@ -13,19 +13,16 @@ export function parseStatementCondition(
     return browser.impasse("Condition.Keyword");
   }
   browser.consume();
-
   // expression
   const astCondition = browser.recurse(parseExpression);
   if (astCondition instanceof TokenImpasse) {
     return browser.impasse("Condition.Condition", [astCondition]);
   }
-
   // block
   const astBlock = browser.recurse(parseBlock);
   if (astBlock instanceof TokenImpasse) {
     return browser.impasse("Condition.Block", [astBlock]);
   }
-
   // done
   return {
     branches: [{

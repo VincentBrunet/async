@@ -5,8 +5,10 @@ import { AstType } from "./AstType.ts";
 
 export interface AstStatementImportSlot extends Ast {
   name: string;
+  hash: string;
 
   resolvedType?: AstType;
+  resolvedImport?: AstStatementImport;
 }
 
 export interface AstStatementImport extends Ast {

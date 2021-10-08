@@ -7,12 +7,12 @@ export function parseStatementExpression(
   browser: TokenBrowser,
 ): AstStatementExpression | TokenImpasse {
   // expression
-  const astExpression = browser.recurse(parseExpression);
-  if (astExpression instanceof TokenImpasse) {
-    return browser.impasse("Statement.Expression", [astExpression]);
+  const expression = browser.recurse(parseExpression);
+  if (expression instanceof TokenImpasse) {
+    return browser.impasse("Statement.Expression", [expression]);
   }
   // done
   return {
-    expression: astExpression,
+    expression: expression,
   };
 }

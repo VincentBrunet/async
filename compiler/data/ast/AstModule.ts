@@ -1,6 +1,7 @@
 import { TokenModule } from "../token/TokenModule.ts";
 import { Ast } from "./Ast.ts";
 import { AstStatement } from "./AstStatement.ts";
+import { AstStatementExport } from "./AstStatementExport.ts";
 import { AstStatementImport } from "./AstStatementImport.ts";
 
 export interface AstModule extends Ast {
@@ -9,5 +10,5 @@ export interface AstModule extends Ast {
   statements: Array<AstStatement>;
 
   resolvedImports?: Array<AstStatementImport>;
-  resolvedExports?: Array<AstStatementImport>;
+  resolvedExports?: Array<AstStatementExport>;
 }

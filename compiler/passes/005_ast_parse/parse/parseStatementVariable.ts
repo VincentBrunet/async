@@ -21,21 +21,17 @@ export function parseStatementVariable(
     return browser.impasse("Variable.modifier");
   }
   browser.consume();
-
   // name
   const tokenName = browser.peek();
   if (tokenName.kind !== TokenKind.Text) {
     return browser.impasse("Variable.Name");
   }
   browser.consume();
-  const name = tokenName.str;
-
   // type annotation
   const astAnnotation = browser.recurse(parseAnnotationType);
   if (astAnnotation instanceof TokenImpasse) {
     return browser.impasse("Variable.Annotation", [astAnnotation]);
   }
-
   // value (optional)
   let value: AstExpression | undefined;
   const tokenEqual = browser.peek();
@@ -47,10 +43,9 @@ export function parseStatementVariable(
     }
     value = astValue;
   }
-
-  // hashed name
+  // prep
+  const name = tokenName.str;
   const hash = hashObjectKey(name);
-
   // Done
   return {
     mutable: mutable,
