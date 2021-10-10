@@ -1,5 +1,6 @@
 import { AstModule } from "../../data/ast/AstModule.ts";
 import { makeRecursorPass } from "../util/makeRecursorPass.ts";
+import { browseBlock } from "./browse/browseBlock.ts";
 import { browseExpressionFunction } from "./browse/browseExpressionFunction.ts";
 import { browseExpressionRun } from "./browse/browseExpressionRun.ts";
 import { browseModule } from "./browse/browseModule.ts";
@@ -19,6 +20,7 @@ const pass = makeRecursorPass<BrowsedScope>((scope) => {
   recurseStatementReturn: browseStatementReturn,
   recurseStatementVariable: browseStatementVariable,
   recurseModule: browseModule,
+  recurseBlock: browseBlock,
 });
 
 export async function passStatementCollector(ast: AstModule) {

@@ -33,7 +33,15 @@ export async function passOutputToObject(output: OutputModule) {
   );
 
   const process = await Deno.run({
-    cmd: ["cc", dir + "/output.c"],
+    cmd: [
+      "cc",
+      "-I",
+      "stdlib",
+      "-c",
+      dir + "/output.c",
+      "-o",
+      dir + "/output.o",
+    ],
     stdin: "piped",
     stdout: "piped",
     stderr: "piped",

@@ -20,7 +20,7 @@ export function writeStatementImport(
   statement.pushPart("t_value *");
   statement.pushPart(localModule);
   statement.pushPart(" = ");
-  statement.pushPart("import");
+  statement.pushPart("module_import");
   statement.pushPart("(");
   statement.pushPart(hash);
   statement.pushPart(")");

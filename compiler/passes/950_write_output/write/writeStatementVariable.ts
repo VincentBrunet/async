@@ -10,14 +10,6 @@ export function writeStatementVariable(
   scope: OutputScope,
   ast: AstStatementVariable,
 ) {
-  const declaration = new OutputStatement();
-  declaration.pushPart("t_ref *");
-  declaration.pushPart("__");
-  declaration.pushPart(ast.name);
-  declaration.pushPart(" = ");
-  declaration.pushPart("ref_make(NULL)");
-  scope.pushStatement(OutputOrder.Variables, declaration);
-
   if (ast.value) {
     const assignment = new OutputStatement();
     assignment.pushPart("__");

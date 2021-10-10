@@ -2,7 +2,6 @@ import { AstExpressionFunction } from "../../../data/ast/AstExpressionFunction.t
 import { ensure } from "../../../lib/errors/ensure.ts";
 import { hashAstKey } from "../../../lib/hash/hashAstKey.ts";
 import { OutputModule } from "../util/OutputModule.ts";
-import { OutputOrder } from "../util/OutputOrder.ts";
 import { OutputScope } from "../util/OutputScope.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
 import { writeBlock } from "./writeBlock.ts";
@@ -54,11 +53,6 @@ export function writeExpressionFunction(
   for (const astParam of ast.params) {
     child.pushParam("t_value *__" + astParam.name);
   }
-
-  // Add a return statement - TODO (this should be added by user)
-  const final = new OutputStatement();
-  final.pushPart("return null_make()");
-  child.pushStatement(OutputOrder.After, final);
 
   // Done, push the newly created function
   module.pushScope(child);

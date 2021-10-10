@@ -30,6 +30,7 @@ export class OutputModule {
     }
     return parts.join("");
   }
+
   generateSource(): string {
     const parts = new Array<string>();
     parts.push("#include <runtime.h>\n");
@@ -40,8 +41,6 @@ export class OutputModule {
       }
       parts.push("\n");
     }
-    parts.push("t_value *(*entry_module)() = module_load;");
-    parts.push("\n");
     return parts.join("");
   }
 }
