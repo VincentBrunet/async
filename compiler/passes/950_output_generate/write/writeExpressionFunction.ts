@@ -1,16 +1,16 @@
 import { AstExpressionFunction } from "../../../data/ast/AstExpressionFunction.ts";
 import { ensure } from "../../../lib/errors/ensure.ts";
 import { hashAstKey } from "../../../lib/hash/hashAstKey.ts";
-import { OutputModule } from "../util/OutputModule.ts";
+import { RecursorPass } from "../../util/RecursorPass.ts";
+import { BrowsedScope } from "../util/BrowsedScope.ts";
 import { OutputScope } from "../util/OutputScope.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
 import { writeBlock } from "./writeBlock.ts";
 import { writeResolvedClosure } from "./writeResolvedClosure.ts";
 
 export function writeExpressionFunction(
-  module: OutputModule,
-  scope: OutputScope,
-  statement: OutputStatement,
+  pass: RecursorPass<BrowsedScope>,
+  scope: BrowsedScope,
   ast: AstExpressionFunction,
 ) {
   const resolvedClosures = ensure(ast.resolvedClosures);
@@ -21,26 +21,26 @@ export function writeExpressionFunction(
   // Simply call the function factory
   const callLength = resolvedClosures.length.toString();
   const callVariadic = resolvedClosures.length > 9;
-  statement.pushPart("function_make_");
+  scope.pushStatementPart("function_make_");
   if (callVariadic) {
-    statement.pushPart("x");
+    scope.pushStatementPart("x");
   } else {
-    statement.pushPart(callLength);
+    scope.pushStatementPart(callLength);
   }
-  statement.pushPart("(");
-  statement.pushPart("type_function"); // TODO,
-  statement.pushPart(", ");
-  statement.pushPart("(void*)&");
-  statement.pushPart(name);
+  scope.pushStatementPart("(");
+  scope.pushStatementPart("type_function"); // TODO,
+  scope.pushStatementPart(", ");
+  scope.pushStatementPart("(void*)&");
+  scope.pushStatementPart(name);
   if (callVariadic) {
-    statement.pushPart(", ");
-    statement.pushPart(resolvedClosures.length.toString());
+    scope.pushStatementPart(", ");
+    scope.pushStatementPart(resolvedClosures.length.toString());
   }
   for (const astClosure of resolvedClosures) {
-    statement.pushPart(", ");
+    scope.pushStatementPart(", ");
     writeResolvedClosure(statement, astClosure);
   }
-  statement.pushPart(")");
+  scope.pushStatementPart(")");
 
   // New function
   const child = new OutputScope("t_value *", name);

@@ -56,9 +56,9 @@ function makeToken(
 /**
  * Convert a code file into a token array
  */
-export async function passCodeToToken(meta: CodeModule): Promise<TokenModule> {
+export async function passCodeToToken(code: CodeModule): Promise<TokenModule> {
   // Extracted info from code
-  const file = meta.file;
+  const file = code.file;
   const tokens = new Array<Token>();
 
   // location counters
@@ -128,7 +128,8 @@ export async function passCodeToToken(meta: CodeModule): Promise<TokenModule> {
 
   // done
   return {
-    meta: meta,
-    list: tokens,
+    metaUrl: code.metaUrl,
+    metaCode: code,
+    tokens: tokens,
   };
 }

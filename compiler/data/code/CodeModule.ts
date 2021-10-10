@@ -1,5 +1,6 @@
 export interface CodeModule {
-  url: URL;
+  metaUrl: URL;
+
   file: string;
   hash: string;
   cache: string;

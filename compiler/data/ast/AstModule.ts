@@ -7,6 +7,7 @@ import { AstStatementImport } from "./AstStatementImport.ts";
 import { AstStatementVariable } from "./AstStatementVariable.ts";
 
 export interface AstModule extends Ast {
+  metaUrl: URL;
   metaCode: CodeModule;
   metaToken: TokenModule;
 

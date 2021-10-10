@@ -5,7 +5,7 @@ import { writeModule } from "./write/writeModule.ts";
 
 const pass = makeRecursorPassAdvanced((scope) => scope, {});
 
-export async function passAstToOutputModule(
+export async function passAstToOutput(
   ast: AstModule,
 ) {
   const output = new OutputModule(ast);

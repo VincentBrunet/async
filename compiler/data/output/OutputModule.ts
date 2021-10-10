@@ -4,6 +4,7 @@ import { TokenModule } from "../token/TokenModule.ts";
 import { OutputFunction } from "./OutputFunction.ts";
 
 export interface OutputModule {
+  metaUrl: URL;
   metaCode: CodeModule;
   metaToken: TokenModule;
   metaAst: AstModule;

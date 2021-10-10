@@ -4,21 +4,18 @@ import {
 } from "../../../data/ast/AstExpressionBinary.ts";
 import { AstTypePrimitiveNative } from "../../../data/ast/AstTypePrimitive.ts";
 import { isTypePrimitive } from "../../../lib/typing/isTypePrimitive.ts";
-import { OutputModule } from "../util/OutputModule.ts";
-import { OutputScope } from "../util/OutputScope.ts";
-import { OutputStatement } from "../util/OutputStatement.ts";
-import { writeExpression } from "./writeExpression.ts";
+import { RecursorPass } from "../../util/RecursorPass.ts";
+import { BrowsedScope } from "../util/BrowsedScope.ts";
 
 export function writeExpressionBinary(
-  module: OutputModule,
-  scope: OutputScope,
-  statement: OutputStatement,
+  pass: RecursorPass<BrowsedScope>,
+  scope: BrowsedScope,
   ast: AstExpressionBinary,
 ) {
   if (ast.operator === AstExpressionBinaryOperator.Assign) {
-    writeExpression(module, scope, statement, ast.expression1);
-    statement.pushPart(" = ");
-    writeExpression(module, scope, statement, ast.expression2);
+    pass.recurseExpression(scope, ast.expression1);
+    scope.pushStatementPart(" = ");
+    pass.recurseExpression(scope, ast.expression2);
     return;
   }
 
@@ -44,10 +41,10 @@ export function writeExpressionBinary(
     }
   }
 
-  statement.pushPart(callName);
-  statement.pushPart("(");
-  writeExpression(module, scope, statement, ast.expression1);
-  statement.pushPart(", ");
-  writeExpression(module, scope, statement, ast.expression2);
-  statement.pushPart(")");
+  scope.pushStatementPart(callName);
+  scope.pushStatementPart("(");
+  pass.recurseExpression(scope, ast.expression1);
+  scope.pushStatementPart(", ");
+  pass.recurseExpression(scope, ast.expression2);
+  scope.pushStatementPart(")");
 }
