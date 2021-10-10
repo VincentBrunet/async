@@ -3,6 +3,6 @@
 
 #include <core/core_struct.h>
 
-extern t_value *(*entry_module)();
+extern t_ref **(*entry_module)();
 
 #endif

@@ -4,7 +4,7 @@ import { OutputScope } from "./OutputScope.ts";
 export class OutputModule {
   private meta: AstModule;
 
-  private dependencies = new Array<string>();
+  private includes = new Array<string>();
   private scopes = new Array<OutputScope>();
 
   constructor(meta: AstModule) {
@@ -18,10 +18,9 @@ export class OutputModule {
     return this.meta.meta.meta.hash;
   }
 
-  pushDependency(hash: string) {
-    this.dependencies.push(hash);
+  pushInclude(path: string) {
+    this.includes.push(path);
   }
-
   pushScope(scope: OutputScope) {
     this.scopes.push(scope);
   }
@@ -36,14 +35,15 @@ export class OutputModule {
 
   generateIncludes(): string {
     const parts = new Array<string>();
-    for (const dependency of this.dependencies) {
+    for (const include of this.includes) {
       parts.push("#include");
       parts.push(" ");
       parts.push("<");
-      parts.push("../");
-      parts.push(dependency);
-      parts.push("/output.h");
+      parts.push(include);
       parts.push(">");
+      parts.push("\n");
+    }
+    if (this.includes.length) {
       parts.push("\n");
     }
     return parts.join("");
@@ -64,7 +64,6 @@ export class OutputModule {
     parts.push("#include <runtime.h>\n");
     parts.push("\n");
     parts.push(this.generateIncludes());
-    parts.push("\n");
     for (const scope of this.scopes) {
       for (const part of scope.generateHeader()) {
         parts.push(part);
@@ -82,7 +81,6 @@ export class OutputModule {
     parts.push("#include <runtime.h>\n");
     parts.push("\n");
     parts.push(this.generateIncludes());
-    parts.push("\n");
     for (const scope of this.scopes) {
       for (const part of scope.generateSource()) {
         parts.push(part);

@@ -11,9 +11,11 @@ t_u32 loaded_count = 0;
 int module_loaded_compare(const void *a, const void *b) {
   t_loaded *ea = (t_loaded *)a;
   t_loaded *eb = (t_loaded *)b;
-  if (ea->loader == eb->loader) {
+  uintptr_t la = (uintptr_t)ea->loader;
+  uintptr_t lb = (uintptr_t)eb->loader;
+  if (la == lb) {
     return 0;
-  } else if (ea->loader > eb->loader) {
+  } else if (la > lb) {
     return 1;
   } else {
     return -1;

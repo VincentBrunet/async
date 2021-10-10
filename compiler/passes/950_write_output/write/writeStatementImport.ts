@@ -14,7 +14,7 @@ export function writeStatementImport(
 ) {
   const resolvedModule = ensure(ast.resolvedModule);
 
-  module.pushDependency(resolvedModule.meta.meta.hash);
+  module.pushInclude(resolvedModule.meta.meta.cache + "/output.h");
 
   for (const slot of ast.slots) {
     const declaration = new OutputStatement();

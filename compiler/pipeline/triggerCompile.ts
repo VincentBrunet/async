@@ -12,6 +12,7 @@ import { passStatementCollector } from "../passes/109_statement_collector/passSt
 import { passTypeInferenceUpward } from "../passes/203_type_inference_upward/passTypeInferenceUpward.ts";
 import { passAstToOutputModule } from "../passes/950_write_output/passAstToOutputModule.ts";
 import { passOutputToObject } from "../passes/980_compile_output/passOutputToObject.ts";
+import { passObjectToBinary } from "../passes/990_compile_binary/passObjectToBinary.ts";
 import { doPass } from "./doPass.ts";
 
 const compileQueue: AstModule[] = [];
@@ -29,10 +30,12 @@ export async function triggerCompile(url: URL) {
   return ast;
 }
 
-export async function finishCompiles() {
+export async function finishCompiles(module: AstModule) {
+  const objects = [];
   for (const compileItem of compileQueue) {
-    await finishCompile(compileItem);
+    objects.push(await finishCompile(compileItem));
   }
+  await passObjectToBinary(module, objects);
 }
 
 export async function finishCompile(ast: AstModule) {
@@ -49,4 +52,6 @@ export async function finishCompile(ast: AstModule) {
 
   const output = await doPass(dir, ast, "950", passAstToOutputModule);
   const object = await doPass(dir, output, "980", passOutputToObject);
+
+  return object;
 }
