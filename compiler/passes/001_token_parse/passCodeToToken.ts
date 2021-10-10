@@ -128,8 +128,7 @@ export async function passCodeToToken(code: CodeModule): Promise<TokenModule> {
 
   // done
   return {
-    metaUrl: code.metaUrl,
-    metaCode: code,
+    sourceCode: code,
     tokens: tokens,
   };
 }

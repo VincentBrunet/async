@@ -1,6 +1,7 @@
 import { AstModule } from "../data/ast/AstModule.ts";
+import { stringify } from "../lib/core/debug/stringify.ts";
 import { passUrlToCode } from "../passes/000_code_read/passUrlToCode.ts";
-import { passCodeToToken } from "../passes/001_tokens_parse/passCodeToToken.ts";
+import { passCodeToToken } from "../passes/001_token_parse/passCodeToToken.ts";
 import { passTokenToAst } from "../passes/005_ast_parse/passTokenToAst.ts";
 import { passImportResolve } from "../passes/099_import_resolve/passImportResolve.ts";
 import { passParentRef } from "../passes/102_parent_ref/passParentRef.ts";
@@ -13,7 +14,29 @@ import { passTypeInferenceUpward } from "../passes/203_type_inference_upward/pas
 import { passAstToOutput } from "../passes/950_write_output/passAstToOutput.ts";
 import { passOutputToObject } from "../passes/980_compile_output/passOutputToObject.ts";
 import { passObjectToBinary } from "../passes/990_compile_binary/passObjectToBinary.ts";
-import { doPass } from "./doPass.ts";
+
+export async function doPass<Input, Output>(
+  dir: string,
+  input: Input,
+  key: string,
+  call: (input: Input) => Promise<Output>,
+) {
+  const output = await call(input);
+  if (output) {
+    await Deno.writeTextFile(
+      dir + "/pass." + key + "." + call.name +
+        ".json",
+      stringify(output, new Set(["token", "tokens", "location"])),
+    );
+  } else {
+    await Deno.writeTextFile(
+      dir + "/pass." + key + "." + call.name +
+        ".json",
+      stringify(input, new Set(["token", "tokens", "location"])),
+    );
+  }
+  return output;
+}
 
 const compileQueue: AstModule[] = [];
 

@@ -35,7 +35,7 @@ export async function passUrlToCode(url: URL): Promise<CodeModule> {
       const hash = hashModuleKey(file);
       const cache = await cacheDirFromHash(hash);
       return {
-        metaUrl: url,
+        sourceUrl: url,
         hash: hash,
         file: file,
         cache: cache,

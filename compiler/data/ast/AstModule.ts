@@ -1,4 +1,3 @@
-import { CodeModule } from "../code/CodeModule.ts";
 import { TokenModule } from "../token/TokenModule.ts";
 import { Ast } from "./Ast.ts";
 import { AstStatement } from "./AstStatement.ts";
@@ -7,9 +6,7 @@ import { AstStatementImport } from "./AstStatementImport.ts";
 import { AstStatementVariable } from "./AstStatementVariable.ts";
 
 export interface AstModule extends Ast {
-  metaUrl: URL;
-  metaCode: CodeModule;
-  metaToken: TokenModule;
+  sourceToken: TokenModule;
 
   statements: Array<AstStatement>;
 

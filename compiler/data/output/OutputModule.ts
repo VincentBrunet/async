@@ -1,13 +1,10 @@
 import { AstModule } from "../ast/AstModule.ts";
-import { CodeModule } from "../code/CodeModule.ts";
-import { TokenModule } from "../token/TokenModule.ts";
 import { OutputFunction } from "./OutputFunction.ts";
+import { OutputInclude } from "./OutputInclude.ts";
 
 export interface OutputModule {
-  metaUrl: URL;
-  metaCode: CodeModule;
-  metaToken: TokenModule;
-  metaAst: AstModule;
+  sourceAst: AstModule;
 
+  includes: Array<OutputInclude>;
   functions: Array<OutputFunction>;
 }

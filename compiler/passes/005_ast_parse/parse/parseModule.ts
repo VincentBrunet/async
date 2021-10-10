@@ -8,10 +8,10 @@ import { parseStatement } from "./parseStatement.ts";
 
 export function parseModule(
   browser: TokenBrowser,
-  module?: TokenModule,
+  token?: TokenModule,
 ): AstModule | TokenImpasse {
-  // meta
-  const meta = ensure(module);
+  // Asserts
+  const sourceToken = ensure(token);
   // statements
   const statements = new Array<AstStatement>();
   while (true) {
@@ -28,7 +28,7 @@ export function parseModule(
   }
   // done
   return {
-    meta: meta,
+    sourceToken: sourceToken,
     statements: statements,
   };
 }

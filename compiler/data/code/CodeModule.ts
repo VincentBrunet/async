@@ -1,5 +1,5 @@
 export interface CodeModule {
-  metaUrl: URL;
+  sourceUrl: URL;
 
   file: string;
   hash: string;
