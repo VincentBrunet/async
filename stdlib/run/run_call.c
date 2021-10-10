@@ -1,8 +1,7 @@
 #include <run/run_call.h>
 
 t_value *run_call_0(t_value *(callable)(t_ref **)) {
-  t_ref *closure[0];
-  return callable(closure);
+  return callable(NULL);
 }
 
 t_value *run_call_1(t_value *(callable)(t_ref **), t_ref *r1) {

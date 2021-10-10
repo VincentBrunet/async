@@ -1,8 +1,7 @@
 #include <object/object_call.h>
 
 t_value *object_call_0(t_value *(callable)(t_ref **)) {
-  t_ref *closure[0];
-  return callable(closure);
+  return callable(NULL);
 }
 
 t_value *object_call_1(t_value *(callable)(t_ref **), t_ref *r1) {

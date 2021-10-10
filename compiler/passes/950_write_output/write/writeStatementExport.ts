@@ -8,6 +8,5 @@ export function writeStatementExport(
   scope: OutputScope,
   ast: AstStatementExport,
 ) {
-  // TODO
   writeStatement(module, scope, ast.statement);
 }
