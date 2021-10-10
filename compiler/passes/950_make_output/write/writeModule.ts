@@ -3,7 +3,6 @@ import { AstStatementVariable } from "../../../data/ast/AstStatementVariable.ts"
 import { ensure } from "../../../lib/errors/ensure.ts";
 import { hashAstKey } from "../../../lib/hash/hashAstKey.ts";
 import { OutputModule } from "../util/OutputModule.ts";
-import { OutputOrder } from "../util/OutputOrder.ts";
 import { OutputScope } from "../util/OutputScope.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
 import { writeStatement } from "./writeStatement.ts";
@@ -27,7 +26,7 @@ export function writeModule(module: OutputModule, ast: AstModule) {
     declaration.pushPart(resolvedVariable.name);
     declaration.pushPart(" = ");
     declaration.pushPart("ref_make(NULL)");
-    scope.pushStatement(OutputOrder.Logic, declaration);
+    scope.pushStatement(declaration);
   }
 
   // Recurse in module content
@@ -54,7 +53,7 @@ export function writeModule(module: OutputModule, ast: AstModule) {
     done.pushPart(resolvedVariable.name);
   }
   done.pushPart(")");
-  scope.pushStatement(OutputOrder.Logic, done);
+  scope.pushStatement(done);
 
   // Done
   module.pushScope(scope);

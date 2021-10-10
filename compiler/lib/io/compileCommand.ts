@@ -33,9 +33,9 @@ export async function compileCommand(command: Array<string>) {
   const stdout = await readToString(process.stdout);
   const stderr = await readToString(process.stderr);
 
-  console.log("compileCommand.status", status);
-  console.log("compileCommand.stderr", stderr);
-  console.log("compileCommand.stdout", stdout);
+  //console.log("compileCommand.status", status);
+  //console.log("compileCommand.stderr", stderr);
+  //console.log("compileCommand.stdout", stdout);
 
   return {
     status: status,

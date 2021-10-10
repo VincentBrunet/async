@@ -47,4 +47,11 @@ export async function passObjectToBinary(
       ...stdlibs,
     ],
   );
+
+  if (compileBinary.stdout) {
+    console.log(compileBinary.stdout);
+  }
+  if (compileBinary.stderr) {
+    console.log(compileBinary.stderr);
+  }
 }

@@ -5,7 +5,6 @@ import {
 import { ensure } from "../../../lib/errors/ensure.ts";
 import { hashAstKey } from "../../../lib/hash/hashAstKey.ts";
 import { OutputModule } from "../util/OutputModule.ts";
-import { OutputOrder } from "../util/OutputOrder.ts";
 import { OutputScope } from "../util/OutputScope.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
 import { writeExpression } from "./writeExpression.ts";
@@ -75,14 +74,14 @@ export function writeExpressionObject(
     object.pushPart(field.hash);
   }
   object.pushPart(")");
-  child.pushStatement(OutputOrder.Logic, object);
+  child.pushStatement(object);
 
   // Read a variable field pointer
   const shortcut = new OutputStatement();
   shortcut.pushPart(
     "t_field *fields = object->data.object.fields",
   );
-  child.pushStatement(OutputOrder.Logic, shortcut);
+  child.pushStatement(shortcut);
 
   // Make local references to created fields
   for (let i = 0; i < sortedFields.length; i++) {
@@ -95,7 +94,7 @@ export function writeExpressionObject(
     named.pushPart("(t_ref *)&(fields[");
     named.pushPart(i.toString());
     named.pushPart("])");
-    child.pushStatement(OutputOrder.Logic, named);
+    child.pushStatement(named);
   }
 
   // Do the assignation
@@ -107,13 +106,13 @@ export function writeExpressionObject(
     assigned.pushPart(" = ");
     writeExpression(module, child, assigned, unsortedField.expression);
     assigned.pushPart("");
-    child.pushStatement(OutputOrder.Logic, assigned);
+    child.pushStatement(assigned);
   }
 
   // We simply return the object
   const done = new OutputStatement();
   done.pushPart("return object");
-  child.pushStatement(OutputOrder.Logic, done);
+  child.pushStatement(done);
 
   // Done, push the newly created function
   module.pushScope(child);

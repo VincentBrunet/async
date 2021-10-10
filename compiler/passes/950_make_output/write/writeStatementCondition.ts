@@ -3,7 +3,6 @@ import {
   AstStatementConditionBranch,
 } from "../../../data/ast/AstStatementCondition.ts";
 import { OutputModule } from "../util/OutputModule.ts";
-import { OutputOrder } from "../util/OutputOrder.ts";
 import { OutputScope } from "../util/OutputScope.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
 import { writeBlock } from "./writeBlock.ts";
@@ -20,14 +19,14 @@ function writeStatementConditionBranch(
   writeExpression(module, scope, opening, ast.condition);
   opening.pushPart(")) {");
   opening.markSpecial();
-  scope.pushStatement(OutputOrder.Logic, opening);
+  scope.pushStatement(opening);
   // content
   writeBlock(module, scope, ast.block);
   // closing
   const closing = new OutputStatement();
   closing.pushPart("}");
   closing.markSpecial();
-  scope.pushStatement(OutputOrder.Logic, closing);
+  scope.pushStatement(closing);
 }
 
 export function writeStatementCondition(

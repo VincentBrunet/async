@@ -1,6 +1,5 @@
 import { AstStatementVariable } from "../../../data/ast/AstStatementVariable.ts";
 import { OutputModule } from "../util/OutputModule.ts";
-import { OutputOrder } from "../util/OutputOrder.ts";
 import { OutputScope } from "../util/OutputScope.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
 import { writeExpression } from "./writeExpression.ts";
@@ -17,6 +16,6 @@ export function writeStatementVariable(
     assignment.pushPart("->value");
     assignment.pushPart(" = ");
     writeExpression(module, scope, assignment, ast.value);
-    scope.pushStatement(OutputOrder.Logic, assignment);
+    scope.pushStatement(assignment);
   }
 }

@@ -2,7 +2,6 @@ import { AstExpressionFunction } from "../../../data/ast/AstExpressionFunction.t
 import { ensure } from "../../../lib/errors/ensure.ts";
 import { hashAstKey } from "../../../lib/hash/hashAstKey.ts";
 import { OutputModule } from "../util/OutputModule.ts";
-import { OutputOrder } from "../util/OutputOrder.ts";
 import { OutputScope } from "../util/OutputScope.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
 import { writeBlock } from "./writeBlock.ts";
@@ -58,7 +57,7 @@ export function writeExpressionFunction(
   // Backup return
   const done = new OutputStatement();
   done.pushPart("return null_make()");
-  child.pushStatement(OutputOrder.Logic, done);
+  child.pushStatement(done);
 
   // Done, push the newly created function
   module.pushScope(child);

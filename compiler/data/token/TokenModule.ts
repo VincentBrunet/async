@@ -2,7 +2,7 @@ import { CodeModule } from "../code/CodeModule.ts";
 import { Token } from "./Token.ts";
 
 export interface TokenModule {
-  meta: CodeModule;
+  metaCode: CodeModule;
 
-  list: Array<Token>;
+  tokens: Array<Token>;
 }

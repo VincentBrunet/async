@@ -1,14 +1,12 @@
 import { AstBlock } from "../../../data/ast/AstBlock.ts";
 import { ensure } from "../../../lib/errors/ensure.ts";
-import { OutputModule } from "../util/OutputModule.ts";
-import { OutputOrder } from "../util/OutputOrder.ts";
-import { OutputScope } from "../util/OutputScope.ts";
+import { RecursorPass } from "../../util/RecursorPass.ts";
+import { BrowsedScope } from "../util/BrowsedScope.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
-import { writeStatement } from "./writeStatement.ts";
 
 export function writeBlock(
-  module: OutputModule,
-  scope: OutputScope,
+  pass: RecursorPass<BrowsedScope>,
+  scope: BrowsedScope,
   ast: AstBlock,
 ) {
   // Setup variables
@@ -20,10 +18,10 @@ export function writeBlock(
     declaration.pushPart(variable.name);
     declaration.pushPart(" = ");
     declaration.pushPart("ref_make(NULL)");
-    scope.pushStatement(OutputOrder.Logic, declaration);
+    scope.pushStatement(declaration);
   }
   // Recurse on statements
   for (const statement of ast.statements) {
-    writeStatement(module, scope, statement);
+    pass.recurseStatement(scope, statement);
   }
 }

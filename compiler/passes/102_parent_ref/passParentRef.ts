@@ -1,8 +1,8 @@
 import { AstModule } from "../../data/ast/AstModule.ts";
-import { makeRecursorPass } from "../util/makeRecursorPass.ts";
+import { makeRecursorPassSimplified } from "../util/makeRecursorPassSimplified.ts";
 import { browseStatementImport } from "./browse/browseStatementImport.ts";
 
-const pass = makeRecursorPass((scope) => {
+const pass = makeRecursorPassSimplified((scope) => {
   return scope;
 }, {
   recurseStatementImport: browseStatementImport,

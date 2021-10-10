@@ -1,5 +1,5 @@
 import { AstModule } from "../../data/ast/AstModule.ts";
-import { makeRecursorPass } from "../util/makeRecursorPass.ts";
+import { makeRecursorPassSimplified } from "../util/makeRecursorPassSimplified.ts";
 import { browseExpressionFunction } from "./browse/browseExpressionFunction.ts";
 import { browseExpressionIdentifier } from "./browse/browseExpressionIdentifier.ts";
 import { browseExpressionObject } from "./browse/browseExpressionObject.ts";
@@ -8,7 +8,7 @@ import { browseStatementImport } from "./browse/browseStatementImport.ts";
 import { browseStatementVariable } from "./browse/browseStatementVariable.ts";
 import { BrowsedScope } from "./util/BrowsedScope.ts";
 
-const pass = makeRecursorPass<BrowsedScope>((scope) => {
+const pass = makeRecursorPassSimplified<BrowsedScope>((scope) => {
   return new BrowsedScope(scope);
 }, {
   recurseStatementImport: browseStatementImport,

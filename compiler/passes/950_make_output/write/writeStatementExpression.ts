@@ -1,6 +1,5 @@
 import { AstStatementExpression } from "../../../data/ast/AstStatementExpression.ts";
 import { OutputModule } from "../util/OutputModule.ts";
-import { OutputOrder } from "../util/OutputOrder.ts";
 import { OutputScope } from "../util/OutputScope.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
 import { writeExpression } from "./writeExpression.ts";
@@ -12,5 +11,5 @@ export function writeStatementExpression(
 ) {
   const statement = new OutputStatement();
   writeExpression(module, scope, statement, astStatementExpression.expression);
-  scope.pushStatement(OutputOrder.Logic, statement);
+  scope.pushStatement(statement);
 }

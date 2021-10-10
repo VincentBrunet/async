@@ -1,8 +1,8 @@
 import { AstModule } from "../../data/ast/AstModule.ts";
-import { makeRecursorPass } from "../util/makeRecursorPass.ts";
+import { makeRecursorPassSimplified } from "../util/makeRecursorPassSimplified.ts";
 import { browseExpressionBinary } from "./browse/browseExpressionBinary.ts";
 
-const pass = makeRecursorPass<undefined>((param) => {
+const pass = makeRecursorPassSimplified<undefined>((param) => {
   return param;
 }, {
   recurseExpressionBinary: browseExpressionBinary,

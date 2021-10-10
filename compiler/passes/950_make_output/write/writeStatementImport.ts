@@ -3,7 +3,6 @@ import { ensure } from "../../../lib/errors/ensure.ts";
 import { hashAstKey } from "../../../lib/hash/hashAstKey.ts";
 import { hashLocalKey } from "../../../lib/hash/hashLocalKey.ts";
 import { OutputModule } from "../util/OutputModule.ts";
-import { OutputOrder } from "../util/OutputOrder.ts";
 import { OutputScope } from "../util/OutputScope.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
 
@@ -27,6 +26,6 @@ export function writeStatementImport(
     declaration.pushPart(", ");
     declaration.pushPart(ast.slots.indexOf(slot).toString());
     declaration.pushPart(")");
-    scope.pushStatement(OutputOrder.Logic, declaration);
+    scope.pushStatement(declaration);
   }
 }

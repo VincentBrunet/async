@@ -26,5 +26,12 @@ export async function passOutputToObject(output: OutputModule) {
     ],
   );
 
+  if (compileObject.stdout) {
+    console.log(compileObject.stdout);
+  }
+  if (compileObject.stderr) {
+    console.log(compileObject.stderr);
+  }
+
   return dir + "/output.o";
 }
