@@ -3,6 +3,6 @@
 
 #include <core/core_struct.h>
 
-t_value *module_import();
+t_ref *module_import(t_ref **(*loader)(), t_u32 idx);
 
 #endif

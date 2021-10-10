@@ -17,7 +17,7 @@ export function writeExpressionFunction(
   const resolvedClosures = ensure(ast.resolvedClosures);
 
   // Generate a stable unique name
-  const name = hashAstKey(module, ast, "function");
+  const name = hashAstKey(module.getMeta(), ast, "function");
 
   // Simply call the function factory
   const callLength = resolvedClosures.length.toString();
@@ -58,7 +58,7 @@ export function writeExpressionFunction(
   // Backup return
   const done = new OutputStatement();
   done.pushPart("return null_make()");
-  child.pushStatement(OutputOrder.After, done);
+  child.pushStatement(OutputOrder.Logic, done);
 
   // Done, push the newly created function
   module.pushScope(child);

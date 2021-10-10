@@ -14,7 +14,7 @@ export function writeModule(module: OutputModule, ast: AstModule) {
   const resolvedVariables = ensure(ast.resolvedVariables);
 
   // Named with module hash
-  const name = hashAstKey(module, ast, "module");
+  const name = hashAstKey(module.getMeta(), ast, "module");
 
   // New Scope
   const scope = new OutputScope("t_ref **", name);

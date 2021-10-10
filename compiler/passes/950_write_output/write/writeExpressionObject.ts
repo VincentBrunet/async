@@ -20,7 +20,7 @@ export function writeExpressionObject(
   const resolvedClosures = ensure(ast.resolvedClosures);
 
   // Generate a stable unique name
-  const name = hashAstKey(module, ast, "object");
+  const name = hashAstKey(module.getMeta(), ast, "object");
 
   // Simply call the object factory in the expression
   const callLength = resolvedClosures.length.toString();
@@ -75,14 +75,14 @@ export function writeExpressionObject(
     object.pushPart(field.hash);
   }
   object.pushPart(")");
-  child.pushStatement(OutputOrder.Variables, object);
+  child.pushStatement(OutputOrder.Logic, object);
 
   // Read a variable field pointer
   const shortcut = new OutputStatement();
   shortcut.pushPart(
     "t_field *fields = object->data.object.fields",
   );
-  child.pushStatement(OutputOrder.Variables, shortcut);
+  child.pushStatement(OutputOrder.Logic, shortcut);
 
   // Make local references to created fields
   for (let i = 0; i < sortedFields.length; i++) {
@@ -95,7 +95,7 @@ export function writeExpressionObject(
     named.pushPart("(t_ref *)&(fields[");
     named.pushPart(i.toString());
     named.pushPart("])");
-    child.pushStatement(OutputOrder.Variables, named);
+    child.pushStatement(OutputOrder.Logic, named);
   }
 
   // Do the assignation
@@ -113,7 +113,7 @@ export function writeExpressionObject(
   // We simply return the object
   const done = new OutputStatement();
   done.pushPart("return object");
-  child.pushStatement(OutputOrder.After, done);
+  child.pushStatement(OutputOrder.Logic, done);
 
   // Done, push the newly created function
   module.pushScope(child);

@@ -17,7 +17,7 @@ export function writeExpressionRun(
   const resolvedClosures = ensure(ast.resolvedClosures);
 
   // Generate a stable unique name
-  const name = hashAstKey(module, ast, "run");
+  const name = hashAstKey(module.getMeta(), ast, "run");
 
   // Simply call the run function in the expression
   const callLength = resolvedClosures.length.toString();
@@ -53,7 +53,7 @@ export function writeExpressionRun(
   // Backup return
   const done = new OutputStatement();
   done.pushPart("return null_make()");
-  child.pushStatement(OutputOrder.After, done);
+  child.pushStatement(OutputOrder.Logic, done);
 
   // Runne, push the newly created function
   module.pushScope(child);
