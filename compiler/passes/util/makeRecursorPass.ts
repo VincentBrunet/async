@@ -119,16 +119,6 @@ export function makeRecursorPass<Scope>(
       passLogic,
       recurseExpression,
     ),
-    recurseStatementImport: makeRecursion(
-      s,
-      passLogic,
-      recurseStatementImport,
-    ),
-    recurseStatementExport: makeRecursion(
-      s,
-      passLogic,
-      recurseStatementExport,
-    ),
     recurseExpressionCall: makeRecursion(
       s,
       passLogic,
@@ -232,6 +222,16 @@ export function makeRecursorPass<Scope>(
       passLogic,
       recurseStatement,
     ),
+    recurseStatementImport: makeRecursion(
+      s,
+      passLogic,
+      recurseStatementImport,
+    ),
+    recurseStatementExport: makeRecursion(
+      s,
+      passLogic,
+      recurseStatementExport,
+    ),
     recurseStatementVariable: makeRecursion(
       s,
       passLogic,
@@ -293,14 +293,6 @@ export function makeRecursorPass<Scope>(
     recurseExpression: makeLogic(
       passRecurse.value.recurseExpression,
       logic.recurseExpression,
-    ),
-    recurseStatementImport: makeLogic(
-      passRecurse.value.recurseStatementImport,
-      logic.recurseStatementImport,
-    ),
-    recurseStatementExport: makeLogic(
-      passRecurse.value.recurseStatementExport,
-      logic.recurseStatementExport,
     ),
     recurseExpressionCall: makeLogic(
       passRecurse.value.recurseExpressionCall,
@@ -384,6 +376,14 @@ export function makeRecursorPass<Scope>(
     recurseStatement: makeLogic(
       passRecurse.value.recurseStatement,
       logic.recurseStatement,
+    ),
+    recurseStatementImport: makeLogic(
+      passRecurse.value.recurseStatementImport,
+      logic.recurseStatementImport,
+    ),
+    recurseStatementExport: makeLogic(
+      passRecurse.value.recurseStatementExport,
+      logic.recurseStatementExport,
     ),
     recurseStatementVariable: makeLogic(
       passRecurse.value.recurseStatementVariable,

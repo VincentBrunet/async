@@ -41,7 +41,7 @@ export function writeExpressionRun(
   statement.pushPart(")");
 
   // New scope
-  const child = new OutputScope(name);
+  const child = new OutputScope("t_value *", name);
 
   // Setup params
   child.pushParam("t_ref **closure");

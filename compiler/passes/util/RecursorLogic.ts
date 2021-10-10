@@ -53,6 +53,16 @@ export interface RecursorLogic<Scope> {
     ast: AstStatement,
     next: () => Promise<void>,
   ) => Promise<void>;
+  recurseStatementImport?: (
+    scope: Scope,
+    ast: AstStatementImport,
+    next: () => Promise<void>,
+  ) => Promise<void>;
+  recurseStatementExport?: (
+    scope: Scope,
+    ast: AstStatementExport,
+    next: () => Promise<void>,
+  ) => Promise<void>;
   recurseStatementVariable?: (
     scope: Scope,
     ast: AstStatementVariable,
@@ -102,16 +112,6 @@ export interface RecursorLogic<Scope> {
   recurseExpression?: (
     scope: Scope,
     ast: AstExpression,
-    next: () => Promise<void>,
-  ) => Promise<void>;
-  recurseStatementImport?: (
-    scope: Scope,
-    ast: AstStatementImport,
-    next: () => Promise<void>,
-  ) => Promise<void>;
-  recurseStatementExport?: (
-    scope: Scope,
-    ast: AstStatementExport,
     next: () => Promise<void>,
   ) => Promise<void>;
   recurseExpressionCall?: (

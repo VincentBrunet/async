@@ -45,7 +45,7 @@ export function writeExpressionObject(
   statement.pushPart(")");
 
   // New scope
-  const child = new OutputScope(name);
+  const child = new OutputScope("t_value *", name);
 
   // Fields
   const unsortedFields = ast.fields;

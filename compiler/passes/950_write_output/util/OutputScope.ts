@@ -3,13 +3,16 @@ import { OutputOrder } from "./OutputOrder.ts";
 import { OutputStatement } from "./OutputStatement.ts";
 
 export class OutputScope {
+  private output: string;
   private name: string;
   private params = new Array<string>();
   private statements = new MapArray<OutputOrder, OutputStatement>();
 
   constructor(
+    output: string,
     name: string,
   ) {
+    this.output = output;
     this.name = name;
   }
 
@@ -23,7 +26,7 @@ export class OutputScope {
 
   generateHeader(): Array<string> {
     const parts = new Array<string>();
-    parts.push("t_value *");
+    parts.push(this.output);
     parts.push(this.name);
     parts.push("(");
     parts.push(this.params.join(", "));
@@ -35,7 +38,7 @@ export class OutputScope {
   generateSource(): Array<string> {
     const parts = new Array<string>();
 
-    parts.push("t_value *");
+    parts.push(this.output);
     parts.push(this.name);
     parts.push("(");
     parts.push(this.params.join(", "));

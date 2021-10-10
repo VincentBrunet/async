@@ -13,6 +13,7 @@ export function writeExpressionFunction(
   statement: OutputStatement,
   ast: AstExpressionFunction,
 ) {
+  console.log("writeExpressionFunction", ast);
   const resolvedClosures = ensure(ast.resolvedClosures);
 
   // Generate a stable unique name
@@ -43,7 +44,7 @@ export function writeExpressionFunction(
   statement.pushPart(")");
 
   // New function
-  const child = new OutputScope(name);
+  const child = new OutputScope("t_value *", name);
 
   // Push statements
   writeBlock(module, child, ast.block);

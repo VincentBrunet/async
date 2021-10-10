@@ -50,6 +50,14 @@ export interface RecursorPass<Scope> {
     scope: Scope,
     ast: AstStatement,
   ) => Promise<void>;
+  recurseStatementImport: (
+    scope: Scope,
+    ast: AstStatementImport,
+  ) => Promise<void>;
+  recurseStatementExport: (
+    scope: Scope,
+    ast: AstStatementExport,
+  ) => Promise<void>;
   recurseStatementVariable: (
     scope: Scope,
     ast: AstStatementVariable,
@@ -90,14 +98,6 @@ export interface RecursorPass<Scope> {
   recurseExpression: (
     scope: Scope,
     ast: AstExpression,
-  ) => Promise<void>;
-  recurseStatementImport: (
-    scope: Scope,
-    ast: AstStatementImport,
-  ) => Promise<void>;
-  recurseStatementExport: (
-    scope: Scope,
-    ast: AstStatementExport,
   ) => Promise<void>;
   recurseExpressionCall: (
     scope: Scope,
