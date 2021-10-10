@@ -13,14 +13,14 @@ import { BrowsedScope } from "./util/BrowsedScope.ts";
 const pass = makeRecursorPass<BrowsedScope>((scope) => {
   return new BrowsedScope(scope);
 }, {
+  recurseBlock: browseBlock,
   recurseExpressionFunction: browseExpressionFunction,
   recurseExpressionRun: browseExpressionRun,
+  recurseModule: browseModule,
   recurseStatementImport: browseStatementImport,
   recurseStatementExport: browseStatementExport,
   recurseStatementReturn: browseStatementReturn,
   recurseStatementVariable: browseStatementVariable,
-  recurseModule: browseModule,
-  recurseBlock: browseBlock,
 });
 
 export async function passStatementCollector(ast: AstModule) {

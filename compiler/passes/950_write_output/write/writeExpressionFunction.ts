@@ -2,6 +2,7 @@ import { AstExpressionFunction } from "../../../data/ast/AstExpressionFunction.t
 import { ensure } from "../../../lib/errors/ensure.ts";
 import { hashAstKey } from "../../../lib/hash/hashAstKey.ts";
 import { OutputModule } from "../util/OutputModule.ts";
+import { OutputOrder } from "../util/OutputOrder.ts";
 import { OutputScope } from "../util/OutputScope.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
 import { writeBlock } from "./writeBlock.ts";
@@ -13,7 +14,6 @@ export function writeExpressionFunction(
   statement: OutputStatement,
   ast: AstExpressionFunction,
 ) {
-  console.log("writeExpressionFunction", ast);
   const resolvedClosures = ensure(ast.resolvedClosures);
 
   // Generate a stable unique name
@@ -31,7 +31,7 @@ export function writeExpressionFunction(
   statement.pushPart("(");
   statement.pushPart("type_function"); // TODO,
   statement.pushPart(", ");
-  statement.pushPart("&");
+  statement.pushPart("(void*)&");
   statement.pushPart(name);
   if (callVariadic) {
     statement.pushPart(", ");
@@ -46,14 +46,19 @@ export function writeExpressionFunction(
   // New function
   const child = new OutputScope("t_value *", name);
 
-  // Push statements
-  writeBlock(module, child, ast.block);
-
   // Setup params
   child.pushParam("t_ref **closure");
   for (const astParam of ast.params) {
     child.pushParam("t_value *__" + astParam.name);
   }
+
+  // Push statements
+  writeBlock(module, child, ast.block);
+
+  // Backup return
+  const done = new OutputStatement();
+  done.pushPart("return null_make()");
+  child.pushStatement(OutputOrder.After, done);
 
   // Done, push the newly created function
   module.pushScope(child);

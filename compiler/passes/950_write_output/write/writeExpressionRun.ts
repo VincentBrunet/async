@@ -2,6 +2,7 @@ import { AstExpressionRun } from "../../../data/ast/AstExpressionRun.ts";
 import { ensure } from "../../../lib/errors/ensure.ts";
 import { hashAstKey } from "../../../lib/hash/hashAstKey.ts";
 import { OutputModule } from "../util/OutputModule.ts";
+import { OutputOrder } from "../util/OutputOrder.ts";
 import { OutputScope } from "../util/OutputScope.ts";
 import { OutputStatement } from "../util/OutputStatement.ts";
 import { writeBlock } from "./writeBlock.ts";
@@ -48,6 +49,11 @@ export function writeExpressionRun(
 
   // Run the recursive writing
   writeBlock(module, child, ast.block);
+
+  // Backup return
+  const done = new OutputStatement();
+  done.pushPart("return null_make()");
+  child.pushStatement(OutputOrder.After, done);
 
   // Runne, push the newly created function
   module.pushScope(child);

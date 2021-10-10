@@ -35,6 +35,8 @@ export async function passOutputToObject(output: OutputModule) {
   const process = await Deno.run({
     cmd: [
       "cc",
+      "-Wall",
+      "-Wpedantic",
       "-I",
       "stdlib",
       "-c",
