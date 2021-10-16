@@ -1,17 +1,8 @@
+import { OutputModule } from "../../data/output/OutputModule.ts";
 import { compileCommand } from "../../lib/io/compileCommand.ts";
-import { OutputModule } from "../950_write_output/util/OutputModule.ts";
 
-export async function passOutputToObject(output: OutputModule) {
-  const dir = output.getMeta().meta.meta.cache;
-
-  Deno.writeTextFileSync(
-    dir + "/output.h",
-    output.generateHeader(),
-  );
-  Deno.writeTextFileSync(
-    dir + "/output.c",
-    output.generateSource(),
-  );
+export async function passFileToObject(output: OutputModule) {
+  const dir = output.sourceAst.sourceToken.sourceCode.cache;
 
   const compileObject = await compileCommand(
     [
