@@ -3,10 +3,10 @@ import { makeTypeFunction } from "../../../lib/typing/makeTypeFunction.ts";
 import { makeTypeOr } from "../../../lib/typing/makeTypeOr.ts";
 import { makeTypePrimitiveAny } from "../../../lib/typing/makeTypePrimitiveAny.ts";
 import { makeTypePrimitiveUnknown } from "../../../lib/typing/makeTypePrimitiveUnknown.ts";
-import { BrowsedScope } from "../util/BrowsedScope.ts";
+import { Scope } from "../util/Scope.ts";
 
 export async function browseExpressionFunction(
-  scope: BrowsedScope,
+  scope: Scope,
   ast: AstExpressionFunction,
   next: () => Promise<void>,
 ) {

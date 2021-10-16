@@ -12,7 +12,8 @@ import { passShorthandResolve } from "../passes/106_shorthand_resolve/passShorth
 import { passStatementCollector } from "../passes/109_statement_collector/passStatementCollector.ts";
 import { passTypeInferenceUpward } from "../passes/203_type_inference_upward/passTypeInferenceUpward.ts";
 import { passAstToOutput } from "../passes/950_write_output/passAstToOutput.ts";
-import { passOutputToObject } from "../passes/980_compile_output/passOutputToObject.ts";
+import { passOutputToFile } from "../passes/960_output_write/passOutputToFile.ts";
+import { passFileToObject } from "../passes/980_compile_output/passFileToObject.ts";
 import { passObjectToBinary } from "../passes/990_compile_binary/passObjectToBinary.ts";
 
 export async function doPass<Input, Output>(
@@ -43,10 +44,12 @@ const compileQueue: AstModule[] = [];
 export async function triggerCompile(url: URL) {
   const code = await passUrlToCode(url);
 
-  const token = await doPass(code.cache, code, "001", passCodeToToken);
-  const ast = await doPass(code.cache, token, "005", passTokenToAst);
+  const hash = code.hash;
 
-  await doPass(code.cache, ast, "099", passImportResolve);
+  const token = await doPass(hash, code, "001", passCodeToToken);
+  const ast = await doPass(hash, token, "005", passTokenToAst);
+
+  await doPass(hash, ast, "099", passImportResolve);
 
   compileQueue.push(ast);
 
@@ -62,19 +65,20 @@ export async function finishCompiles(module: AstModule) {
 }
 
 export async function finishCompile(ast: AstModule) {
-  const dir = ast.metaCode.cache;
+  const hash = ast.sourceToken.sourceCode.hash;
 
-  await doPass(dir, ast, "102", passParentRef);
-  await doPass(dir, ast, "103", passBinaryPrioritize);
-  await doPass(dir, ast, "104", passClosureResolve);
-  await doPass(dir, ast, "105", passReferenceResolve);
-  await doPass(dir, ast, "106", passShorthandResolve);
-  await doPass(dir, ast, "109", passStatementCollector);
+  await doPass(hash, ast, "102", passParentRef);
+  await doPass(hash, ast, "103", passBinaryPrioritize);
+  await doPass(hash, ast, "104", passClosureResolve);
+  await doPass(hash, ast, "105", passReferenceResolve);
+  await doPass(hash, ast, "106", passShorthandResolve);
+  await doPass(hash, ast, "109", passStatementCollector);
 
-  await doPass(dir, ast, "203", passTypeInferenceUpward);
+  await doPass(hash, ast, "203", passTypeInferenceUpward);
 
-  const output = await doPass(dir, ast, "950", passAstToOutput);
-  const object = await doPass(dir, output, "980", passOutputToObject);
+  const output = await doPass(hash, ast, "950", passAstToOutput);
+  await doPass(hash, output, "960", passOutputToFile);
+  const object = await doPass(hash, file, "980", passFileToObject);
 
   return object;
 }

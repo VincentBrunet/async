@@ -3,7 +3,7 @@ import {
   AstTypeData,
   AstTypeKind,
 } from "../../../data/ast/AstType.ts";
-import { TokenBrowser } from "../util/TokenBrowser.ts";
+import { Browser } from "../util/Browser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseTypeBinary } from "./parseTypeBinary.ts";
 import { parseTypeFunction } from "./parseTypeFunction.ts";
@@ -16,7 +16,7 @@ function makeType(kind: AstTypeKind, data: AstTypeData) {
 }
 
 const leafs = new Array<
-  [AstTypeKind, (b: TokenBrowser) => AstTypeData | TokenImpasse]
+  [AstTypeKind, (b: Browser) => AstTypeData | TokenImpasse]
 >();
 leafs.push([AstTypeKind.Function, parseTypeFunction]);
 leafs.push([AstTypeKind.Object, parseTypeObject]);
@@ -26,13 +26,13 @@ leafs.push([AstTypeKind.Identifier, parseTypeIdentifier]);
 const recursors = new Array<
   [
     AstTypeKind,
-    (b: TokenBrowser, left: AstType) => AstTypeData | TokenImpasse,
+    (b: Browser, left: AstType) => AstTypeData | TokenImpasse,
   ]
 >();
 recursors.push([AstTypeKind.Binary, parseTypeBinary]);
 
 export function parseType(
-  browser: TokenBrowser,
+  browser: Browser,
   leafOnly?: boolean,
 ): AstType | TokenImpasse {
   // Start with a simple leaf Type

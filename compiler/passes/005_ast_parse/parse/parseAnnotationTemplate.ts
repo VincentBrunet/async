@@ -3,7 +3,7 @@ import {
   AstAnnotationTemplateParam,
 } from "../../../data/ast/AstAnnotationTemplate.ts";
 import { TokenKind } from "../../../data/token/Token.ts";
-import { TokenBrowser } from "../util/TokenBrowser.ts";
+import { Browser } from "../util/Browser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseAnnotationType } from "./parseAnnotationType.ts";
 
@@ -12,7 +12,7 @@ const templateClose = new Set([">"]);
 const templateDelim = new Set([","]);
 
 function parseAnnotationTemplateParam(
-  browser: TokenBrowser,
+  browser: Browser,
 ): AstAnnotationTemplateParam | TokenImpasse {
   // template - name
   const templateName = browser.peek();
@@ -33,7 +33,7 @@ function parseAnnotationTemplateParam(
 }
 
 export function parseAnnotationTemplate(
-  browser: TokenBrowser,
+  browser: Browser,
 ): AstAnnotationTemplate | TokenImpasse {
   // items
   const astTemplates = browser.recurseArray(

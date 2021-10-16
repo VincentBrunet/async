@@ -4,10 +4,10 @@ import { browseExpressionFunction } from "./browse/browseExpressionFunction.ts";
 import { browseStatementImport } from "./browse/browseStatementImport.ts";
 import { browseStatementTypedef } from "./browse/browseStatementTypedef.ts";
 import { browseTypeIdentifier } from "./browse/browseTypeIdentifier.ts";
-import { BrowsedScope } from "./util/BrowsedScope.ts";
+import { Scope } from "./util/Scope.ts";
 
-const pass = makeRecursorPassSimplified<BrowsedScope>((scope) => {
-  return new BrowsedScope(scope);
+const pass = makeRecursorPassSimplified<Scope>((scope) => {
+  return new Scope(scope);
 }, {
   recurseExpressionFunction: browseExpressionFunction,
   recurseStatementImport: browseStatementImport,
@@ -16,5 +16,5 @@ const pass = makeRecursorPassSimplified<BrowsedScope>((scope) => {
 });
 
 export async function passShorthandResolve(ast: AstModule) {
-  await pass.recurseModule(new BrowsedScope(), ast);
+  await pass.recurseModule(new Scope(), ast);
 }

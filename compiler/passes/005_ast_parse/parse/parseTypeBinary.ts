@@ -3,7 +3,7 @@ import {
   AstTypeBinary,
   AstTypeBinaryOperator,
 } from "../../../data/ast/AstTypeBinary.ts";
-import { TokenBrowser } from "../util/TokenBrowser.ts";
+import { Browser } from "../util/Browser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseType } from "./parseType.ts";
 
@@ -19,7 +19,7 @@ symbolMap.set("|", AstTypeBinaryOperator.Or);
  * Do the parsing using an already-parsed left handside
  */
 export function parseTypeBinary(
-  browser: TokenBrowser,
+  browser: Browser,
   left: AstType,
 ): AstTypeBinary | TokenImpasse {
   // operator

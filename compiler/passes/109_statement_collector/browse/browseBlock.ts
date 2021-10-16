@@ -1,9 +1,9 @@
 import { AstBlock } from "../../../data/ast/AstBlock.ts";
 import { assert } from "../../../lib/errors/assert.ts";
-import { BrowsedScope } from "../util/BrowsedScope.ts";
+import { Scope } from "../util/Scope.ts";
 
 export async function browseBlock(
-  scope: BrowsedScope,
+  scope: Scope,
   ast: AstBlock,
   next: () => Promise<void>,
 ) {

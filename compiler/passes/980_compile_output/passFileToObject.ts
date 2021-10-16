@@ -1,8 +1,9 @@
 import { OutputModule } from "../../data/output/OutputModule.ts";
+import { cacheFileFromHash } from "../../lib/io/cacheFileFromHash.ts";
 import { compileCommand } from "../../lib/io/compileCommand.ts";
 
 export async function passFileToObject(output: OutputModule) {
-  const dir = output.sourceAst.sourceToken.sourceCode.cache;
+  const hash = output.sourceAst.sourceToken.sourceCode.hash;
 
   const compileObject = await compileCommand(
     [
@@ -11,9 +12,9 @@ export async function passFileToObject(output: OutputModule) {
       "-I",
       "stdlib",
       "-c",
-      dir + "/output.c",
+      await cacheFileFromHash(hash, "output.c"),
       "-o",
-      dir + "/output.o",
+      await cacheFileFromHash(hash, "output.o"),
     ],
   );
 
@@ -24,5 +25,5 @@ export async function passFileToObject(output: OutputModule) {
     console.log(compileObject.stderr);
   }
 
-  return dir + "/output.o";
+  return await cacheFileFromHash(hash, "output.o");
 }

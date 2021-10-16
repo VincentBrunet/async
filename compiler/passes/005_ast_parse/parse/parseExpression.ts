@@ -3,7 +3,7 @@ import {
   AstExpressionData,
   AstExpressionKind,
 } from "../../../data/ast/AstExpression.ts";
-import { TokenBrowser } from "../util/TokenBrowser.ts";
+import { Browser } from "../util/Browser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseExpressionBinary } from "./parseExpressionBinary.ts";
 import { parseExpressionCall } from "./parseExpressionCall.ts";
@@ -23,7 +23,7 @@ function makeExpression(kind: AstExpressionKind, data: AstExpressionData) {
 
 // Leaf expression can consume tokens right away
 const leafs = new Array<
-  [AstExpressionKind, (b: TokenBrowser) => AstExpressionData | TokenImpasse]
+  [AstExpressionKind, (b: Browser) => AstExpressionData | TokenImpasse]
 >();
 leafs.push([AstExpressionKind.Unary, parseExpressionUnary]);
 leafs.push([AstExpressionKind.Parenthesis, parseExpressionParenthesis]);
@@ -37,7 +37,7 @@ leafs.push([AstExpressionKind.Identifier, parseExpressionIdentifier]);
 const recursors = new Array<
   [
     AstExpressionKind,
-    (b: TokenBrowser, left: AstExpression) => AstExpressionData | TokenImpasse,
+    (b: Browser, left: AstExpression) => AstExpressionData | TokenImpasse,
   ]
 >();
 recursors.push([AstExpressionKind.Call, parseExpressionCall]);
@@ -49,7 +49,7 @@ recursors.push([AstExpressionKind.Typing, parseExpressionTyping]);
  * Parse
  */
 export function parseExpression(
-  browser: TokenBrowser,
+  browser: Browser,
   leafOnly?: boolean,
 ): AstExpression | TokenImpasse {
   // Start with a simple leaf expression

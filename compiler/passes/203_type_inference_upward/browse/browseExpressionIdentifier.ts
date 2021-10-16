@@ -1,8 +1,8 @@
 import { AstExpressionIdentifier } from "../../../data/ast/AstExpressionIdentifier.ts";
-import { BrowsedScope } from "../util/BrowsedScope.ts";
+import { Scope } from "../util/Scope.ts";
 
 export async function browseExpressionIdentifier(
-  scope: BrowsedScope,
+  scope: Scope,
   ast: AstExpressionIdentifier,
   next: () => Promise<void>,
 ) {

@@ -1,6 +1,6 @@
 import { AstExpressionLiteral } from "../../../data/ast/AstExpressionLiteral.ts";
 import { AstTypePrimitiveNative } from "../../../data/ast/AstTypePrimitive.ts";
-import { TokenBrowser } from "../util/TokenBrowser.ts";
+import { Browser } from "../util/Browser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 
 const digits = new Set<string>();
@@ -16,7 +16,7 @@ digits.add("8");
 digits.add("9");
 
 function makeLiteral(
-  browser: TokenBrowser,
+  browser: Browser,
   native: AstTypePrimitiveNative,
   value: string,
 ): AstExpressionLiteral {
@@ -28,7 +28,7 @@ function makeLiteral(
 }
 
 function makeStringUntil(
-  browser: TokenBrowser,
+  browser: Browser,
   delimiter: string,
 ): AstExpressionLiteral {
   const parts = [];
@@ -93,7 +93,7 @@ function makeStringUntil(
 }
 
 export function parseExpressionLiteral(
-  browser: TokenBrowser,
+  browser: Browser,
 ): AstExpressionLiteral | TokenImpasse {
   const token = browser.peek();
   browser.increment();

@@ -3,7 +3,7 @@ import {
   AstTypeFunctionParam,
 } from "../../../data/ast/AstTypeFunction.ts";
 import { TokenKind } from "../../../data/token/Token.ts";
-import { TokenBrowser } from "../util/TokenBrowser.ts";
+import { Browser } from "../util/Browser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseAnnotationType } from "./parseAnnotationType.ts";
 
@@ -12,7 +12,7 @@ const paramClose = new Set([")"]);
 const paramDelim = new Set([","]);
 
 function parseTypeFunctionParam(
-  browser: TokenBrowser,
+  browser: Browser,
 ): AstTypeFunctionParam | TokenImpasse {
   // name
   let name: string | undefined;
@@ -39,7 +39,7 @@ function parseTypeFunctionParam(
 }
 
 export function parseTypeFunction(
-  browser: TokenBrowser,
+  browser: Browser,
 ): AstTypeFunction | TokenImpasse {
   // params
   const params = browser.recurseArray(

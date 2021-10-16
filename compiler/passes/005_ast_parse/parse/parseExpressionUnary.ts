@@ -2,7 +2,7 @@ import {
   AstExpressionUnary,
   AstExpressionUnaryOperator,
 } from "../../../data/ast/AstExpressionUnary.ts";
-import { TokenBrowser } from "../util/TokenBrowser.ts";
+import { Browser } from "../util/Browser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseExpression } from "./parseExpression.ts";
 
@@ -12,7 +12,7 @@ symbolMap.set("-", AstExpressionUnaryOperator.Negative);
 symbolMap.set("!", AstExpressionUnaryOperator.Not);
 
 export function parseExpressionUnary(
-  browser: TokenBrowser,
+  browser: Browser,
 ): AstExpressionUnary | TokenImpasse {
   // operator
   const operator = symbolMap.get(browser.peek().str);

@@ -1,6 +1,6 @@
 import { AstExpressionIdentifier } from "../../../data/ast/AstExpressionIdentifier.ts";
 import { TokenKind } from "../../../data/token/Token.ts";
-import { TokenBrowser } from "../util/TokenBrowser.ts";
+import { Browser } from "../util/Browser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 
 const forbidden = new Set<string>();
@@ -16,7 +16,7 @@ forbidden.add("import");
 forbidden.add("from");
 
 export function parseExpressionIdentifier(
-  browser: TokenBrowser,
+  browser: Browser,
 ): AstExpressionIdentifier | TokenImpasse {
   // Read text
   const token = browser.peek();

@@ -3,10 +3,10 @@ import {
   AstExpressionTypingOperator,
 } from "../../../data/ast/AstExpressionTyping.ts";
 import { makeTypePrimitiveBoolean } from "../../../lib/typing/makeTypePrimitiveBoolean.ts";
-import { BrowsedScope } from "../util/BrowsedScope.ts";
+import { Scope } from "../util/Scope.ts";
 
 export async function browseExpressionTyping(
-  scope: BrowsedScope,
+  scope: Scope,
   ast: AstExpressionTyping,
   next: () => Promise<void>,
 ) {

@@ -2,11 +2,11 @@ import { AstExpression } from "../../../data/ast/AstExpression.ts";
 import { AstExpressionLookup } from "../../../data/ast/AstExpressionLookup.ts";
 import { TokenKind } from "../../../data/token/Token.ts";
 import { hashObjectKey } from "../../../lib/hash/hashObjectKey.ts";
-import { TokenBrowser } from "../util/TokenBrowser.ts";
+import { Browser } from "../util/Browser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 
 export function parseExpressionLookup(
-  browser: TokenBrowser,
+  browser: Browser,
   astExpression: AstExpression,
 ): AstExpressionLookup | TokenImpasse {
   // dot (required)

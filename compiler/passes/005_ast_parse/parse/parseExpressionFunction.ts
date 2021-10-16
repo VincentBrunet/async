@@ -3,7 +3,7 @@ import {
   AstExpressionFunctionParam,
 } from "../../../data/ast/AstExpressionFunction.ts";
 import { TokenKind } from "../../../data/token/Token.ts";
-import { TokenBrowser } from "../util/TokenBrowser.ts";
+import { Browser } from "../util/Browser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseAnnotationTemplate } from "./parseAnnotationTemplate.ts";
 import { parseAnnotationType } from "./parseAnnotationType.ts";
@@ -14,7 +14,7 @@ const paramClose = new Set([")"]);
 const paramDelim = new Set([","]);
 
 export function parseExpressionFunctionParam(
-  browser: TokenBrowser,
+  browser: Browser,
 ): AstExpressionFunctionParam | TokenImpasse {
   // param - optional name
   let name: string | undefined;
@@ -36,7 +36,7 @@ export function parseExpressionFunctionParam(
 }
 
 export function parseExpressionFunction(
-  browser: TokenBrowser,
+  browser: Browser,
 ): AstExpressionFunction | TokenImpasse {
   // keyword (required)
   const keyword = browser.peek();

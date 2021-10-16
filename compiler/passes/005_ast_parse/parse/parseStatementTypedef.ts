@@ -1,12 +1,12 @@
 import { AstStatementTypedef } from "../../../data/ast/AstStatementTypedef.ts";
 import { TokenKind } from "../../../data/token/Token.ts";
-import { TokenBrowser } from "../util/TokenBrowser.ts";
+import { Browser } from "../util/Browser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseAnnotationTemplate } from "./parseAnnotationTemplate.ts";
 import { parseType } from "./parseType.ts";
 
 export function parseStatementTypedef(
-  browser: TokenBrowser,
+  browser: Browser,
 ): AstStatementTypedef | TokenImpasse {
   // keyword
   const keyword = browser.peek();

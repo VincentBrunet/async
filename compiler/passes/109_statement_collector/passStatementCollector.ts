@@ -8,10 +8,10 @@ import { browseStatementExport } from "./browse/browseStatementExport.ts";
 import { browseStatementImport } from "./browse/browseStatementImport.ts";
 import { browseStatementReturn } from "./browse/browseStatementReturn.ts";
 import { browseStatementVariable } from "./browse/browseStatementVariable.ts";
-import { BrowsedScope } from "./util/BrowsedScope.ts";
+import { Scope } from "./util/Scope.ts";
 
-const pass = makeRecursorPassSimplified<BrowsedScope>((scope) => {
-  return new BrowsedScope(scope);
+const pass = makeRecursorPassSimplified<Scope>((scope) => {
+  return new Scope(scope);
 }, {
   recurseBlock: browseBlock,
   recurseExpressionFunction: browseExpressionFunction,
@@ -24,5 +24,5 @@ const pass = makeRecursorPassSimplified<BrowsedScope>((scope) => {
 });
 
 export async function passStatementCollector(ast: AstModule) {
-  await pass.recurseModule(new BrowsedScope(), ast);
+  await pass.recurseModule(new Scope(), ast);
 }

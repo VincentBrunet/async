@@ -1,10 +1,10 @@
 import { AstExpressionCall } from "../../../data/ast/AstExpressionCall.ts";
 import { AstTypeKind } from "../../../data/ast/AstType.ts";
 import { makeTypePrimitiveUnknown } from "../../../lib/typing/makeTypePrimitiveUnknown.ts";
-import { BrowsedScope } from "../util/BrowsedScope.ts";
+import { Scope } from "../util/Scope.ts";
 
 export async function browseExpressionCall(
-  scope: BrowsedScope,
+  scope: Scope,
   ast: AstExpressionCall,
   next: () => Promise<void>,
 ) {

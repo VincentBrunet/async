@@ -1,8 +1,8 @@
 import { AstExpressionLookup } from "../../../data/ast/AstExpressionLookup.ts";
-import { BrowsedScope } from "../util/BrowsedScope.ts";
+import { Scope } from "../util/Scope.ts";
 
 export async function browseExpressionLookup(
-  scope: BrowsedScope,
+  scope: Scope,
   ast: AstExpressionLookup,
   next: () => Promise<void>,
 ) {

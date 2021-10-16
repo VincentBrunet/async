@@ -1,6 +1,6 @@
 import { AstExpression } from "../../../data/ast/AstExpression.ts";
 import { AstExpressionCall } from "../../../data/ast/AstExpressionCall.ts";
-import { TokenBrowser } from "../util/TokenBrowser.ts";
+import { Browser } from "../util/Browser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseExpression } from "./parseExpression.ts";
 
@@ -9,7 +9,7 @@ const paramClose = new Set([")"]);
 const paramDelim = new Set([","]);
 
 export function parseExpressionCall(
-  browser: TokenBrowser,
+  browser: Browser,
   astCallee: AstExpression,
 ): AstExpressionCall | TokenImpasse {
   // params

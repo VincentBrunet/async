@@ -4,7 +4,7 @@ import {
 } from "../../../data/ast/AstTypeObject.ts";
 import { TokenKind } from "../../../data/token/Token.ts";
 import { hashObjectKey } from "../../../lib/hash/hashObjectKey.ts";
-import { TokenBrowser } from "../util/TokenBrowser.ts";
+import { Browser } from "../util/Browser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseAnnotationType } from "./parseAnnotationType.ts";
 
@@ -13,7 +13,7 @@ const fieldClose = new Set(["}"]);
 const fieldDelim = new Set([",", ";"]);
 
 function parseTypeObjectField(
-  browser: TokenBrowser,
+  browser: Browser,
 ): AstTypeObjectField | TokenImpasse {
   // field - mutable
   let mutable = false;
@@ -54,7 +54,7 @@ function parseTypeObjectField(
 }
 
 export function parseTypeObject(
-  browser: TokenBrowser,
+  browser: Browser,
 ): AstTypeObject | TokenImpasse {
   // items
   const fields = browser.recurseArray(

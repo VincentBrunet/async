@@ -1,9 +1,9 @@
 import { AstModule } from "../../../data/ast/AstModule.ts";
 import { assert } from "../../../lib/errors/assert.ts";
-import { BrowsedScope } from "../util/BrowsedScope.ts";
+import { Scope } from "../util/Scope.ts";
 
 export async function browseModule(
-  scope: BrowsedScope,
+  scope: Scope,
   ast: AstModule,
   next: () => Promise<void>,
 ) {

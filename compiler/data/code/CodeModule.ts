@@ -3,5 +3,4 @@ export interface CodeModule {
 
   file: string;
   hash: string;
-  cache: string;
 }

@@ -8,12 +8,12 @@ import { AstStatementImportSlot } from "../../../data/ast/AstStatementImport.ts"
 import { AstStatementVariable } from "../../../data/ast/AstStatementVariable.ts";
 import { ensure } from "../../../lib/errors/ensure.ts";
 
-export class BrowsedScope {
-  public parent?: BrowsedScope;
+export class Scope {
+  public parent?: Scope;
 
   private references = new Map<string, AstResolvedReference>();
 
-  constructor(parent?: BrowsedScope) {
+  constructor(parent?: Scope) {
     this.parent = parent;
   }
 

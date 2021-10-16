@@ -1,9 +1,9 @@
 import { AstExpressionLiteral } from "../../../data/ast/AstExpressionLiteral.ts";
 import { makeTypePrimitive } from "../../../lib/typing/makeTypePrimitive.ts";
-import { BrowsedScope } from "../util/BrowsedScope.ts";
+import { Scope } from "../util/Scope.ts";
 
 export async function browseExpressionLiteral(
-  scope: BrowsedScope,
+  scope: Scope,
   ast: AstExpressionLiteral,
   next: () => Promise<void>,
 ) {

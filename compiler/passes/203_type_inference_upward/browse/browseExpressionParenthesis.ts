@@ -1,8 +1,8 @@
 import { AstExpressionParenthesis } from "../../../data/ast/AstExpressionParenthesis.ts";
-import { BrowsedScope } from "../util/BrowsedScope.ts";
+import { Scope } from "../util/Scope.ts";
 
 export async function browseExpressionParenthesis(
-  scope: BrowsedScope,
+  scope: Scope,
   ast: AstExpressionParenthesis,
   next: () => Promise<void>,
 ) {

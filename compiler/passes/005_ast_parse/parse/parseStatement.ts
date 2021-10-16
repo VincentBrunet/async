@@ -3,7 +3,7 @@ import {
   AstStatementData,
   AstStatementKind,
 } from "../../../data/ast/AstStatement.ts";
-import { TokenBrowser } from "../util/TokenBrowser.ts";
+import { Browser } from "../util/Browser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseStatementCondition } from "./parseStatementCondition.ts";
 import { parseStatementEmpty } from "./parseStatementEmpty.ts";
@@ -16,7 +16,7 @@ import { parseStatementUnsafe } from "./parseStatementUnsafe.ts";
 import { parseStatementVariable } from "./parseStatementVariable.ts";
 import { parseStatementWhile } from "./parseStatementWhile.ts";
 
-function consumeEnd(browser: TokenBrowser) {
+function consumeEnd(browser: Browser) {
   const next = browser.peek();
   if (next.str === ";") {
     browser.consume();
@@ -31,7 +31,7 @@ function finishStatement(
 }
 
 export function parseStatement(
-  browser: TokenBrowser,
+  browser: Browser,
 ): AstStatement | TokenImpasse {
   // empty ;
   const astStatementEmpty = browser.recurse(parseStatementEmpty);

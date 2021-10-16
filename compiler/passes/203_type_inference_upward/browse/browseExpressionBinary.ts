@@ -1,8 +1,8 @@
 import { AstExpressionBinary } from "../../../data/ast/AstExpressionBinary.ts";
-import { BrowsedScope } from "../util/BrowsedScope.ts";
+import { Scope } from "../util/Scope.ts";
 
 export async function browseExpressionBinary(
-  scope: BrowsedScope,
+  scope: Scope,
   ast: AstExpressionBinary,
   next: () => Promise<void>,
 ) {

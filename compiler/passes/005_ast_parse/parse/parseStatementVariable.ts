@@ -2,13 +2,13 @@ import { AstExpression } from "../../../data/ast/AstExpression.ts";
 import { AstStatementVariable } from "../../../data/ast/AstStatementVariable.ts";
 import { TokenKind } from "../../../data/token/Token.ts";
 import { hashObjectKey } from "../../../lib/hash/hashObjectKey.ts";
-import { TokenBrowser } from "../util/TokenBrowser.ts";
+import { Browser } from "../util/Browser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseAnnotationType } from "./parseAnnotationType.ts";
 import { parseExpression } from "./parseExpression.ts";
 
 export function parseStatementVariable(
-  browser: TokenBrowser,
+  browser: Browser,
 ): AstStatementVariable | TokenImpasse {
   // keyword const/mutable
   let mutable = false;

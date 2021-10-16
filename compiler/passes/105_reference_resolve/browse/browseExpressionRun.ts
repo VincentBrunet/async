@@ -1,9 +1,9 @@
 import { AstExpressionRun } from "../../../data/ast/AstExpressionRun.ts";
 import { ensure } from "../../../lib/errors/ensure.ts";
-import { BrowsedScope } from "../util/BrowsedScope.ts";
+import { Scope } from "../util/Scope.ts";
 
 export async function browseExpressionRun(
-  scope: BrowsedScope,
+  scope: Scope,
   ast: AstExpressionRun,
   next: () => Promise<void>,
 ) {

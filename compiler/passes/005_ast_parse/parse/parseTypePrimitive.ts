@@ -2,7 +2,7 @@ import {
   AstTypePrimitive,
   AstTypePrimitiveNative,
 } from "../../../data/ast/AstTypePrimitive.ts";
-import { TokenBrowser } from "../util/TokenBrowser.ts";
+import { Browser } from "../util/Browser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseType } from "./parseType.ts";
 
@@ -27,7 +27,7 @@ const templateClose = new Set([">"]);
 const templateDelim = new Set([","]);
 
 export function parseTypePrimitive(
-  browser: TokenBrowser,
+  browser: Browser,
 ): AstTypePrimitive | TokenImpasse {
   // read native
   const name = browser.peek();

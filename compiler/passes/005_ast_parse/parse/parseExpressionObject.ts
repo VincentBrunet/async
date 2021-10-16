@@ -4,7 +4,7 @@ import {
 } from "../../../data/ast/AstExpressionObject.ts";
 import { TokenKind } from "../../../data/token/Token.ts";
 import { hashObjectKey } from "../../../lib/hash/hashObjectKey.ts";
-import { TokenBrowser } from "../util/TokenBrowser.ts";
+import { Browser } from "../util/Browser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseExpression } from "./parseExpression.ts";
 
@@ -13,7 +13,7 @@ const objectClose = new Set(["}"]);
 const objectDelim = new Set([",", ";"]);
 
 function parseExpressionObjectField(
-  browser: TokenBrowser,
+  browser: Browser,
 ): AstExpressionObjectField | TokenImpasse {
   // field - mutable
   let mutable = false;
@@ -57,7 +57,7 @@ function parseExpressionObjectField(
 }
 
 export function parseExpressionObject(
-  browser: TokenBrowser,
+  browser: Browser,
 ): AstExpressionObject | TokenImpasse {
   // fields
   const fields = browser.recurseArray(

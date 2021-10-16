@@ -1,6 +1,6 @@
 import { AstTypeIdentifier } from "../../../data/ast/AstTypeIdentifier.ts";
 import { TokenKind } from "../../../data/token/Token.ts";
-import { TokenBrowser } from "../util/TokenBrowser.ts";
+import { Browser } from "../util/Browser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseType } from "./parseType.ts";
 
@@ -9,7 +9,7 @@ const templateClose = new Set([">"]);
 const templateDelim = new Set([","]);
 
 export function parseTypeIdentifier(
-  browser: TokenBrowser,
+  browser: Browser,
 ): AstTypeIdentifier | TokenImpasse {
   // read native
   const name = browser.peek();

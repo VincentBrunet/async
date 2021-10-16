@@ -1,10 +1,10 @@
 import { AstStatementExport } from "../../../data/ast/AstStatementExport.ts";
-import { TokenBrowser } from "../util/TokenBrowser.ts";
+import { Browser } from "../util/Browser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseStatement } from "./parseStatement.ts";
 
 export function parseStatementExport(
-  browser: TokenBrowser,
+  browser: Browser,
 ): AstStatementExport | TokenImpasse {
   // keyword - export
   const keyword = browser.peek();

@@ -4,7 +4,7 @@ import {
 } from "../../../data/ast/AstStatementImport.ts";
 import { TokenKind } from "../../../data/token/Token.ts";
 import { hashObjectKey } from "../../../lib/hash/hashObjectKey.ts";
-import { TokenBrowser } from "../util/TokenBrowser.ts";
+import { Browser } from "../util/Browser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseExpression } from "./parseExpression.ts";
 
@@ -13,7 +13,7 @@ const slotClose = new Set(["]"]);
 const slotDelim = new Set([","]);
 
 function parseStatementImportSlot(
-  browser: TokenBrowser,
+  browser: Browser,
 ): AstStatementImportSlot | TokenImpasse {
   // name
   const slotName = browser.peek();
@@ -32,7 +32,7 @@ function parseStatementImportSlot(
 }
 
 export function parseStatementImport(
-  browser: TokenBrowser,
+  browser: Browser,
 ): AstStatementImport | TokenImpasse {
   // keyword - import
   const keywordImport = browser.peek();

@@ -3,7 +3,7 @@ import {
   AstExpressionBinary,
   AstExpressionBinaryOperator,
 } from "../../../data/ast/AstExpressionBinary.ts";
-import { TokenBrowser } from "../util/TokenBrowser.ts";
+import { Browser } from "../util/Browser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseExpression } from "./parseExpression.ts";
 
@@ -36,7 +36,7 @@ symbolMap.set("=", AstExpressionBinaryOperator.Assign);
  * Do the parsing using an already-parsed left handside
  */
 export function parseExpressionBinary(
-  browser: TokenBrowser,
+  browser: Browser,
   left: AstExpression,
 ): AstExpressionBinary | TokenImpasse {
   // operator

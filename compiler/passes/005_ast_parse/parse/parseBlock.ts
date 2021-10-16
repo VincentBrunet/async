@@ -1,10 +1,10 @@
 import { AstBlock } from "../../../data/ast/AstBlock.ts";
 import { AstStatement } from "../../../data/ast/AstStatement.ts";
-import { TokenBrowser } from "../util/TokenBrowser.ts";
+import { Browser } from "../util/Browser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseStatement } from "./parseStatement.ts";
 
-export function parseBlock(browser: TokenBrowser): AstBlock | TokenImpasse {
+export function parseBlock(browser: Browser): AstBlock | TokenImpasse {
   // bracket - open
   const bracketOpen = browser.peek();
   if (bracketOpen.str !== "{") {

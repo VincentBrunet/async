@@ -1,11 +1,11 @@
 import { AstExpressionRun } from "../../../data/ast/AstExpressionRun.ts";
-import { TokenBrowser } from "../util/TokenBrowser.ts";
+import { Browser } from "../util/Browser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseAnnotationType } from "./parseAnnotationType.ts";
 import { parseBlock } from "./parseBlock.ts";
 
 export function parseExpressionRun(
-  browser: TokenBrowser,
+  browser: Browser,
 ): AstExpressionRun | TokenImpasse {
   // keyword (required)
   const keyword = browser.peek();

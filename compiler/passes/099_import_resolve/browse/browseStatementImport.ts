@@ -20,8 +20,10 @@ export async function browseStatementImport(
     throw new Error("Unknown literal non string:" + literal.native);
   }
 
-  const nextUrl = combinedUrl(literal.value, scope.metaUrl);
-  ast.resolvedModule = await triggerCompile(nextUrl);
+  ast.resolvedModule = await triggerCompile(combinedUrl(
+    literal.value,
+    scope.sourceToken.sourceCode.sourceUrl,
+  ));
 
   await next();
 }

@@ -1,8 +1,8 @@
 import { AstStatementTypedef } from "../../../data/ast/AstStatementTypedef.ts";
-import { BrowsedScope } from "../util/BrowsedScope.ts";
+import { Scope } from "../util/Scope.ts";
 
 export async function browseStatementTypedef(
-  scope: BrowsedScope,
+  scope: Scope,
   ast: AstStatementTypedef,
   next: () => Promise<void>,
 ) {

@@ -1,6 +1,7 @@
 import { expandGlob } from "https://deno.land/std@0.63.0/fs/mod.ts";
 import { AstModule } from "../../data/ast/AstModule.ts";
 import { hashAstKey } from "../../lib/hash/hashAstKey.ts";
+import { cacheFileFromHash } from "../../lib/io/cacheFileFromHash.ts";
 import { compileCommand } from "../../lib/io/compileCommand.ts";
 
 const stdlibs = new Array<string>();
@@ -12,6 +13,8 @@ export async function passObjectToBinary(
   mainAst: AstModule,
   objects: Array<string>,
 ) {
+  const hash = mainAst.sourceToken.sourceCode.hash;
+
   const mainPath = await Deno.makeTempFile({
     suffix: ".c",
   });
@@ -22,7 +25,7 @@ export async function passObjectToBinary(
   mainContent.push("#include");
   mainContent.push(" ");
   mainContent.push("<");
-  mainContent.push(mainAst.meta.meta.cache + "/output.h");
+  mainContent.push(await cacheFileFromHash(hash, "output.h"));
   mainContent.push(">");
   mainContent.push("\n");
   mainContent.push("\n");

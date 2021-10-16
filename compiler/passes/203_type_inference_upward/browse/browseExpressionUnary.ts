@@ -3,10 +3,10 @@ import {
   AstExpressionUnaryOperator,
 } from "../../../data/ast/AstExpressionUnary.ts";
 import { makeTypePrimitiveBoolean } from "../../../lib/typing/makeTypePrimitiveBoolean.ts";
-import { BrowsedScope } from "../util/BrowsedScope.ts";
+import { Scope } from "../util/Scope.ts";
 
 export async function browseExpressionUnary(
-  scope: BrowsedScope,
+  scope: Scope,
   ast: AstExpressionUnary,
   next: () => Promise<void>,
 ) {

@@ -6,6 +6,7 @@ import {
   AstExpressionBinary,
   AstExpressionBinaryOperator,
 } from "../../../data/ast/AstExpressionBinary.ts";
+import { AstModule } from "../../../data/ast/AstModule.ts";
 
 /**
  * Supported symbol priority map
@@ -77,7 +78,7 @@ function listBinaryNodes(
  * Build a new binary operation tree by reading the inputs and operators
  */
 export async function browseExpressionBinary(
-  scope: undefined,
+  scope: AstModule,
   ast: AstExpressionBinary,
   next: () => Promise<void>,
 ) {

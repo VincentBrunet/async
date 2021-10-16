@@ -1,4 +1,6 @@
+import { OutputBlock } from "./OutputBlock.ts";
+
 export interface OutputStatement {
-  depth: number;
   parts: Array<string>;
+  inner?: OutputBlock;
 }

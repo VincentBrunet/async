@@ -12,10 +12,10 @@ import { browseExpressionRun } from "./browse/browseExpressionRun.ts";
 import { browseExpressionUnary } from "./browse/browseExpressionUnary.ts";
 import { browseStatementVariable } from "./browse/browseStatementVariable.ts";
 import { browseTypeIdentifier } from "./browse/browseTypeIdentifier.ts";
-import { BrowsedScope } from "./util/BrowsedScope.ts";
+import { Scope } from "./util/Scope.ts";
 
-const pass = makeRecursorPassSimplified<BrowsedScope>((scope) => {
-  return new BrowsedScope(scope);
+const pass = makeRecursorPassSimplified<Scope>((scope) => {
+  return new Scope(scope);
 }, {
   recurseExpression: browseExpression,
   recurseExpressionBinary: browseExpressionBinary,
@@ -32,5 +32,5 @@ const pass = makeRecursorPassSimplified<BrowsedScope>((scope) => {
 });
 
 export async function passTypeInferenceUpward(ast: AstModule) {
-  await pass.recurseModule(new BrowsedScope(), ast);
+  await pass.recurseModule(new Scope(), ast);
 }

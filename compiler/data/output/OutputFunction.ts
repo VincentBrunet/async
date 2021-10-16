@@ -1,7 +1,8 @@
-import { OutputStatement } from "./OutputStatement.ts";
+import { OutputBlock } from "./OutputBlock.ts";
 
 export interface OutputFunction {
-  return: string;
+  type: string;
+  name: string;
   params: Array<string>;
-  statements: Array<OutputStatement>;
+  block: OutputBlock;
 }

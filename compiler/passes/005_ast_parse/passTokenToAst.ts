@@ -1,13 +1,13 @@
 import { TokenModule } from "../../data/token/TokenModule.ts";
 import { parseModule } from "./parse/parseModule.ts";
-import { TokenBrowser } from "./util/TokenBrowser.ts";
+import { Browser } from "./util/Browser.ts";
 import { TokenDebugger } from "./util/TokenDebugger.ts";
 import { TokenImpasse } from "./util/TokenImpasse.ts";
 
 export async function passTokenToAst(token: TokenModule) {
   const tokens = token.tokens;
 
-  const browser = new TokenBrowser(tokens);
+  const browser = new Browser(tokens);
 
   const ast = browser.recurse(parseModule, token);
 

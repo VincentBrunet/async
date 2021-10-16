@@ -1,9 +1,9 @@
 import { AstStatementUnsafe } from "../../../data/ast/AstStatementUnsafe.ts";
-import { TokenBrowser } from "../util/TokenBrowser.ts";
+import { Browser } from "../util/Browser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 
 export function parseStatementUnsafe(
-  browser: TokenBrowser,
+  browser: Browser,
 ): AstStatementUnsafe | TokenImpasse {
   // keyword
   const keyword = browser.peek();

@@ -3,7 +3,7 @@ import {
   AstExpressionTyping,
   AstExpressionTypingOperator,
 } from "../../../data/ast/AstExpressionTyping.ts";
-import { TokenBrowser } from "../util/TokenBrowser.ts";
+import { Browser } from "../util/Browser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseType } from "./parseType.ts";
 
@@ -19,7 +19,7 @@ symbolMap.set("as", AstExpressionTypingOperator.As);
  * Do the parsing using an already-parsed left handside
  */
 export function parseExpressionTyping(
-  browser: TokenBrowser,
+  browser: Browser,
   expression: AstExpression,
 ): AstExpressionTyping | TokenImpasse {
   // operator

@@ -1,11 +1,11 @@
 import { AstStatementCondition } from "../../../data/ast/AstStatementCondition.ts";
-import { TokenBrowser } from "../util/TokenBrowser.ts";
+import { Browser } from "../util/Browser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseBlock } from "./parseBlock.ts";
 import { parseExpression } from "./parseExpression.ts";
 
 export function parseStatementCondition(
-  browser: TokenBrowser,
+  browser: Browser,
 ): AstStatementCondition | TokenImpasse {
   // keyword (required)
   const keyword = browser.peek();

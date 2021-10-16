@@ -1,8 +1,8 @@
 import { AstStatementVariable } from "../../../data/ast/AstStatementVariable.ts";
-import { BrowsedScope } from "../util/BrowsedScope.ts";
+import { Scope } from "../util/Scope.ts";
 
 export async function browseStatementVariable(
-  scope: BrowsedScope,
+  scope: Scope,
   ast: AstStatementVariable,
   next: () => Promise<void>,
 ) {

@@ -2,12 +2,12 @@ import { AstModule } from "../../../data/ast/AstModule.ts";
 import { AstStatement } from "../../../data/ast/AstStatement.ts";
 import { TokenModule } from "../../../data/token/TokenModule.ts";
 import { ensure } from "../../../lib/errors/ensure.ts";
-import { TokenBrowser } from "../util/TokenBrowser.ts";
+import { Browser } from "../util/Browser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseStatement } from "./parseStatement.ts";
 
 export function parseModule(
-  browser: TokenBrowser,
+  browser: Browser,
   token?: TokenModule,
 ): AstModule | TokenImpasse {
   // Asserts

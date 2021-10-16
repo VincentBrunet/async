@@ -1,8 +1,8 @@
 import { AstStatementReturn } from "../../../data/ast/AstStatementReturn.ts";
-import { BrowsedScope } from "../util/BrowsedScope.ts";
+import { Scope } from "../util/Scope.ts";
 
 export async function browseStatementReturn(
-  scope: BrowsedScope,
+  scope: Scope,
   ast: AstStatementReturn,
   next: () => Promise<void>,
 ) {
