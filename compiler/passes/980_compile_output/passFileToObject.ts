@@ -1,10 +1,7 @@
-import { OutputModule } from "../../data/output/OutputModule.ts";
-import { cacheFileFromHash } from "../../lib/io/cacheFileFromHash.ts";
+import { FileModule } from "../../data/file/FileModule.ts";
 import { compileCommand } from "../../lib/io/compileCommand.ts";
 
-export async function passFileToObject(output: OutputModule) {
-  const hash = output.sourceAst.sourceToken.sourceCode.hash;
-
+export async function passFileToObject(file: FileModule) {
   const compileObject = await compileCommand(
     [
       "-Wall",
@@ -12,9 +9,9 @@ export async function passFileToObject(output: OutputModule) {
       "-I",
       "stdlib",
       "-c",
-      await cacheFileFromHash(hash, "output.c"),
+      file.source,
       "-o",
-      await cacheFileFromHash(hash, "output.o"),
+      file.object,
     ],
   );
 
@@ -25,5 +22,5 @@ export async function passFileToObject(output: OutputModule) {
     console.log(compileObject.stderr);
   }
 
-  return await cacheFileFromHash(hash, "output.o");
+  return file.object;
 }

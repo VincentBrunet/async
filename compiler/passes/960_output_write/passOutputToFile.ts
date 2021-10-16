@@ -1,17 +1,25 @@
 import { OutputModule } from "../../data/output/OutputModule.ts";
 import { cacheFileFromHash } from "../../lib/io/cacheFileFromHash.ts";
-import { writeModule } from "./browse/writeModule.ts";
 import { Writer } from "./util/Writer.ts";
+import { writeModule } from "./write/writeModule.ts";
 
 export async function passOutputToFile(outputModule: OutputModule) {
   const hash = outputModule.sourceAst.sourceToken.sourceCode.hash;
 
-  const writer = new Writer(
-    await cacheFileFromHash(hash, "output.h"),
-    await cacheFileFromHash(hash, "output.c"),
-  );
+  const file = {
+    sourceOutput: outputModule,
+    header: await cacheFileFromHash(hash, "output.h"),
+    source: await cacheFileFromHash(hash, "output.c"),
+    object: await cacheFileFromHash(hash, "output.o"),
+    main: await cacheFileFromHash(hash, "module.c"),
+    meta: await cacheFileFromHash(hash, "module.json"),
+  };
 
-  writeModule(outputModule);
+  const writer = new Writer(file);
+
+  writeModule(writer, outputModule);
 
   await writer.flush();
+
+  return file;
 }

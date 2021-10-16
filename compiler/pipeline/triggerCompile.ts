@@ -1,5 +1,4 @@
 import { AstModule } from "../data/ast/AstModule.ts";
-import { stringify } from "../lib/core/debug/stringify.ts";
 import { passUrlToCode } from "../passes/000_code_read/passUrlToCode.ts";
 import { passCodeToToken } from "../passes/001_token_parse/passCodeToToken.ts";
 import { passTokenToAst } from "../passes/005_ast_parse/passTokenToAst.ts";
@@ -11,7 +10,7 @@ import { passReferenceResolve } from "../passes/105_reference_resolve/passRefere
 import { passShorthandResolve } from "../passes/106_shorthand_resolve/passShorthandResolve.ts";
 import { passStatementCollector } from "../passes/109_statement_collector/passStatementCollector.ts";
 import { passTypeInferenceUpward } from "../passes/203_type_inference_upward/passTypeInferenceUpward.ts";
-import { passAstToOutput } from "../passes/950_write_output/passAstToOutput.ts";
+import { passAstToOutput } from "../passes/950_output_generate/passAstToOutput.ts";
 import { passOutputToFile } from "../passes/960_output_write/passOutputToFile.ts";
 import { passFileToObject } from "../passes/980_compile_output/passFileToObject.ts";
 import { passObjectToBinary } from "../passes/990_compile_binary/passObjectToBinary.ts";
@@ -23,6 +22,7 @@ export async function doPass<Input, Output>(
   call: (input: Input) => Promise<Output>,
 ) {
   const output = await call(input);
+  /*
   if (output) {
     await Deno.writeTextFile(
       dir + "/pass." + key + "." + call.name +
@@ -36,6 +36,7 @@ export async function doPass<Input, Output>(
       stringify(input, new Set(["token", "tokens", "location"])),
     );
   }
+  */
   return output;
 }
 
@@ -77,7 +78,7 @@ export async function finishCompile(ast: AstModule) {
   await doPass(hash, ast, "203", passTypeInferenceUpward);
 
   const output = await doPass(hash, ast, "950", passAstToOutput);
-  await doPass(hash, output, "960", passOutputToFile);
+  const file = await doPass(hash, output, "960", passOutputToFile);
   const object = await doPass(hash, file, "980", passFileToObject);
 
   return object;

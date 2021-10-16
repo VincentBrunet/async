@@ -8,7 +8,7 @@ import { RecursorPass } from "../../util/RecursorPass.ts";
 import { Transpiler } from "../util/Transpiler.ts";
 import { transpileResolvedClosure } from "./transpileResolvedClosure.ts";
 
-export function transpileExpressionObject(
+export async function transpileExpressionObject(
   pass: RecursorPass<Transpiler>,
   transpiler: Transpiler,
   ast: AstExpressionObject,
@@ -20,18 +20,18 @@ export function transpileExpressionObject(
   const name = hashAstKey(transpiler.getOutput().sourceAst, ast, "object");
 
   // Simply call the object factory in the expression
-  const callLength = resolvedClosures.length.toString();
-  const callVariadic = resolvedClosures.length > 9;
+  const objectCallLength = resolvedClosures.length.toString();
+  const objectCallVariadic = resolvedClosures.length > 9;
   transpiler.pushPart("object_call_");
-  if (callVariadic) {
+  if (objectCallVariadic) {
     transpiler.pushPart("x");
   } else {
-    transpiler.pushPart(callLength);
+    transpiler.pushPart(objectCallLength);
   }
   transpiler.pushPart("(");
   transpiler.pushPart("&");
   transpiler.pushPart(name);
-  if (callVariadic) {
+  if (objectCallVariadic) {
     transpiler.pushPart(", ");
     transpiler.pushPart(resolvedClosures.length.toString());
   }
@@ -61,11 +61,21 @@ export function transpileExpressionObject(
   );
 
   // Create the module object containing all declared fields
+  const objectMakeLength = sortedFields.length.toString();
+  const objectMakeVariadic = sortedFields.length > 9;
   transpiler.pushStatement([]);
-  transpiler.pushPart("t_value *object = object_make_x(");
+  transpiler.pushPart("t_value *object = object_make_");
+  if (objectMakeVariadic) {
+    transpiler.pushPart("x");
+  } else {
+    transpiler.pushPart(objectMakeLength);
+  }
+  transpiler.pushPart("(");
   transpiler.pushPart("type_object"); // TODO
-  transpiler.pushPart(", ");
-  transpiler.pushPart(sortedFields.length.toString());
+  if (objectMakeVariadic) {
+    transpiler.pushPart(", ");
+    transpiler.pushPart(objectMakeLength);
+  }
   for (const field of sortedFields) {
     transpiler.pushPart(", ");
     transpiler.pushPart(field.hash);

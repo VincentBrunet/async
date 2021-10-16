@@ -11,6 +11,9 @@ export async function transpileBlock(
   // Asserts
   const resolvedVariables = ensure(ast.resolvedVariables);
 
+  // Just in case there is no other statement yet
+  transpiler.pushStatement([]);
+
   // Open block
   transpiler.pushBlock();
 
@@ -22,7 +25,6 @@ export async function transpileBlock(
       variable.name,
       " = ",
       "ref_make(NULL)",
-      ";",
     ]);
   }
 

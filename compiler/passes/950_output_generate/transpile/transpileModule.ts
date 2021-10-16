@@ -34,15 +34,15 @@ export async function transpileModule(
   }
 
   // We simply return the module
-  const callLength = resolvedExports.length.toString();
-  const callVariadic = resolvedExports.length > 9;
+  const moduleMakeLength = resolvedExports.length.toString();
+  const moduleMakeVariadic = resolvedExports.length > 9;
   const done = new Array<string>();
   done.push("return ");
   done.push("module_make_");
-  if (callVariadic) {
+  if (moduleMakeVariadic) {
     done.push("x");
   } else {
-    done.push(callLength);
+    done.push(moduleMakeLength);
   }
   done.push("(");
   for (const resolvedExport of resolvedExports) {

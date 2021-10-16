@@ -16,18 +16,18 @@ export async function transpileExpressionRun(
   const name = hashAstKey(transpiler.getOutput().sourceAst, ast, "run");
 
   // Simply call the run function in the expression
-  const callLength = resolvedClosures.length.toString();
-  const callVariadic = resolvedClosures.length > 9;
+  const runCallLength = resolvedClosures.length.toString();
+  const runCallVariadic = resolvedClosures.length > 9;
   transpiler.pushPart("run_call_");
-  if (callVariadic) {
+  if (runCallVariadic) {
     transpiler.pushPart("x");
   } else {
-    transpiler.pushPart(callLength);
+    transpiler.pushPart(runCallLength);
   }
   transpiler.pushPart("(");
   transpiler.pushPart("&");
   transpiler.pushPart(name);
-  if (callVariadic) {
+  if (runCallVariadic) {
     transpiler.pushPart(", ");
     transpiler.pushPart(resolvedClosures.length.toString());
   }

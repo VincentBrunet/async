@@ -8,7 +8,7 @@ export function hashAstKey(
   prefix: string,
 ) {
   const begin = ensure(ensure(ast.token).begin);
-  const hashModule = parent.meta.meta.hash;
+  const hashModule = parent.sourceToken.sourceCode.hash;
   const hashLocation = begin.toString(16).padStart(8, "0");
   return ["_", hashModule, "_", prefix, "_", "0x", hashLocation].join("");
 }

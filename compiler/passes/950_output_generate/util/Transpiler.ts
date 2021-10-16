@@ -3,12 +3,14 @@ import { OutputBlock } from "../../../data/output/OutputBlock.ts";
 import { OutputFunction } from "../../../data/output/OutputFunction.ts";
 import { OutputModule } from "../../../data/output/OutputModule.ts";
 import { OutputStatement } from "../../../data/output/OutputStatement.ts";
+import { Stack } from "../../../lib/core/data/Stack.ts";
 
 export class Transpiler {
   private currentModule: OutputModule;
-  private currentBlock?: OutputBlock;
-  private currentFunction?: OutputFunction;
   private currentStatement?: OutputStatement;
+
+  private stackFunctions = new Stack<OutputFunction>();
+  private stackBlock = new Stack<OutputBlock>();
 
   constructor(ast: AstModule) {
     this.currentModule = {
@@ -29,30 +31,42 @@ export class Transpiler {
   }
 
   pushFunction(type: string, name: string, params: string[]) {
-    this.currentBlock = {
+    const outputBlock = {
       statements: [],
     };
-    this.currentFunction = {
+    const outputFunction = {
       type: type,
       name: name,
       params: params,
-      block: this.currentBlock,
+      block: outputBlock,
     };
-    this.currentModule.functions.push(this.currentFunction);
+    this.stackBlock.push(outputBlock);
+    this.stackFunctions.push(outputFunction);
+    this.currentModule.functions.push(outputFunction);
   }
   popFunction() {
+    this.stackBlock.pop();
+    this.stackFunctions.pop();
+  }
+
+  pushBlock() {
+    const outputBlock = {
+      statements: [],
+    };
+    this.stackBlock.push(outputBlock);
+    if (this.currentStatement) {
+      this.currentStatement.inner = outputBlock;
+    }
+  }
+  popBlock() {
+    this.stackBlock.pop();
   }
 
   pushStatement(parts: Array<string>) {
     this.currentStatement = {
       parts: parts,
     };
-    this.currentBlock?.statements?.push(this.currentStatement);
-  }
-
-  pushBlock() {
-  }
-  popBlock() {
+    this.stackBlock.peek()?.statements?.push(this.currentStatement);
   }
 
   pushPart(part: string) {

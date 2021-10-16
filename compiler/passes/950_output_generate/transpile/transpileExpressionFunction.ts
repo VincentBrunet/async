@@ -5,7 +5,7 @@ import { RecursorPass } from "../../util/RecursorPass.ts";
 import { Transpiler } from "../util/Transpiler.ts";
 import { transpileResolvedClosure } from "./transpileResolvedClosure.ts";
 
-export function transpileExpressionFunction(
+export async function transpileExpressionFunction(
   pass: RecursorPass<Transpiler>,
   transpiler: Transpiler,
   ast: AstExpressionFunction,
@@ -16,20 +16,20 @@ export function transpileExpressionFunction(
   const name = hashAstKey(transpiler.getOutput().sourceAst, ast, "function");
 
   // Simply call the function factory
-  const callLength = resolvedClosures.length.toString();
-  const callVariadic = resolvedClosures.length > 9;
+  const functionMakeLength = resolvedClosures.length.toString();
+  const functionMakeVariadic = resolvedClosures.length > 9;
   transpiler.pushPart("function_make_");
-  if (callVariadic) {
+  if (functionMakeVariadic) {
     transpiler.pushPart("x");
   } else {
-    transpiler.pushPart(callLength);
+    transpiler.pushPart(functionMakeLength);
   }
   transpiler.pushPart("(");
   transpiler.pushPart("type_function"); // TODO,
   transpiler.pushPart(", ");
   transpiler.pushPart("(void*)&");
   transpiler.pushPart(name);
-  if (callVariadic) {
+  if (functionMakeVariadic) {
     transpiler.pushPart(", ");
     transpiler.pushPart(resolvedClosures.length.toString());
   }

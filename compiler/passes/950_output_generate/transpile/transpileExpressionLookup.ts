@@ -2,7 +2,7 @@ import { AstExpressionLookup } from "../../../data/ast/AstExpressionLookup.ts";
 import { RecursorPass } from "../../util/RecursorPass.ts";
 import { Transpiler } from "../util/Transpiler.ts";
 
-export async function writeExpressionLookup(
+export async function transpileExpressionLookup(
   pass: RecursorPass<Transpiler>,
   transpiler: Transpiler,
   ast: AstExpressionLookup,
