@@ -17,31 +17,33 @@ export async function transpileExpressionIdentifier(
   const resolvedReference = ensure(astIdentifier.resolvedReference);
   // Find proper lookup
   switch (resolvedReference.kind) {
-    case AstResolvedReferenceKind.Closure: {
-      const closure = resolvedReference.data as AstResolvedClosure;
-      transpiler.pushPart("closure[");
-      transpiler.pushPart(closure.idx.toString());
-      transpiler.pushPart("]->value");
-      break;
-    }
-    case AstResolvedReferenceKind.FunctionParam: {
-      const param = resolvedReference.data as AstExpressionFunctionParam;
-      transpiler.pushPart("_param_");
-      transpiler.pushPart(ensure(param.name));
-      break;
-    }
-    case AstResolvedReferenceKind.Variable: {
-      const variable = resolvedReference.data as AstStatementVariable;
+    case AstResolvedReferenceKind.StatementVariable: {
+      const statementVariable = resolvedReference.data as AstStatementVariable;
       transpiler.pushPart("_variable_");
-      transpiler.pushPart(variable.name);
+      transpiler.pushPart(statementVariable.name);
       transpiler.pushPart("->value");
       break;
     }
-    case AstResolvedReferenceKind.ImportSlot: {
-      const slot = resolvedReference.data as AstStatementImportSlot;
+    case AstResolvedReferenceKind.StatementImportSlot: {
+      const statementImportSlot = resolvedReference
+        .data as AstStatementImportSlot;
       transpiler.pushPart("_import_");
-      transpiler.pushPart(slot.name);
+      transpiler.pushPart(statementImportSlot.name);
       transpiler.pushPart("->value");
+      break;
+    }
+    case AstResolvedReferenceKind.ExpressionFunctionParam: {
+      const expressionFunctionParam = resolvedReference
+        .data as AstExpressionFunctionParam;
+      transpiler.pushPart("_param_");
+      transpiler.pushPart(ensure(expressionFunctionParam.name));
+      break;
+    }
+    case AstResolvedReferenceKind.ResolvedClosure: {
+      const resolvedClosure = resolvedReference.data as AstResolvedClosure;
+      transpiler.pushPart("closure[");
+      transpiler.pushPart(resolvedClosure.idx.toString());
+      transpiler.pushPart("]->value");
       break;
     }
   }

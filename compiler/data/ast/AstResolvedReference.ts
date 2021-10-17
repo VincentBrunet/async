@@ -5,16 +5,16 @@ import { AstStatementImportSlot } from "./AstStatementImport.ts";
 import { AstStatementVariable } from "./AstStatementVariable.ts";
 
 export enum AstResolvedReferenceKind {
-  Variable = "Variable",
-  FunctionParam = "FunctionParam",
-  ImportSlot = "ImportSlot",
-  Closure = "Closure",
+  StatementVariable = "StatementVariable",
+  StatementImportSlot = "StatementImportSlot",
+  ExpressionFunctionParam = "ExpressionFunctionParam",
+  ResolvedClosure = "ResolvedClosure",
 }
 
 export type AstResolvedReferenceData =
   | AstStatementVariable
-  | AstExpressionFunctionParam
   | AstStatementImportSlot
+  | AstExpressionFunctionParam
   | AstResolvedClosure;
 
 export interface AstResolvedReference extends Ast {

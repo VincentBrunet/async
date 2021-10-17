@@ -17,35 +17,35 @@ export class Scope {
     this.parent = parent;
   }
 
-  pushVariable(variable: AstStatementVariable) {
-    const name = variable.name;
+  pushVariable(statementVariable: AstStatementVariable) {
+    const name = statementVariable.name;
     this.pushReference(name, {
-      kind: AstResolvedReferenceKind.Variable,
-      data: variable,
+      kind: AstResolvedReferenceKind.StatementVariable,
+      data: statementVariable,
     });
   }
 
-  pushClosure(closure: AstResolvedClosure) {
-    const name = closure.name;
+  pushImportSlot(statementImportSlot: AstStatementImportSlot) {
+    const name = statementImportSlot.name;
     this.pushReference(name, {
-      kind: AstResolvedReferenceKind.Closure,
-      data: closure,
+      kind: AstResolvedReferenceKind.StatementImportSlot,
+      data: statementImportSlot,
     });
   }
 
-  pushImportSlot(slot: AstStatementImportSlot) {
-    const name = slot.name;
+  pushFunctionParam(expressionFunctionParam: AstExpressionFunctionParam) {
+    const name = ensure(expressionFunctionParam.name);
     this.pushReference(name, {
-      kind: AstResolvedReferenceKind.ImportSlot,
-      data: slot,
+      kind: AstResolvedReferenceKind.ExpressionFunctionParam,
+      data: expressionFunctionParam,
     });
   }
 
-  pushFunctionParam(param: AstExpressionFunctionParam) {
-    const name = ensure(param.name);
+  pushClosure(resolvedClosure: AstResolvedClosure) {
+    const name = resolvedClosure.name;
     this.pushReference(name, {
-      kind: AstResolvedReferenceKind.FunctionParam,
-      data: param,
+      kind: AstResolvedReferenceKind.ResolvedClosure,
+      data: resolvedClosure,
     });
   }
 
