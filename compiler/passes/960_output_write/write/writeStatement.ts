@@ -9,10 +9,15 @@ export function writeStatement(
   depth: number,
 ) {
   writer.pushToSource(repeat("  ", depth));
-  writer.pushToSource(outputStatement.parts.join(""));
+  if (outputStatement.parts.length > 0) {
+    writer.pushToSource(outputStatement.parts.join(""));
+  }
   if (outputStatement.inner) {
     writeBlock(writer, outputStatement.inner, depth);
+  } else {
+    if (outputStatement.parts.length > 0) {
+      writer.pushToSource(";");
+    }
   }
-  writer.pushToSource(";");
   writer.pushToSource("\n");
 }

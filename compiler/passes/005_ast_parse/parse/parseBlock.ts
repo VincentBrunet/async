@@ -4,21 +4,33 @@ import { Browser } from "../util/Browser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseStatement } from "./parseStatement.ts";
 
-export function parseBlock(browser: Browser): AstBlock | TokenImpasse {
+export function parseBlock(
+  browser: Browser,
+  bracketsOptional?: boolean,
+): AstBlock | TokenImpasse {
   // bracket - open
-  const bracketOpen = browser.peek();
-  if (bracketOpen.str !== "{") {
-    return browser.impasse("Block.Open");
+  if (!bracketsOptional) {
+    const bracketOpen = browser.peek();
+    if (bracketOpen.str !== "{") {
+      return browser.impasse("Block.Open");
+    }
+    browser.consume();
   }
-  browser.consume();
   // statements
   const statements = new Array<AstStatement>();
   while (true) {
-    // bracket - close
-    const bracketClose = browser.peek();
-    if (bracketClose.str === "}") {
-      browser.consume();
-      break;
+    if (!bracketsOptional) {
+      // bracket - close
+      const bracketClose = browser.peek();
+      if (bracketClose.str === "}") {
+        browser.consume();
+        break;
+      }
+    } else {
+      // done when empty
+      if (browser.ended()) {
+        break;
+      }
     }
     // parse statement
     const astStatement = browser.recurse(parseStatement);

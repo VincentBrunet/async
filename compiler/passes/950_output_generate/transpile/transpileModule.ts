@@ -1,7 +1,7 @@
 import { AstModule } from "../../../data/ast/AstModule.ts";
-import { AstStatementVariable } from "../../../data/ast/AstStatementVariable.ts";
 import { ensure } from "../../../lib/errors/ensure.ts";
 import { hashAstKey } from "../../../lib/hash/hashAstKey.ts";
+import { cacheFileFromHash } from "../../../lib/io/cacheFileFromHash.ts";
 import { RecursorPass } from "../../util/RecursorPass.ts";
 import { Transpiler } from "../util/Transpiler.ts";
 
@@ -12,45 +12,55 @@ export async function transpileModule(
 ) {
   // Asserts
   const resolvedExports = ensure(ast.resolvedExports);
-  const resolvedVariables = ensure(ast.resolvedVariables);
+
+  // Include
+  transpiler.pushInclude(
+    await cacheFileFromHash(
+      ast.sourceToken.sourceCode.hash,
+      "output.h",
+    ),
+  );
 
   // New Function
   transpiler.pushFunction("t_ref **", hashAstKey(ast, ast, "module"), []);
 
-  // Setup variables
-  for (const resolvedVariable of resolvedVariables) {
+  // Setup local exports
+  for (const resolvedExport of resolvedExports) {
     transpiler.pushStatement([
       "t_ref *",
-      "__",
-      resolvedVariable.name,
+      "_export_",
+      resolvedExport.name,
       " = ",
       "ref_make(NULL)",
     ]);
   }
 
   // Recurse in module content
-  for (const astStatement of ast.statements) {
-    await pass.recurseStatement(transpiler, astStatement);
-  }
+  transpiler.pushStatement([]);
+  await pass.recurseBlock(transpiler, ast.block);
 
   // We simply return the module
   const moduleMakeLength = resolvedExports.length.toString();
   const moduleMakeVariadic = resolvedExports.length > 9;
-  const done = new Array<string>();
-  done.push("return ");
-  done.push("module_make_");
+  transpiler.pushStatement([]);
+  transpiler.pushPart("return ");
+  transpiler.pushPart("module_make_");
   if (moduleMakeVariadic) {
-    done.push("x");
+    transpiler.pushPart("x");
   } else {
-    done.push(moduleMakeLength);
+    transpiler.pushPart(moduleMakeLength);
   }
-  done.push("(");
-  for (const resolvedExport of resolvedExports) {
-    const resolvedVariable = resolvedExport.statement
-      .data as AstStatementVariable; // TODO - should be checked
-    done.push("__");
-    done.push(resolvedVariable.name);
+  transpiler.pushPart("(");
+  if (moduleMakeVariadic) {
+    transpiler.pushPart(moduleMakeLength);
+    transpiler.pushPart(", ");
   }
-  done.push(")");
-  transpiler.pushStatement(done);
+  for (let i = 0; i < resolvedExports.length; i++) {
+    if (i != 0) {
+      transpiler.pushPart(", ");
+    }
+    transpiler.pushPart("_export_");
+    transpiler.pushPart(resolvedExports[i].name);
+  }
+  transpiler.pushPart(")");
 }

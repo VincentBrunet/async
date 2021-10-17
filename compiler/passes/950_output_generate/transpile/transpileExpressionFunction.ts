@@ -31,11 +31,11 @@ export async function transpileExpressionFunction(
   transpiler.pushPart(name);
   if (functionMakeVariadic) {
     transpiler.pushPart(", ");
-    transpiler.pushPart(resolvedClosures.length.toString());
+    transpiler.pushPart(functionMakeLength);
   }
   for (const astClosure of resolvedClosures) {
     transpiler.pushPart(", ");
-    transpileResolvedClosure(pass, transpiler, astClosure);
+    transpileResolvedClosure(transpiler, astClosure);
   }
   transpiler.pushPart(")");
 
@@ -43,11 +43,12 @@ export async function transpileExpressionFunction(
   const params = [];
   params.push("t_ref **closure");
   for (const astParam of ast.params) {
-    params.push("t_value *__" + astParam.name);
+    params.push("t_value *_param_" + astParam.name);
   }
   transpiler.pushFunction("t_value *", name, params);
 
-  // Push statements
+  // Push block statements
+  transpiler.pushStatement([]);
   await pass.recurseBlock(transpiler, ast.block);
 
   // Backup return

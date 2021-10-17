@@ -1,4 +1,5 @@
 import { OutputModule } from "../../data/output/OutputModule.ts";
+import { stringify } from "../../lib/core/debug/stringify.ts";
 import { cacheFileFromHash } from "../../lib/io/cacheFileFromHash.ts";
 import { Writer } from "./util/Writer.ts";
 import { writeModule } from "./write/writeModule.ts";
@@ -18,6 +19,11 @@ export async function passOutputToFile(outputModule: OutputModule) {
   const writer = new Writer(file);
 
   writeModule(writer, outputModule);
+
+  await Deno.writeTextFile(
+    file.object + ".json",
+    stringify(outputModule),
+  );
 
   await writer.flush();
 

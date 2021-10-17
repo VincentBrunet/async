@@ -16,4 +16,5 @@ export function writeFunction(writer: Writer, outputFunction: OutputFunction) {
   writeBlock(writer, outputFunction.block, 0);
   // Done
   writer.pushBoth("\n");
+  writer.pushBoth("\n");
 }

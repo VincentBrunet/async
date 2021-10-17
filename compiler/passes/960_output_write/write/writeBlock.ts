@@ -8,7 +8,6 @@ export function writeBlock(
   outputBlock: OutputBlock,
   depth: number,
 ) {
-  writer.pushToSource(repeat("  ", depth));
   writer.pushToSource("{");
   writer.pushToSource("\n");
   for (const outputStatement of outputBlock.statements) {
@@ -16,5 +15,4 @@ export function writeBlock(
   }
   writer.pushToSource(repeat("  ", depth));
   writer.pushToSource("}");
-  writer.pushToSource("\n");
 }

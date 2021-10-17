@@ -9,7 +9,7 @@ export async function transpileStatementVariable(
 ) {
   if (ast.value) {
     transpiler.pushStatement([]);
-    transpiler.pushPart("__");
+    transpiler.pushPart("_variable_");
     transpiler.pushPart(ast.name);
     transpiler.pushPart("->value");
     transpiler.pushPart(" = ");

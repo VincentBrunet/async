@@ -4,12 +4,24 @@ import { writeFunction } from "./writeFunction.ts";
 import { writeInclude } from "./writeInclude.ts";
 
 export function writeModule(writer: Writer, outputModule: OutputModule) {
-  // Quick recap on top
+  const hash = outputModule.sourceAst.sourceToken.sourceCode.hash;
+  const href = outputModule.sourceAst.sourceToken.sourceCode.sourceUrl.href;
+  // Quick recap of url on top
   writer.pushBoth("//");
   writer.pushBoth(" ");
-  writer.pushBoth(outputModule.sourceAst.sourceToken.sourceCode.sourceUrl.href);
+  writer.pushBoth(href);
   writer.pushBoth("\n");
   writer.pushBoth("\n");
+  // Anti-reimport
+  writer.pushToHeader("#ifndef __");
+  writer.pushToHeader(hash);
+  writer.pushToHeader("_H");
+  writer.pushToHeader("\n");
+  writer.pushToHeader("#define __");
+  writer.pushToHeader(hash);
+  writer.pushToHeader("_H");
+  writer.pushToHeader("\n");
+  writer.pushToHeader("\n");
   // Quick recap on top
   writer.pushBoth("#include <runtime.h>");
   writer.pushBoth("\n");
@@ -28,4 +40,7 @@ export function writeModule(writer: Writer, outputModule: OutputModule) {
     }
     writer.pushBoth("\n");
   }
+  // Anti-reimport
+  writer.pushToHeader("#endif");
+  writer.pushToHeader("\n");
 }

@@ -10,6 +10,7 @@ export async function transpileExpressionRun(
   transpiler: Transpiler,
   ast: AstExpressionRun,
 ) {
+  // Asserts
   const resolvedClosures = ensure(ast.resolvedClosures);
 
   // Generate a stable unique name
@@ -29,20 +30,19 @@ export async function transpileExpressionRun(
   transpiler.pushPart(name);
   if (runCallVariadic) {
     transpiler.pushPart(", ");
-    transpiler.pushPart(resolvedClosures.length.toString());
+    transpiler.pushPart(runCallLength);
   }
   for (const astClosure of resolvedClosures) {
     transpiler.pushPart(", ");
-    transpileResolvedClosure(pass, transpiler, astClosure);
+    transpileResolvedClosure(transpiler, astClosure);
   }
   transpiler.pushPart(")");
 
   // New scope
-  transpiler.pushFunction("t_value *", name, [
-    "t_ref **closure",
-  ]);
+  transpiler.pushFunction("t_value *", name, ["t_ref **closure"]);
 
   // Run the recursive writing
+  transpiler.pushStatement([]);
   await pass.recurseBlock(transpiler, ast.block);
 
   // Backup return

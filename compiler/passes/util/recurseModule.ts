@@ -6,7 +6,5 @@ export async function recurseModule<Scope>(
   p: Scope,
   ast: AstModule,
 ) {
-  for (const statement of ast.statements) {
-    await r.recurseStatement(p, statement);
-  }
+  await r.recurseBlock(p, ast.block);
 }

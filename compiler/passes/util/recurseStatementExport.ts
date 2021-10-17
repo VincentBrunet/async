@@ -6,5 +6,5 @@ export async function recurseStatementExport<Scope>(
   p: Scope,
   ast: AstStatementExport,
 ) {
-  await r.recurseStatement(p, ast.statement);
+  await r.recurseExpression(p, ast.expression);
 }

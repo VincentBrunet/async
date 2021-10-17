@@ -4,11 +4,9 @@ import { AstResolvedReferenceKind } from "../../../data/ast/AstResolvedReference
 import { AstStatementImportSlot } from "../../../data/ast/AstStatementImport.ts";
 import { AstStatementVariable } from "../../../data/ast/AstStatementVariable.ts";
 import { ensure } from "../../../lib/errors/ensure.ts";
-import { RecursorPass } from "../../util/RecursorPass.ts";
 import { Transpiler } from "../util/Transpiler.ts";
 
 export function transpileResolvedClosure(
-  pass: RecursorPass<Transpiler>,
   transpiler: Transpiler,
   ast: AstResolvedClosure,
 ) {
@@ -26,14 +24,14 @@ export function transpileResolvedClosure(
     case AstResolvedReferenceKind.FunctionParam: {
       const param = resolvedReference.data as AstExpressionFunctionParam;
       transpiler.pushPart("ref_make(");
-      transpiler.pushPart("__");
+      transpiler.pushPart("_param_");
       transpiler.pushPart(ensure(param.name));
       transpiler.pushPart(")");
       break;
     }
     case AstResolvedReferenceKind.Variable: {
       const variable = resolvedReference.data as AstStatementVariable;
-      transpiler.pushPart("__");
+      transpiler.pushPart("_variable_");
       transpiler.pushPart(variable.name);
       break;
     }

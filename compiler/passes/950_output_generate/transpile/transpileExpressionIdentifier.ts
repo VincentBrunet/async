@@ -26,13 +26,13 @@ export async function transpileExpressionIdentifier(
     }
     case AstResolvedReferenceKind.FunctionParam: {
       const param = resolvedReference.data as AstExpressionFunctionParam;
-      transpiler.pushPart("__");
+      transpiler.pushPart("_param_");
       transpiler.pushPart(ensure(param.name));
       break;
     }
     case AstResolvedReferenceKind.Variable: {
       const variable = resolvedReference.data as AstStatementVariable;
-      transpiler.pushPart("__");
+      transpiler.pushPart("_variable_");
       transpiler.pushPart(variable.name);
       transpiler.pushPart("->value");
       break;

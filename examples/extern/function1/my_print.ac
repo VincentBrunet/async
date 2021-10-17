@@ -3,11 +3,12 @@ typedef MyObject = {
   b :i32;
 };;
 
-export const my_print = fn (a :i32, b :i32) :MyObject {
+const my_print = fn (a :i32, b :i32) :MyObject {
+
+  unsafe { printf("Hello, A:%d\n", _param_a->data.i32); }
 
   unsafe {
-    printf("Hello, A:%d\n", __a->data.i32);
-    printf("Hello, B:%d\n", __b->data.i32);
+    printf("Hello, B:%d\n", _param_b->data.i32);
   }
 
   return {
@@ -16,3 +17,6 @@ export const my_print = fn (a :i32, b :i32) :MyObject {
   }
 
 }
+
+export my_print: (a:i32,b:i32):MyObject = my_print;
+export my_print2: (a:i32,b:i32):MyObject = my_print;

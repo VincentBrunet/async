@@ -1,5 +1,6 @@
 import { AstModule } from "../../data/ast/AstModule.ts";
 import { makeRecursorPassAdvanced } from "../util/makeRecursorPassAdvanced.ts";
+import { transpileBlock } from "./transpile/transpileBlock.ts";
 import { transpileExpressionBinary } from "./transpile/transpileExpressionBinary.ts";
 import { transpileExpressionCall } from "./transpile/transpileExpressionCall.ts";
 import { transpileExpressionFunction } from "./transpile/transpileExpressionFunction.ts";
@@ -24,6 +25,7 @@ import { Transpiler } from "./util/Transpiler.ts";
 
 const pass = makeRecursorPassAdvanced((no) => no, {
   recurseModule: transpileModule,
+  recurseBlock: transpileBlock,
   recurseExpressionBinary: transpileExpressionBinary,
   recurseExpressionCall: transpileExpressionCall,
   recurseExpressionFunction: transpileExpressionFunction,

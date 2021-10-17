@@ -33,11 +33,11 @@ export async function transpileExpressionObject(
   transpiler.pushPart(name);
   if (objectCallVariadic) {
     transpiler.pushPart(", ");
-    transpiler.pushPart(resolvedClosures.length.toString());
+    transpiler.pushPart(objectCallLength);
   }
   for (const astClosure of resolvedClosures) {
     transpiler.pushPart(", ");
-    transpileResolvedClosure(pass, transpiler, astClosure);
+    transpileResolvedClosure(transpiler, astClosure);
   }
   transpiler.pushPart(")");
 

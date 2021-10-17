@@ -1,6 +1,9 @@
 import { Ast } from "./Ast.ts";
-import { AstStatement } from "./AstStatement.ts";
+import { AstAnnotationType } from "./AstAnnotationType.ts";
+import { AstExpression } from "./AstExpression.ts";
 
 export interface AstStatementExport extends Ast {
-  statement: AstStatement;
+  name: string;
+  annotation: AstAnnotationType;
+  expression: AstExpression;
 }

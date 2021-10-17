@@ -1,10 +1,9 @@
 import { AstModule } from "../../../data/ast/AstModule.ts";
-import { AstStatement } from "../../../data/ast/AstStatement.ts";
 import { TokenModule } from "../../../data/token/TokenModule.ts";
 import { ensure } from "../../../lib/errors/ensure.ts";
 import { Browser } from "../util/Browser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
-import { parseStatement } from "./parseStatement.ts";
+import { parseBlock } from "./parseBlock.ts";
 
 export function parseModule(
   browser: Browser,
@@ -12,23 +11,14 @@ export function parseModule(
 ): AstModule | TokenImpasse {
   // Asserts
   const sourceToken = ensure(token);
-  // statements
-  const statements = new Array<AstStatement>();
-  while (true) {
-    // done when empty
-    if (browser.ended()) {
-      break;
-    }
-    // parse statement
-    const astStatement = browser.recurse(parseStatement);
-    if (astStatement instanceof TokenImpasse) {
-      return browser.impasse("Module", [astStatement]);
-    }
-    statements.push(astStatement);
+  // Content
+  const block = browser.recurse(parseBlock, true);
+  if (block instanceof TokenImpasse) {
+    return browser.impasse("Module.Block", [block]);
   }
   // done
   return {
     sourceToken: sourceToken,
-    statements: statements,
+    block: block,
   };
 }
