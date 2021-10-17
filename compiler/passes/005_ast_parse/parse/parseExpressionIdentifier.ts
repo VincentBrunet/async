@@ -11,8 +11,10 @@ forbidden.add("fn");
 forbidden.add("unsafe");
 forbidden.add("typedef");
 forbidden.add("const");
+forbidden.add("obj");
 forbidden.add("mutable");
 forbidden.add("import");
+forbidden.add("export");
 forbidden.add("from");
 
 export function parseExpressionIdentifier(

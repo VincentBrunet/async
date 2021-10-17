@@ -1,4 +1,5 @@
 import { Ast } from "./Ast.ts";
+import { AstStatementBlock } from "./AstStatementBlock.ts";
 import { AstStatementCondition } from "./AstStatementCondition.ts";
 import { AstStatementEmpty } from "./AstStatementEmpty.ts";
 import { AstStatementExport } from "./AstStatementExport.ts";
@@ -15,6 +16,7 @@ export enum AstStatementKind {
   Export = "Export",
   Variable = "Variable",
   Typedef = "Typedef",
+  Block = "Block",
   While = "While",
   Condition = "Condition",
   Return = "Return",
@@ -28,6 +30,7 @@ export type AstStatementData =
   | AstStatementExport
   | AstStatementVariable
   | AstStatementTypedef
+  | AstStatementBlock
   | AstStatementWhile
   | AstStatementCondition
   | AstStatementReturn

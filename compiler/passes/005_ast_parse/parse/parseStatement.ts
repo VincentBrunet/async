@@ -5,6 +5,7 @@ import {
 } from "../../../data/ast/AstStatement.ts";
 import { Browser } from "../util/Browser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
+import { parseStatementBlock } from "./parseStatementBlock.ts";
 import { parseStatementCondition } from "./parseStatementCondition.ts";
 import { parseStatementEmpty } from "./parseStatementEmpty.ts";
 import { parseStatementExport } from "./parseStatementExport.ts";
@@ -62,6 +63,12 @@ export function parseStatement(
   if (!(astStatementTypedef instanceof TokenImpasse)) {
     consumeEnd(browser);
     return finishStatement(AstStatementKind.Typedef, astStatementTypedef);
+  }
+  // { statements }
+  const astStatementBlock = browser.recurse(parseStatementBlock);
+  if (!(astStatementBlock instanceof TokenImpasse)) {
+    consumeEnd(browser);
+    return finishStatement(AstStatementKind.Block, astStatementBlock);
   }
   // while (expression)
   const astStatementWhile = browser.recurse(parseStatementWhile);

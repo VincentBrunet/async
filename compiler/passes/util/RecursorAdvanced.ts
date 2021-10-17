@@ -15,6 +15,7 @@ import { AstExpressionTyping } from "../../data/ast/AstExpressionTyping.ts";
 import { AstExpressionUnary } from "../../data/ast/AstExpressionUnary.ts";
 import { AstModule } from "../../data/ast/AstModule.ts";
 import { AstStatement } from "../../data/ast/AstStatement.ts";
+import { AstStatementBlock } from "../../data/ast/AstStatementBlock.ts";
 import {
   AstStatementCondition,
   AstStatementConditionBranch,
@@ -73,6 +74,11 @@ export interface RecursorAdvanced<Scope> {
     pass: RecursorPass<Scope>,
     scope: Scope,
     ast: AstStatementTypedef,
+  ) => Promise<void>;
+  recurseStatementBlock?: (
+    pass: RecursorPass<Scope>,
+    scope: Scope,
+    ast: AstStatementBlock,
   ) => Promise<void>;
   recurseStatementWhile?: (
     pass: RecursorPass<Scope>,

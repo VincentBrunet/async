@@ -15,6 +15,7 @@ import { AstExpressionTyping } from "../../data/ast/AstExpressionTyping.ts";
 import { AstExpressionUnary } from "../../data/ast/AstExpressionUnary.ts";
 import { AstModule } from "../../data/ast/AstModule.ts";
 import { AstStatement } from "../../data/ast/AstStatement.ts";
+import { AstStatementBlock } from "../../data/ast/AstStatementBlock.ts";
 import {
   AstStatementCondition,
   AstStatementConditionBranch,
@@ -71,6 +72,11 @@ export interface RecursorSimplified<Scope> {
   recurseStatementTypedef?: (
     scope: Scope,
     ast: AstStatementTypedef,
+    next: () => Promise<void>,
+  ) => Promise<void>;
+  recurseStatementBlock?: (
+    scope: Scope,
+    ast: AstStatementBlock,
     next: () => Promise<void>,
   ) => Promise<void>;
   recurseStatementWhile?: (

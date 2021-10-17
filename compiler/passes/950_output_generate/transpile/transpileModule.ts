@@ -28,11 +28,12 @@ export async function transpileModule(
   transpiler.pushFunction("t_ref **", name, []);
 
   // Setup local exports
-  for (const resolvedExport of resolvedExports) {
+  const resolvedExportNames = [...resolvedExports.keys()];
+  for (const resolvedExportName of resolvedExportNames) {
     transpiler.pushStatement([
       "t_ref *",
       "_export_",
-      resolvedExport.name,
+      resolvedExportName,
       " = ",
       "ref_make(NULL)",
     ]);
@@ -43,8 +44,8 @@ export async function transpileModule(
   await pass.recurseBlock(transpiler, ast.block);
 
   // We simply return the module
-  const moduleMakeLength = resolvedExports.length.toString();
-  const moduleMakeVariadic = resolvedExports.length > 9;
+  const moduleMakeLength = resolvedExportNames.length.toString();
+  const moduleMakeVariadic = resolvedExportNames.length > 9;
   const moduleMakeParts = [];
   moduleMakeParts.push("return ");
   moduleMakeParts.push("module_make_");
@@ -58,12 +59,12 @@ export async function transpileModule(
     moduleMakeParts.push(moduleMakeLength);
     moduleMakeParts.push(", ");
   }
-  for (let i = 0; i < resolvedExports.length; i++) {
+  for (let i = 0; i < resolvedExportNames.length; i++) {
     if (i != 0) {
       moduleMakeParts.push(", ");
     }
     moduleMakeParts.push("_export_");
-    moduleMakeParts.push(resolvedExports[i].name);
+    moduleMakeParts.push(resolvedExportNames[i]);
   }
   moduleMakeParts.push(")");
   transpiler.pushStatement(moduleMakeParts);

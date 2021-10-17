@@ -1,4 +1,5 @@
 import { AstStatement, AstStatementKind } from "../../data/ast/AstStatement.ts";
+import { AstStatementBlock } from "../../data/ast/AstStatementBlock.ts";
 import { AstStatementCondition } from "../../data/ast/AstStatementCondition.ts";
 import { AstStatementEmpty } from "../../data/ast/AstStatementEmpty.ts";
 import { AstStatementExport } from "../../data/ast/AstStatementExport.ts";
@@ -33,6 +34,10 @@ export async function recurseStatement<Scope>(
     }
     case AstStatementKind.Typedef: {
       await r.recurseStatementTypedef(p, data as AstStatementTypedef);
+      break;
+    }
+    case AstStatementKind.Block: {
+      await r.recurseStatementBlock(p, data as AstStatementBlock);
       break;
     }
     case AstStatementKind.While: {

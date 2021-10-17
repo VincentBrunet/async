@@ -15,6 +15,7 @@ import { recurseExpressionTyping } from "./recurseExpressionTyping.ts";
 import { recurseExpressionUnary } from "./recurseExpressionUnary.ts";
 import { recurseModule } from "./recurseModule.ts";
 import { recurseStatement } from "./recurseStatement.ts";
+import { recurseStatementBlock } from "./recurseStatementBlock.ts";
 import { recurseStatementCondition } from "./recurseStatementCondition.ts";
 import { recurseStatementConditionBranch } from "./recurseStatementConditionBranch.ts";
 import { recurseStatementEmpty } from "./recurseStatementEmpty.ts";
@@ -236,6 +237,12 @@ export function makeRecursorPassAdvanced<Scope>(
       passRecurse,
       recurseStatementTypedef,
       customAdvanced.recurseStatementTypedef,
+    ),
+    recurseStatementBlock: makePass(
+      scoper,
+      passRecurse,
+      recurseStatementBlock,
+      customAdvanced.recurseStatementBlock,
     ),
     recurseStatementWhile: makePass(
       scoper,

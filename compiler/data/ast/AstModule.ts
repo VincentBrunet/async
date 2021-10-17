@@ -1,3 +1,4 @@
+import { MapArray } from "../../lib/core/data/MapArray.ts";
 import { TokenModule } from "../token/TokenModule.ts";
 import { Ast } from "./Ast.ts";
 import { AstBlock } from "./AstBlock.ts";
@@ -9,6 +10,6 @@ export interface AstModule extends Ast {
 
   block: AstBlock;
 
-  resolvedImports?: Array<AstStatementImport>;
-  resolvedExports?: Array<AstStatementExport>;
+  resolvedImports?: MapArray<string, AstStatementImport>;
+  resolvedExports?: MapArray<string, AstStatementExport>;
 }
