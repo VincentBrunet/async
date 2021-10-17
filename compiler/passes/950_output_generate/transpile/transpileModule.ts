@@ -13,6 +13,9 @@ export async function transpileModule(
   // Asserts
   const resolvedExports = ensure(ast.resolvedExports);
 
+  // Name
+  const name = hashAstKey(ast, ast, "module");
+
   // Include
   transpiler.pushInclude(
     await cacheFileFromHash(
@@ -22,7 +25,7 @@ export async function transpileModule(
   );
 
   // New Function
-  transpiler.pushFunction("t_ref **", hashAstKey(ast, ast, "module"), []);
+  transpiler.pushFunction("t_ref **", name, []);
 
   // Setup local exports
   for (const resolvedExport of resolvedExports) {
@@ -63,4 +66,13 @@ export async function transpileModule(
     transpiler.pushPart(resolvedExports[i].name);
   }
   transpiler.pushPart(")");
+
+  // New Function (getter)
+  transpiler.pushFunction("t_ref **", hashAstKey(ast, ast, "getter"), []);
+  transpiler.pushStatement(["static t_ref **exports = NULL"]);
+  transpiler.pushStatement(["if (exports == NULL)"]);
+  transpiler.pushBlock();
+  transpiler.pushStatement(["exports = ", name, "()"]);
+  transpiler.popBlock();
+  transpiler.pushStatement(["return exports"]);
 }

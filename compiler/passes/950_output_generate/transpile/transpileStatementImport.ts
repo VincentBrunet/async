@@ -28,12 +28,11 @@ export async function transpileStatementImport(
       "t_ref *",
       hashLocalKey("import", slot.name),
       " = ",
-      "module_import",
-      "(",
-      hashAstKey(resolvedModule, resolvedModule, "module"),
-      ", ",
+      hashAstKey(resolvedModule, resolvedModule, "getter"),
+      "()",
+      "[",
       ast.slots.indexOf(slot).toString(), // TODO - not correct
-      ")",
+      "]",
     ]);
   }
 }

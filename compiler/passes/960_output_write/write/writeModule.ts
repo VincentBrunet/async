@@ -34,11 +34,8 @@ export function writeModule(writer: Writer, outputModule: OutputModule) {
     writer.pushBoth("\n");
   }
   // Functions
-  if (outputModule.functions.length) {
-    for (const outputFunction of outputModule.functions) {
-      writeFunction(writer, outputFunction);
-    }
-    writer.pushBoth("\n");
+  for (const outputFunction of outputModule.functions) {
+    writeFunction(writer, outputFunction);
   }
   // Anti-reimport
   writer.pushToHeader("#endif");

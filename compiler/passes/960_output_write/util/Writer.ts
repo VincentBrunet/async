@@ -22,7 +22,6 @@ export class Writer {
   }
 
   async flush() {
-    console.log("Writer.flush", this.fileModule);
     await Deno.writeTextFile(
       this.fileModule.header,
       this.contentHeader.join(""),
