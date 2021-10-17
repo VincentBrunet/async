@@ -34,9 +34,9 @@ export async function browseExpressionFunction(
   await next();
 
   const returns = ast.resolvedReturns ?? [];
-  let currentReturn = returns[0]?.expression.resolvedType;
+  let currentReturn = returns[0]?.resolvedType;
   for (let i = 1; i < returns.length; i++) {
-    const nextReturn = returns[i].expression.resolvedType;
+    const nextReturn = returns[i].resolvedType;
     if (currentReturn && nextReturn) {
       currentReturn = makeTypeOr(currentReturn, nextReturn, ast);
     }

@@ -18,14 +18,14 @@ export function parseStatementReturn(
   if (annotation instanceof TokenImpasse) {
     return browser.impasse("Return.Annotation", [annotation]);
   }
-  // expression
-  const expression = browser.recurse(parseExpression);
-  if (expression instanceof TokenImpasse) {
-    return browser.impasse("Return.Expression", [expression]);
+  // value
+  const value = browser.recurse(parseExpression);
+  if (value instanceof TokenImpasse) {
+    return browser.impasse("Return.Expression", [value]);
   }
   // done
   return {
     annotation: annotation,
-    expression: expression,
+    value: value,
   };
 }

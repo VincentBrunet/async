@@ -17,9 +17,9 @@ export async function browseExpressionRun(
   await next();
 
   const returns = ast.resolvedReturns ?? [];
-  let current = returns[0]?.expression.resolvedType;
+  let current = returns[0]?.resolvedType;
   for (let i = 1; i < returns.length; i++) {
-    const next = returns[i].expression.resolvedType;
+    const next = returns[i].resolvedType;
     if (current && next) {
       current = makeTypeOr(current, next, ast);
     }

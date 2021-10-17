@@ -8,5 +8,5 @@ export async function transpileStatementReturn(
   ast: AstStatementReturn,
 ) {
   transpiler.pushStatement(["return", " "]);
-  await pass.recurseExpression(transpiler, ast.expression);
+  await pass.recurseExpression(transpiler, ast.value);
 }
