@@ -93,7 +93,7 @@ export async function transpileExpressionObject(
     const sortedField = sortedFields[i];
     transpiler.pushStatement([
       "t_ref *",
-      "__",
+      "_field_",
       sortedField.name,
       " = ",
       "(t_ref *)&(fields[",
@@ -102,10 +102,10 @@ export async function transpileExpressionObject(
     ]);
   }
 
-  // Do the assignation
+  // Do the assignation in the code's order (not the hash order)
   for (const unsortedField of unsortedFields) {
     transpiler.pushStatement([
-      "__",
+      "_field_",
       unsortedField.name,
       "->value",
       " = ",

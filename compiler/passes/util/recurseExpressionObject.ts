@@ -6,7 +6,9 @@ export async function recurseExpressionObject<Scope>(
   p: Scope,
   ast: AstExpressionObject,
 ) {
+  await r.recurseAnnotationType(p, ast.annotation);
   for (const field of ast.fields) {
+    await r.recurseAnnotationType(p, field.annotation);
     await r.recurseExpression(p, field.expression);
   }
 }

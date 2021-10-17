@@ -4,6 +4,6 @@ import { AstType } from "./AstType.ts";
 
 export interface AstStatementTypedef extends Ast {
   name: string;
-  type: AstType;
   template: AstAnnotationTemplate;
+  type: AstType;
 }

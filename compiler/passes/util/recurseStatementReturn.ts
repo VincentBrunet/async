@@ -6,5 +6,6 @@ export async function recurseStatementReturn<Scope>(
   p: Scope,
   ast: AstStatementReturn,
 ) {
+  await r.recurseAnnotationType(p, ast.annotation);
   await r.recurseExpression(p, ast.expression);
 }
