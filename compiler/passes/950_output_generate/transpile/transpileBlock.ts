@@ -25,10 +25,17 @@ export async function transpileBlock(
     ]);
   }
 
+  // Open block
+  transpiler.pushStatement(["/* block statements */ "]);
+  transpiler.pushBlock();
+
   // Recurse on statements
   for (const statement of ast.statements) {
     await pass.recurseStatement(transpiler, statement);
   }
+
+  // Close block
+  transpiler.popBlock();
 
   // Close block
   transpiler.popBlock();

@@ -104,13 +104,13 @@ export async function transpileExpressionObject(
 
   // Do the assignation
   for (const unsortedField of unsortedFields) {
-    transpiler.pushStatement([]);
-    transpiler.pushPart("__");
-    transpiler.pushPart(unsortedField.name);
-    transpiler.pushPart("->value");
-    transpiler.pushPart(" = ");
+    transpiler.pushStatement([
+      "__",
+      unsortedField.name,
+      "->value",
+      " = ",
+    ]);
     await pass.recurseExpression(transpiler, unsortedField.expression);
-    transpiler.pushPart("");
   }
 
   // We simply return the object

@@ -13,5 +13,14 @@ const res3 = expr {
 }
 my_print(res3.b, res3.a)
 
+fn (a, b) {
+  const res4 = my_print(a, b);
+  my_print(res4.b, res4.a)
+}(7, 8)
+
+if (42) {
+  true;
+}
+
 typedef MyType = {};
 

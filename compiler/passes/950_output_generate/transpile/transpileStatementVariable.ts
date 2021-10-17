@@ -8,11 +8,12 @@ export async function transpileStatementVariable(
   ast: AstStatementVariable,
 ) {
   if (ast.value) {
-    transpiler.pushStatement([]);
-    transpiler.pushPart("_variable_");
-    transpiler.pushPart(ast.name);
-    transpiler.pushPart("->value");
-    transpiler.pushPart(" = ");
+    transpiler.pushStatement([
+      "_variable_",
+      ast.name,
+      "->value",
+      " = ",
+    ]);
     await pass.recurseExpression(transpiler, ast.value);
   }
 }

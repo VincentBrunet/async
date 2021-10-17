@@ -12,7 +12,7 @@ export function writeFunction(writer: Writer, outputFunction: OutputFunction) {
   // Header doesn't have a block
   writer.pushToHeader(";");
   // Source needs the full source
-  writer.pushToSource("\n");
+  writer.pushToSource(" ");
   writeBlock(writer, outputFunction.block, 0);
   // Done
   writer.pushBoth("\n");

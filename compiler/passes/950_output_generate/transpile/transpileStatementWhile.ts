@@ -8,10 +8,10 @@ export async function transpileStatementWhile(
   ast: AstStatementWhile,
 ) {
   // condition
-  transpiler.pushStatement([]);
-  transpiler.pushPart("while (TO_BOOLEAN(");
+  transpiler.pushStatement(["while (TO_BOOLEAN("]);
   await pass.recurseExpression(transpiler, ast.condition);
   transpiler.pushPart("))");
+  transpiler.pushPart(" ");
   // content
   await pass.recurseBlock(transpiler, ast.block);
 }
