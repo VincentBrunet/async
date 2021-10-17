@@ -1,6 +1,6 @@
 typedef MyObject = {
-  a :i32;
-  b :i32;
+  const a :i32;
+  const b :i32;
 };;
 
 const my_print = fn (a :i32, b :i32) :MyObject {
@@ -11,9 +11,9 @@ const my_print = fn (a :i32, b :i32) :MyObject {
   return obj {
     a = a + 10 - b,
     b = -b + 10,
-    c = obj: {n42:i32, n43:i32} {
-      n42 :i32 = 42,
-      n43 :i32 = 43,
+    c = obj: { const n42:i32, const n43:i32} {
+      const n42 :i32 = 42,
+      const n43 :i32 = 43,
     },
   }
 
