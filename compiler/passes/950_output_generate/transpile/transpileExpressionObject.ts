@@ -42,9 +42,7 @@ export async function transpileExpressionObject(
   transpiler.pushPart(")");
 
   // New scope
-  transpiler.pushFunction("t_value *", name, [
-    "t_ref **closure",
-  ]);
+  transpiler.pushFunction("t_value *", name, ["t_ref **closure"]);
 
   // Fields
   const unsortedFields = ast.fields;
@@ -84,9 +82,9 @@ export async function transpileExpressionObject(
   transpiler.pushStatement(objectMakeParts);
 
   // Read a variable field pointer
-  transpiler.pushStatement([
-    "t_field *fields = object->data.object.fields",
-  ]);
+  if (sortedFields.length) {
+    transpiler.pushStatement(["t_field *fields = object->data.object.fields"]);
+  }
 
   // Make local references to created fields
   for (let i = 0; i < sortedFields.length; i++) {
