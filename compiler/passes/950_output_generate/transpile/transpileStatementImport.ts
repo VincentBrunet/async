@@ -13,6 +13,7 @@ export async function transpileStatementImport(
 ) {
   // Asserts
   const resolvedModule = ensure(ast.resolvedModule);
+  const resolvedExports = ensure(resolvedModule.resolvedExports);
 
   // Include
   transpiler.pushInclude(
@@ -31,7 +32,7 @@ export async function transpileStatementImport(
       hashAstKey(resolvedModule, resolvedModule, "getter"),
       "()",
       "[",
-      ast.slots.indexOf(slot).toString(), // TODO - not correct
+      resolvedExports.keys().indexOf(slot.name).toString(),
       "]",
     ]);
   }

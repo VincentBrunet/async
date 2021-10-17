@@ -22,7 +22,7 @@ export class MapArray<K, V> {
   }
 
   public keys() {
-    return this.map.keys();
+    return [...this.map.keys()];
   }
 
   public list(key: K) {
