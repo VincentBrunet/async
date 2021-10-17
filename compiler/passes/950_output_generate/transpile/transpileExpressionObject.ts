@@ -63,24 +63,25 @@ export async function transpileExpressionObject(
   // Create the module object containing all declared fields
   const objectMakeLength = sortedFields.length.toString();
   const objectMakeVariadic = sortedFields.length > 9;
-  transpiler.pushStatement([]);
-  transpiler.pushPart("t_value *object = object_make_");
+  const objectMakeParts = [];
+  objectMakeParts.push("t_value *object = object_make_");
   if (objectMakeVariadic) {
-    transpiler.pushPart("x");
+    objectMakeParts.push("x");
   } else {
-    transpiler.pushPart(objectMakeLength);
+    objectMakeParts.push(objectMakeLength);
   }
-  transpiler.pushPart("(");
-  transpiler.pushPart("type_object"); // TODO
+  objectMakeParts.push("(");
+  objectMakeParts.push("type_object"); // TODO
   if (objectMakeVariadic) {
-    transpiler.pushPart(", ");
-    transpiler.pushPart(objectMakeLength);
+    objectMakeParts.push(", ");
+    objectMakeParts.push(objectMakeLength);
   }
   for (const field of sortedFields) {
-    transpiler.pushPart(", ");
-    transpiler.pushPart(field.hash);
+    objectMakeParts.push(", ");
+    objectMakeParts.push(field.hash);
   }
-  transpiler.pushPart(")");
+  objectMakeParts.push(")");
+  transpiler.pushStatement(objectMakeParts);
 
   // Read a variable field pointer
   transpiler.pushStatement([

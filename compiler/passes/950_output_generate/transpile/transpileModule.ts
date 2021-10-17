@@ -45,27 +45,28 @@ export async function transpileModule(
   // We simply return the module
   const moduleMakeLength = resolvedExports.length.toString();
   const moduleMakeVariadic = resolvedExports.length > 9;
-  transpiler.pushStatement([]);
-  transpiler.pushPart("return ");
-  transpiler.pushPart("module_make_");
+  const moduleMakeParts = [];
+  moduleMakeParts.push("return ");
+  moduleMakeParts.push("module_make_");
   if (moduleMakeVariadic) {
-    transpiler.pushPart("x");
+    moduleMakeParts.push("x");
   } else {
-    transpiler.pushPart(moduleMakeLength);
+    moduleMakeParts.push(moduleMakeLength);
   }
-  transpiler.pushPart("(");
+  moduleMakeParts.push("(");
   if (moduleMakeVariadic) {
-    transpiler.pushPart(moduleMakeLength);
-    transpiler.pushPart(", ");
+    moduleMakeParts.push(moduleMakeLength);
+    moduleMakeParts.push(", ");
   }
   for (let i = 0; i < resolvedExports.length; i++) {
     if (i != 0) {
-      transpiler.pushPart(", ");
+      moduleMakeParts.push(", ");
     }
-    transpiler.pushPart("_export_");
-    transpiler.pushPart(resolvedExports[i].name);
+    moduleMakeParts.push("_export_");
+    moduleMakeParts.push(resolvedExports[i].name);
   }
-  transpiler.pushPart(")");
+  moduleMakeParts.push(")");
+  transpiler.pushStatement(moduleMakeParts);
 
   // New Function (getter)
   transpiler.pushFunction("t_ref **", hashAstKey(ast, ast, "getter"), []);
