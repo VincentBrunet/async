@@ -7,10 +7,10 @@ export async function transpileStatementUnsafe(
   transpiler: Transpiler,
   ast: AstStatementUnsafe,
 ) {
-  transpiler.pushStatement(["/* unsafe */ "]);
+  transpiler.pushStatement([]);
   transpiler.pushBlock();
-  transpiler.pushStatement([
-    ast.content,
-  ]);
+  transpiler.pushStatement(["// unsafe start"]);
+  transpiler.pushStatement([ast.content]);
+  transpiler.pushStatement(["// unsafe end"]);
   transpiler.popBlock();
 }
