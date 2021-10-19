@@ -8,5 +8,5 @@ export async function browseStatementReturn(
 ) {
   ast.resolvedType = ast.annotation.type;
   await next();
-  ast.resolvedType = ast.annotation.type ?? ast.value?.resolvedType;
+  ast.resolvedType = ast.annotation.type ?? ast.value.resolvedType;
 }

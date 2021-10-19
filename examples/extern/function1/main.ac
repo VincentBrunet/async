@@ -22,5 +22,4 @@ fn (a, b) {
   my_print(res1.c.n42, res1.c.n43);
 }
 
-typedef MyType = {};
-
+typedef MyType = ({} | {});

@@ -7,6 +7,5 @@ export async function browseExpressionParenthesis(
   next: () => Promise<void>,
 ) {
   await next();
-
   ast.resolvedType = ast.expression.resolvedType;
 }

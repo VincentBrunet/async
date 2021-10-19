@@ -1,9 +1,10 @@
 import { AstModule } from "../data/ast/AstModule.ts";
+import { Stack } from "../lib/core/data/Stack.ts";
+import { ensure } from "../lib/errors/ensure.ts";
 import { passUrlToCode } from "../passes/000_code_read/passUrlToCode.ts";
 import { passCodeToToken } from "../passes/001_token_parse/passCodeToToken.ts";
 import { passTokenToAst } from "../passes/005_ast_parse/passTokenToAst.ts";
 import { passImportResolve } from "../passes/099_import_resolve/passImportResolve.ts";
-import { passParentRef } from "../passes/102_parent_ref/passParentRef.ts";
 import { passBinaryPrioritize } from "../passes/103_binary_prioritize/passBinaryPrioritize.ts";
 import { passClosureResolve } from "../passes/104_closure_resolve/passClosureResolve.ts";
 import { passReferenceResolve } from "../passes/105_reference_resolve/passReferenceResolve.ts";
@@ -40,7 +41,7 @@ export async function doPass<Input, Output>(
   return output;
 }
 
-const compileQueue: AstModule[] = [];
+const compileStack = new Stack<AstModule>();
 
 export async function triggerCompile(url: URL) {
   const code = await passUrlToCode(url);
@@ -52,14 +53,15 @@ export async function triggerCompile(url: URL) {
 
   await doPass(hash, ast, "099", passImportResolve);
 
-  compileQueue.push(ast);
+  compileStack.push(ast);
 
   return ast;
 }
 
 export async function finishCompiles(module: AstModule) {
   const objects = [];
-  for (const compileItem of compileQueue) {
+  while (compileStack.peek()) {
+    const compileItem = ensure(compileStack.pop());
     objects.push(await finishCompile(compileItem));
   }
   await passObjectToBinary(module, objects);
@@ -68,7 +70,6 @@ export async function finishCompiles(module: AstModule) {
 export async function finishCompile(ast: AstModule) {
   const hash = ast.sourceToken.sourceCode.hash;
 
-  await doPass(hash, ast, "102", passParentRef);
   await doPass(hash, ast, "103", passBinaryPrioritize);
   await doPass(hash, ast, "104", passClosureResolve);
   await doPass(hash, ast, "105", passReferenceResolve);

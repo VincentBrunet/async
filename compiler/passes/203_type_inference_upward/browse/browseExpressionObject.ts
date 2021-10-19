@@ -1,5 +1,6 @@
 import { AstExpressionObject } from "../../../data/ast/AstExpressionObject.ts";
 import { AstTypeObjectField } from "../../../data/ast/AstTypeObject.ts";
+import { ensure } from "../../../lib/errors/ensure.ts";
 import { makeTypeObject } from "../../../lib/typing/makeTypeObject.ts";
 import { makeTypePrimitiveUnknown } from "../../../lib/typing/makeTypePrimitiveUnknown.ts";
 import { Scope } from "../util/Scope.ts";
@@ -9,24 +10,32 @@ export async function browseExpressionObject(
   ast: AstExpressionObject,
   next: () => Promise<void>,
 ) {
-  if (ast.resolvedClosures) {
-    for (const closure of ast.resolvedClosures) {
-      closure.resolvedType = closure.resolvedReference?.data.resolvedType;
-    }
+  // Asserts
+  const resolvedClosures = ensure(ast.resolvedClosures);
+
+  // Resolve closures types
+  for (const closure of resolvedClosures) {
+    closure.resolvedType = ensure(closure.resolvedReference).data.resolvedType;
   }
 
+  // Prep type before recursion
+  ast.resolvedType = ast.annotation.type;
+
+  // Recurse in objects statements
   await next();
 
+  // Check all fields types
   const foundFields: AstTypeObjectField[] = [];
   for (const field of ast.fields) {
     foundFields.push({
       mutable: field.mutable,
       name: field.name,
       hash: field.hash,
-      type: field.expression.resolvedType ?? makeTypePrimitiveUnknown(field),
+      type: field.annotation.type ?? field.expression.resolvedType ??
+        makeTypePrimitiveUnknown(field),
       token: field.token,
     });
   }
 
-  ast.resolvedType = makeTypeObject(foundFields, ast);
+  ast.resolvedType = ast.annotation.type ?? makeTypeObject(foundFields, ast);
 }

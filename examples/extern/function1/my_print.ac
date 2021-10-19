@@ -9,12 +9,12 @@ typedef MyObject = {
   const c :MySubObject;
 };;
 
-const my_print = fn (a :i32, b :i32) :MyObject {
+const my_print = fn (a:i32,b:i32) :MyObject {
 
   unsafe { printf("Hello, A:%d\n", _param_a->data.i32); }
   unsafe { printf("Hello, B:%d\n", _param_b->data.i32); }
 
-  return :MyObject obj {
+  return :MyObject obj :MyObject {
     a = a + 10 - b,
     b = -b + 10,
     c = obj :MySubObject {

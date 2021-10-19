@@ -1,5 +1,6 @@
 import { AstExpressionRun } from "../../../data/ast/AstExpressionRun.ts";
-import { makeTypeOr } from "../../../lib/typing/makeTypeOr.ts";
+import { ensure } from "../../../lib/errors/ensure.ts";
+import { makeTypeOrFromArray } from "../../../lib/typing/makeTypeOrFromArray.ts";
 import { Scope } from "../util/Scope.ts";
 
 export async function browseExpressionRun(
@@ -7,22 +8,28 @@ export async function browseExpressionRun(
   ast: AstExpressionRun,
   next: () => Promise<void>,
 ) {
-  ast.resolvedType = ast.annotation.type;
-  if (ast.resolvedClosures) {
-    for (const closure of ast.resolvedClosures) {
-      closure.resolvedType = closure.resolvedReference?.data.resolvedType;
-    }
+  // Asserts
+  const resolvedClosures = ensure(ast.resolvedClosures);
+  const resolvedReturns = ensure(ast.resolvedReturns);
+
+  // Resolve closure types
+  for (const closure of resolvedClosures) {
+    closure.resolvedType = ensure(closure.resolvedReference).data.resolvedType;
   }
 
+  // Prep type before recursion
+  ast.resolvedType = ast.annotation.type;
+
+  // Recurse in run statements
   await next();
 
-  const returns = ast.resolvedReturns ?? [];
-  let current = returns[0]?.resolvedType;
-  for (let i = 1; i < returns.length; i++) {
-    const next = returns[i].resolvedType;
-    if (current && next) {
-      current = makeTypeOr(current, next, ast);
-    }
-  }
-  ast.resolvedType = ast.annotation.type ?? current;
+  // Find all return types
+  const returns = makeTypeOrFromArray(
+    resolvedReturns.map((resolvedReturn) =>
+      ensure(resolvedReturn.resolvedType)
+    ),
+    ast,
+  );
+
+  ast.resolvedType = ast.annotation.type ?? returns;
 }

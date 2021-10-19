@@ -8,7 +8,6 @@ export interface AstStatementImportSlot extends Ast {
   hash: string;
 
   resolvedType?: AstType;
-  resolvedImport?: AstStatementImport;
 }
 
 export interface AstStatementImport extends Ast {

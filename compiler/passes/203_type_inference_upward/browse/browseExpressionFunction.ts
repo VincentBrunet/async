@@ -1,6 +1,8 @@
 import { AstExpressionFunction } from "../../../data/ast/AstExpressionFunction.ts";
+import { AstTypeFunctionParam } from "../../../data/ast/AstTypeFunction.ts";
+import { ensure } from "../../../lib/errors/ensure.ts";
 import { makeTypeFunction } from "../../../lib/typing/makeTypeFunction.ts";
-import { makeTypeOr } from "../../../lib/typing/makeTypeOr.ts";
+import { makeTypeOrFromArray } from "../../../lib/typing/makeTypeOrFromArray.ts";
 import { makeTypePrimitiveAny } from "../../../lib/typing/makeTypePrimitiveAny.ts";
 import { makeTypePrimitiveUnknown } from "../../../lib/typing/makeTypePrimitiveUnknown.ts";
 import { Scope } from "../util/Scope.ts";
@@ -10,46 +12,43 @@ export async function browseExpressionFunction(
   ast: AstExpressionFunction,
   next: () => Promise<void>,
 ) {
+  // Asserts
+  const resolvedClosures = ensure(ast.resolvedClosures);
+  const resolvedReturns = ensure(ast.resolvedReturns);
+
+  // Prepare a simple original annotation-based type
   for (const param of ast.params) {
     param.resolvedType = param.annotation.type ??
       makeTypePrimitiveAny(param);
   }
-  const typeParams = ast.params.map((param) => {
+  const typeParams: AstTypeFunctionParam[] = ast.params.map((param) => {
     return {
       name: param.name,
-      type: param.resolvedType!,
+      type: param.resolvedType ?? makeTypePrimitiveUnknown(param),
     };
   });
-
   if (ast.ret.type) {
     ast.resolvedType = makeTypeFunction(typeParams, ast.ret.type, ast);
   }
 
-  if (ast.resolvedClosures) {
-    for (const closure of ast.resolvedClosures) {
-      closure.resolvedType = closure.resolvedReference?.data.resolvedType;
-    }
+  // Resolve closures types
+  for (const closure of resolvedClosures) {
+    closure.resolvedType = ensure(closure.resolvedReference).data.resolvedType;
   }
 
+  // Recurse in function statements
   await next();
 
-  const returns = ast.resolvedReturns ?? [];
-  let currentReturn = returns[0]?.resolvedType;
-  for (let i = 1; i < returns.length; i++) {
-    const nextReturn = returns[i].resolvedType;
-    if (currentReturn && nextReturn) {
-      currentReturn = makeTypeOr(currentReturn, nextReturn, ast);
-    }
-  }
+  // Find all return types
+  const returns = makeTypeOrFromArray(
+    resolvedReturns.map((resolvedReturn) =>
+      ensure(resolvedReturn.resolvedType)
+    ),
+    ast,
+  );
 
-  const typeReturn = ast.ret.type ?? currentReturn ??
+  const typeReturn = ast.ret.type ?? returns ??
     makeTypePrimitiveUnknown(ast.ret);
-
-  /*
-  if (typeReturn === undefined) {
-    throw new Error("cannot resolve return type");
-  }
-  */
 
   ast.resolvedType = makeTypeFunction(typeParams, typeReturn, ast);
 }
