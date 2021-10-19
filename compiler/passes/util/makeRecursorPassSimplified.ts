@@ -32,6 +32,7 @@ import { recurseTypeBinary } from "./recurseTypeBinary.ts";
 import { recurseTypeFunction } from "./recurseTypeFunction.ts";
 import { recurseTypeIdentifier } from "./recurseTypeIdentifier.ts";
 import { recurseTypeObject } from "./recurseTypeObject.ts";
+import { recurseTypeParenthesis } from "./recurseTypeParenthesis.ts";
 import { recurseTypePrimitive } from "./recurseTypePrimitive.ts";
 import { RecursorPass } from "./RecursorPass.ts";
 import { RecursorSimplified } from "./RecursorSimplified.ts";
@@ -187,6 +188,11 @@ export function makeRecursorPassSimplified<Scope>(
       scoper,
       holderPassFromCustomSimplified,
       recurseType,
+    ),
+    recurseTypeParenthesis: makePassFromStandardAdvanced(
+      scoper,
+      holderPassFromCustomSimplified,
+      recurseTypeParenthesis,
     ),
     recurseTypeIdentifier: makePassFromStandardAdvanced(
       scoper,
@@ -352,6 +358,10 @@ export function makeRecursorPassSimplified<Scope>(
     recurseType: makePassFromCustomSimplified(
       passFromStandardAdvanced.recurseType,
       customSimplified.recurseType,
+    ),
+    recurseTypeParenthesis: makePassFromCustomSimplified(
+      passFromStandardAdvanced.recurseTypeParenthesis,
+      customSimplified.recurseTypeParenthesis,
     ),
     recurseTypeIdentifier: makePassFromCustomSimplified(
       passFromStandardAdvanced.recurseTypeIdentifier,

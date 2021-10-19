@@ -3,9 +3,11 @@ import { AstTypeBinary } from "./AstTypeBinary.ts";
 import { AstTypeFunction } from "./AstTypeFunction.ts";
 import { AstTypeIdentifier } from "./AstTypeIdentifier.ts";
 import { AstTypeObject } from "./AstTypeObject.ts";
+import { AstTypeParenthesis } from "./AstTypeParenthesis.ts";
 import { AstTypePrimitive } from "./AstTypePrimitive.ts";
 
 export enum AstTypeKind {
+  Parenthesis = "Parenthesis",
   Identifier = "Identifier",
   Primitive = "Primitive",
   Function = "Function",
@@ -14,6 +16,7 @@ export enum AstTypeKind {
 }
 
 export type AstTypeData =
+  | AstTypeParenthesis
   | AstTypeIdentifier
   | AstTypePrimitive
   | AstTypeFunction

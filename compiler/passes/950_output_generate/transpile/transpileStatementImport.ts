@@ -23,7 +23,10 @@ export async function transpileStatementImport(
     ),
   );
 
-  // Import lines
+  // Which keys can be imported
+  const resolvedExportKeys = resolvedExports.keys();
+
+  // Imported keys
   for (const slot of ast.slots) {
     transpiler.pushStatement([
       "t_ref *",
@@ -32,7 +35,7 @@ export async function transpileStatementImport(
       hashAstKey(resolvedModule, resolvedModule, "getter"),
       "()",
       "[",
-      resolvedExports.keys().indexOf(slot.name).toString(),
+      resolvedExportKeys.indexOf(slot.name).toString(),
       "]",
     ]);
   }

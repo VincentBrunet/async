@@ -34,6 +34,7 @@ import { AstTypeBinary } from "../../data/ast/AstTypeBinary.ts";
 import { AstTypeFunction } from "../../data/ast/AstTypeFunction.ts";
 import { AstTypeIdentifier } from "../../data/ast/AstTypeIdentifier.ts";
 import { AstTypeObject } from "../../data/ast/AstTypeObject.ts";
+import { AstTypeParenthesis } from "../../data/ast/AstTypeParenthesis.ts";
 import { AstTypePrimitive } from "../../data/ast/AstTypePrimitive.ts";
 
 export interface RecursorPass<Scope> {
@@ -162,17 +163,17 @@ export interface RecursorPass<Scope> {
     scope: Scope,
     ast: AstType,
   ) => Promise<void>;
-  recurseTypeBinary: (
+  recurseTypeParenthesis: (
     scope: Scope,
-    ast: AstTypeBinary,
-  ) => Promise<void>;
-  recurseTypePrimitive: (
-    scope: Scope,
-    ast: AstTypePrimitive,
+    ast: AstTypeParenthesis,
   ) => Promise<void>;
   recurseTypeIdentifier: (
     scope: Scope,
     ast: AstTypeIdentifier,
+  ) => Promise<void>;
+  recurseTypePrimitive: (
+    scope: Scope,
+    ast: AstTypePrimitive,
   ) => Promise<void>;
   recurseTypeFunction: (
     scope: Scope,
@@ -181,5 +182,9 @@ export interface RecursorPass<Scope> {
   recurseTypeObject: (
     scope: Scope,
     ast: AstTypeObject,
+  ) => Promise<void>;
+  recurseTypeBinary: (
+    scope: Scope,
+    ast: AstTypeBinary,
   ) => Promise<void>;
 }

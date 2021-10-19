@@ -17,7 +17,7 @@ const my_print = fn (a :i32, b :i32) :MyObject {
   return :MyObject obj {
     a = a + 10 - b,
     b = -b + 10,
-    c = obj: MySubObject {
+    c = obj :MySubObject {
       const n42 :i32 = 42,
       const n43 :i32 = 43,
     },
@@ -27,5 +27,5 @@ const my_print = fn (a :i32, b :i32) :MyObject {
 
 }
 
-export my_print: (a:i32,b:i32):MyObject = my_print;
-export my_print2: (a:i32,b:i32):MyObject = my_print;
+export my_print :(a:i32,b:i32):MyObject = my_print;
+export my_print2 :(a:i32,b:i32):MyObject = my_print;

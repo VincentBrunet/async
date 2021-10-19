@@ -9,6 +9,7 @@ import { parseTypeBinary } from "./parseTypeBinary.ts";
 import { parseTypeFunction } from "./parseTypeFunction.ts";
 import { parseTypeIdentifier } from "./parseTypeIdentifier.ts";
 import { parseTypeObject } from "./parseTypeObject.ts";
+import { parseTypeParenthesis } from "./parseTypeParenthesis.ts";
 import { parseTypePrimitive } from "./parseTypePrimitive.ts";
 
 function makeType(kind: AstTypeKind, data: AstTypeData) {
@@ -20,6 +21,7 @@ const leafs = new Array<
 >();
 leafs.push([AstTypeKind.Function, parseTypeFunction]);
 leafs.push([AstTypeKind.Object, parseTypeObject]);
+leafs.push([AstTypeKind.Parenthesis, parseTypeParenthesis]);
 leafs.push([AstTypeKind.Primitive, parseTypePrimitive]);
 leafs.push([AstTypeKind.Identifier, parseTypeIdentifier]);
 
