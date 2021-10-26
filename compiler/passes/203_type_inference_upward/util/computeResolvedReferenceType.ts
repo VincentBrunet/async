@@ -9,7 +9,7 @@ import { AstStatementVariable } from "../../../data/ast/AstStatementVariable.ts"
 import { ensure } from "../../../lib/errors/ensure.ts";
 import { never } from "../../../lib/errors/never.ts";
 
-export function computeReferenceType(ast: AstResolvedReference) {
+export function computeResolvedReferenceType(ast: AstResolvedReference) {
   const kind = ast.kind;
   const data = ast.data;
   switch (kind) {

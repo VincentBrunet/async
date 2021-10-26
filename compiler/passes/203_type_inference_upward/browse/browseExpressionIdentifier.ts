@@ -1,6 +1,6 @@
 import { AstExpressionIdentifier } from "../../../data/ast/AstExpressionIdentifier.ts";
 import { ensure } from "../../../lib/errors/ensure.ts";
-import { computeReferenceType } from "../util/computeReferenceType.ts";
+import { computeResolvedReferenceType } from "../util/computeResolvedReferenceType.ts";
 import { Scope } from "../util/Scope.ts";
 
 export async function browseExpressionIdentifier(
@@ -13,5 +13,5 @@ export async function browseExpressionIdentifier(
 
   await next();
 
-  ast.resolvedType = computeReferenceType(resolvedReference);
+  ast.resolvedType = computeResolvedReferenceType(resolvedReference);
 }

@@ -11,15 +11,7 @@ export async function browseStatementImport(
   const parent = ensure(scope.parent);
 
   for (const slot of ast.slots) {
-    if (slot.resolvedStatementTypedef) {
-      parent.pushImportSlot(slot);
-    }
-  }
-
-  for (const slot of ast.slots) {
-    if (slot.resolvedStatementVariable) {
-      parent.pushImportSlot(slot);
-    }
+    parent.pushImportSlot(slot);
   }
 
   await next();

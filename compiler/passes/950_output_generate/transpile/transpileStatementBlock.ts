@@ -7,6 +7,6 @@ export async function transpileStatementBlock(
   transpiler: Transpiler,
   ast: AstStatementBlock,
 ) {
-  transpiler.pushStatement(["/* statement block */ "]);
+  transpiler.pushStatement(["/* user defined block */ "]);
   await pass.recurseBlock(transpiler, ast.block);
 }

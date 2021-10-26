@@ -1,5 +1,6 @@
 import { AstBlock } from "../../../data/ast/AstBlock.ts";
 import { ensure } from "../../../lib/errors/ensure.ts";
+import { hashLocalSymbol } from "../../../lib/hash/hashLocalSymbol.ts";
 import { RecursorPass } from "../../util/RecursorPass.ts";
 import { Transpiler } from "../util/Transpiler.ts";
 
@@ -18,24 +19,16 @@ export async function transpileBlock(
   for (const variable of resolvedVariables) {
     transpiler.pushStatement([
       "t_ref *",
-      "_variable_",
-      variable.name,
+      hashLocalSymbol("variable", variable.name),
       " = ",
       "ref_make(NULL)",
     ]);
   }
 
-  // Open block
-  transpiler.pushStatement(["/* block statements */ "]);
-  transpiler.pushBlock();
-
   // Recurse on statements
   for (const statement of ast.statements) {
     await pass.recurseStatement(transpiler, statement);
   }
-
-  // Close block
-  transpiler.popBlock();
 
   // Close block
   transpiler.popBlock();

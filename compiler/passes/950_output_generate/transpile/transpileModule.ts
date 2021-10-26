@@ -1,6 +1,7 @@
 import { AstModule } from "../../../data/ast/AstModule.ts";
 import { ensure } from "../../../lib/errors/ensure.ts";
 import { hashGlobalSymbol } from "../../../lib/hash/hashGlobalSymbol.ts";
+import { hashLocalSymbol } from "../../../lib/hash/hashLocalSymbol.ts";
 import { cacheFileFromHash } from "../../../lib/io/cacheFileFromHash.ts";
 import { RecursorPass } from "../../util/RecursorPass.ts";
 import { Transpiler } from "../util/Transpiler.ts";
@@ -32,10 +33,9 @@ export async function transpileModule(
   for (const resolvedExportName of resolvedExportNames) {
     transpiler.pushStatement([
       "t_ref *",
-      "_export_",
-      resolvedExportName,
+      hashLocalSymbol("export", resolvedExportName),
       " = ",
-      "ref_make(NULL)",
+      "NULL",
     ]);
   }
 
@@ -63,8 +63,7 @@ export async function transpileModule(
     if (i != 0) {
       moduleMakeParts.push(", ");
     }
-    moduleMakeParts.push("_export_");
-    moduleMakeParts.push(resolvedExportNames[i]);
+    moduleMakeParts.push(hashLocalSymbol("export", resolvedExportNames[i]));
   }
   moduleMakeParts.push(")");
   transpiler.pushStatement(moduleMakeParts);

@@ -5,6 +5,7 @@ import { AstResolvedReferenceKind } from "../../../data/ast/AstResolvedReference
 import { AstStatementImportSlot } from "../../../data/ast/AstStatementImport.ts";
 import { AstStatementVariable } from "../../../data/ast/AstStatementVariable.ts";
 import { ensure } from "../../../lib/errors/ensure.ts";
+import { hashLocalSymbol } from "../../../lib/hash/hashLocalSymbol.ts";
 import { RecursorPass } from "../../util/RecursorPass.ts";
 import { Transpiler } from "../util/Transpiler.ts";
 
@@ -19,24 +20,23 @@ export async function transpileExpressionIdentifier(
   switch (resolvedReference.kind) {
     case AstResolvedReferenceKind.StatementVariable: {
       const statementVariable = resolvedReference.data as AstStatementVariable;
-      transpiler.pushPart("_variable_");
-      transpiler.pushPart(statementVariable.name);
+      transpiler.pushPart(hashLocalSymbol("variable", statementVariable.name));
       transpiler.pushPart("->value");
       break;
     }
     case AstResolvedReferenceKind.StatementImportSlot: {
       const statementImportSlot = resolvedReference
         .data as AstStatementImportSlot;
-      transpiler.pushPart("_import_");
-      transpiler.pushPart(statementImportSlot.name);
+      transpiler.pushPart(hashLocalSymbol("import", statementImportSlot.name));
       transpiler.pushPart("->value");
       break;
     }
     case AstResolvedReferenceKind.ExpressionFunctionParam: {
       const expressionFunctionParam = resolvedReference
         .data as AstExpressionFunctionParam;
-      transpiler.pushPart("_param_");
-      transpiler.pushPart(ensure(expressionFunctionParam.name));
+      transpiler.pushPart(
+        hashLocalSymbol("param", ensure(expressionFunctionParam.name)),
+      );
       break;
     }
     case AstResolvedReferenceKind.ResolvedClosure: {

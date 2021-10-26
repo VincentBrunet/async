@@ -1,4 +1,5 @@
 import { AstStatementVariable } from "../../../data/ast/AstStatementVariable.ts";
+import { hashLocalSymbol } from "../../../lib/hash/hashLocalSymbol.ts";
 import { RecursorPass } from "../../util/RecursorPass.ts";
 import { Transpiler } from "../util/Transpiler.ts";
 
@@ -9,8 +10,7 @@ export async function transpileStatementVariable(
 ) {
   if (ast.value) {
     transpiler.pushStatement([
-      "_variable_",
-      ast.name,
+      hashLocalSymbol("variable", ast.name),
       "->value",
       " = ",
     ]);
