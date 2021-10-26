@@ -1,9 +1,7 @@
 import { AstStatementExport } from "../../../data/ast/AstStatementExport.ts";
-import { TokenKind } from "../../../data/token/Token.ts";
 import { Browser } from "../util/Browser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
-import { parseAnnotationType } from "./parseAnnotationType.ts";
-import { parseExpression } from "./parseExpression.ts";
+import { parseStatement } from "./parseStatement.ts";
 
 export function parseStatementExport(
   browser: Browser,
@@ -14,32 +12,13 @@ export function parseStatementExport(
     return browser.impasse("StatementExport.KeywordExport");
   }
   browser.consume();
-  // name
-  const tokenName = browser.peek();
-  if (tokenName.kind !== TokenKind.Text) {
-    return browser.impasse("StatementExport.Name");
-  }
-  browser.consume();
-  // type annotation
-  const annotation = browser.recurse(parseAnnotationType);
-  if (annotation instanceof TokenImpasse) {
-    return browser.impasse("StatementExport.Annotation", [annotation]);
-  }
-  // equal
-  const tokenEqual = browser.peek();
-  if (tokenEqual.str !== "=") {
-    return browser.impasse("StatementExport.Equal");
-  }
-  browser.consume();
-  // actual value
-  const expression = browser.recurse(parseExpression);
-  if (expression instanceof TokenImpasse) {
-    return browser.impasse("StatementExport.Statement", [expression]);
+  // actual statement
+  const statement = browser.recurse(parseStatement);
+  if (statement instanceof TokenImpasse) {
+    return browser.impasse("StatementExport.Statement", [statement]);
   }
   // done
   return {
-    name: tokenName.str,
-    annotation: annotation,
-    expression: expression,
+    statement: statement,
   };
 }

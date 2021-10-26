@@ -6,6 +6,6 @@ export async function browseTypeIdentifier(
   ast: AstTypeIdentifier,
   next: () => Promise<void>,
 ) {
-  ast.resolvedShorthand = scope.findShorthand(ast.name);
+  ast.resolvedReference = scope.findReference(ast.name);
   await next();
 }

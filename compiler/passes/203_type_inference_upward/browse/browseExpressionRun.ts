@@ -1,6 +1,7 @@
 import { AstExpressionRun } from "../../../data/ast/AstExpressionRun.ts";
 import { ensure } from "../../../lib/errors/ensure.ts";
 import { makeTypeOrFromArray } from "../../../lib/typing/makeTypeOrFromArray.ts";
+import { computeClosureType } from "../util/computeClosureType.ts";
 import { Scope } from "../util/Scope.ts";
 
 export async function browseExpressionRun(
@@ -14,7 +15,7 @@ export async function browseExpressionRun(
 
   // Resolve closure types
   for (const closure of resolvedClosures) {
-    closure.resolvedType = ensure(closure.resolvedReference).data.resolvedType;
+    closure.resolvedType = computeClosureType(closure);
   }
 
   // Prep type before recursion

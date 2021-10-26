@@ -14,6 +14,7 @@ export async function browseExpressionCall(
   if (calleeType?.kind !== AstTypeKind.Function) {
     //throw new Error("Cannot call a value that's not a function");
     ast.resolvedType = makeTypePrimitiveUnknown(ast.callee);
+    return;
   }
 
   //const functionType = calleeType.data as AstTypeFunction;

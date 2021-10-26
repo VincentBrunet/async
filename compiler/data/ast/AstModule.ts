@@ -11,5 +11,5 @@ export interface AstModule extends Ast {
   block: AstBlock;
 
   resolvedImports?: MapArray<string, AstStatementImport>;
-  resolvedExports?: MapArray<string, AstStatementExport>;
+  resolvedExports?: Map<string, AstStatementExport>;
 }

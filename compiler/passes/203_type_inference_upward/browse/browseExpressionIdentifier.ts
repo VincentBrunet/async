@@ -1,4 +1,6 @@
 import { AstExpressionIdentifier } from "../../../data/ast/AstExpressionIdentifier.ts";
+import { ensure } from "../../../lib/errors/ensure.ts";
+import { computeReferenceType } from "../util/computeReferenceType.ts";
 import { Scope } from "../util/Scope.ts";
 
 export async function browseExpressionIdentifier(
@@ -6,9 +8,10 @@ export async function browseExpressionIdentifier(
   ast: AstExpressionIdentifier,
   next: () => Promise<void>,
 ) {
+  // Asserts
+  const resolvedReference = ensure(ast.resolvedReference);
+
   await next();
-  if (ast.resolvedReference === undefined) {
-    throw new Error("Identifier unresolved:" + ast.name);
-  }
-  ast.resolvedType = ast.resolvedReference.data.resolvedType;
+
+  ast.resolvedType = computeReferenceType(resolvedReference);
 }

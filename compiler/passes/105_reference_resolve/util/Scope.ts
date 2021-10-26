@@ -1,3 +1,4 @@
+import { AstAnnotationTemplateParam } from "../../../data/ast/AstAnnotationTemplate.ts";
 import { AstExpressionFunctionParam } from "../../../data/ast/AstExpressionFunction.ts";
 import { AstResolvedClosure } from "../../../data/ast/AstResolvedClosure.ts";
 import {
@@ -5,6 +6,7 @@ import {
   AstResolvedReferenceKind,
 } from "../../../data/ast/AstResolvedReference.ts";
 import { AstStatementImportSlot } from "../../../data/ast/AstStatementImport.ts";
+import { AstStatementTypedef } from "../../../data/ast/AstStatementTypedef.ts";
 import { AstStatementVariable } from "../../../data/ast/AstStatementVariable.ts";
 import { ensure } from "../../../lib/errors/ensure.ts";
 
@@ -15,6 +17,21 @@ export class Scope {
 
   constructor(parent?: Scope) {
     this.parent = parent;
+  }
+
+  pushTemplateParam(template: AstAnnotationTemplateParam) {
+    this.pushReference(template.name, {
+      kind: AstResolvedReferenceKind.TemplateParam,
+      data: template,
+    });
+  }
+
+  pushTypedef(typedef: AstStatementTypedef) {
+    const name = typedef.name;
+    this.pushReference(name, {
+      kind: AstResolvedReferenceKind.StatementTypedef,
+      data: typedef,
+    });
   }
 
   pushVariable(statementVariable: AstStatementVariable) {

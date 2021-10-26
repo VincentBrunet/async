@@ -7,6 +7,7 @@ export async function browseExpressionObject(
   ast: AstExpressionObject,
   next: () => Promise<void>,
 ) {
+  // Asserts
   const resolvedClosures = ensure(ast.resolvedClosures);
 
   for (const astClosure of resolvedClosures) {

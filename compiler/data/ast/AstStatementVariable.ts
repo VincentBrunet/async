@@ -6,7 +6,6 @@ import { AstType } from "./AstType.ts";
 export interface AstStatementVariable extends Ast {
   mutable: boolean;
   name: string;
-  hash: string;
   annotation: AstAnnotationType;
   value?: AstExpression;
 

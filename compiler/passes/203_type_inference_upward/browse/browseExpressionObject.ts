@@ -3,6 +3,7 @@ import { AstTypeObjectField } from "../../../data/ast/AstTypeObject.ts";
 import { ensure } from "../../../lib/errors/ensure.ts";
 import { makeTypeObject } from "../../../lib/typing/makeTypeObject.ts";
 import { makeTypePrimitiveUnknown } from "../../../lib/typing/makeTypePrimitiveUnknown.ts";
+import { computeClosureType } from "../util/computeClosureType.ts";
 import { Scope } from "../util/Scope.ts";
 
 export async function browseExpressionObject(
@@ -15,7 +16,7 @@ export async function browseExpressionObject(
 
   // Resolve closures types
   for (const closure of resolvedClosures) {
-    closure.resolvedType = ensure(closure.resolvedReference).data.resolvedType;
+    closure.resolvedType = computeClosureType(closure);
   }
 
   // Prep type before recursion

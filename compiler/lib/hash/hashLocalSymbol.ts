@@ -1,4 +1,4 @@
-export function hashLocalKey(
+export function hashLocalSymbol(
   prefix: string,
   name: string,
 ) {

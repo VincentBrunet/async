@@ -5,6 +5,7 @@ import { makeTypeFunction } from "../../../lib/typing/makeTypeFunction.ts";
 import { makeTypeOrFromArray } from "../../../lib/typing/makeTypeOrFromArray.ts";
 import { makeTypePrimitiveAny } from "../../../lib/typing/makeTypePrimitiveAny.ts";
 import { makeTypePrimitiveUnknown } from "../../../lib/typing/makeTypePrimitiveUnknown.ts";
+import { computeClosureType } from "../util/computeClosureType.ts";
 import { Scope } from "../util/Scope.ts";
 
 export async function browseExpressionFunction(
@@ -33,7 +34,7 @@ export async function browseExpressionFunction(
 
   // Resolve closures types
   for (const closure of resolvedClosures) {
-    closure.resolvedType = ensure(closure.resolvedReference).data.resolvedType;
+    closure.resolvedType = computeClosureType(closure);
   }
 
   // Recurse in function statements
@@ -46,7 +47,6 @@ export async function browseExpressionFunction(
     ),
     ast,
   );
-
   const typeReturn = ast.ret.type ?? returns ??
     makeTypePrimitiveUnknown(ast.ret);
 

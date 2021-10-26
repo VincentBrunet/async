@@ -6,7 +6,5 @@ export async function browseStatementExport(
   ast: AstStatementExport,
   next: () => Promise<void>,
 ) {
-  ast.resolvedType = ast.annotation.type;
   await next();
-  ast.resolvedType = ast.annotation.type ?? ast.expression.resolvedType;
 }

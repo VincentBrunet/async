@@ -7,11 +7,5 @@ export async function transpileStatementExport(
   transpiler: Transpiler,
   ast: AstStatementExport,
 ) {
-  transpiler.pushStatement([
-    "_export_",
-    ast.name,
-    "->value",
-    " = ",
-  ]);
-  await pass.recurseExpression(transpiler, ast.expression);
+  await pass.recurseStatement(transpiler, ast.statement);
 }

@@ -1,4 +1,5 @@
 import { AstStatementVariable } from "../../../data/ast/AstStatementVariable.ts";
+import { ensure } from "../../../lib/errors/ensure.ts";
 import { Scope } from "../util/Scope.ts";
 
 export async function browseStatementVariable(
@@ -6,6 +7,10 @@ export async function browseStatementVariable(
   ast: AstStatementVariable,
   next: () => Promise<void>,
 ) {
-  scope.parent?.pushVariable(ast);
+  // Asserts
+  const parent = ensure(scope.parent);
+
+  parent.pushVariable(ast);
+
   await next();
 }

@@ -3,6 +3,7 @@ import {
   AstExpressionBinaryOperator,
 } from "../../../data/ast/AstExpressionBinary.ts";
 import { AstTypePrimitiveNative } from "../../../data/ast/AstTypePrimitive.ts";
+import { ensure } from "../../../lib/errors/ensure.ts";
 import { isTypePrimitive } from "../../../lib/typing/isTypePrimitive.ts";
 import { RecursorPass } from "../../util/RecursorPass.ts";
 import { Transpiler } from "../util/Transpiler.ts";
@@ -12,15 +13,16 @@ export async function transpileExpressionBinary(
   transpiler: Transpiler,
   ast: AstExpressionBinary,
 ) {
+  // Asserts
+  const type1 = ensure(ast.expression1.resolvedType);
+  const type2 = ensure(ast.expression2.resolvedType);
+
   if (ast.operator === AstExpressionBinaryOperator.Assign) {
     await pass.recurseExpression(transpiler, ast.expression1);
     transpiler.pushPart(" = ");
     await pass.recurseExpression(transpiler, ast.expression2);
     return;
   }
-
-  const type1 = ast.expression1.resolvedType;
-  const type2 = ast.expression2.resolvedType;
 
   let callName = ast.operator.toString();
 

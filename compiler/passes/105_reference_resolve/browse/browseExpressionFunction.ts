@@ -7,10 +7,15 @@ export async function browseExpressionFunction(
   ast: AstExpressionFunction,
   next: () => Promise<void>,
 ) {
+  // Asserts
   const resolvedClosures = ensure(ast.resolvedClosures);
 
   for (const astClosure of resolvedClosures) {
     astClosure.resolvedReference = scope.findReference(astClosure.name);
+  }
+
+  for (const param of ast.template.params) {
+    scope.pushTemplateParam(param);
   }
 
   for (const astClosure of resolvedClosures) {

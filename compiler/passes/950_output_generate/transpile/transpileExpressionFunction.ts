@@ -1,6 +1,6 @@
 import { AstExpressionFunction } from "../../../data/ast/AstExpressionFunction.ts";
 import { ensure } from "../../../lib/errors/ensure.ts";
-import { hashAstKey } from "../../../lib/hash/hashAstKey.ts";
+import { hashGlobalSymbol } from "../../../lib/hash/hashGlobalSymbol.ts";
 import { RecursorPass } from "../../util/RecursorPass.ts";
 import { Transpiler } from "../util/Transpiler.ts";
 import { transpileResolvedClosure } from "./transpileResolvedClosure.ts";
@@ -13,7 +13,11 @@ export async function transpileExpressionFunction(
   const resolvedClosures = ensure(ast.resolvedClosures);
 
   // Generate a stable unique name
-  const name = hashAstKey(transpiler.getOutput().sourceAst, ast, "function");
+  const name = hashGlobalSymbol(
+    transpiler.getOutput().sourceAst,
+    ast,
+    "function",
+  );
 
   // Simply call the function factory
   const functionMakeLength = resolvedClosures.length.toString();

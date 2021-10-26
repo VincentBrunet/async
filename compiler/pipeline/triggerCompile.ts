@@ -1,14 +1,12 @@
 import { AstModule } from "../data/ast/AstModule.ts";
-import { Stack } from "../lib/core/data/Stack.ts";
-import { ensure } from "../lib/errors/ensure.ts";
 import { passUrlToCode } from "../passes/000_code_read/passUrlToCode.ts";
 import { passCodeToToken } from "../passes/001_token_parse/passCodeToToken.ts";
 import { passTokenToAst } from "../passes/005_ast_parse/passTokenToAst.ts";
 import { passImportResolve } from "../passes/099_import_resolve/passImportResolve.ts";
+import { passExportRead } from "../passes/102_export_read/passExportRead.ts";
 import { passBinaryPrioritize } from "../passes/103_binary_prioritize/passBinaryPrioritize.ts";
 import { passClosureResolve } from "../passes/104_closure_resolve/passClosureResolve.ts";
 import { passReferenceResolve } from "../passes/105_reference_resolve/passReferenceResolve.ts";
-import { passShorthandResolve } from "../passes/106_shorthand_resolve/passShorthandResolve.ts";
 import { passStatementCollector } from "../passes/109_statement_collector/passStatementCollector.ts";
 import { passTypeInferenceUpward } from "../passes/203_type_inference_upward/passTypeInferenceUpward.ts";
 import { passAstToOutput } from "../passes/950_output_generate/passAstToOutput.ts";
@@ -41,7 +39,7 @@ export async function doPass<Input, Output>(
   return output;
 }
 
-const compileStack = new Stack<AstModule>();
+const compileArray = new Array<AstModule>();
 
 export async function triggerCompile(url: URL) {
   const code = await passUrlToCode(url);
@@ -53,15 +51,14 @@ export async function triggerCompile(url: URL) {
 
   await doPass(hash, ast, "099", passImportResolve);
 
-  compileStack.push(ast);
+  compileArray.push(ast);
 
   return ast;
 }
 
 export async function finishCompiles(module: AstModule) {
   const objects = [];
-  while (compileStack.peek()) {
-    const compileItem = ensure(compileStack.pop());
+  for (const compileItem of compileArray) {
     objects.push(await finishCompile(compileItem));
   }
   await passObjectToBinary(module, objects);
@@ -70,10 +67,10 @@ export async function finishCompiles(module: AstModule) {
 export async function finishCompile(ast: AstModule) {
   const hash = ast.sourceToken.sourceCode.hash;
 
+  await doPass(hash, ast, "102", passExportRead);
   await doPass(hash, ast, "103", passBinaryPrioritize);
   await doPass(hash, ast, "104", passClosureResolve);
   await doPass(hash, ast, "105", passReferenceResolve);
-  await doPass(hash, ast, "106", passShorthandResolve);
   await doPass(hash, ast, "109", passStatementCollector);
 
   await doPass(hash, ast, "203", passTypeInferenceUpward);

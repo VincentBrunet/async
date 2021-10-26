@@ -1,4 +1,5 @@
 import { AstStatementImport } from "../../../data/ast/AstStatementImport.ts";
+import { ensure } from "../../../lib/errors/ensure.ts";
 import { Scope } from "../util/Scope.ts";
 
 export async function browseStatementImport(
@@ -6,8 +7,20 @@ export async function browseStatementImport(
   ast: AstStatementImport,
   next: () => Promise<void>,
 ) {
-  await next();
+  // Asserts
+  const parent = ensure(scope.parent);
+
   for (const slot of ast.slots) {
-    scope.parent?.pushImportSlot(slot);
+    if (slot.resolvedStatementTypedef) {
+      parent.pushImportSlot(slot);
+    }
   }
+
+  for (const slot of ast.slots) {
+    if (slot.resolvedStatementVariable) {
+      parent.pushImportSlot(slot);
+    }
+  }
+
+  await next();
 }

@@ -1,7 +1,5 @@
-import { Ast } from "../../data/ast/Ast.ts";
-
-export function assert<T>(condition?: T, ast?: Ast) {
-  if (!condition) {
-    throw Error("Assert: " + ast);
+export function assert<T>(required?: T) {
+  if (required === undefined) {
+    throw Error("Assert");
   }
 }

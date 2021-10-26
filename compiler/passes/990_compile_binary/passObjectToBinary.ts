@@ -1,6 +1,6 @@
 import { expandGlob } from "https://deno.land/std@0.63.0/fs/mod.ts";
 import { AstModule } from "../../data/ast/AstModule.ts";
-import { hashAstKey } from "../../lib/hash/hashAstKey.ts";
+import { hashGlobalSymbol } from "../../lib/hash/hashGlobalSymbol.ts";
 import { cacheFileFromHash } from "../../lib/io/cacheFileFromHash.ts";
 import { compileCommand } from "../../lib/io/compileCommand.ts";
 
@@ -30,7 +30,7 @@ export async function passObjectToBinary(
   mainContent.push("\n");
   mainContent.push("\n");
   mainContent.push("t_ref **(*entry_module)() = ");
-  mainContent.push(hashAstKey(mainAst, mainAst, "module"));
+  mainContent.push(hashGlobalSymbol(mainAst, mainAst, "module"));
   mainContent.push(";");
   mainContent.push("\n");
 

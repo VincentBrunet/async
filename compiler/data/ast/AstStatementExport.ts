@@ -1,12 +1,12 @@
 import { Ast } from "./Ast.ts";
-import { AstAnnotationType } from "./AstAnnotationType.ts";
-import { AstExpression } from "./AstExpression.ts";
-import { AstType } from "./AstType.ts";
+import { AstStatement } from "./AstStatement.ts";
+import { AstStatementTypedef } from "./AstStatementTypedef.ts";
+import { AstStatementVariable } from "./AstStatementVariable.ts";
 
 export interface AstStatementExport extends Ast {
-  name: string;
-  annotation: AstAnnotationType;
-  expression: AstExpression;
+  statement: AstStatement;
 
-  resolvedType?: AstType;
+  resolvedName?: string;
+  resolvedStatementVariable?: AstStatementVariable;
+  resolvedStatementTypedef?: AstStatementTypedef;
 }

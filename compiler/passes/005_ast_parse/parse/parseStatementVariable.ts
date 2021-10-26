@@ -1,7 +1,6 @@
 import { AstExpression } from "../../../data/ast/AstExpression.ts";
 import { AstStatementVariable } from "../../../data/ast/AstStatementVariable.ts";
 import { TokenKind } from "../../../data/token/Token.ts";
-import { hashObjectKey } from "../../../lib/hash/hashObjectKey.ts";
 import { Browser } from "../util/Browser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseAnnotationType } from "./parseAnnotationType.ts";
@@ -45,12 +44,10 @@ export function parseStatementVariable(
   }
   // prep
   const name = tokenName.str;
-  const hash = hashObjectKey(name);
   // Done
   return {
     mutable: mutable,
     name: name,
-    hash: hash,
     annotation: astAnnotation,
     value: value,
   };

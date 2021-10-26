@@ -1,7 +1,7 @@
 import { AstStatementImport } from "../../../data/ast/AstStatementImport.ts";
 import { ensure } from "../../../lib/errors/ensure.ts";
-import { hashAstKey } from "../../../lib/hash/hashAstKey.ts";
-import { hashLocalKey } from "../../../lib/hash/hashLocalKey.ts";
+import { hashGlobalSymbol } from "../../../lib/hash/hashGlobalSymbol.ts";
+import { hashLocalSymbol } from "../../../lib/hash/hashLocalSymbol.ts";
 import { cacheFileFromHash } from "../../../lib/io/cacheFileFromHash.ts";
 import { RecursorPass } from "../../util/RecursorPass.ts";
 import { Transpiler } from "../util/Transpiler.ts";
@@ -24,15 +24,15 @@ export async function transpileStatementImport(
   );
 
   // Which keys can be imported
-  const resolvedExportKeys = resolvedExports.keys();
+  const resolvedExportKeys = [...resolvedExports.keys()];
 
   // Imported keys
   for (const slot of ast.slots) {
     transpiler.pushStatement([
       "t_ref *",
-      hashLocalKey("import", slot.name),
+      hashLocalSymbol("import", slot.name),
       " = ",
-      hashAstKey(resolvedModule, resolvedModule, "getter"),
+      hashGlobalSymbol(resolvedModule, resolvedModule, "getter"),
       "()",
       "[",
       resolvedExportKeys.indexOf(slot.name).toString(),

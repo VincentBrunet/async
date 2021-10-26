@@ -2,7 +2,7 @@ import { Ast } from "../../data/ast/Ast.ts";
 import { AstModule } from "../../data/ast/AstModule.ts";
 import { ensure } from "../errors/ensure.ts";
 
-export function hashAstKey(
+export function hashGlobalSymbol(
   parent: AstModule,
   ast: Ast,
   prefix: string,

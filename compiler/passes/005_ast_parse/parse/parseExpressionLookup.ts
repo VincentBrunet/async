@@ -15,7 +15,6 @@ export function parseExpressionLookup(
     return browser.impasse("Lookup.Dot");
   }
   browser.consume();
-
   // name (required)
   const key = browser.peek();
   if (key.kind !== TokenKind.Text) {
@@ -23,10 +22,8 @@ export function parseExpressionLookup(
   }
   browser.consume();
   const name = key.str;
-
   // hashed name
   const hash = hashObjectKey(name);
-
   // done
   return {
     expression: astExpression,

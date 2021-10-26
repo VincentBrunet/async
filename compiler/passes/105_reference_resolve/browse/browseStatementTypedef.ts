@@ -1,4 +1,5 @@
 import { AstStatementTypedef } from "../../../data/ast/AstStatementTypedef.ts";
+import { ensure } from "../../../lib/errors/ensure.ts";
 import { Scope } from "../util/Scope.ts";
 
 export async function browseStatementTypedef(
@@ -6,9 +7,14 @@ export async function browseStatementTypedef(
   ast: AstStatementTypedef,
   next: () => Promise<void>,
 ) {
-  scope.parent?.pushTypedef(ast);
+  // Asserts
+  const parent = ensure(scope.parent);
+
+  parent.pushTypedef(ast);
+
   for (const param of ast.template.params) {
     scope.pushTemplateParam(param);
   }
+
   await next();
 }

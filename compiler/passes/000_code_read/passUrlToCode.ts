@@ -1,5 +1,5 @@
 import { CodeModule } from "../../data/code/CodeModule.ts";
-import { hashModuleKey } from "../../lib/hash/hashModuleKey.ts";
+import { hashModuleId } from "../../lib/hash/hashModuleId.ts";
 
 /**
  * Resolvers
@@ -31,7 +31,7 @@ export async function passUrlToCode(url: URL): Promise<CodeModule> {
   for (const resolver of resolvers) {
     if (url.protocol === resolver.protocol) {
       const file = await resolver.call(url);
-      const hash = hashModuleKey(file);
+      const hash = hashModuleId(file);
       return {
         sourceUrl: url,
         hash: hash,

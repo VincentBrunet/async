@@ -3,6 +3,7 @@ import {
   AstExpressionUnaryOperator,
 } from "../../../data/ast/AstExpressionUnary.ts";
 import { AstTypePrimitiveNative } from "../../../data/ast/AstTypePrimitive.ts";
+import { ensure } from "../../../lib/errors/ensure.ts";
 import { isTypePrimitive } from "../../../lib/typing/isTypePrimitive.ts";
 import { RecursorPass } from "../../util/RecursorPass.ts";
 import { Transpiler } from "../util/Transpiler.ts";
@@ -12,7 +13,8 @@ export async function transpileExpressionUnary(
   transpiler: Transpiler,
   ast: AstExpressionUnary,
 ) {
-  const type = ast.expression.resolvedType;
+  // Asserts
+  const type = ensure(ast.expression.resolvedType);
 
   let callName = ast.operator.toString(); // TODO
 

@@ -14,11 +14,19 @@ function toMapArray<K, V>(array: Array<V>, keyer: (v: V) => K): MapArray<K, V> {
   return map;
 }
 
+function toMap<K, V>(array: Array<V>, keyer: (v: V) => K): Map<K, V> {
+  const map = new Map<K, V>();
+  for (const item of array) {
+    map.set(keyer(item), item);
+  }
+  return map;
+}
+
 function importKey(ast: AstStatementImport) {
   return ensure(ast.resolvedModule).sourceToken.sourceCode.hash;
 }
 function exportKey(ast: AstStatementExport) {
-  return ast.name;
+  return ensure(ast.resolvedName);
 }
 
 export async function browseModule(
@@ -34,5 +42,5 @@ export async function browseModule(
 
   assert(scope.getStatementReturns().length === 0);
   ast.resolvedImports = toMapArray(scope.getStatementImports(), importKey);
-  ast.resolvedExports = toMapArray(scope.getStatementExports(), exportKey);
+  ast.resolvedExports = toMap(scope.getStatementExports(), exportKey);
 }

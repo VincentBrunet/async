@@ -5,8 +5,8 @@ import {
 } from "../../data/ast/AstTypePrimitive.ts";
 
 export function isTypePrimitive(
-  type?: AstType,
-  native?: AstTypePrimitiveNative,
+  type: AstType,
+  native: AstTypePrimitiveNative,
 ) {
   if (type === undefined) {
     return false;
