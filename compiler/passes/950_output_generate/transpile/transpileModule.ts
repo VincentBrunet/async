@@ -40,7 +40,7 @@ export async function transpileModule(
   }
 
   // Recurse in module content
-  transpiler.pushStatement(["/* module block */ "]);
+  transpiler.pushStatement(["/* module block */"]);
   await pass.recurseBlock(transpiler, ast.block);
 
   // We simply return the module

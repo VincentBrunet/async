@@ -52,7 +52,7 @@ export async function transpileExpressionFunction(
   transpiler.pushFunction("t_value *", name, params);
 
   // Push block statements
-  transpiler.pushStatement(["/* function block */ "]);
+  transpiler.pushStatement(["/* function block */"]);
   await pass.recurseBlock(transpiler, ast.block);
 
   // Backup return

@@ -1,25 +1,27 @@
-import [ my_print, ] from "./my_print.ac";
+import [ my_print, ] from "./my_print.ac"
 
-const res1 = my_print(1, 2);
+const res1 = my_print(1, 2)
 my_print(res1.b, res1.a)
 
 fn {
-  const res2 = my_print(3, 4);
+  const res2 = my_print(3, 4)
   my_print(res2.b, res2.a)
 }()
 
 const res3 = expr {
-  return my_print(5, 6);
+  return my_print(5, 6)
 }
 my_print(res3.b, res3.a)
 
 fn (a, b) {
-  const res4 = my_print(a, b);
+  const res4 = my_print(a, b)
   my_print(res4.b, res4.a)
 }(7, 8)
 
 {
-  my_print(res1.c.n42, res1.c.n43);
+  my_print(res1.c.n42, res1.c.n43)
 }
 
-typedef MyType = ({} | {});
+export typedef MyType = ({} | {})
+
+export const final = res3

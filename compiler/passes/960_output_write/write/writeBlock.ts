@@ -8,6 +8,7 @@ export function writeBlock(
   outputBlock: OutputBlock,
   depth: number,
 ) {
+  writer.pushToSource(" ");
   writer.pushToSource("{");
   writer.pushToSource("\n");
   for (const outputStatement of outputBlock.statements) {

@@ -11,7 +11,6 @@ export async function transpileStatementConditionBranch(
   transpiler.pushStatement(["if (TO_BOOLEAN("]);
   await pass.recurseExpression(transpiler, ast.condition);
   transpiler.pushPart("))");
-  transpiler.pushPart(" ");
   // content
   await pass.recurseBlock(transpiler, ast.block);
 }

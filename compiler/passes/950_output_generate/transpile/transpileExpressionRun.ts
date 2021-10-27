@@ -42,7 +42,7 @@ export async function transpileExpressionRun(
   transpiler.pushFunction("t_value *", name, ["t_ref **closure"]);
 
   // Run the recursive writing
-  transpiler.pushStatement(["/* run block */ "]);
+  transpiler.pushStatement(["/* run block */"]);
   await pass.recurseBlock(transpiler, ast.block);
 
   // Backup return
