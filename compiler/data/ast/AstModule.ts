@@ -6,6 +6,7 @@ import { AstStatementImport } from "./AstStatementImport.ts";
 
 export interface AstModule extends Ast {
   hash: string;
+
   block: AstBlock;
 
   resolvedImports?: MapArray<string, AstStatementImport>;

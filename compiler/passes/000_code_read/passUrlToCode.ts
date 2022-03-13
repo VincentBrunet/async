@@ -28,6 +28,7 @@ async function readFile(url: URL) {
 export async function passUrlToCode(url: URL): Promise<CodeModule> {
   for (const resolver of resolvers) {
     if (url.protocol === resolver.protocol) {
+      console.log("fetch", url.href);
       return {
         content: await resolver.call(url),
       };
