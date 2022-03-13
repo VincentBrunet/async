@@ -3,7 +3,8 @@ import { AstTypePrimitiveNative } from "../../../data/ast/AstTypePrimitive.ts";
 import { RecursorPass } from "../../util/RecursorPass.ts";
 import { Transpiler } from "../util/Transpiler.ts";
 
-export async function transpileExpressionLiteral(
+// deno-lint-ignore require-await
+export function transpileExpressionLiteral(
   pass: RecursorPass<Transpiler>,
   transpiler: Transpiler,
   ast: AstExpressionLiteral,

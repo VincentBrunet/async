@@ -10,7 +10,7 @@ export interface AstStatementImportSlot extends Ast {
 
   resolvedStatementVariable?: AstStatementVariable;
   resolvedStatementTypedef?: AstStatementTypedef;
-  resolvedType?: AstType;
+  //resolvedType?: AstType;
 }
 
 export interface AstStatementImport extends Ast {

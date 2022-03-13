@@ -19,7 +19,7 @@ async function readToString(reader: Deno.Reader) {
 }
 
 export async function compileCommand(command: Array<string>) {
-  const process = await Deno.run({
+  const process = Deno.run({
     cmd: [
       "cc",
       ...command,

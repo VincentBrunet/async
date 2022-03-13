@@ -45,12 +45,12 @@ type RecursorAdvancedFunction<Scope, Ast> = (
   pass: RecursorPass<Scope>,
   scope: Scope,
   ast: Ast,
-) => Promise<void>;
+) => void;
 
 type RecursorPassFunction<Scope, Ast> = (
   scope: Scope,
   ast: Ast,
-) => Promise<void>;
+) => void;
 
 function makePass<Scope, Ast>(
   scoper: (parent: Scope) => Scope,
@@ -58,10 +58,10 @@ function makePass<Scope, Ast>(
   standard: RecursorAdvancedFunction<Scope, Ast>,
   custom?: RecursorAdvancedFunction<Scope, Ast>,
 ): RecursorPassFunction<Scope, Ast> {
-  return async (scope, ast) => {
+  return (scope: Scope, ast: Ast) => {
     const child = scoper(scope);
     const advanced = custom ?? standard;
-    await advanced(pass.value!, child, ast);
+    advanced(pass.value!, child, ast);
   };
 }
 
@@ -69,7 +69,7 @@ export function makeRecursorPassAdvanced<Scope>(
   scoper: (parent: Scope) => Scope,
   customAdvanced: RecursorAdvanced<Scope>,
 ): RecursorPass<Scope> {
-  let passRecurse: RecursorPassHolder<Scope> = {};
+  const passRecurse: RecursorPassHolder<Scope> = {};
 
   passRecurse.value = {
     recurseModule: makePass(

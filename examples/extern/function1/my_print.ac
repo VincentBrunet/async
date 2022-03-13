@@ -1,28 +1,4 @@
-typedef MySubObject = {
-  const n42 :i32,
-  const n43 :i32
-}
 
-export typedef MyObject = {
-  const a :i32;
-  const b :i32;
-  const c :MySubObject;
-};;
-
-export const my_print = fn (a:i32,b:i32) :MyObject {
-
-  unsafe { printf("Hello, A:%d\n", _param_a->data.i32); }
-  unsafe { printf("Hello, B:%d\n", _param_b->data.i32); }
-
-  return :MyObject obj :MyObject {
-    a = a + 10 - b,
-    b = -b + 10,
-    c = obj :MySubObject {
-      const n42 :i32 = 42,
-      const n43 :i32 = 43,
-    },
-  }
-
-  return obj {}
-
+export const my_print_i32 = fn (value:i32) {
+  unsafe { printf("Print:%d\n", _param_value->data.i32); }
 }

@@ -11,11 +11,10 @@ interface Resolver {
 
 const resolvers: Resolver[] = [];
 
-resolvers.push({ protocol: "http:", call: readHttp });
-resolvers.push({ protocol: "https:", call: readHttp });
+resolvers.push({ protocol: "https:", call: readHttps });
 resolvers.push({ protocol: "file:", call: readFile });
 
-async function readHttp(url: URL) {
+async function readHttps(url: URL) {
   const response = await fetch(url);
   return await response.text();
 }

@@ -1,12 +1,12 @@
 import { AstStatementReturn } from "../../../data/ast/AstStatementReturn.ts";
 import { Scope } from "../util/Scope.ts";
 
-export async function browseStatementReturn(
+export function browseStatementReturn(
   scope: Scope,
   ast: AstStatementReturn,
-  next: () => Promise<void>,
+  next: () => void,
 ) {
   ast.resolvedType = ast.annotation.type;
-  await next();
+  next();
   ast.resolvedType = ast.annotation.type ?? ast.value.resolvedType;
 }

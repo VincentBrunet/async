@@ -43,185 +43,185 @@ export interface RecursorAdvanced<Scope> {
     pass: RecursorPass<Scope>,
     scope: Scope,
     ast: AstModule,
-  ) => Promise<void>;
+  ) => void;
 
   recurseBlock?: (
     pass: RecursorPass<Scope>,
     scope: Scope,
     ast: AstBlock,
-  ) => Promise<void>;
+  ) => void;
 
   recurseStatement?: (
     pass: RecursorPass<Scope>,
     scope: Scope,
     ast: AstStatement,
-  ) => Promise<void>;
+  ) => void;
   recurseStatementImport?: (
     pass: RecursorPass<Scope>,
     scope: Scope,
     ast: AstStatementImport,
-  ) => Promise<void>;
+  ) => void;
   recurseStatementExport?: (
     pass: RecursorPass<Scope>,
     scope: Scope,
     ast: AstStatementExport,
-  ) => Promise<void>;
+  ) => void;
   recurseStatementVariable?: (
     pass: RecursorPass<Scope>,
     scope: Scope,
     ast: AstStatementVariable,
-  ) => Promise<void>;
+  ) => void;
   recurseStatementTypedef?: (
     pass: RecursorPass<Scope>,
     scope: Scope,
     ast: AstStatementTypedef,
-  ) => Promise<void>;
+  ) => void;
   recurseStatementBlock?: (
     pass: RecursorPass<Scope>,
     scope: Scope,
     ast: AstStatementBlock,
-  ) => Promise<void>;
+  ) => void;
   recurseStatementWhile?: (
     pass: RecursorPass<Scope>,
     scope: Scope,
     ast: AstStatementWhile,
-  ) => Promise<void>;
+  ) => void;
   recurseStatementCondition?: (
     pass: RecursorPass<Scope>,
     scope: Scope,
     ast: AstStatementCondition,
-  ) => Promise<void>;
+  ) => void;
   recurseStatementConditionBranch?: (
     pass: RecursorPass<Scope>,
     scope: Scope,
     ast: AstStatementConditionBranch,
-  ) => Promise<void>;
+  ) => void;
   recurseStatementReturn?: (
     pass: RecursorPass<Scope>,
     scope: Scope,
     ast: AstStatementReturn,
-  ) => Promise<void>;
+  ) => void;
   recurseStatementUnsafe?: (
     pass: RecursorPass<Scope>,
     scope: Scope,
     ast: AstStatementUnsafe,
-  ) => Promise<void>;
+  ) => void;
   recurseStatementExpression?: (
     pass: RecursorPass<Scope>,
     scope: Scope,
     ast: AstStatementExpression,
-  ) => Promise<void>;
+  ) => void;
   recurseStatementEmpty?: (
     pass: RecursorPass<Scope>,
     scope: Scope,
     ast: AstStatementEmpty,
-  ) => Promise<void>;
+  ) => void;
 
   recurseExpression?: (
     pass: RecursorPass<Scope>,
     scope: Scope,
     ast: AstExpression,
-  ) => Promise<void>;
+  ) => void;
   recurseExpressionCall?: (
     pass: RecursorPass<Scope>,
     scope: Scope,
     ast: AstExpressionCall,
-  ) => Promise<void>;
+  ) => void;
   recurseExpressionIdentifier?: (
     pass: RecursorPass<Scope>,
     scope: Scope,
     ast: AstExpressionIdentifier,
-  ) => Promise<void>;
+  ) => void;
   recurseExpressionLiteral?: (
     pass: RecursorPass<Scope>,
     scope: Scope,
     ast: AstExpressionLiteral,
-  ) => Promise<void>;
+  ) => void;
   recurseExpressionFunction?: (
     pass: RecursorPass<Scope>,
     scope: Scope,
     ast: AstExpressionFunction,
-  ) => Promise<void>;
+  ) => void;
   recurseExpressionObject?: (
     pass: RecursorPass<Scope>,
     scope: Scope,
     ast: AstExpressionObject,
-  ) => Promise<void>;
+  ) => void;
   recurseExpressionRun?: (
     pass: RecursorPass<Scope>,
     scope: Scope,
     ast: AstExpressionRun,
-  ) => Promise<void>;
+  ) => void;
   recurseExpressionLookup?: (
     pass: RecursorPass<Scope>,
     scope: Scope,
     ast: AstExpressionLookup,
-  ) => Promise<void>;
+  ) => void;
   recurseExpressionUnary?: (
     pass: RecursorPass<Scope>,
     scope: Scope,
     ast: AstExpressionUnary,
-  ) => Promise<void>;
+  ) => void;
   recurseExpressionBinary?: (
     pass: RecursorPass<Scope>,
     scope: Scope,
     ast: AstExpressionBinary,
-  ) => Promise<void>;
+  ) => void;
   recurseExpressionTyping?: (
     pass: RecursorPass<Scope>,
     scope: Scope,
     ast: AstExpressionTyping,
-  ) => Promise<void>;
+  ) => void;
   recurseExpressionParenthesis?: (
     pass: RecursorPass<Scope>,
     scope: Scope,
     ast: AstExpressionParenthesis,
-  ) => Promise<void>;
+  ) => void;
 
   recurseAnnotationType?: (
     pass: RecursorPass<Scope>,
     scope: Scope,
     ast: AstAnnotationType,
-  ) => Promise<void>;
+  ) => void;
   recurseAnnotationTemplate?: (
     pass: RecursorPass<Scope>,
     scope: Scope,
     ast: AstAnnotationTemplate,
-  ) => Promise<void>;
+  ) => void;
 
   recurseType?: (
     pass: RecursorPass<Scope>,
     scope: Scope,
     ast: AstType,
-  ) => Promise<void>;
+  ) => void;
   recurseTypeParenthesis?: (
     pass: RecursorPass<Scope>,
     scope: Scope,
     ast: AstTypeParenthesis,
-  ) => Promise<void>;
+  ) => void;
   recurseTypeIdentifier?: (
     pass: RecursorPass<Scope>,
     scope: Scope,
     ast: AstTypeIdentifier,
-  ) => Promise<void>;
+  ) => void;
   recurseTypePrimitive?: (
     pass: RecursorPass<Scope>,
     scope: Scope,
     ast: AstTypePrimitive,
-  ) => Promise<void>;
+  ) => void;
   recurseTypeFunction?: (
     pass: RecursorPass<Scope>,
     scope: Scope,
     ast: AstTypeFunction,
-  ) => Promise<void>;
+  ) => void;
   recurseTypeObject?: (
     pass: RecursorPass<Scope>,
     scope: Scope,
     ast: AstTypeObject,
-  ) => Promise<void>;
+  ) => void;
   recurseTypeBinary?: (
     pass: RecursorPass<Scope>,
     scope: Scope,
     ast: AstTypeBinary,
-  ) => Promise<void>;
+  ) => void;
 }

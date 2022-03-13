@@ -1,12 +1,12 @@
 import { AstAnnotationType } from "../../data/ast/AstAnnotationType.ts";
 import { RecursorPass } from "./RecursorPass.ts";
 
-export async function recurseAnnotationType<Scope>(
+export function recurseAnnotationType<Scope>(
   r: RecursorPass<Scope>,
   p: Scope,
   ast: AstAnnotationType,
 ) {
   if (ast.type) {
-    await r.recurseType(p, ast.type);
+    r.recurseType(p, ast.type);
   }
 }

@@ -8,10 +8,10 @@ import { makeTypePrimitiveUnknown } from "../../../lib/typing/makeTypePrimitiveU
 import { computeResolvedClosureType } from "../util/computeResolvedClosureType.ts";
 import { Scope } from "../util/Scope.ts";
 
-export async function browseExpressionFunction(
+export function browseExpressionFunction(
   scope: Scope,
   ast: AstExpressionFunction,
-  next: () => Promise<void>,
+  next: () => void,
 ) {
   // Asserts
   const resolvedClosures = ensure(ast.resolvedClosures);
@@ -38,7 +38,7 @@ export async function browseExpressionFunction(
   }
 
   // Recurse in function statements
-  await next();
+  next();
 
   // Find all return types
   const returns = makeTypeOrFromArray(

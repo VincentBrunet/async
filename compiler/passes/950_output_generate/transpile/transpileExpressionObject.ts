@@ -8,7 +8,7 @@ import { RecursorPass } from "../../util/RecursorPass.ts";
 import { Transpiler } from "../util/Transpiler.ts";
 import { transpileResolvedClosure } from "./transpileResolvedClosure.ts";
 
-export async function transpileExpressionObject(
+export function transpileExpressionObject(
   pass: RecursorPass<Transpiler>,
   transpiler: Transpiler,
   ast: AstExpressionObject,
@@ -112,7 +112,7 @@ export async function transpileExpressionObject(
       "->value",
       " = ",
     ]);
-    await pass.recurseExpression(transpiler, unsortedField.expression);
+    pass.recurseExpression(transpiler, unsortedField.expression);
   }
 
   // We simply return the object

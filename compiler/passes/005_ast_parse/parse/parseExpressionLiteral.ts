@@ -55,9 +55,6 @@ function makeStringUntil(
           case "a":
             parts.push("\a");
             break;
-          case "r":
-            parts.push("\r");
-            break;
           case "b":
             parts.push("\b");
             break;

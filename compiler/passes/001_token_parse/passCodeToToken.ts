@@ -56,7 +56,7 @@ function makeToken(
 /**
  * Convert a code file into a token array
  */
-export async function passCodeToToken(code: CodeModule): Promise<TokenModule> {
+export function passCodeToToken(code: CodeModule): TokenModule {
   // Extracted info from code
   const file = code.file;
   const tokens = new Array<Token>();

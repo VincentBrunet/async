@@ -13,22 +13,27 @@ export function computeResolvedReferenceType(ast: AstResolvedReference) {
   const kind = ast.kind;
   const data = ast.data;
   switch (kind) {
-    case AstResolvedReferenceKind.TemplateParam:
-      never();
-    case AstResolvedReferenceKind.StatementTypedef:
-      never();
-    case AstResolvedReferenceKind.ResolvedClosure:
+    case AstResolvedReferenceKind.TemplateParam: {
+      return never();
+    }
+    case AstResolvedReferenceKind.StatementTypedef: {
+      return never();
+    }
+    case AstResolvedReferenceKind.ResolvedClosure: {
       const resolvedClosure = data as AstResolvedClosure;
       return resolvedClosure.resolvedType;
-    case AstResolvedReferenceKind.StatementVariable:
+    }
+    case AstResolvedReferenceKind.StatementVariable: {
       const statementVariable = data as AstStatementVariable;
       return statementVariable.resolvedType;
-    case AstResolvedReferenceKind.StatementImportSlot:
+    }
+    case AstResolvedReferenceKind.StatementImportSlot: {
       const statementImportSlot = data as AstStatementImportSlot;
       return ensure(statementImportSlot.resolvedStatementVariable).resolvedType;
-    case AstResolvedReferenceKind.ExpressionFunctionParam:
+    }
+    case AstResolvedReferenceKind.ExpressionFunctionParam: {
       const expressionFunctionParam = data as AstExpressionFunctionParam;
       return expressionFunctionParam.resolvedType;
+    }
   }
-  never();
 }

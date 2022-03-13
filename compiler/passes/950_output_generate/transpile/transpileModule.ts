@@ -6,7 +6,7 @@ import { cacheFileFromHash } from "../../../lib/io/cacheFileFromHash.ts";
 import { RecursorPass } from "../../util/RecursorPass.ts";
 import { Transpiler } from "../util/Transpiler.ts";
 
-export async function transpileModule(
+export function transpileModule(
   pass: RecursorPass<Transpiler>,
   transpiler: Transpiler,
   ast: AstModule,
@@ -19,7 +19,7 @@ export async function transpileModule(
 
   // Include
   transpiler.pushInclude(
-    await cacheFileFromHash(
+    cacheFileFromHash(
       ast.sourceToken.sourceCode.hash,
       "output.h",
     ),
@@ -41,7 +41,7 @@ export async function transpileModule(
 
   // Recurse in module content
   transpiler.pushStatement(["/* module block */"]);
-  await pass.recurseBlock(transpiler, ast.block);
+  pass.recurseBlock(transpiler, ast.block);
 
   // We simply return the module
   const moduleMakeLength = resolvedExportNames.length.toString();

@@ -5,12 +5,12 @@ import {
 import { makeTypePrimitiveBoolean } from "../../../lib/typing/makeTypePrimitiveBoolean.ts";
 import { Scope } from "../util/Scope.ts";
 
-export async function browseExpressionTyping(
+export function browseExpressionTyping(
   scope: Scope,
   ast: AstExpressionTyping,
-  next: () => Promise<void>,
+  next: () => void,
 ) {
-  await next();
+  next();
 
   ast.resolvedType = ast.expression.resolvedType; // TODO
 

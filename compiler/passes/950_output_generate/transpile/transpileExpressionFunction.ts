@@ -5,7 +5,7 @@ import { RecursorPass } from "../../util/RecursorPass.ts";
 import { Transpiler } from "../util/Transpiler.ts";
 import { transpileResolvedClosure } from "./transpileResolvedClosure.ts";
 
-export async function transpileExpressionFunction(
+export function transpileExpressionFunction(
   pass: RecursorPass<Transpiler>,
   transpiler: Transpiler,
   ast: AstExpressionFunction,
@@ -46,14 +46,19 @@ export async function transpileExpressionFunction(
   // New function
   const params = [];
   params.push("t_ref **closure");
-  for (const astParam of ast.params) {
-    params.push("t_value *_param_" + astParam.name);
+  for (let i = 0; i < ast.params.length; i++) {
+    const astParam = ast.params[i];
+    if (astParam.name) {
+      params.push("t_value *_param_" + astParam.name);
+    } else {
+      params.push("t_value *_param" + i);
+    }
   }
   transpiler.pushFunction("t_value *", name, params);
 
   // Push block statements
   transpiler.pushStatement(["/* function block */"]);
-  await pass.recurseBlock(transpiler, ast.block);
+  pass.recurseBlock(transpiler, ast.block);
 
   // Backup return
   transpiler.pushStatement(["return", " ", "null_make()"]);

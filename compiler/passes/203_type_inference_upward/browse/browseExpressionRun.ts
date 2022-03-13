@@ -4,10 +4,10 @@ import { makeTypeOrFromArray } from "../../../lib/typing/makeTypeOrFromArray.ts"
 import { computeResolvedClosureType } from "../util/computeResolvedClosureType.ts";
 import { Scope } from "../util/Scope.ts";
 
-export async function browseExpressionRun(
+export function browseExpressionRun(
   scope: Scope,
   ast: AstExpressionRun,
-  next: () => Promise<void>,
+  next: () => void,
 ) {
   // Asserts
   const resolvedClosures = ensure(ast.resolvedClosures);
@@ -22,7 +22,7 @@ export async function browseExpressionRun(
   ast.resolvedType = ast.annotation.type;
 
   // Recurse in run statements
-  await next();
+  next();
 
   // Find all return types
   const returns = makeTypeOrFromArray(

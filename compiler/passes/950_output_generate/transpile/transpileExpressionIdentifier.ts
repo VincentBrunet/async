@@ -9,7 +9,8 @@ import { hashLocalSymbol } from "../../../lib/hash/hashLocalSymbol.ts";
 import { RecursorPass } from "../../util/RecursorPass.ts";
 import { Transpiler } from "../util/Transpiler.ts";
 
-export async function transpileExpressionIdentifier(
+// deno-lint-ignore require-await
+export function transpileExpressionIdentifier(
   pass: RecursorPass<Transpiler>,
   transpiler: Transpiler,
   astIdentifier: AstExpressionIdentifier,

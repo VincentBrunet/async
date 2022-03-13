@@ -6,6 +6,6 @@ const pass = makeRecursorPassSimplified((no) => no, {
   recurseStatementImport: browseStatementImport,
 });
 
-export async function passImportResolve(ast: AstModule) {
-  await pass.recurseModule(ast, ast);
+export function passImportResolve(ast: AstModule) {
+  pass.recurseModule(ast, ast);
 }

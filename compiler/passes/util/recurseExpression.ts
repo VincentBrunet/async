@@ -15,7 +15,7 @@ import { AstExpressionTyping } from "../../data/ast/AstExpressionTyping.ts";
 import { AstExpressionUnary } from "../../data/ast/AstExpressionUnary.ts";
 import { RecursorPass } from "./RecursorPass.ts";
 
-export async function recurseExpression<Scope>(
+export function recurseExpression<Scope>(
   r: RecursorPass<Scope>,
   p: Scope,
   ast: AstExpression,
@@ -24,47 +24,47 @@ export async function recurseExpression<Scope>(
   const data = ast.data;
   switch (kind) {
     case AstExpressionKind.Call: {
-      await r.recurseExpressionCall(p, data as AstExpressionCall);
+      r.recurseExpressionCall(p, data as AstExpressionCall);
       break;
     }
     case AstExpressionKind.Identifier: {
-      await r.recurseExpressionIdentifier(p, data as AstExpressionIdentifier);
+      r.recurseExpressionIdentifier(p, data as AstExpressionIdentifier);
       break;
     }
     case AstExpressionKind.Literal: {
-      await r.recurseExpressionLiteral(p, data as AstExpressionLiteral);
+      r.recurseExpressionLiteral(p, data as AstExpressionLiteral);
       break;
     }
     case AstExpressionKind.Function: {
-      await r.recurseExpressionFunction(p, data as AstExpressionFunction);
+      r.recurseExpressionFunction(p, data as AstExpressionFunction);
       break;
     }
     case AstExpressionKind.Object: {
-      await r.recurseExpressionObject(p, data as AstExpressionObject);
+      r.recurseExpressionObject(p, data as AstExpressionObject);
       break;
     }
     case AstExpressionKind.Run: {
-      await r.recurseExpressionRun(p, data as AstExpressionRun);
+      r.recurseExpressionRun(p, data as AstExpressionRun);
       break;
     }
     case AstExpressionKind.Lookup: {
-      await r.recurseExpressionLookup(p, data as AstExpressionLookup);
+      r.recurseExpressionLookup(p, data as AstExpressionLookup);
       break;
     }
     case AstExpressionKind.Unary: {
-      await r.recurseExpressionUnary(p, data as AstExpressionUnary);
+      r.recurseExpressionUnary(p, data as AstExpressionUnary);
       break;
     }
     case AstExpressionKind.Binary: {
-      await r.recurseExpressionBinary(p, data as AstExpressionBinary);
+      r.recurseExpressionBinary(p, data as AstExpressionBinary);
       break;
     }
     case AstExpressionKind.Typing: {
-      await r.recurseExpressionTyping(p, data as AstExpressionTyping);
+      r.recurseExpressionTyping(p, data as AstExpressionTyping);
       break;
     }
     case AstExpressionKind.Parenthesis: {
-      await r.recurseExpressionParenthesis(p, data as AstExpressionParenthesis);
+      r.recurseExpressionParenthesis(p, data as AstExpressionParenthesis);
       break;
     }
   }

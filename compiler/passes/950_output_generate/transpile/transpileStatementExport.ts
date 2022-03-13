@@ -3,7 +3,7 @@ import { hashLocalSymbol } from "../../../lib/hash/hashLocalSymbol.ts";
 import { RecursorPass } from "../../util/RecursorPass.ts";
 import { Transpiler } from "../util/Transpiler.ts";
 
-export async function transpileStatementExport(
+export function transpileStatementExport(
   pass: RecursorPass<Transpiler>,
   transpiler: Transpiler,
   ast: AstStatementExport,
@@ -16,5 +16,5 @@ export async function transpileStatementExport(
       hashLocalSymbol("variable", resolvedStatementVariable.name),
     ]);
   }
-  await pass.recurseStatement(transpiler, ast.statement);
+  pass.recurseStatement(transpiler, ast.statement);
 }

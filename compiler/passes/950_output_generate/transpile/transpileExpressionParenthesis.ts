@@ -2,12 +2,12 @@ import { AstExpressionParenthesis } from "../../../data/ast/AstExpressionParenth
 import { RecursorPass } from "../../util/RecursorPass.ts";
 import { Transpiler } from "../util/Transpiler.ts";
 
-export async function transpileExpressionParenthesis(
+export function transpileExpressionParenthesis(
   pass: RecursorPass<Transpiler>,
   transpiler: Transpiler,
   ast: AstExpressionParenthesis,
 ) {
   transpiler.pushPart("(");
-  await pass.recurseExpression(transpiler, ast.expression);
+  pass.recurseExpression(transpiler, ast.expression);
   transpiler.pushPart(")");
 }

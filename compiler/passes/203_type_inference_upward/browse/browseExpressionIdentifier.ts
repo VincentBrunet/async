@@ -3,15 +3,15 @@ import { ensure } from "../../../lib/errors/ensure.ts";
 import { computeResolvedReferenceType } from "../util/computeResolvedReferenceType.ts";
 import { Scope } from "../util/Scope.ts";
 
-export async function browseExpressionIdentifier(
+export function browseExpressionIdentifier(
   scope: Scope,
   ast: AstExpressionIdentifier,
-  next: () => Promise<void>,
+  next: () => void,
 ) {
   // Asserts
   const resolvedReference = ensure(ast.resolvedReference);
 
-  await next();
+  next();
 
   ast.resolvedType = computeResolvedReferenceType(resolvedReference);
 }

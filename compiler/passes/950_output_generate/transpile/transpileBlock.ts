@@ -4,7 +4,7 @@ import { hashLocalSymbol } from "../../../lib/hash/hashLocalSymbol.ts";
 import { RecursorPass } from "../../util/RecursorPass.ts";
 import { Transpiler } from "../util/Transpiler.ts";
 
-export async function transpileBlock(
+export function transpileBlock(
   pass: RecursorPass<Transpiler>,
   transpiler: Transpiler,
   ast: AstBlock,
@@ -27,7 +27,7 @@ export async function transpileBlock(
 
   // Recurse on statements
   for (const statement of ast.statements) {
-    await pass.recurseStatement(transpiler, statement);
+    pass.recurseStatement(transpiler, statement);
   }
 
   // Close block

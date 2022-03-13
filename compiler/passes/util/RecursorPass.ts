@@ -41,150 +41,150 @@ export interface RecursorPass<Scope> {
   recurseModule: (
     scope: Scope,
     ast: AstModule,
-  ) => Promise<void>;
+  ) => void;
 
   recurseBlock: (
     scope: Scope,
     ast: AstBlock,
-  ) => Promise<void>;
+  ) => void;
 
   recurseStatement: (
     scope: Scope,
     ast: AstStatement,
-  ) => Promise<void>;
+  ) => void;
   recurseStatementImport: (
     scope: Scope,
     ast: AstStatementImport,
-  ) => Promise<void>;
+  ) => void;
   recurseStatementExport: (
     scope: Scope,
     ast: AstStatementExport,
-  ) => Promise<void>;
+  ) => void;
   recurseStatementVariable: (
     scope: Scope,
     ast: AstStatementVariable,
-  ) => Promise<void>;
+  ) => void;
   recurseStatementTypedef: (
     scope: Scope,
     ast: AstStatementTypedef,
-  ) => Promise<void>;
+  ) => void;
   recurseStatementBlock: (
     scope: Scope,
     ast: AstStatementBlock,
-  ) => Promise<void>;
+  ) => void;
   recurseStatementWhile: (
     scope: Scope,
     ast: AstStatementWhile,
-  ) => Promise<void>;
+  ) => void;
   recurseStatementCondition: (
     scope: Scope,
     ast: AstStatementCondition,
-  ) => Promise<void>;
+  ) => void;
   recurseStatementConditionBranch: (
     scope: Scope,
     ast: AstStatementConditionBranch,
-  ) => Promise<void>;
+  ) => void;
   recurseStatementReturn: (
     scope: Scope,
     ast: AstStatementReturn,
-  ) => Promise<void>;
+  ) => void;
   recurseStatementUnsafe: (
     scope: Scope,
     ast: AstStatementUnsafe,
-  ) => Promise<void>;
+  ) => void;
   recurseStatementExpression: (
     scope: Scope,
     ast: AstStatementExpression,
-  ) => Promise<void>;
+  ) => void;
   recurseStatementEmpty: (
     scope: Scope,
     ast: AstStatementEmpty,
-  ) => Promise<void>;
+  ) => void;
 
   recurseExpression: (
     scope: Scope,
     ast: AstExpression,
-  ) => Promise<void>;
+  ) => void;
   recurseExpressionCall: (
     scope: Scope,
     ast: AstExpressionCall,
-  ) => Promise<void>;
+  ) => void;
   recurseExpressionIdentifier: (
     scope: Scope,
     ast: AstExpressionIdentifier,
-  ) => Promise<void>;
+  ) => void;
   recurseExpressionLiteral: (
     scope: Scope,
     ast: AstExpressionLiteral,
-  ) => Promise<void>;
+  ) => void;
   recurseExpressionFunction: (
     scope: Scope,
     ast: AstExpressionFunction,
-  ) => Promise<void>;
+  ) => void;
   recurseExpressionObject: (
     scope: Scope,
     ast: AstExpressionObject,
-  ) => Promise<void>;
+  ) => void;
   recurseExpressionRun: (
     scope: Scope,
     ast: AstExpressionRun,
-  ) => Promise<void>;
+  ) => void;
   recurseExpressionLookup: (
     scope: Scope,
     ast: AstExpressionLookup,
-  ) => Promise<void>;
+  ) => void;
   recurseExpressionUnary: (
     scope: Scope,
     ast: AstExpressionUnary,
-  ) => Promise<void>;
+  ) => void;
   recurseExpressionBinary: (
     scope: Scope,
     ast: AstExpressionBinary,
-  ) => Promise<void>;
+  ) => void;
   recurseExpressionTyping: (
     scope: Scope,
     ast: AstExpressionTyping,
-  ) => Promise<void>;
+  ) => void;
   recurseExpressionParenthesis: (
     scope: Scope,
     ast: AstExpressionParenthesis,
-  ) => Promise<void>;
+  ) => void;
 
   recurseAnnotationType: (
     scope: Scope,
     ast: AstAnnotationType,
-  ) => Promise<void>;
+  ) => void;
   recurseAnnotationTemplate: (
     scope: Scope,
     ast: AstAnnotationTemplate,
-  ) => Promise<void>;
+  ) => void;
 
   recurseType: (
     scope: Scope,
     ast: AstType,
-  ) => Promise<void>;
+  ) => void;
   recurseTypeParenthesis: (
     scope: Scope,
     ast: AstTypeParenthesis,
-  ) => Promise<void>;
+  ) => void;
   recurseTypeIdentifier: (
     scope: Scope,
     ast: AstTypeIdentifier,
-  ) => Promise<void>;
+  ) => void;
   recurseTypePrimitive: (
     scope: Scope,
     ast: AstTypePrimitive,
-  ) => Promise<void>;
+  ) => void;
   recurseTypeFunction: (
     scope: Scope,
     ast: AstTypeFunction,
-  ) => Promise<void>;
+  ) => void;
   recurseTypeObject: (
     scope: Scope,
     ast: AstTypeObject,
-  ) => Promise<void>;
+  ) => void;
   recurseTypeBinary: (
     scope: Scope,
     ast: AstTypeBinary,
-  ) => Promise<void>;
+  ) => void;
 }

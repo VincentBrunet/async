@@ -1,10 +1,10 @@
 import { AstStatementExport } from "../../../data/ast/AstStatementExport.ts";
 import { Scope } from "../util/Scope.ts";
 
-export async function browseStatementExport(
+export function browseStatementExport(
   scope: Scope,
   ast: AstStatementExport,
-  next: () => Promise<void>,
+  next: () => void,
 ) {
-  await next();
+  next();
 }

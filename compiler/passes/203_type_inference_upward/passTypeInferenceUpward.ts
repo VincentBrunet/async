@@ -36,5 +36,5 @@ const pass = makeRecursorPassSimplified<Scope>((scope) => {
 });
 
 export async function passTypeInferenceUpward(ast: AstModule) {
-  await pass.recurseModule(new Scope(), ast);
+  pass.recurseModule(new Scope(), ast);
 }

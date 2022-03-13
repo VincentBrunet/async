@@ -45,18 +45,18 @@ type RecursorAdvancedFunction<Scope, Ast> = (
   pass: RecursorPass<Scope>,
   scope: Scope,
   ast: Ast,
-) => Promise<void>;
+) => void;
 
 type RecursorSimplifiedFunction<Scope, Ast> = (
   scope: Scope,
   ast: Ast,
-  next: () => Promise<void>,
-) => Promise<void>;
+  next: () => void,
+) => void;
 
 type RecursorPassFunction<Scope, Ast> = (
   scope: Scope,
   ast: Ast,
-) => Promise<void>;
+) => void;
 
 /**
  * Make a recursion pass function:
@@ -68,9 +68,9 @@ function makePassFromStandardAdvanced<Scope, Ast>(
   holderPassFromCustomSimplified: RecursorPassHolder<Scope>,
   standardAdvanced: RecursorAdvancedFunction<Scope, Ast>,
 ): RecursorPassFunction<Scope, Ast> {
-  return async (scope, ast) => {
+  return (scope: Scope, ast: Ast) => {
     const child = scoper(scope);
-    await standardAdvanced(holderPassFromCustomSimplified.value!, child, ast);
+    standardAdvanced(holderPassFromCustomSimplified.value!, child, ast);
   };
 }
 
@@ -83,13 +83,13 @@ function makePassFromCustomSimplified<Scope, Ast>(
   passFromStandardAdvanced: RecursorPassFunction<Scope, Ast>,
   customSimplified?: RecursorSimplifiedFunction<Scope, Ast>,
 ): RecursorPassFunction<Scope, Ast> {
-  return async (scope, ast) => {
+  return (scope: Scope, ast: Ast) => {
     if (customSimplified) {
-      await customSimplified(scope, ast, async () => {
-        await passFromStandardAdvanced(scope, ast);
+      customSimplified(scope, ast, () => {
+        passFromStandardAdvanced(scope, ast);
       });
     } else {
-      await passFromStandardAdvanced(scope, ast);
+      passFromStandardAdvanced(scope, ast);
     }
   };
 }
@@ -98,7 +98,7 @@ export function makeRecursorPassSimplified<Scope>(
   scoper: (parent: Scope) => Scope,
   customSimplified: RecursorSimplified<Scope>,
 ): RecursorPass<Scope> {
-  let holderPassFromCustomSimplified: RecursorPassHolder<Scope> = {};
+  const holderPassFromCustomSimplified: RecursorPassHolder<Scope> = {};
 
   const passFromStandardAdvanced: RecursorPass<Scope> = {
     recurseModule: makePassFromStandardAdvanced(

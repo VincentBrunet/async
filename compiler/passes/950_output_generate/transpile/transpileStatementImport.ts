@@ -6,7 +6,7 @@ import { cacheFileFromHash } from "../../../lib/io/cacheFileFromHash.ts";
 import { RecursorPass } from "../../util/RecursorPass.ts";
 import { Transpiler } from "../util/Transpiler.ts";
 
-export async function transpileStatementImport(
+export function transpileStatementImport(
   pass: RecursorPass<Transpiler>,
   transpiler: Transpiler,
   ast: AstStatementImport,
@@ -17,7 +17,7 @@ export async function transpileStatementImport(
 
   // Include
   transpiler.pushInclude(
-    await cacheFileFromHash(
+    cacheFileFromHash(
       resolvedModule.sourceToken.sourceCode.hash,
       "output.h",
     ),

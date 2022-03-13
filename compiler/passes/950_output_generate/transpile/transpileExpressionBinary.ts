@@ -8,7 +8,7 @@ import { isTypePrimitive } from "../../../lib/typing/isTypePrimitive.ts";
 import { RecursorPass } from "../../util/RecursorPass.ts";
 import { Transpiler } from "../util/Transpiler.ts";
 
-export async function transpileExpressionBinary(
+export function transpileExpressionBinary(
   pass: RecursorPass<Transpiler>,
   transpiler: Transpiler,
   ast: AstExpressionBinary,
@@ -18,9 +18,9 @@ export async function transpileExpressionBinary(
   const type2 = ensure(ast.expression2.resolvedType);
 
   if (ast.operator === AstExpressionBinaryOperator.Assign) {
-    await pass.recurseExpression(transpiler, ast.expression1);
+    pass.recurseExpression(transpiler, ast.expression1);
     transpiler.pushPart(" = ");
-    await pass.recurseExpression(transpiler, ast.expression2);
+    pass.recurseExpression(transpiler, ast.expression2);
     return;
   }
 
@@ -45,8 +45,8 @@ export async function transpileExpressionBinary(
 
   transpiler.pushPart(callName);
   transpiler.pushPart("(");
-  await pass.recurseExpression(transpiler, ast.expression1);
+  pass.recurseExpression(transpiler, ast.expression1);
   transpiler.pushPart(", ");
-  await pass.recurseExpression(transpiler, ast.expression2);
+  pass.recurseExpression(transpiler, ast.expression2);
   transpiler.pushPart(")");
 }

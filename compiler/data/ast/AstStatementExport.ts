@@ -6,7 +6,7 @@ import { AstStatementVariable } from "./AstStatementVariable.ts";
 export interface AstStatementExport extends Ast {
   statement: AstStatement;
 
-  resolvedName?: string;
   resolvedStatementVariable?: AstStatementVariable;
   resolvedStatementTypedef?: AstStatementTypedef;
+  resolvedName?: string;
 }

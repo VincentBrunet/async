@@ -23,6 +23,8 @@ typedef int64_t t_i64;
 typedef float t_f32;
 typedef double t_f64;
 
+typedef uintptr_t t_ptr;
+
 #define FALSE 0
 #define TRUE 1
 typedef uint8_t t_boolean;
@@ -90,6 +92,7 @@ typedef union t_data {
   t_i64 i64;
   t_f32 f32;
   t_f64 f64;
+  t_ptr ptr;
   t_object object;
   t_function function;
   t_string string;

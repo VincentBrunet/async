@@ -6,10 +6,10 @@ import { makeTypePrimitiveUnknown } from "../../../lib/typing/makeTypePrimitiveU
 import { computeResolvedClosureType } from "../util/computeResolvedClosureType.ts";
 import { Scope } from "../util/Scope.ts";
 
-export async function browseExpressionObject(
+export function browseExpressionObject(
   scope: Scope,
   ast: AstExpressionObject,
-  next: () => Promise<void>,
+  next: () => void,
 ) {
   // Asserts
   const resolvedClosures = ensure(ast.resolvedClosures);
@@ -23,7 +23,7 @@ export async function browseExpressionObject(
   ast.resolvedType = ast.annotation.type;
 
   // Recurse in objects statements
-  await next();
+  next();
 
   // Check all fields types
   const foundFields: AstTypeObjectField[] = [];

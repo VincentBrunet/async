@@ -1,10 +1,12 @@
 
+export typedef Type = {};
+
 const toto = 42
 
 /**
  * This object is commented
  */
-const cl = object {
+const cl:Type = obj:Type {
 
   const l = toto
 

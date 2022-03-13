@@ -1,4 +1,5 @@
 import { AstModule } from "../../data/ast/AstModule.ts";
+import { OutputModule } from "../../data/output/OutputModule.ts";
 import { makeRecursorPassAdvanced } from "../util/makeRecursorPassAdvanced.ts";
 import { transpileBlock } from "./transpile/transpileBlock.ts";
 import { transpileExpressionBinary } from "./transpile/transpileExpressionBinary.ts";
@@ -49,10 +50,8 @@ const pass = makeRecursorPassAdvanced((no) => no, {
   recurseStatementWhile: transpileStatementWhile,
 });
 
-export async function passAstToOutput(
-  ast: AstModule,
-) {
+export function passAstToOutput(ast: AstModule): OutputModule {
   const transpiler = new Transpiler(ast);
-  await pass.recurseModule(transpiler, ast);
+  pass.recurseModule(transpiler, ast);
   return transpiler.getOutput();
 }

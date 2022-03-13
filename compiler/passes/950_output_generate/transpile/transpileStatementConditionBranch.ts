@@ -2,15 +2,15 @@ import { AstStatementConditionBranch } from "../../../data/ast/AstStatementCondi
 import { RecursorPass } from "../../util/RecursorPass.ts";
 import { Transpiler } from "../util/Transpiler.ts";
 
-export async function transpileStatementConditionBranch(
+export function transpileStatementConditionBranch(
   pass: RecursorPass<Transpiler>,
   transpiler: Transpiler,
   ast: AstStatementConditionBranch,
 ) {
   // condition
   transpiler.pushStatement(["if (TO_BOOLEAN("]);
-  await pass.recurseExpression(transpiler, ast.condition);
+  pass.recurseExpression(transpiler, ast.condition);
   transpiler.pushPart("))");
   // content
-  await pass.recurseBlock(transpiler, ast.block);
+  pass.recurseBlock(transpiler, ast.block);
 }

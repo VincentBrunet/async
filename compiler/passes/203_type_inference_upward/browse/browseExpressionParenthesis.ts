@@ -1,11 +1,11 @@
 import { AstExpressionParenthesis } from "../../../data/ast/AstExpressionParenthesis.ts";
 import { Scope } from "../util/Scope.ts";
 
-export async function browseExpressionParenthesis(
+export function browseExpressionParenthesis(
   scope: Scope,
   ast: AstExpressionParenthesis,
-  next: () => Promise<void>,
+  next: () => void,
 ) {
-  await next();
+  next();
   ast.resolvedType = ast.expression.resolvedType;
 }

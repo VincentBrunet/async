@@ -5,7 +5,7 @@ import { RecursorPass } from "../../util/RecursorPass.ts";
 import { Transpiler } from "../util/Transpiler.ts";
 import { transpileResolvedClosure } from "./transpileResolvedClosure.ts";
 
-export async function transpileExpressionRun(
+export function transpileExpressionRun(
   pass: RecursorPass<Transpiler>,
   transpiler: Transpiler,
   ast: AstExpressionRun,
@@ -43,7 +43,7 @@ export async function transpileExpressionRun(
 
   // Run the recursive writing
   transpiler.pushStatement(["/* run block */"]);
-  await pass.recurseBlock(transpiler, ast.block);
+  pass.recurseBlock(transpiler, ast.block);
 
   // Backup return
   transpiler.pushStatement(["return", " ", "null_make()"]);
