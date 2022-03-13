@@ -18,7 +18,7 @@ export function transpileStatementImport(
   // Include
   transpiler.pushInclude(
     cacheFileFromHash(
-      resolvedModule.sourceToken.sourceCode.hash,
+      resolvedModule.hash,
       "output.h",
     ),
   );
@@ -32,7 +32,7 @@ export function transpileStatementImport(
       "t_ref *",
       hashLocalSymbol("import", slot.name),
       " = ",
-      hashGlobalSymbol(resolvedModule, resolvedModule, "getter"),
+      hashGlobalSymbol(resolvedModule.hash, resolvedModule, "getter"),
       "()",
       "[",
       resolvedExportKeys.indexOf(slot.name).toString(),

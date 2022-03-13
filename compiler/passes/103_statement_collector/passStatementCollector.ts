@@ -1,4 +1,5 @@
 import { AstModule } from "../../data/ast/AstModule.ts";
+import { UnitModule } from "../../data/unit/UnitModule.ts";
 import { makeRecursorPassSimplified } from "../util/makeRecursorPassSimplified.ts";
 import { browseBlock } from "./browse/browseBlock.ts";
 import { browseExpressionFunction } from "./browse/browseExpressionFunction.ts";
@@ -23,6 +24,6 @@ const pass = makeRecursorPassSimplified<Scope>((scope) => {
   recurseStatementVariable: browseStatementVariable,
 });
 
-export function passStatementCollector(ast: AstModule) {
-  pass.recurseModule(new Scope(), ast);
+export function passStatementCollector(unit: UnitModule) {
+  pass.recurseModule(new Scope(), unit.ast);
 }

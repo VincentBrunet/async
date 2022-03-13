@@ -15,15 +15,11 @@ export function transpileModule(
   const resolvedExports = ensure(ast.resolvedExports);
 
   // Name
-  const name = hashGlobalSymbol(ast, ast, "module");
+  const hash = ast.hash;
+  const name = hashGlobalSymbol(hash, ast, "module");
 
   // Include
-  transpiler.pushInclude(
-    cacheFileFromHash(
-      ast.sourceToken.sourceCode.hash,
-      "output.h",
-    ),
-  );
+  transpiler.pushInclude(cacheFileFromHash(hash, "output.h"));
 
   // New Function
   transpiler.pushFunction("t_ref **", name, []);
@@ -69,7 +65,11 @@ export function transpileModule(
   transpiler.pushStatement(moduleMakeParts);
 
   // New Function (getter)
-  transpiler.pushFunction("t_ref **", hashGlobalSymbol(ast, ast, "getter"), []);
+  transpiler.pushFunction(
+    "t_ref **",
+    hashGlobalSymbol(hash, ast, "getter"),
+    [],
+  );
   transpiler.pushStatement(["static t_ref **exports = NULL"]);
   transpiler.pushStatement(["if (exports == NULL)"]);
   transpiler.pushBlock();

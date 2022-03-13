@@ -29,6 +29,8 @@ export async function compileCommand(command: Array<string>) {
     stderr: "piped",
   });
 
+  //console.log("compileCommand.command", command);
+
   const status = await process.status();
   const stdout = await readToString(process.stdout);
   const stderr = await readToString(process.stderr);

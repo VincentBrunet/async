@@ -14,7 +14,11 @@ export function transpileExpressionRun(
   const resolvedClosures = ensure(ast.resolvedClosures);
 
   // Generate a stable unique name
-  const name = hashGlobalSymbol(transpiler.getOutput().sourceAst, ast, "run");
+  const name = hashGlobalSymbol(
+    transpiler.getUnit().ast.hash,
+    ast,
+    "run",
+  );
 
   // Simply call the run function in the expression
   const runCallLength = resolvedClosures.length.toString();

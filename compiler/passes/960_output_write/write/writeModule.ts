@@ -1,15 +1,18 @@
 import { OutputModule } from "../../../data/output/OutputModule.ts";
+import { UnitModule } from "../../../data/unit/UnitModule.ts";
+import { ensure } from "../../../lib/errors/ensure.ts";
 import { Writer } from "../util/Writer.ts";
 import { writeFunction } from "./writeFunction.ts";
 import { writeInclude } from "./writeInclude.ts";
 
-export function writeModule(writer: Writer, outputModule: OutputModule) {
-  const hash = outputModule.sourceAst.sourceToken.sourceCode.hash;
-  const href = outputModule.sourceAst.sourceToken.sourceCode.sourceUrl.href;
+export function writeModule(writer: Writer, unit: UnitModule) {
+  const hash = unit.ast.hash;
+  const url = unit.url;
+  const outputModule = ensure(unit.output);
   // Quick recap of url on top
   writer.pushBoth("//");
   writer.pushBoth(" ");
-  writer.pushBoth(href);
+  writer.pushBoth(url.href);
   writer.pushBoth("\n");
   writer.pushBoth("\n");
   // Anti-reimport

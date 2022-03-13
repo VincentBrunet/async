@@ -58,7 +58,7 @@ function makeToken(
  */
 export function passCodeToToken(code: CodeModule): TokenModule {
   // Extracted info from code
-  const file = code.file;
+  const content = code.content;
   const tokens = new Array<Token>();
 
   // location counters
@@ -70,8 +70,8 @@ export function passCodeToToken(code: CodeModule): TokenModule {
   let partialToken: PartialToken | undefined = undefined;
 
   // loop over all characters of the code
-  for (let i = 0; i < file.length; i++) {
-    const char = file.charAt(i);
+  for (let i = 0; i < content.length; i++) {
+    const char = content.charAt(i);
 
     // Find the kind of token this character belong to
     let kind;
@@ -128,7 +128,6 @@ export function passCodeToToken(code: CodeModule): TokenModule {
 
   // done
   return {
-    sourceCode: code,
     tokens: tokens,
   };
 }

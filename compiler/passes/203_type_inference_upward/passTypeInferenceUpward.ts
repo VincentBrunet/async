@@ -1,4 +1,5 @@
 import { AstModule } from "../../data/ast/AstModule.ts";
+import { UnitModule } from "../../data/unit/UnitModule.ts";
 import { makeRecursorPassSimplified } from "../util/makeRecursorPassSimplified.ts";
 import { browseExpression } from "./browse/browseExpression.ts";
 import { browseExpressionBinary } from "./browse/browseExpressionBinary.ts";
@@ -35,6 +36,6 @@ const pass = makeRecursorPassSimplified<Scope>((scope) => {
   recurseStatementVariable: browseStatementVariable,
 });
 
-export async function passTypeInferenceUpward(ast: AstModule) {
-  pass.recurseModule(new Scope(), ast);
+export function passTypeInferenceUpward(unit: UnitModule) {
+  pass.recurseModule(new Scope(), unit.ast);
 }

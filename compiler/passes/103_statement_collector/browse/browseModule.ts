@@ -23,7 +23,7 @@ function toMap<K, V>(array: Array<V>, keyer: (v: V) => K): Map<K, V> {
 }
 
 function importKey(ast: AstStatementImport) {
-  return ensure(ast.resolvedModule).sourceToken.sourceCode.hash;
+  return ensure(ast.resolvedModule).hash;
 }
 function exportKey(ast: AstStatementExport) {
   return ensure(ast.resolvedName);

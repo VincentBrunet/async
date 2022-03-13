@@ -1,4 +1,5 @@
 import { AstModule } from "../../data/ast/AstModule.ts";
+import { UnitModule } from "../../data/unit/UnitModule.ts";
 import { makeRecursorPassSimplified } from "../util/makeRecursorPassSimplified.ts";
 import { browseExpressionFunction } from "./browse/browseExpressionFunction.ts";
 import { browseExpressionIdentifier } from "./browse/browseExpressionIdentifier.ts";
@@ -19,6 +20,6 @@ const pass = makeRecursorPassSimplified<Scope>((scope) => {
   recurseExpressionIdentifier: browseExpressionIdentifier,
 });
 
-export async function passReferenceResolve(ast: AstModule) {
-  pass.recurseModule(new Scope(), ast);
+export function passReferenceResolve(unit: UnitModule) {
+  pass.recurseModule(new Scope(), unit.ast);
 }

@@ -1,13 +1,13 @@
-import { FileModule } from "../../../data/file/FileModule.ts";
+import { FilesModule } from "../../../data/files/FilesModule.ts";
 
 export class Writer {
-  private fileModule: FileModule;
+  private filesModule: FilesModule;
 
   private contentHeader = new Array<string>();
   private contentSource = new Array<string>();
 
-  constructor(fileModule: FileModule) {
-    this.fileModule = fileModule;
+  constructor(filesModule: FilesModule) {
+    this.filesModule = filesModule;
   }
 
   pushToHeader(content: string) {
@@ -23,11 +23,11 @@ export class Writer {
 
   async flush() {
     await Deno.writeTextFile(
-      this.fileModule.header,
+      this.filesModule.header,
       this.contentHeader.join(""),
     );
     await Deno.writeTextFile(
-      this.fileModule.source,
+      this.filesModule.source,
       this.contentSource.join(""),
     );
   }

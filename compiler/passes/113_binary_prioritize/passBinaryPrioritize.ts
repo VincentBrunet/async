@@ -1,4 +1,4 @@
-import { AstModule } from "../../data/ast/AstModule.ts";
+import { UnitModule } from "../../data/unit/UnitModule.ts";
 import { makeRecursorPassSimplified } from "../util/makeRecursorPassSimplified.ts";
 import { browseExpressionBinary } from "./browse/browseExpressionBinary.ts";
 
@@ -6,6 +6,6 @@ const pass = makeRecursorPassSimplified((no) => no, {
   recurseExpressionBinary: browseExpressionBinary,
 });
 
-export function passBinaryPrioritize(ast: AstModule) {
-  pass.recurseModule(ast, ast);
+export function passBinaryPrioritize(unit: UnitModule) {
+  pass.recurseModule(unit.ast, unit.ast);
 }

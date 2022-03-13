@@ -14,7 +14,7 @@ export function transpileExpressionFunction(
 
   // Generate a stable unique name
   const name = hashGlobalSymbol(
-    transpiler.getOutput().sourceAst,
+    transpiler.getUnit().ast.hash,
     ast,
     "function",
   );

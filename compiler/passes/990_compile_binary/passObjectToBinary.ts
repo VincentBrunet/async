@@ -1,5 +1,7 @@
 import { expandGlob } from "https://deno.land/std@0.63.0/fs/mod.ts";
 import { AstModule } from "../../data/ast/AstModule.ts";
+import { UnitModule } from "../../data/unit/UnitModule.ts";
+import { ensure } from "../../lib/errors/ensure.ts";
 import { hashGlobalSymbol } from "../../lib/hash/hashGlobalSymbol.ts";
 import { cacheFileFromHash } from "../../lib/io/cacheFileFromHash.ts";
 import { compileCommand } from "../../lib/io/compileCommand.ts";
@@ -10,10 +12,10 @@ for await (const file of expandGlob("stdlib/**/*.c")) {
 }
 
 export async function passObjectToBinary(
-  mainAst: AstModule,
-  objects: Array<string>,
+  unit: UnitModule,
+  units: Array<UnitModule>,
 ) {
-  const hash = mainAst.sourceToken.sourceCode.hash;
+  const hash = unit.ast.hash;
 
   const mainPath = await Deno.makeTempFile({
     suffix: ".c",
@@ -25,12 +27,12 @@ export async function passObjectToBinary(
   mainContent.push("#include");
   mainContent.push(" ");
   mainContent.push("<");
-  mainContent.push(await cacheFileFromHash(hash, "output.h"));
+  mainContent.push(cacheFileFromHash(hash, "output.h"));
   mainContent.push(">");
   mainContent.push("\n");
   mainContent.push("\n");
   mainContent.push("t_ref **(*entry_module)() = ");
-  mainContent.push(hashGlobalSymbol(mainAst, mainAst, "module"));
+  mainContent.push(hashGlobalSymbol(hash, unit.ast, "module"));
   mainContent.push(";");
   mainContent.push("\n");
 
@@ -45,7 +47,7 @@ export async function passObjectToBinary(
       "-Wpedantic",
       "-I",
       "stdlib",
-      ...objects,
+      ...units.map((unit) => ensure(unit.files).object),
       mainPath,
       ...stdlibs,
     ],

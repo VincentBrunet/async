@@ -1,16 +1,17 @@
 import { AstModule } from "../../../data/ast/AstModule.ts";
 import { TokenModule } from "../../../data/token/TokenModule.ts";
 import { ensure } from "../../../lib/errors/ensure.ts";
+import { hashModuleId } from "../../../lib/hash/hashModuleId.ts";
 import { Browser } from "../util/Browser.ts";
 import { TokenImpasse } from "../util/TokenImpasse.ts";
 import { parseBlock } from "./parseBlock.ts";
 
 export function parseModule(
   browser: Browser,
-  token?: TokenModule,
+  moduleHash?: string,
 ): AstModule | TokenImpasse {
   // Asserts
-  const sourceToken = ensure(token);
+  const hash = ensure(moduleHash);
   // Content
   const block = browser.recurse(parseBlock, true);
   if (block instanceof TokenImpasse) {
@@ -18,7 +19,7 @@ export function parseModule(
   }
   // done
   return {
-    sourceToken: sourceToken,
+    hash: hash,
     block: block,
   };
 }

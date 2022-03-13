@@ -2,28 +2,35 @@ import { AstModule } from "../../../data/ast/AstModule.ts";
 import { OutputBlock } from "../../../data/output/OutputBlock.ts";
 import { OutputModule } from "../../../data/output/OutputModule.ts";
 import { OutputStatement } from "../../../data/output/OutputStatement.ts";
+import { UnitModule } from "../../../data/unit/UnitModule.ts";
 import { Stack } from "../../../lib/core/data/Stack.ts";
 
 export class Transpiler {
-  private currentModule: OutputModule;
+  private currentUnit: UnitModule;
+
+  private currentOutput: OutputModule;
   private currentStatement?: OutputStatement;
 
   private stackBlock = new Stack<OutputBlock>();
 
-  constructor(ast: AstModule) {
-    this.currentModule = {
-      sourceAst: ast,
+  constructor(unit: UnitModule) {
+    this.currentUnit = unit;
+    this.currentOutput = {
       includes: [],
       functions: [],
     };
   }
 
+  getUnit() {
+    return this.currentUnit;
+  }
+
   getOutput() {
-    return this.currentModule;
+    return this.currentOutput;
   }
 
   pushInclude(path: string) {
-    this.currentModule.includes.push({
+    this.currentOutput.includes.push({
       path: path,
     });
   }
@@ -39,7 +46,7 @@ export class Transpiler {
       block: outputBlock,
     };
     this.stackBlock.push(outputBlock);
-    this.currentModule.functions.push(outputFunction);
+    this.currentOutput.functions.push(outputFunction);
   }
 
   popFunction() {
