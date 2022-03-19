@@ -18,7 +18,6 @@ import { recurseModule } from './recurseModule.ts';
 import { recurseStatement } from './recurseStatement.ts';
 import { recurseStatementBlock } from './recurseStatementBlock.ts';
 import { recurseStatementCondition } from './recurseStatementCondition.ts';
-import { recurseStatementConditionBranch } from './recurseStatementConditionBranch.ts';
 import { recurseStatementEmpty } from './recurseStatementEmpty.ts';
 import { recurseStatementExport } from './recurseStatementExport.ts';
 import { recurseStatementExpression } from './recurseStatementExpression.ts';
@@ -102,7 +101,7 @@ function makeFromSimplified<Scope, Ast>(
 }
 
 export function makeRecursorPassSimplified<Scope>(
-  recursors: RecursorSimplified<Scope>,
+  simplifieds: RecursorSimplified<Scope>,
   scoper?: (parent: Scope) => Scope,
 ): (scope: Scope) => RecursorPass {
   return (scope: Scope) => {
@@ -110,102 +109,86 @@ export function makeRecursorPassSimplified<Scope>(
 
     const passSimplified: RecursorPassHolder = {};
 
-    const passStandard: RecursorPass = {
-      recurseModule: makeFromStandard(passSimplified, recurseModule),
-      recurseBlock: makeFromStandard(passSimplified, recurseBlock),
+    const standardModule = makeFromStandard(passSimplified, recurseModule);
+    const standardBlock = makeFromStandard(passSimplified, recurseBlock);
 
-      recurseExpression: makeFromStandard(passSimplified, recurseExpression),
-      recurseExpressionCall: makeFromStandard(passSimplified, recurseExpressionCall),
-      recurseExpressionIdentifier: makeFromStandard(passSimplified, recurseExpressionIdentifier),
-      recurseExpressionFunction: makeFromStandard(passSimplified, recurseExpressionFunction),
-      recurseExpressionObject: makeFromStandard(passSimplified, recurseExpressionObject),
-      recurseExpressionRun: makeFromStandard(passSimplified, recurseExpressionRun),
-      recurseExpressionLookup: makeFromStandard(passSimplified, recurseExpressionLookup),
-      recurseExpressionLiteral: makeFromStandard(passSimplified, recurseExpressionLiteral),
-      recurseExpressionUnary: makeFromStandard(passSimplified, recurseExpressionUnary),
-      recurseExpressionBinary: makeFromStandard(passSimplified, recurseExpressionBinary),
-      recurseExpressionTyping: makeFromStandard(passSimplified, recurseExpressionTyping),
-      recurseExpressionParenthesis: makeFromStandard(passSimplified, recurseExpressionParenthesis),
+    const standardExpression = makeFromStandard(passSimplified, recurseExpression);
+    const standardExpressionCall = makeFromStandard(passSimplified, recurseExpressionCall);
+    const standardExpressionIdentifier = makeFromStandard(passSimplified, recurseExpressionIdentifier);
+    const standardExpressionFunction = makeFromStandard(passSimplified, recurseExpressionFunction);
+    const standardExpressionObject = makeFromStandard(passSimplified, recurseExpressionObject);
+    const standardExpressionRun = makeFromStandard(passSimplified, recurseExpressionRun);
+    const standardExpressionLookup = makeFromStandard(passSimplified, recurseExpressionLookup);
+    const standardExpressionLiteral = makeFromStandard(passSimplified, recurseExpressionLiteral);
+    const standardExpressionUnary = makeFromStandard(passSimplified, recurseExpressionUnary);
+    const standardExpressionBinary = makeFromStandard(passSimplified, recurseExpressionBinary);
+    const standardExpressionTyping = makeFromStandard(passSimplified, recurseExpressionTyping);
+    const standardExpressionParenthesis = makeFromStandard(passSimplified, recurseExpressionParenthesis);
 
-      recurseAnnotationType: makeFromStandard(passSimplified, recurseAnnotationType),
-      recurseAnnotationTemplate: makeFromStandard(passSimplified, recurseAnnotationTemplate),
+    const standardAnnotationType = makeFromStandard(passSimplified, recurseAnnotationType);
+    const standardAnnotationTemplate = makeFromStandard(passSimplified, recurseAnnotationTemplate);
 
-      recurseType: makeFromStandard(passSimplified, recurseType),
-      recurseTypeParenthesis: makeFromStandard(passSimplified, recurseTypeParenthesis),
-      recurseTypeIdentifier: makeFromStandard(passSimplified, recurseTypeIdentifier),
-      recurseTypePrimitive: makeFromStandard(passSimplified, recurseTypePrimitive),
-      recurseTypeBinary: makeFromStandard(passSimplified, recurseTypeBinary),
-      recurseTypeFunction: makeFromStandard(passSimplified, recurseTypeFunction),
-      recurseTypeObject: makeFromStandard(passSimplified, recurseTypeObject),
+    const standardType = makeFromStandard(passSimplified, recurseType);
+    const standardTypeParenthesis = makeFromStandard(passSimplified, recurseTypeParenthesis);
+    const standardTypeIdentifier = makeFromStandard(passSimplified, recurseTypeIdentifier);
+    const standardTypePrimitive = makeFromStandard(passSimplified, recurseTypePrimitive);
+    const standardTypeBinary = makeFromStandard(passSimplified, recurseTypeBinary);
+    const standardTypeFunction = makeFromStandard(passSimplified, recurseTypeFunction);
+    const standardTypeObject = makeFromStandard(passSimplified, recurseTypeObject);
 
-      recurseStatement: makeFromStandard(passSimplified, recurseStatement),
-      recurseStatementImport: makeFromStandard(passSimplified, recurseStatementImport),
-      recurseStatementExport: makeFromStandard(passSimplified, recurseStatementExport),
-      recurseStatementVariable: makeFromStandard(passSimplified, recurseStatementVariable),
-      recurseStatementTypedef: makeFromStandard(passSimplified, recurseStatementTypedef),
-      recurseStatementBlock: makeFromStandard(passSimplified, recurseStatementBlock),
-      recurseStatementWhile: makeFromStandard(passSimplified, recurseStatementWhile),
-      recurseStatementCondition: makeFromStandard(passSimplified, recurseStatementCondition),
-      recurseStatementConditionBranch: makeFromStandard(passSimplified, recurseStatementConditionBranch),
-      recurseStatementReturn: makeFromStandard(passSimplified, recurseStatementReturn),
-      recurseStatementUnsafe: makeFromStandard(passSimplified, recurseStatementUnsafe),
-      recurseStatementExpression: makeFromStandard(passSimplified, recurseStatementExpression),
-      recurseStatementEmpty: makeFromStandard(passSimplified, recurseStatementEmpty),
-    };
+    const standardStatement = makeFromStandard(passSimplified, recurseStatement);
+    const standardStatementImport = makeFromStandard(passSimplified, recurseStatementImport);
+    const standardStatementExport = makeFromStandard(passSimplified, recurseStatementExport);
+    const standardStatementVariable = makeFromStandard(passSimplified, recurseStatementVariable);
+    const standardStatementTypedef = makeFromStandard(passSimplified, recurseStatementTypedef);
+    const standardStatementBlock = makeFromStandard(passSimplified, recurseStatementBlock);
+    const standardStatementWhile = makeFromStandard(passSimplified, recurseStatementWhile);
+    const standardStatementCondition = makeFromStandard(passSimplified, recurseStatementCondition);
+    const standardStatementReturn = makeFromStandard(passSimplified, recurseStatementReturn);
+    const standardStatementUnsafe = makeFromStandard(passSimplified, recurseStatementUnsafe);
+    const standardStatementExpression = makeFromStandard(passSimplified, recurseStatementExpression);
+    const standardStatementEmpty = makeFromStandard(passSimplified, recurseStatementEmpty);
 
     passSimplified.value = {
-      recurseModule: makeFromSimplified(stack, passStandard.recurseModule, recursors.recurseModule),
-      recurseBlock: makeFromSimplified(stack, passStandard.recurseBlock, recursors.recurseBlock),
+      recurseModule: makeFromSimplified(stack, standardModule, simplifieds.recurseModule),
+      recurseBlock: makeFromSimplified(stack, standardBlock, simplifieds.recurseBlock),
 
-      recurseExpression: makeFromSimplified(stack, passStandard.recurseExpression, recursors.recurseExpression),
-      recurseExpressionCall: makeFromSimplified(stack, passStandard.recurseExpressionCall, recursors.recurseExpressionCall),
-      recurseExpressionIdentifier: makeFromSimplified(
-        stack,
-        passStandard.recurseExpressionIdentifier,
-        recursors.recurseExpressionIdentifier,
-      ),
-      recurseExpressionFunction: makeFromSimplified(stack, passStandard.recurseExpressionFunction, recursors.recurseExpressionFunction),
-      recurseExpressionObject: makeFromSimplified(stack, passStandard.recurseExpressionObject, recursors.recurseExpressionObject),
-      recurseExpressionRun: makeFromSimplified(stack, passStandard.recurseExpressionRun, recursors.recurseExpressionRun),
-      recurseExpressionLookup: makeFromSimplified(stack, passStandard.recurseExpressionLookup, recursors.recurseExpressionLookup),
-      recurseExpressionLiteral: makeFromSimplified(stack, passStandard.recurseExpressionLiteral, recursors.recurseExpressionLiteral),
-      recurseExpressionUnary: makeFromSimplified(stack, passStandard.recurseExpressionUnary, recursors.recurseExpressionUnary),
-      recurseExpressionBinary: makeFromSimplified(stack, passStandard.recurseExpressionBinary, recursors.recurseExpressionBinary),
-      recurseExpressionTyping: makeFromSimplified(stack, passStandard.recurseExpressionTyping, recursors.recurseExpressionTyping),
-      recurseExpressionParenthesis: makeFromSimplified(
-        stack,
-        passStandard.recurseExpressionParenthesis,
-        recursors.recurseExpressionParenthesis,
-      ),
+      recurseExpression: makeFromSimplified(stack, standardExpression, simplifieds.recurseExpression),
+      recurseExpressionCall: makeFromSimplified(stack, standardExpressionCall, simplifieds.recurseExpressionCall),
+      recurseExpressionIdentifier: makeFromSimplified(stack, standardExpressionIdentifier, simplifieds.recurseExpressionIdentifier),
+      recurseExpressionFunction: makeFromSimplified(stack, standardExpressionFunction, simplifieds.recurseExpressionFunction),
+      recurseExpressionObject: makeFromSimplified(stack, standardExpressionObject, simplifieds.recurseExpressionObject),
+      recurseExpressionRun: makeFromSimplified(stack, standardExpressionRun, simplifieds.recurseExpressionRun),
+      recurseExpressionLookup: makeFromSimplified(stack, standardExpressionLookup, simplifieds.recurseExpressionLookup),
+      recurseExpressionLiteral: makeFromSimplified(stack, standardExpressionLiteral, simplifieds.recurseExpressionLiteral),
+      recurseExpressionUnary: makeFromSimplified(stack, standardExpressionUnary, simplifieds.recurseExpressionUnary),
+      recurseExpressionBinary: makeFromSimplified(stack, standardExpressionBinary, simplifieds.recurseExpressionBinary),
+      recurseExpressionTyping: makeFromSimplified(stack, standardExpressionTyping, simplifieds.recurseExpressionTyping),
+      recurseExpressionParenthesis: makeFromSimplified(stack, standardExpressionParenthesis, simplifieds.recurseExpressionParenthesis),
 
-      recurseAnnotationType: makeFromSimplified(stack, passStandard.recurseAnnotationType, recursors.recurseAnnotationType),
-      recurseAnnotationTemplate: makeFromSimplified(stack, passStandard.recurseAnnotationTemplate, recursors.recurseAnnotationTemplate),
+      recurseAnnotationType: makeFromSimplified(stack, standardAnnotationType, simplifieds.recurseAnnotationType),
+      recurseAnnotationTemplate: makeFromSimplified(stack, standardAnnotationTemplate, simplifieds.recurseAnnotationTemplate),
 
-      recurseType: makeFromSimplified(stack, passStandard.recurseType, recursors.recurseType),
-      recurseTypeParenthesis: makeFromSimplified(stack, passStandard.recurseTypeParenthesis, recursors.recurseTypeParenthesis),
-      recurseTypeIdentifier: makeFromSimplified(stack, passStandard.recurseTypeIdentifier, recursors.recurseTypeIdentifier),
-      recurseTypePrimitive: makeFromSimplified(stack, passStandard.recurseTypePrimitive, recursors.recurseTypePrimitive),
-      recurseTypeBinary: makeFromSimplified(stack, passStandard.recurseTypeBinary, recursors.recurseTypeBinary),
-      recurseTypeFunction: makeFromSimplified(stack, passStandard.recurseTypeFunction, recursors.recurseTypeFunction),
-      recurseTypeObject: makeFromSimplified(stack, passStandard.recurseTypeObject, recursors.recurseTypeObject),
+      recurseType: makeFromSimplified(stack, standardType, simplifieds.recurseType),
+      recurseTypeParenthesis: makeFromSimplified(stack, standardTypeParenthesis, simplifieds.recurseTypeParenthesis),
+      recurseTypeIdentifier: makeFromSimplified(stack, standardTypeIdentifier, simplifieds.recurseTypeIdentifier),
+      recurseTypePrimitive: makeFromSimplified(stack, standardTypePrimitive, simplifieds.recurseTypePrimitive),
+      recurseTypeBinary: makeFromSimplified(stack, standardTypeBinary, simplifieds.recurseTypeBinary),
+      recurseTypeFunction: makeFromSimplified(stack, standardTypeFunction, simplifieds.recurseTypeFunction),
+      recurseTypeObject: makeFromSimplified(stack, standardTypeObject, simplifieds.recurseTypeObject),
 
-      recurseStatement: makeFromSimplified(stack, passStandard.recurseStatement, recursors.recurseStatement),
-      recurseStatementImport: makeFromSimplified(stack, passStandard.recurseStatementImport, recursors.recurseStatementImport),
-      recurseStatementExport: makeFromSimplified(stack, passStandard.recurseStatementExport, recursors.recurseStatementExport),
-      recurseStatementVariable: makeFromSimplified(stack, passStandard.recurseStatementVariable, recursors.recurseStatementVariable),
-      recurseStatementTypedef: makeFromSimplified(stack, passStandard.recurseStatementTypedef, recursors.recurseStatementTypedef),
-      recurseStatementBlock: makeFromSimplified(stack, passStandard.recurseStatementBlock, recursors.recurseStatementBlock),
-      recurseStatementWhile: makeFromSimplified(stack, passStandard.recurseStatementWhile, recursors.recurseStatementWhile),
-      recurseStatementCondition: makeFromSimplified(stack, passStandard.recurseStatementCondition, recursors.recurseStatementCondition),
-      recurseStatementConditionBranch: makeFromSimplified(
-        stack,
-        passStandard.recurseStatementConditionBranch,
-        recursors.recurseStatementConditionBranch,
-      ),
-      recurseStatementReturn: makeFromSimplified(stack, passStandard.recurseStatementReturn, recursors.recurseStatementReturn),
-      recurseStatementUnsafe: makeFromSimplified(stack, passStandard.recurseStatementUnsafe, recursors.recurseStatementUnsafe),
-      recurseStatementExpression: makeFromSimplified(stack, passStandard.recurseStatementExpression, recursors.recurseStatementExpression),
-      recurseStatementEmpty: makeFromSimplified(stack, passStandard.recurseStatementEmpty, recursors.recurseStatementEmpty),
+      recurseStatement: makeFromSimplified(stack, standardStatement, simplifieds.recurseStatement),
+      recurseStatementImport: makeFromSimplified(stack, standardStatementImport, simplifieds.recurseStatementImport),
+      recurseStatementExport: makeFromSimplified(stack, standardStatementExport, simplifieds.recurseStatementExport),
+      recurseStatementVariable: makeFromSimplified(stack, standardStatementVariable, simplifieds.recurseStatementVariable),
+      recurseStatementTypedef: makeFromSimplified(stack, standardStatementTypedef, simplifieds.recurseStatementTypedef),
+      recurseStatementBlock: makeFromSimplified(stack, standardStatementBlock, simplifieds.recurseStatementBlock),
+      recurseStatementWhile: makeFromSimplified(stack, standardStatementWhile, simplifieds.recurseStatementWhile),
+      recurseStatementCondition: makeFromSimplified(stack, standardStatementCondition, simplifieds.recurseStatementCondition),
+      recurseStatementReturn: makeFromSimplified(stack, standardStatementReturn, simplifieds.recurseStatementReturn),
+      recurseStatementUnsafe: makeFromSimplified(stack, standardStatementUnsafe, simplifieds.recurseStatementUnsafe),
+      recurseStatementExpression: makeFromSimplified(stack, standardStatementExpression, simplifieds.recurseStatementExpression),
+      recurseStatementEmpty: makeFromSimplified(stack, standardStatementEmpty, simplifieds.recurseStatementEmpty),
     };
 
     return passSimplified.value;

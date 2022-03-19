@@ -17,7 +17,6 @@ import { recurseModule } from './recurseModule.ts';
 import { recurseStatement } from './recurseStatement.ts';
 import { recurseStatementBlock } from './recurseStatementBlock.ts';
 import { recurseStatementCondition } from './recurseStatementCondition.ts';
-import { recurseStatementConditionBranch } from './recurseStatementConditionBranch.ts';
 import { recurseStatementEmpty } from './recurseStatementEmpty.ts';
 import { recurseStatementExport } from './recurseStatementExport.ts';
 import { recurseStatementExpression } from './recurseStatementExpression.ts';
@@ -121,7 +120,6 @@ export function makeRecursorPassAdvanced<Scope>(
       recurseStatementBlock: make(stack, pass, recurseStatementBlock, recursors.recurseStatementBlock),
       recurseStatementWhile: make(stack, pass, recurseStatementWhile, recursors.recurseStatementWhile),
       recurseStatementCondition: make(stack, pass, recurseStatementCondition, recursors.recurseStatementCondition),
-      recurseStatementConditionBranch: make(stack, pass, recurseStatementConditionBranch, recursors.recurseStatementConditionBranch),
       recurseStatementReturn: make(stack, pass, recurseStatementReturn, recursors.recurseStatementReturn),
       recurseStatementUnsafe: make(stack, pass, recurseStatementUnsafe, recursors.recurseStatementUnsafe),
       recurseStatementExpression: make(stack, pass, recurseStatementExpression, recursors.recurseStatementExpression),

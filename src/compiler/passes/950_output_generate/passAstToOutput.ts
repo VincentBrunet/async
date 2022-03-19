@@ -16,7 +16,7 @@ import { transpileExpressionTyping } from './transpile/transpileExpressionTyping
 import { transpileExpressionUnary } from './transpile/transpileExpressionUnary.ts';
 import { transpileModule } from './transpile/transpileModule.ts';
 import { transpileStatementBlock } from './transpile/transpileStatementBlock.ts';
-import { transpileStatementConditionBranch } from './transpile/transpileStatementConditionBranch.ts';
+import { transpileStatementCondition } from './transpile/transpileStatementCondition.ts';
 import { transpileStatementExport } from './transpile/transpileStatementExport.ts';
 import { transpileStatementExpression } from './transpile/transpileStatementExpression.ts';
 import { transpileStatementImport } from './transpile/transpileStatementImport.ts';
@@ -40,7 +40,7 @@ const pass = makeRecursorPassAdvanced({
   recurseExpressionRun: transpileExpressionRun,
   recurseExpressionTyping: transpileExpressionTyping,
   recurseExpressionUnary: transpileExpressionUnary,
-  recurseStatementConditionBranch: transpileStatementConditionBranch,
+  recurseStatementCondition: transpileStatementCondition,
   recurseStatementExport: transpileStatementExport,
   recurseStatementExpression: transpileStatementExpression,
   recurseStatementBlock: transpileStatementBlock,

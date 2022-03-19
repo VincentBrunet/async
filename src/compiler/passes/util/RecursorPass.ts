@@ -16,7 +16,7 @@ import { AstExpressionUnary } from '../../data/ast/AstExpressionUnary.ts';
 import { AstModule } from '../../data/ast/AstModule.ts';
 import { AstStatement } from '../../data/ast/AstStatement.ts';
 import { AstStatementBlock } from '../../data/ast/AstStatementBlock.ts';
-import { AstStatementCondition, AstStatementConditionBranch } from '../../data/ast/AstStatementCondition.ts';
+import { AstStatementCondition } from '../../data/ast/AstStatementCondition.ts';
 import { AstStatementEmpty } from '../../data/ast/AstStatementEmpty.ts';
 import { AstStatementExport } from '../../data/ast/AstStatementExport.ts';
 import { AstStatementExpression } from '../../data/ast/AstStatementExpression.ts';
@@ -50,7 +50,6 @@ export interface RecursorPass {
   recurseStatementBlock: RecursorPassFunction<AstStatementBlock>;
   recurseStatementWhile: RecursorPassFunction<AstStatementWhile>;
   recurseStatementCondition: RecursorPassFunction<AstStatementCondition>;
-  recurseStatementConditionBranch: RecursorPassFunction<AstStatementConditionBranch>;
   recurseStatementReturn: RecursorPassFunction<AstStatementReturn>;
   recurseStatementUnsafe: RecursorPassFunction<AstStatementUnsafe>;
   recurseStatementExpression: RecursorPassFunction<AstStatementExpression>;

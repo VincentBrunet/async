@@ -16,7 +16,7 @@ import { AstExpressionUnary } from '../../data/ast/AstExpressionUnary.ts';
 import { AstModule } from '../../data/ast/AstModule.ts';
 import { AstStatement } from '../../data/ast/AstStatement.ts';
 import { AstStatementBlock } from '../../data/ast/AstStatementBlock.ts';
-import { AstStatementCondition, AstStatementConditionBranch } from '../../data/ast/AstStatementCondition.ts';
+import { AstStatementCondition } from '../../data/ast/AstStatementCondition.ts';
 import { AstStatementEmpty } from '../../data/ast/AstStatementEmpty.ts';
 import { AstStatementExport } from '../../data/ast/AstStatementExport.ts';
 import { AstStatementExpression } from '../../data/ast/AstStatementExpression.ts';
@@ -52,7 +52,6 @@ export interface RecursorSimplified<Scope> {
   recurseStatementBlock?: RecursorSimplifiedFunction<AstStatementBlock, Scope>;
   recurseStatementWhile?: RecursorSimplifiedFunction<AstStatementWhile, Scope>;
   recurseStatementCondition?: RecursorSimplifiedFunction<AstStatementCondition, Scope>;
-  recurseStatementConditionBranch?: RecursorSimplifiedFunction<AstStatementConditionBranch, Scope>;
   recurseStatementReturn?: RecursorSimplifiedFunction<AstStatementReturn, Scope>;
   recurseStatementUnsafe?: RecursorSimplifiedFunction<AstStatementUnsafe, Scope>;
   recurseStatementExpression?: RecursorSimplifiedFunction<AstStatementExpression, Scope>;
