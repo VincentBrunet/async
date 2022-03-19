@@ -3,7 +3,7 @@
   "editor.tabSize": 2,
   "editor.insertSpaces": true,
   "editor.autoIndent": "advanced",
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  //"editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.codeActionsOnSave": {
     "source.organizeImports": true
   },
@@ -27,8 +27,12 @@
       "color": "#5a5a5a80"
     },
     {
-      "column": 80,
+      "column": 100,
       "color": "#5a5a5a80"
     }
-  ]
+  ],
+  "editor.wordWrapColumn": 100,
+  "deno.suggest.completeFunctionCalls": true,
+  "deno.config": "",
+  "deno.path": "/Users/vincent/.deno/bin/deno"
 }

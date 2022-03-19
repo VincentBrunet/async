@@ -1,4 +1,4 @@
-import [ my_print_i32, ] from "./my_print.ac"
+import [ my_print_i32 ] from "./my_print_i32.ac"
 
 my_print_i32(1)
 
