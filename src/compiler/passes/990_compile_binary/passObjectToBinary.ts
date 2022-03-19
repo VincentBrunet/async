@@ -1,5 +1,4 @@
 import { expandGlob } from 'https://deno.land/std@0.63.0/fs/mod.ts';
-import { AstModule } from '../../data/ast/AstModule.ts';
 import { UnitModule } from '../../data/unit/UnitModule.ts';
 import { ensure } from '../../lib/errors/ensure.ts';
 import { hashGlobalSymbol } from '../../lib/hash/hashGlobalSymbol.ts';

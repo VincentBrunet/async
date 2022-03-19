@@ -1,5 +1,3 @@
-import { AstModule } from '../../data/ast/AstModule.ts';
-import { OutputModule } from '../../data/output/OutputModule.ts';
 import { UnitModule } from '../../data/unit/UnitModule.ts';
 import { makeRecursorPassAdvanced } from '../util/makeRecursorPassAdvanced.ts';
 import { transpileBlock } from './transpile/transpileBlock.ts';

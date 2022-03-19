@@ -1,6 +1,5 @@
 import { AstExpression, AstExpressionKind } from '../../../data/ast/AstExpression.ts';
 import { AstExpressionBinary, AstExpressionBinaryOperator } from '../../../data/ast/AstExpressionBinary.ts';
-import { AstModule } from '../../../data/ast/AstModule.ts';
 
 /**
  * Supported symbol priority map

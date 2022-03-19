@@ -1,4 +1,3 @@
-import { AstModule } from '../../data/ast/AstModule.ts';
 import { UnitModule } from '../../data/unit/UnitModule.ts';
 import { makeRecursorPassSimplified } from '../util/makeRecursorPassSimplified.ts';
 import { browseBlock } from './browse/browseBlock.ts';
