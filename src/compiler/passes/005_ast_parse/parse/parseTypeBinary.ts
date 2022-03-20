@@ -1,19 +1,16 @@
-import { AstType } from "../../../data/ast/AstType.ts";
-import {
-  AstTypeBinary,
-  AstTypeBinaryOperator,
-} from "../../../data/ast/AstTypeBinary.ts";
-import { Browser } from "../util/Browser.ts";
-import { TokenImpasse } from "../util/TokenImpasse.ts";
-import { parseType } from "./parseType.ts";
+import { AstType } from '../../../data/ast/AstType.ts';
+import { AstTypeBinary, AstTypeBinaryOperator } from '../../../data/ast/AstTypeBinary.ts';
+import { Browser } from '../util/Browser.ts';
+import { TokenImpasse } from '../util/TokenImpasse.ts';
+import { parseType } from './parseType.ts';
 
 /**
  * Support operator symbols
  */
 const symbolMap = new Map<string, AstTypeBinaryOperator>();
 
-symbolMap.set("&", AstTypeBinaryOperator.And);
-symbolMap.set("|", AstTypeBinaryOperator.Or);
+symbolMap.set('&', AstTypeBinaryOperator.And);
+symbolMap.set('|', AstTypeBinaryOperator.Or);
 
 /**
  * Do the parsing using an already-parsed left handside
@@ -32,7 +29,7 @@ export function parseTypeBinary(
     consumed = 1;
   }
   if (operator === undefined) {
-    return browser.impasse("TypeBinary.Operator");
+    return browser.impasse('TypeBinary.Operator');
   }
   for (let i = 0; i < consumed; i++) {
     browser.consume();
@@ -40,7 +37,7 @@ export function parseTypeBinary(
   // right
   const right = browser.recurse(parseType);
   if (right instanceof TokenImpasse) {
-    return browser.impasse("TypeBinary.Right", [right]);
+    return browser.impasse('TypeBinary.Right', [right]);
   }
   // done
   return {

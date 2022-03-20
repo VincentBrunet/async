@@ -7,9 +7,9 @@ export function browseStatementImport(
   ast: AstStatementImport,
   scope: Scope,
 ) {
-  next();
   const parent = ensure(scope.parent);
   for (const slot of ast.slots) {
     parent.pushName(slot.name);
   }
+  next();
 }

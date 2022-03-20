@@ -1,6 +1,6 @@
-import { AstExpressionLiteral } from "../../../data/ast/AstExpressionLiteral.ts";
-import { makeTypePrimitive } from "../../../lib/typing/makeTypePrimitive.ts";
-import { Tracker } from "../util/Tracker.ts";
+import { AstExpressionLiteral } from '../../../data/ast/AstExpressionLiteral.ts';
+import { makeTypePrimitive } from '../../../lib/typing/makeTypePrimitive.ts';
+import { Tracker } from '../util/Tracker.ts';
 
 export function browseExpressionLiteral(
   next: () => void,
@@ -8,5 +8,5 @@ export function browseExpressionLiteral(
   tracker: Tracker,
 ) {
   next();
-  ast.resolvedType = makeTypePrimitive(ast.native, [], ast);
+  ast.resolvedType = makeTypePrimitive(ast.native, ast);
 }

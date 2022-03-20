@@ -34,6 +34,15 @@ import { AstTypeObject } from '../../data/ast/AstTypeObject.ts';
 import { AstTypeParenthesis } from '../../data/ast/AstTypeParenthesis.ts';
 import { AstTypePrimitive } from '../../data/ast/AstTypePrimitive.ts';
 
+export type RecursorPassHolder = {
+  value?: RecursorPass;
+};
+
+export type RecursorPassStandard<Ast> = (
+  r: RecursorPass,
+  ast: Ast,
+) => void;
+
 export type RecursorPassFunction<Ast> = (
   ast: Ast,
 ) => void;

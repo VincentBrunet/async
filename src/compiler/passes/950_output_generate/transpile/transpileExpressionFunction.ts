@@ -1,10 +1,12 @@
 import { AstExpressionFunction } from '../../../data/ast/AstExpressionFunction.ts';
+import { OutputFunctionParam } from '../../../data/output/OutputFunction.ts';
 import { OutputStructField } from '../../../data/output/OutputStructs.ts';
 import { ensure } from '../../../lib/errors/ensure.ts';
 import { hashGlobalSymbol } from '../../../lib/hash/hashGlobalSymbol.ts';
 import { RecursorPass } from '../../util/RecursorPass.ts';
 import { Transpiler } from '../util/Transpiler.ts';
-import { transpileResolvedClosure } from './transpileResolvedClosure.ts';
+import { utilTranspileResolvedClosure } from '../util/utilTranspileResolvedClosure.ts';
+import { utilTranspileType } from '../util/utilTranspileType.ts';
 
 export function transpileExpressionFunction(
   pass: RecursorPass,
@@ -51,19 +53,29 @@ export function transpileExpressionFunction(
   }
   for (const astClosure of resolvedClosures) {
     transpiler.pushStatementPart(', ');
-    transpileResolvedClosure(astClosure, transpiler);
+    utilTranspileResolvedClosure(astClosure, transpiler);
   }
   transpiler.pushStatementPart(')');
 
   // New function
-  const params = [];
-  params.push('t_ref **closure');
+  const params: OutputFunctionParam[] = [];
+  params.push({
+    type: 't_closure',
+    name: 'closure',
+  });
   for (let i = 0; i < ast.params.length; i++) {
     const astParam = ast.params[i];
+    const astParamType = utilTranspileType(ensure(astParam.resolvedType));
     if (astParam.name) {
-      params.push('t_value *_param_' + astParam.name);
+      params.push({
+        type: astParamType,
+        name: '_param_' + astParam.name,
+      });
     } else {
-      params.push('t_value *_param' + i);
+      params.push({
+        type: astParamType,
+        name: '_param' + i,
+      });
     }
   }
   transpiler.pushFunction('t_value *', name, params);

@@ -34,37 +34,16 @@ import { recurseTypeIdentifier } from './recurseTypeIdentifier.ts';
 import { recurseTypeObject } from './recurseTypeObject.ts';
 import { recurseTypeParenthesis } from './recurseTypeParenthesis.ts';
 import { recurseTypePrimitive } from './recurseTypePrimitive.ts';
-import { RecursorPass, RecursorPassFunction } from './RecursorPass.ts';
+import { RecursorPass, RecursorPassFunction, RecursorPassHolder, RecursorPassStandard } from './RecursorPass.ts';
 import { RecursorSimplified, RecursorSimplifiedFunction } from './RecursorSimplified.ts';
-
-type RecursorPassHolder = { value?: RecursorPass };
-
-type RecursorPassStandard<Ast> = (r: RecursorPass, ast: Ast) => void;
-
-class RecursorStack<Scope> {
-  private scoper: (parent: Scope) => Scope;
-  private stack: Stack<Scope>;
-  constructor(scope: Scope, scoper: (parent: Scope) => Scope) {
-    this.scoper = scoper;
-    this.stack = new Stack();
-    this.stack.push(scope);
-  }
-  public push(): Scope {
-    const child = this.scoper(this.stack.peek()!);
-    this.stack.push(child);
-    return child;
-  }
-  public pop(): void {
-    this.stack.pop();
-  }
-}
+import { RecursorStack } from './RecursorStack.ts';
 
 /**
  * Make a recursion pass function:
  *  - deepen the scope
  *  - call the standard recursion logic that will call custom logic
  */
-function makeFromStandard<Scope, Ast>(
+function makeFromStandard<Ast>(
   pass: RecursorPassHolder,
   standard: RecursorPassStandard<Ast>,
 ): RecursorPassFunction<Ast> {

@@ -1,5 +1,5 @@
 import { UnitModule } from '../../data/unit/UnitModule.ts';
-import { makeRecursorPassSimplified } from '../util/makeRecursorPassSimplified.ts';
+import { makeRecursorPassNaive } from '../util/makeRecursorPassNaive.ts';
 import { browseExpressionFunction } from './browse/browseExpressionFunction.ts';
 import { browseExpressionIdentifier } from './browse/browseExpressionIdentifier.ts';
 import { browseExpressionObject } from './browse/browseExpressionObject.ts';
@@ -8,7 +8,7 @@ import { browseStatementImport } from './browse/browseStatementImport.ts';
 import { browseStatementVariable } from './browse/browseStatementVariable.ts';
 import { Scope } from './util/Scope.ts';
 
-const pass = makeRecursorPassSimplified<Scope>({
+const pass = makeRecursorPassNaive<Scope>({
   recurseStatementImport: browseStatementImport,
   recurseStatementVariable: browseStatementVariable,
   recurseExpressionFunction: browseExpressionFunction,

@@ -3,7 +3,7 @@ import { ensure } from '../../../lib/errors/ensure.ts';
 import { hashGlobalSymbol } from '../../../lib/hash/hashGlobalSymbol.ts';
 import { RecursorPass } from '../../util/RecursorPass.ts';
 import { Transpiler } from '../util/Transpiler.ts';
-import { transpileResolvedClosure } from './transpileResolvedClosure.ts';
+import { utilTranspileResolvedClosure } from '../util/utilTranspileResolvedClosure.ts';
 
 export function transpileExpressionRun(
   pass: RecursorPass,
@@ -38,12 +38,12 @@ export function transpileExpressionRun(
   }
   for (const astClosure of resolvedClosures) {
     transpiler.pushStatementPart(', ');
-    transpileResolvedClosure(astClosure, transpiler);
+    utilTranspileResolvedClosure(astClosure, transpiler);
   }
   transpiler.pushStatementPart(')');
 
   // New scope
-  transpiler.pushFunction('t_value *', name, ['t_ref **closure']);
+  transpiler.pushFunction('t_value *', name, [{ type: 't_closure', name: 'closure' }]);
 
   // Run the recursive writing
   transpiler.pushStatement(['/* run block */']);

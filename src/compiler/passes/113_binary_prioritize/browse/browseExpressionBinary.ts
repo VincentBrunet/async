@@ -71,12 +71,10 @@ function listBinaryNodes(
  * Build a new binary operation tree by reading the inputs and operators
  */
 export function browseExpressionBinary(
-  next: () => void,
   ast: AstExpressionBinary,
 ) {
   // Skip if already resolved prioritization
   if (ast.resolvedPrioritization) {
-    next();
     return;
   }
 
@@ -141,7 +139,4 @@ export function browseExpressionBinary(
   ast.operator = binary.operator;
   ast.expression1 = binary.expression1;
   ast.expression2 = binary.expression2;
-
-  // done
-  next();
 }

@@ -1,10 +1,11 @@
-import { AstModule } from "../../../data/ast/AstModule.ts";
-import { OutputBlock } from "../../../data/output/OutputBlock.ts";
-import { OutputModule } from "../../../data/output/OutputModule.ts";
-import { OutputStatement } from "../../../data/output/OutputStatement.ts";
-import { OutputStructField } from "../../../data/output/OutputStructs.ts";
-import { UnitModule } from "../../../data/unit/UnitModule.ts";
-import { Stack } from "../../../lib/core/data/Stack.ts";
+import { AstModule } from '../../../data/ast/AstModule.ts';
+import { OutputBlock } from '../../../data/output/OutputBlock.ts';
+import { OutputFunctionParam } from '../../../data/output/OutputFunction.ts';
+import { OutputModule } from '../../../data/output/OutputModule.ts';
+import { OutputStatement } from '../../../data/output/OutputStatement.ts';
+import { OutputStructField } from '../../../data/output/OutputStructs.ts';
+import { UnitModule } from '../../../data/unit/UnitModule.ts';
+import { Stack } from '../../../lib/core/data/Stack.ts';
 
 export class Transpiler {
   private currentUnit: UnitModule;
@@ -44,7 +45,7 @@ export class Transpiler {
     });
   }
 
-  pushFunction(type: string, name: string, params: string[]) {
+  pushFunction(type: string, name: string, params: OutputFunctionParam[]) {
     const outputBlock = {
       statements: [],
     };

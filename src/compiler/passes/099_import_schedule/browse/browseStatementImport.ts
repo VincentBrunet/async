@@ -7,9 +7,8 @@ import { combinedUrl } from '../../../lib/io/combinedUrl.ts';
 import { scheduleImport } from '../../../pipeline/compile.ts';
 
 export function browseStatementImport(
-  next: () => void,
   ast: AstStatementImport,
-  scope: URL,
+  currentUrl: URL,
 ) {
   if (ast.url.kind !== AstExpressionKind.Literal) {
     throw new Error('Unknown import non literal:' + ast.url.kind);
@@ -21,14 +20,9 @@ export function browseStatementImport(
   }
 
   scheduleImport(
-    combinedUrl(
-      literal.value,
-      scope,
-    ),
+    combinedUrl(currentUrl, literal.value),
     (resolvedModule: AstModule) => {
       ast.resolvedModule = resolvedModule;
     },
   );
-
-  next();
 }

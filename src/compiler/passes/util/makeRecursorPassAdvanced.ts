@@ -34,30 +34,8 @@ import { recurseTypeObject } from './recurseTypeObject.ts';
 import { recurseTypeParenthesis } from './recurseTypeParenthesis.ts';
 import { recurseTypePrimitive } from './recurseTypePrimitive.ts';
 import { RecursorAdvanced, RecursorAdvancedFunction } from './RecursorAdvanced.ts';
-import { RecursorPass, RecursorPassFunction } from './RecursorPass.ts';
-import { Stack } from '../../lib/core/data/Stack.ts';
-
-type RecursorPassHolder = { value?: RecursorPass };
-
-type RecursorPassStandard<Ast> = (r: RecursorPass, ast: Ast) => void;
-
-class RecursorStack<Scope> {
-  private scoper: (parent: Scope) => Scope;
-  private stack: Stack<Scope>;
-  constructor(scope: Scope, scoper: (parent: Scope) => Scope) {
-    this.scoper = scoper;
-    this.stack = new Stack();
-    this.stack.push(scope);
-  }
-  public push(): Scope {
-    const child = this.scoper(this.stack.peek()!);
-    this.stack.push(child);
-    return child;
-  }
-  public pop(): void {
-    this.stack.pop();
-  }
-}
+import { RecursorPass, RecursorPassFunction, RecursorPassHolder, RecursorPassStandard } from './RecursorPass.ts';
+import { RecursorStack } from './RecursorStack.ts';
 
 function make<Ast, Scope>(
   stack: RecursorStack<Scope>,
@@ -77,7 +55,7 @@ function make<Ast, Scope>(
 }
 
 export function makeRecursorPassAdvanced<Scope>(
-  recursors: RecursorAdvanced<Scope>,
+  advanceds: RecursorAdvanced<Scope>,
   scoper?: (parent: Scope) => Scope,
 ): (scope: Scope) => RecursorPass {
   return (scope: Scope) => {
@@ -85,45 +63,45 @@ export function makeRecursorPassAdvanced<Scope>(
 
     const pass: RecursorPassHolder = {};
     pass.value = {
-      recurseModule: make(stack, pass, recurseModule, recursors.recurseModule),
-      recurseBlock: make(stack, pass, recurseBlock, recursors.recurseBlock),
+      recurseModule: make(stack, pass, recurseModule, advanceds.recurseModule),
+      recurseBlock: make(stack, pass, recurseBlock, advanceds.recurseBlock),
 
-      recurseExpression: make(stack, pass, recurseExpression, recursors.recurseExpression),
-      recurseExpressionCall: make(stack, pass, recurseExpressionCall, recursors.recurseExpressionCall),
-      recurseExpressionIdentifier: make(stack, pass, recurseExpressionIdentifier, recursors.recurseExpressionIdentifier),
-      recurseExpressionFunction: make(stack, pass, recurseExpressionFunction, recursors.recurseExpressionFunction),
-      recurseExpressionObject: make(stack, pass, recurseExpressionObject, recursors.recurseExpressionObject),
-      recurseExpressionRun: make(stack, pass, recurseExpressionRun, recursors.recurseExpressionRun),
-      recurseExpressionLookup: make(stack, pass, recurseExpressionLookup, recursors.recurseExpressionLookup),
-      recurseExpressionLiteral: make(stack, pass, recurseExpressionLiteral, recursors.recurseExpressionLiteral),
-      recurseExpressionUnary: make(stack, pass, recurseExpressionUnary, recursors.recurseExpressionUnary),
-      recurseExpressionBinary: make(stack, pass, recurseExpressionBinary, recursors.recurseExpressionBinary),
-      recurseExpressionTyping: make(stack, pass, recurseExpressionTyping, recursors.recurseExpressionTyping),
-      recurseExpressionParenthesis: make(stack, pass, recurseExpressionParenthesis, recursors.recurseExpressionParenthesis),
+      recurseExpression: make(stack, pass, recurseExpression, advanceds.recurseExpression),
+      recurseExpressionCall: make(stack, pass, recurseExpressionCall, advanceds.recurseExpressionCall),
+      recurseExpressionIdentifier: make(stack, pass, recurseExpressionIdentifier, advanceds.recurseExpressionIdentifier),
+      recurseExpressionFunction: make(stack, pass, recurseExpressionFunction, advanceds.recurseExpressionFunction),
+      recurseExpressionObject: make(stack, pass, recurseExpressionObject, advanceds.recurseExpressionObject),
+      recurseExpressionRun: make(stack, pass, recurseExpressionRun, advanceds.recurseExpressionRun),
+      recurseExpressionLookup: make(stack, pass, recurseExpressionLookup, advanceds.recurseExpressionLookup),
+      recurseExpressionLiteral: make(stack, pass, recurseExpressionLiteral, advanceds.recurseExpressionLiteral),
+      recurseExpressionUnary: make(stack, pass, recurseExpressionUnary, advanceds.recurseExpressionUnary),
+      recurseExpressionBinary: make(stack, pass, recurseExpressionBinary, advanceds.recurseExpressionBinary),
+      recurseExpressionTyping: make(stack, pass, recurseExpressionTyping, advanceds.recurseExpressionTyping),
+      recurseExpressionParenthesis: make(stack, pass, recurseExpressionParenthesis, advanceds.recurseExpressionParenthesis),
 
-      recurseAnnotationType: make(stack, pass, recurseAnnotationType, recursors.recurseAnnotationType),
-      recurseAnnotationTemplate: make(stack, pass, recurseAnnotationTemplate, recursors.recurseAnnotationTemplate),
+      recurseAnnotationType: make(stack, pass, recurseAnnotationType, advanceds.recurseAnnotationType),
+      recurseAnnotationTemplate: make(stack, pass, recurseAnnotationTemplate, advanceds.recurseAnnotationTemplate),
 
-      recurseType: make(stack, pass, recurseType, recursors.recurseType),
-      recurseTypeParenthesis: make(stack, pass, recurseTypeParenthesis, recursors.recurseTypeParenthesis),
-      recurseTypeIdentifier: make(stack, pass, recurseTypeIdentifier, recursors.recurseTypeIdentifier),
-      recurseTypePrimitive: make(stack, pass, recurseTypePrimitive, recursors.recurseTypePrimitive),
-      recurseTypeBinary: make(stack, pass, recurseTypeBinary, recursors.recurseTypeBinary),
-      recurseTypeFunction: make(stack, pass, recurseTypeFunction, recursors.recurseTypeFunction),
-      recurseTypeObject: make(stack, pass, recurseTypeObject, recursors.recurseTypeObject),
+      recurseType: make(stack, pass, recurseType, advanceds.recurseType),
+      recurseTypeParenthesis: make(stack, pass, recurseTypeParenthesis, advanceds.recurseTypeParenthesis),
+      recurseTypeIdentifier: make(stack, pass, recurseTypeIdentifier, advanceds.recurseTypeIdentifier),
+      recurseTypePrimitive: make(stack, pass, recurseTypePrimitive, advanceds.recurseTypePrimitive),
+      recurseTypeBinary: make(stack, pass, recurseTypeBinary, advanceds.recurseTypeBinary),
+      recurseTypeFunction: make(stack, pass, recurseTypeFunction, advanceds.recurseTypeFunction),
+      recurseTypeObject: make(stack, pass, recurseTypeObject, advanceds.recurseTypeObject),
 
-      recurseStatement: make(stack, pass, recurseStatement, recursors.recurseStatement),
-      recurseStatementImport: make(stack, pass, recurseStatementImport, recursors.recurseStatementImport),
-      recurseStatementExport: make(stack, pass, recurseStatementExport, recursors.recurseStatementExport),
-      recurseStatementVariable: make(stack, pass, recurseStatementVariable, recursors.recurseStatementVariable),
-      recurseStatementTypedef: make(stack, pass, recurseStatementTypedef, recursors.recurseStatementTypedef),
-      recurseStatementBlock: make(stack, pass, recurseStatementBlock, recursors.recurseStatementBlock),
-      recurseStatementWhile: make(stack, pass, recurseStatementWhile, recursors.recurseStatementWhile),
-      recurseStatementCondition: make(stack, pass, recurseStatementCondition, recursors.recurseStatementCondition),
-      recurseStatementReturn: make(stack, pass, recurseStatementReturn, recursors.recurseStatementReturn),
-      recurseStatementUnsafe: make(stack, pass, recurseStatementUnsafe, recursors.recurseStatementUnsafe),
-      recurseStatementExpression: make(stack, pass, recurseStatementExpression, recursors.recurseStatementExpression),
-      recurseStatementEmpty: make(stack, pass, recurseStatementEmpty, recursors.recurseStatementEmpty),
+      recurseStatement: make(stack, pass, recurseStatement, advanceds.recurseStatement),
+      recurseStatementImport: make(stack, pass, recurseStatementImport, advanceds.recurseStatementImport),
+      recurseStatementExport: make(stack, pass, recurseStatementExport, advanceds.recurseStatementExport),
+      recurseStatementVariable: make(stack, pass, recurseStatementVariable, advanceds.recurseStatementVariable),
+      recurseStatementTypedef: make(stack, pass, recurseStatementTypedef, advanceds.recurseStatementTypedef),
+      recurseStatementBlock: make(stack, pass, recurseStatementBlock, advanceds.recurseStatementBlock),
+      recurseStatementWhile: make(stack, pass, recurseStatementWhile, advanceds.recurseStatementWhile),
+      recurseStatementCondition: make(stack, pass, recurseStatementCondition, advanceds.recurseStatementCondition),
+      recurseStatementReturn: make(stack, pass, recurseStatementReturn, advanceds.recurseStatementReturn),
+      recurseStatementUnsafe: make(stack, pass, recurseStatementUnsafe, advanceds.recurseStatementUnsafe),
+      recurseStatementExpression: make(stack, pass, recurseStatementExpression, advanceds.recurseStatementExpression),
+      recurseStatementEmpty: make(stack, pass, recurseStatementEmpty, advanceds.recurseStatementEmpty),
     };
     return pass.value;
   };

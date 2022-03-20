@@ -19,7 +19,7 @@ export async function passOutputToFiles(unit: UnitModule) {
   const writer = new Writer(files);
   writeModule(writer, unit);
   await ensureDir(cacheDirFromHash(hash));
-  await Deno.writeTextFile(files.debug, stringify(unit));
+  await Deno.writeTextFile(files.debug, stringify(unit, new Set<string>(['token'])));
   await writer.flush();
 
   unit.files = files;

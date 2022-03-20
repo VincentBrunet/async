@@ -1,8 +1,8 @@
-import { AstBlock } from "../../../data/ast/AstBlock.ts";
-import { AstStatement } from "../../../data/ast/AstStatement.ts";
-import { Browser } from "../util/Browser.ts";
-import { TokenImpasse } from "../util/TokenImpasse.ts";
-import { parseStatement } from "./parseStatement.ts";
+import { AstBlock } from '../../../data/ast/AstBlock.ts';
+import { AstStatement } from '../../../data/ast/AstStatement.ts';
+import { Browser } from '../util/Browser.ts';
+import { TokenImpasse } from '../util/TokenImpasse.ts';
+import { parseStatement } from './parseStatement.ts';
 
 export function parseBlock(
   browser: Browser,
@@ -11,8 +11,8 @@ export function parseBlock(
   // bracket - open
   if (!bracketsOptional) {
     const bracketOpen = browser.peek();
-    if (bracketOpen.str !== "{") {
-      return browser.impasse("Block.Open");
+    if (bracketOpen.str !== '{') {
+      return browser.impasse('Block.Open');
     }
     browser.consume();
   }
@@ -22,7 +22,7 @@ export function parseBlock(
     if (!bracketsOptional) {
       // bracket - close
       const bracketClose = browser.peek();
-      if (bracketClose.str === "}") {
+      if (bracketClose.str === '}') {
         browser.consume();
         break;
       }
@@ -35,8 +35,8 @@ export function parseBlock(
     // parse statement
     const astStatement = browser.recurse(parseStatement);
     if (astStatement instanceof TokenImpasse) {
-      console.log("Block.Previous", JSON.stringify(statements, null, 4));
-      return browser.impasse("Block.Statement", [astStatement]);
+      console.log('Block.Previous', JSON.stringify(statements, null, 4));
+      return browser.impasse('Block.Statement', [astStatement]);
     }
     statements.push(astStatement);
   }

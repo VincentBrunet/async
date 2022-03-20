@@ -1,7 +1,7 @@
-import { Ast } from "../../../data/ast/Ast.ts";
-import { Token, TokenKind } from "../../../data/token/Token.ts";
-import { repeat } from "../../../lib/core/strings/repeat.ts";
-import { TokenImpasse } from "./TokenImpasse.ts";
+import { Ast } from '../../../data/ast/Ast.ts';
+import { Token, TokenKind } from '../../../data/token/Token.ts';
+import { repeat } from '../../../lib/core/strings/repeat.ts';
+import { TokenImpasse } from './TokenImpasse.ts';
 
 export class Browser {
   private id = 0;
@@ -27,19 +27,25 @@ export class Browser {
     this.forward();
   }
 
-  recurse<T extends Ast, V>(
-    recurser: (stack: Browser, param?: V) => T | TokenImpasse,
-    param?: V,
+  recurse<T extends Ast>(
+    recurse: (stack: Browser) => T | TokenImpasse,
+  ): T | TokenImpasse {
+    return this.recurseWithParam(recurse, undefined);
+  }
+
+  recurseWithParam<T extends Ast, Param>(
+    recurser: (stack: Browser, param: Param) => T | TokenImpasse,
+    param: Param,
   ): T | TokenImpasse {
     const before = this.getCurrentIndex();
     this.indexes.push(before);
     this.depth++;
     if (this.log) {
       console.log(
-        repeat("  ", this.depth),
-        "->",
+        repeat('  ', this.depth),
+        '->',
         recurser.name,
-        "TRY",
+        'TRY',
         this.readToken().str,
       );
     }
@@ -48,10 +54,10 @@ export class Browser {
     if (ast instanceof TokenImpasse) {
       if (this.log) {
         console.log(
-          repeat("  ", this.depth),
-          "<-",
+          repeat('  ', this.depth),
+          '<-',
           recurser.name,
-          "FAIL",
+          'FAIL',
           ast.message,
           this.readToken().str,
         );
@@ -62,15 +68,14 @@ export class Browser {
     if (!(ast instanceof TokenImpasse)) {
       if (this.log) {
         console.log(
-          repeat("  ", this.depth),
-          "<-",
+          repeat('  ', this.depth),
+          '<-',
           recurser.name,
-          "SUCCESS",
+          'SUCCESS',
           this.readToken().str,
         );
       }
       const after = this.indexes.pop() ?? Infinity;
-      ast.id = this.id++;
       ast.token = {
         begin: before,
         end: after,
@@ -94,7 +99,7 @@ export class Browser {
     const tokenOpen = this.peek();
     if (!validOpen.has(tokenOpen.str)) {
       if (mandatory) {
-        return this.impasse("Array.Open");
+        return this.impasse('Array.Open');
       } else {
         return [];
       }
@@ -105,7 +110,7 @@ export class Browser {
     while (true) {
       // failed
       if (this.ended()) {
-        return this.impasse("Array.EOF");
+        return this.impasse('Array.EOF');
       }
       // initial close
       const tokenClose = this.peek();
@@ -127,7 +132,7 @@ export class Browser {
         this.consume();
         break;
       } else {
-        return this.impasse("Array.Close");
+        return this.impasse('Array.Close');
       }
     }
     return items;
@@ -174,7 +179,7 @@ export class Browser {
     if (token === undefined) {
       return {
         kind: TokenKind.Invalid,
-        str: "",
+        str: '',
       };
     }
     return token;
@@ -193,9 +198,9 @@ export class Browser {
       const next = this.readToken(1);
       if (curr.kind === TokenKind.Whitespace) {
         this.increment();
-      } else if (curr.str === "/" && next.str === "/") {
+      } else if (curr.str === '/' && next.str === '/') {
         this.forwardLineComment();
-      } else if (curr.str === "/" && next.str === "*") {
+      } else if (curr.str === '/' && next.str === '*') {
         this.forwardBlockComment();
       } else {
         return;
@@ -208,7 +213,7 @@ export class Browser {
     this.increment(); // consume second dash
     let it = this.readToken();
     while (
-      it.str.indexOf("\n") === -1 &&
+      it.str.indexOf('\n') === -1 &&
       it.kind !== TokenKind.Invalid
     ) {
       this.increment();
@@ -223,7 +228,7 @@ export class Browser {
     let curr = this.readToken(0);
     let next = this.readToken(1);
     while (
-      !(curr.str === "*" && next.str === "/") &&
+      !(curr.str === '*' && next.str === '/') &&
       curr.kind !== TokenKind.Invalid
     ) {
       this.increment();

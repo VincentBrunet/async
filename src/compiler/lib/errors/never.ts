@@ -1,5 +1,3 @@
-import { assert } from "./assert.ts";
-
 export function never(): never {
-  throw assert(!false);
+  throw Error('Never has been reached');
 }
