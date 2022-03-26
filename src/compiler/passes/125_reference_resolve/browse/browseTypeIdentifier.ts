@@ -6,5 +6,5 @@ export function browseTypeIdentifier(
   scope: Scope,
 ) {
   // Find closest name
-  ast.resolvedReference = scope.findReference(ast.name);
+  ast.resolvedReferenceType = scope.findReferenceType(ast.name);
 }

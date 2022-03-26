@@ -1,5 +1,5 @@
 import { AstStatementImport } from '../../../data/ast/AstStatementImport.ts';
-import { ensure } from '../../../lib/errors/ensure.ts';
+import { ensure } from '../../../passes/errors/ensure.ts';
 import { Scope } from '../util/Scope.ts';
 
 export function browseStatementImport(
@@ -11,6 +11,6 @@ export function browseStatementImport(
 
   // All imported slots, for parent scope
   for (const slot of ast.slots) {
-    parent.pushImportSlot(slot);
+    parent.pushStatementImportSlot(slot);
   }
 }

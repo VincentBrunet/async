@@ -3,4 +3,5 @@ export interface FilesModule {
   source: string;
   object: string;
   debug: string;
+  code: string;
 }

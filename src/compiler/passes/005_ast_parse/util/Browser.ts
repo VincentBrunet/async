@@ -18,7 +18,7 @@ export class Browser {
     this.forward();
   }
 
-  peek(offset?: number) {
+  peek(offset?: number): Token {
     return this.readToken(offset);
   }
 
@@ -174,12 +174,17 @@ export class Browser {
     this.indexes[height] = this.indexes[height] + 1;
   }
 
-  private readToken(offset?: number) {
+  private readToken(offset?: number): Token {
     const token = this.tokens[this.getCurrentIndex() + (offset ?? 0)];
     if (token === undefined) {
       return {
         kind: TokenKind.Invalid,
         str: '',
+        location: {
+          index: { begin: -1, end: -1 },
+          line: { begin: -1, end: -1 },
+          column: { begin: -1, end: -1 },
+        },
       };
     }
     return token;

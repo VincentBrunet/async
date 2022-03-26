@@ -1,20 +1,20 @@
-import { AstTypeIdentifier } from "../../../data/ast/AstTypeIdentifier.ts";
-import { TokenKind } from "../../../data/token/Token.ts";
-import { Browser } from "../util/Browser.ts";
-import { TokenImpasse } from "../util/TokenImpasse.ts";
-import { parseType } from "./parseType.ts";
+import { AstTypeIdentifier } from '../../../data/ast/AstTypeIdentifier.ts';
+import { tokenIsText } from '../../../data/token/Token.ts';
+import { Browser } from '../util/Browser.ts';
+import { TokenImpasse } from '../util/TokenImpasse.ts';
+import { parseType } from './parseType.ts';
 
-const templateOpen = new Set(["<"]);
-const templateClose = new Set([">"]);
-const templateDelim = new Set([","]);
+const templateOpen = new Set(['<']);
+const templateClose = new Set(['>']);
+const templateDelim = new Set([',']);
 
 export function parseTypeIdentifier(
   browser: Browser,
 ): AstTypeIdentifier | TokenImpasse {
   // read native
   const name = browser.peek();
-  if (name.kind !== TokenKind.Text) {
-    return browser.impasse("TypeIdentifier.Name");
+  if (!tokenIsText(name)) {
+    return browser.impasse('TypeIdentifier.Name');
   }
   browser.consume();
   // param
@@ -26,7 +26,7 @@ export function parseTypeIdentifier(
     parseType,
   );
   if (params instanceof TokenImpasse) {
-    return browser.impasse("TypeIdentifier.Template", [
+    return browser.impasse('TypeIdentifier.Template', [
       params,
     ]);
   }

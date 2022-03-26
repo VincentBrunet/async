@@ -15,6 +15,7 @@ export enum AstTypePrimitiveNative {
   Unsigned64 = 'u64',
   Float32 = 'f32',
   Float64 = 'f64',
+  Pointer = 'ptr',
   Unknown = 'unknown',
 }
 

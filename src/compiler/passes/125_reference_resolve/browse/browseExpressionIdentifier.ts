@@ -5,5 +5,5 @@ export function browseExpressionIdentifier(
   ast: AstExpressionIdentifier,
   scope: Scope,
 ) {
-  ast.resolvedReference = scope.findReference(ast.name);
+  ast.resolvedReferenceValue = scope.findReferenceValue(ast.name);
 }

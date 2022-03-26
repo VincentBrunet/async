@@ -1,12 +1,12 @@
-import { AstExpressionFunction } from "../../../data/ast/AstExpressionFunction.ts";
-import { AstTypeFunctionParam } from "../../../data/ast/AstTypeFunction.ts";
-import { ensure } from "../../../lib/errors/ensure.ts";
-import { makeTypeFunction } from "../../../lib/typing/makeTypeFunction.ts";
-import { makeTypeOrFromArray } from "../../../lib/typing/makeTypeOrFromArray.ts";
-import { makeTypePrimitiveAny } from "../../../lib/typing/makeTypePrimitiveAny.ts";
-import { makeTypePrimitiveUnknown } from "../../../lib/typing/makeTypePrimitiveUnknown.ts";
-import { computeResolvedClosureType } from "../util/computeResolvedClosureType.ts";
-import { Tracker } from "../util/Tracker.ts";
+import { AstExpressionFunction } from '../../../data/ast/AstExpressionFunction.ts';
+import { AstTypeFunctionParam } from '../../../data/ast/AstTypeFunction.ts';
+import { ensure } from '../../../passes/errors/ensure.ts';
+import { makeTypeFunction } from '../../../lib/typing/makeTypeFunction.ts';
+import { makeTypeOrFromArray } from '../../../lib/typing/makeTypeOrFromArray.ts';
+import { makeTypePrimitiveAny } from '../../../lib/typing/makeTypePrimitiveAny.ts';
+import { makeTypePrimitiveUnknown } from '../../../lib/typing/makeTypePrimitiveUnknown.ts';
+import { utilTypeForReferenceValueClosure } from '../util/utilTypeForReferenceValueClosure.ts';
+import { Tracker } from '../util/Tracker.ts';
 
 export function browseExpressionFunction(
   next: () => void,
@@ -14,7 +14,7 @@ export function browseExpressionFunction(
   tracker: Tracker,
 ) {
   // Asserts
-  const resolvedClosures = ensure(ast.resolvedClosures);
+  const referenceValueClosures = ensure(ast.referenceValueClosures);
   const resolvedReturns = ensure(ast.resolvedReturns);
 
   // Prepare a simple original annotation-based type
@@ -30,11 +30,12 @@ export function browseExpressionFunction(
   });
   if (ast.ret.type) {
     ast.resolvedType = makeTypeFunction(typeParams, ast.ret.type, ast);
+    ast.resolvedTypeRet = ast.ret.type;
   }
 
   // Resolve closures types
-  for (const closure of resolvedClosures) {
-    closure.resolvedType = computeResolvedClosureType(closure);
+  for (const referenceValueClosure of referenceValueClosures) {
+    referenceValueClosure.resolvedType = utilTypeForReferenceValueClosure(referenceValueClosure);
   }
 
   // Recurse in function statements
@@ -42,13 +43,12 @@ export function browseExpressionFunction(
 
   // Find all return types
   const returns = makeTypeOrFromArray(
-    resolvedReturns.map((resolvedReturn) =>
-      ensure(resolvedReturn.resolvedType)
-    ),
+    resolvedReturns.map((resolvedReturn) => ensure(resolvedReturn.resolvedType)),
     ast,
   );
   const typeReturn = ast.ret.type ?? returns ??
     makeTypePrimitiveUnknown(ast.ret);
 
   ast.resolvedType = makeTypeFunction(typeParams, typeReturn, ast);
+  ast.resolvedTypeRet = typeReturn;
 }

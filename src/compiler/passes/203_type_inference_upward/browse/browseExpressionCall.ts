@@ -1,7 +1,7 @@
 import { AstExpressionCall } from '../../../data/ast/AstExpressionCall.ts';
-import { AstTypeKind } from '../../../data/ast/AstType.ts';
-import { AstTypeFunction } from '../../../data/ast/AstTypeFunction.ts';
+import { astTypeAsFunction } from '../../../data/ast/AstType.ts';
 import { makeTypePrimitiveUnknown } from '../../../lib/typing/makeTypePrimitiveUnknown.ts';
+import { ensure } from '../../errors/ensure.ts';
 import { Tracker } from '../util/Tracker.ts';
 
 export function browseExpressionCall(
@@ -11,16 +11,12 @@ export function browseExpressionCall(
 ) {
   next();
 
-  const calleeType = ast.callee.resolvedType;
-  if (calleeType === undefined) {
-    return;
-  }
-
-  if (calleeType.kind !== AstTypeKind.Function) {
+  const typeFunction = astTypeAsFunction(ensure(ast.callee.resolvedType));
+  if (!typeFunction) {
     //throw new Error("Cannot call a value that's not a function");
     ast.resolvedType = makeTypePrimitiveUnknown(ast.callee);
     return;
   }
 
-  ast.resolvedType = (calleeType.data as AstTypeFunction).ret;
+  ast.resolvedType = typeFunction.ret;
 }

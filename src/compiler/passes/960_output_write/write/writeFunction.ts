@@ -5,6 +5,7 @@ import { writeBlock } from './writeBlock.ts';
 export function writeFunction(writer: Writer, outputFunction: OutputFunction) {
   // Function definition
   writer.pushBoth(outputFunction.type);
+  writer.pushBoth(' ');
   writer.pushBoth(outputFunction.name);
   writer.pushBoth('(');
   for (let i = 0; i < outputFunction.params.length; i++) {

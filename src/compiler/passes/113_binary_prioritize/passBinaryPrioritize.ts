@@ -1,8 +1,8 @@
 import { UnitModule } from '../../data/unit/UnitModule.ts';
-import { makeRecursorPassNaive } from '../util/makeRecursorPassNaive.ts';
+import { makeRecursorPassDfs } from '../util/makeRecursorPassDfs.ts';
 import { browseExpressionBinary } from './browse/browseExpressionBinary.ts';
 
-const pass = makeRecursorPassNaive({
+const pass = makeRecursorPassDfs({
   recurseExpressionBinary: browseExpressionBinary,
 });
 

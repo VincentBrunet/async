@@ -1,8 +1,8 @@
-import { AstExpressionRun } from "../../../data/ast/AstExpressionRun.ts";
-import { ensure } from "../../../lib/errors/ensure.ts";
-import { makeTypeOrFromArray } from "../../../lib/typing/makeTypeOrFromArray.ts";
-import { computeResolvedClosureType } from "../util/computeResolvedClosureType.ts";
-import { Tracker } from "../util/Tracker.ts";
+import { AstExpressionRun } from '../../../data/ast/AstExpressionRun.ts';
+import { ensure } from '../../../passes/errors/ensure.ts';
+import { makeTypeOrFromArray } from '../../../lib/typing/makeTypeOrFromArray.ts';
+import { utilTypeForReferenceValueClosure } from '../util/utilTypeForReferenceValueClosure.ts';
+import { Tracker } from '../util/Tracker.ts';
 
 export function browseExpressionRun(
   next: () => void,
@@ -10,12 +10,12 @@ export function browseExpressionRun(
   tracker: Tracker,
 ) {
   // Asserts
-  const resolvedClosures = ensure(ast.resolvedClosures);
+  const referenceValueClosures = ensure(ast.referenceValueClosures);
   const resolvedReturns = ensure(ast.resolvedReturns);
 
   // Resolve closure types
-  for (const closure of resolvedClosures) {
-    closure.resolvedType = computeResolvedClosureType(closure);
+  for (const referenceValueClosure of referenceValueClosures) {
+    referenceValueClosure.resolvedType = utilTypeForReferenceValueClosure(referenceValueClosure);
   }
 
   // Prep type before recursion
@@ -26,9 +26,7 @@ export function browseExpressionRun(
 
   // Find all return types
   const returns = makeTypeOrFromArray(
-    resolvedReturns.map((resolvedReturn) =>
-      ensure(resolvedReturn.resolvedType)
-    ),
+    resolvedReturns.map((resolvedReturn) => ensure(resolvedReturn.resolvedType)),
     ast,
   );
 

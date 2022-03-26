@@ -1,10 +1,10 @@
-import { Ast } from "./Ast.ts";
-import { AstAnnotationTemplate } from "./AstAnnotationTemplate.ts";
-import { AstAnnotationType } from "./AstAnnotationType.ts";
-import { AstBlock } from "./AstBlock.ts";
-import { AstResolvedClosure } from "./AstResolvedClosure.ts";
-import { AstStatementReturn } from "./AstStatementReturn.ts";
-import { AstType } from "./AstType.ts";
+import { Ast } from './Ast.ts';
+import { AstAnnotationTemplate } from './AstAnnotationTemplate.ts';
+import { AstAnnotationType } from './AstAnnotationType.ts';
+import { AstBlock } from './AstBlock.ts';
+import { AstReferenceValueClosure } from './AstReferenceValueClosure.ts';
+import { AstStatementReturn } from './AstStatementReturn.ts';
+import { AstType } from './AstType.ts';
 
 export interface AstExpressionFunctionParam extends Ast {
   name?: string;
@@ -20,6 +20,8 @@ export interface AstExpressionFunction extends Ast {
   block: AstBlock;
 
   resolvedType?: AstType;
-  resolvedClosures?: Array<AstResolvedClosure>;
+  resolvedTypeRet?: AstType;
   resolvedReturns?: Array<AstStatementReturn>;
+
+  referenceValueClosures?: Array<AstReferenceValueClosure>;
 }

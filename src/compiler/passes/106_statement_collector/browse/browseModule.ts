@@ -2,8 +2,8 @@ import { AstModule } from '../../../data/ast/AstModule.ts';
 import { AstStatementExport } from '../../../data/ast/AstStatementExport.ts';
 import { AstStatementImport } from '../../../data/ast/AstStatementImport.ts';
 import { MapArray } from '../../../lib/core/data/MapArray.ts';
-import { assert } from '../../../lib/errors/assert.ts';
-import { ensure } from '../../../lib/errors/ensure.ts';
+import { assert } from '../../../passes/errors/assert.ts';
+import { ensure } from '../../../passes/errors/ensure.ts';
 import { Scope } from '../util/Scope.ts';
 
 function toMapArray<K, V>(array: Array<V>, keyer: (v: V) => K): MapArray<K, V> {

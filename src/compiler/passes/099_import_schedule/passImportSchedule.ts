@@ -1,8 +1,8 @@
 import { AstModule } from '../../data/ast/AstModule.ts';
-import { makeRecursorPassNaive } from '../util/makeRecursorPassNaive.ts';
+import { makeRecursorPassDfs } from '../util/makeRecursorPassDfs.ts';
 import { browseStatementImport } from './browse/browseStatementImport.ts';
 
-const pass = makeRecursorPassNaive({
+const pass = makeRecursorPassDfs({
   recurseStatementImport: browseStatementImport,
 });
 

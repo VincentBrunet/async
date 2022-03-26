@@ -5,22 +5,28 @@ const c1 = true
 const c2 = false
 const c3 = null
 
-const obj = object {
-  const dudu = 32
+const lala = obj {
+  const dudu = 32;
   const lol = c3
+}
+
+const dudu = expr {
+  return 42
 }
 
 const hello = fn (num) {
 
   const f = fn (num2) {
-    hello(num, num2, c3)
+    //hello(num, num2, c3)
   }
 
   f(num)
 }
 
-const world = hello
+export const world = hello
 
 world(32)
 
+export mutable rofl = hello
 
+rofl(11)

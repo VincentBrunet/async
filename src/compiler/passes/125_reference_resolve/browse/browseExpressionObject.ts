@@ -1,5 +1,5 @@
 import { AstExpressionObject } from '../../../data/ast/AstExpressionObject.ts';
-import { ensure } from '../../../lib/errors/ensure.ts';
+import { ensure } from '../../../passes/errors/ensure.ts';
 import { Scope } from '../util/Scope.ts';
 
 export function browseExpressionObject(
@@ -7,13 +7,13 @@ export function browseExpressionObject(
   scope: Scope,
 ) {
   // Asserts
-  const resolvedClosures = ensure(ast.resolvedClosures);
+  const referenceValueClosures = ensure(ast.referenceValueClosures);
 
-  // Closures (resolve and declare)
-  for (const astClosure of resolvedClosures) {
-    astClosure.resolvedReference = scope.findReference(astClosure.name);
+  // ValueClosures (resolve and declare)
+  for (const referenceValueClosure of referenceValueClosures) {
+    referenceValueClosure.resolvedReferenceValue = scope.findReferenceValue(referenceValueClosure.name);
   }
-  for (const astClosure of resolvedClosures) {
-    scope.pushClosure(astClosure);
+  for (const referenceValueClosure of referenceValueClosures) {
+    scope.pushReferenceValueClosure(referenceValueClosure);
   }
 }

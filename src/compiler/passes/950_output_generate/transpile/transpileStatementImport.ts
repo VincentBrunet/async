@@ -1,10 +1,10 @@
-import { AstStatementImport } from "../../../data/ast/AstStatementImport.ts";
-import { ensure } from "../../../lib/errors/ensure.ts";
-import { hashGlobalSymbol } from "../../../lib/hash/hashGlobalSymbol.ts";
-import { hashLocalSymbol } from "../../../lib/hash/hashLocalSymbol.ts";
-import { cacheFileFromHash } from "../../../lib/io/cacheFileFromHash.ts";
-import { RecursorPass } from "../../util/RecursorPass.ts";
-import { Transpiler } from "../util/Transpiler.ts";
+import { AstStatementImport } from '../../../data/ast/AstStatementImport.ts';
+import { ensure } from '../../../passes/errors/ensure.ts';
+import { hashGlobalSymbol } from '../../../passes/hash/hashGlobalSymbol.ts';
+import { hashLocalSymbol } from '../../../passes/hash/hashLocalSymbol.ts';
+import { cacheFileFromHash } from '../../../lib/io/cacheFileFromHash.ts';
+import { RecursorPass } from '../../util/RecursorPass.ts';
+import { Transpiler } from '../util/Transpiler.ts';
 
 export function transpileStatementImport(
   pass: RecursorPass,
@@ -19,7 +19,7 @@ export function transpileStatementImport(
   transpiler.pushInclude(
     cacheFileFromHash(
       resolvedModule.hash,
-      "output.h",
+      'output.h',
     ),
   );
 
@@ -29,14 +29,14 @@ export function transpileStatementImport(
   // Imported keys
   for (const slot of ast.slots) {
     transpiler.pushStatement([
-      "t_ref *",
-      hashLocalSymbol("import", slot.name),
-      " = ",
-      hashGlobalSymbol(resolvedModule.hash, resolvedModule, "getter"),
-      "()",
-      "[",
+      't_ref *',
+      hashLocalSymbol('import', slot.name),
+      ' = ',
+      hashGlobalSymbol(resolvedModule.hash, resolvedModule, 'getter'),
+      '()',
+      '[',
       resolvedExportKeys.indexOf(slot.name).toString(),
-      "]",
+      ']',
     ]);
   }
 }

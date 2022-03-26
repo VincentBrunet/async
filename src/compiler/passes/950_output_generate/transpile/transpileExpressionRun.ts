@@ -1,9 +1,10 @@
 import { AstExpressionRun } from '../../../data/ast/AstExpressionRun.ts';
-import { ensure } from '../../../lib/errors/ensure.ts';
-import { hashGlobalSymbol } from '../../../lib/hash/hashGlobalSymbol.ts';
+import { ensure } from '../../../passes/errors/ensure.ts';
+import { hashGlobalSymbol } from '../../../passes/hash/hashGlobalSymbol.ts';
 import { RecursorPass } from '../../util/RecursorPass.ts';
 import { Transpiler } from '../util/Transpiler.ts';
-import { utilTranspileResolvedClosure } from '../util/utilTranspileResolvedClosure.ts';
+import { utilTranspileReferenceValueClosure } from '../util/utilTranspileReferenceValueClosure.ts';
+import { utilTranspileType } from '../util/utilTranspileType.ts';
 
 export function transpileExpressionRun(
   pass: RecursorPass,
@@ -11,7 +12,7 @@ export function transpileExpressionRun(
   transpiler: Transpiler,
 ) {
   // Asserts
-  const resolvedClosures = ensure(ast.resolvedClosures);
+  const referenceValueClosures = ensure(ast.referenceValueClosures);
 
   // Generate a stable unique name
   const name = hashGlobalSymbol(
@@ -21,8 +22,8 @@ export function transpileExpressionRun(
   );
 
   // Simply call the run function in the expression
-  const runCallLength = resolvedClosures.length.toString();
-  const runCallVariadic = resolvedClosures.length > 9;
+  const runCallLength = referenceValueClosures.length.toString();
+  const runCallVariadic = referenceValueClosures.length > 9;
   transpiler.pushStatementPart('run_call_');
   if (runCallVariadic) {
     transpiler.pushStatementPart('x');
@@ -36,14 +37,15 @@ export function transpileExpressionRun(
     transpiler.pushStatementPart(', ');
     transpiler.pushStatementPart(runCallLength);
   }
-  for (const astClosure of resolvedClosures) {
+  for (const referenceValueClosure of referenceValueClosures) {
     transpiler.pushStatementPart(', ');
-    utilTranspileResolvedClosure(astClosure, transpiler);
+    utilTranspileReferenceValueClosure(referenceValueClosure, transpiler);
   }
   transpiler.pushStatementPart(')');
 
   // New scope
-  transpiler.pushFunction('t_value *', name, [{ type: 't_closure', name: 'closure' }]);
+  const transpiledType = utilTranspileType(ensure(ast.resolvedType), false);
+  transpiler.pushFunction(transpiledType, name, [{ type: 't_closure', name: 'closure' }]);
 
   // Run the recursive writing
   transpiler.pushStatement(['/* run block */']);

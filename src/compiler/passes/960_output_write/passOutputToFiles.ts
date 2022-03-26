@@ -14,13 +14,17 @@ export async function passOutputToFiles(unit: UnitModule) {
     source: cacheFileFromHash(hash, 'output.c'),
     object: cacheFileFromHash(hash, 'output.o'),
     debug: cacheFileFromHash(hash, 'output.json'),
+    code: cacheFileFromHash(hash, 'output.ac'),
   };
+
+  await ensureDir(cacheDirFromHash(hash));
 
   const writer = new Writer(files);
   writeModule(writer, unit);
-  await ensureDir(cacheDirFromHash(hash));
-  await Deno.writeTextFile(files.debug, stringify(unit, new Set<string>(['token'])));
   await writer.flush();
+
+  await Deno.writeTextFile(files.debug, stringify(unit, new Set<string>(['token'])));
+  await Deno.writeTextFile(files.code, unit.code.content);
 
   unit.files = files;
 }

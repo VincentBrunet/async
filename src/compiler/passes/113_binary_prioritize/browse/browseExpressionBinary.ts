@@ -1,4 +1,4 @@
-import { AstExpression, AstExpressionKind } from '../../../data/ast/AstExpression.ts';
+import { AstExpression, astExpressionAsBinary, astExpressionMakeBinary } from '../../../data/ast/AstExpression.ts';
 import { AstExpressionBinary, AstExpressionBinaryOperator } from '../../../data/ast/AstExpressionBinary.ts';
 
 /**
@@ -29,23 +29,18 @@ precedenceMap.set(AstExpressionBinaryOperator.Assign, 1);
 /**
  * Recursor tooling for the binary chain
  */
-function getBinary(expression: AstExpression): AstExpressionBinary | undefined {
-  if (expression.kind === AstExpressionKind.Binary) {
-    return expression.data as AstExpressionBinary;
-  }
-  return undefined;
-}
+
 function listBinaryLeafs(
   binary: AstExpressionBinary,
   leafs: Array<AstExpression>,
 ) {
-  const left = getBinary(binary.expression1);
+  const left = astExpressionAsBinary(binary.expression1);
   if (left) {
     listBinaryLeafs(left, leafs);
   } else {
     leafs.push(binary.expression1);
   }
-  const right = getBinary(binary.expression2);
+  const right = astExpressionAsBinary(binary.expression2);
   if (right) {
     listBinaryLeafs(right, leafs);
   } else {
@@ -56,12 +51,12 @@ function listBinaryNodes(
   binary: AstExpressionBinary,
   nodes: Array<AstExpressionBinary>,
 ) {
-  const left = getBinary(binary.expression1);
+  const left = astExpressionAsBinary(binary.expression1);
   if (left) {
     listBinaryNodes(left, nodes);
   }
   nodes.push(binary);
-  const right = getBinary(binary.expression2);
+  const right = astExpressionAsBinary(binary.expression2);
   if (right) {
     listBinaryNodes(right, nodes);
   }
@@ -109,15 +104,12 @@ export function browseExpressionBinary(
     const node = nodes[step.idx];
     const expression1 = expressions[idx1];
     const expression2 = expressions[idx2];
-    expression = {
-      kind: AstExpressionKind.Binary,
-      data: {
-        operator: node.operator,
-        expression1: expression1,
-        expression2: expression2,
-        resolvedPrioritization: true,
-      },
-    };
+    expression = astExpressionMakeBinary({
+      operator: node.operator,
+      expression1: expression1,
+      expression2: expression2,
+      resolvedPrioritization: true,
+    });
     while (expressions[idx1] === expression1) {
       expressions[idx1] = expression;
       idx1 -= 1;
@@ -132,7 +124,7 @@ export function browseExpressionBinary(
   if (expression === undefined) {
     throw new Error('Could not build the binary graph');
   }
-  const binary = getBinary(expression);
+  const binary = astExpressionAsBinary(expression);
   if (binary === undefined) {
     throw new Error('binary graph result was not binary');
   }

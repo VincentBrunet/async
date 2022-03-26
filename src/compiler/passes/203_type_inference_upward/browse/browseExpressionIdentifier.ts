@@ -1,7 +1,7 @@
 import { AstExpressionIdentifier } from '../../../data/ast/AstExpressionIdentifier.ts';
-import { ensure } from '../../../lib/errors/ensure.ts';
-import { computeResolvedReferenceType } from '../util/computeResolvedReferenceType.ts';
+import { ensure } from '../../../passes/errors/ensure.ts';
 import { Tracker } from '../util/Tracker.ts';
+import { utilTypeForReferenceValue } from '../util/utilTypeForReferenceValue.ts';
 
 export function browseExpressionIdentifier(
   next: () => void,
@@ -9,9 +9,9 @@ export function browseExpressionIdentifier(
   tracker: Tracker,
 ) {
   // Asserts
-  const resolvedReference = ensure(ast.resolvedReference);
+  const resolvedReferenceValue = ensure(ast.resolvedReferenceValue, ast.name);
 
   next();
 
-  ast.resolvedType = computeResolvedReferenceType(resolvedReference);
+  ast.resolvedType = utilTypeForReferenceValue(resolvedReferenceValue);
 }

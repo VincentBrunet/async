@@ -1,16 +1,13 @@
-import {
-  AstTypeObject,
-  AstTypeObjectField,
-} from "../../../data/ast/AstTypeObject.ts";
-import { TokenKind } from "../../../data/token/Token.ts";
-import { hashObjectKey } from "../../../lib/hash/hashObjectKey.ts";
-import { Browser } from "../util/Browser.ts";
-import { TokenImpasse } from "../util/TokenImpasse.ts";
-import { parseAnnotationType } from "./parseAnnotationType.ts";
+import { AstTypeObject, AstTypeObjectField } from '../../../data/ast/AstTypeObject.ts';
+import { tokenIsText } from '../../../data/token/Token.ts';
+import { hashObjectKey } from '../../../passes/hash/hashObjectKey.ts';
+import { Browser } from '../util/Browser.ts';
+import { TokenImpasse } from '../util/TokenImpasse.ts';
+import { parseAnnotationType } from './parseAnnotationType.ts';
 
-const fieldOpen = new Set(["{"]);
-const fieldClose = new Set(["}"]);
-const fieldDelim = new Set([",", ";"]);
+const fieldOpen = new Set(['{']);
+const fieldClose = new Set(['}']);
+const fieldDelim = new Set([';']);
 
 function parseTypeObjectField(
   browser: Browser,
@@ -18,29 +15,29 @@ function parseTypeObjectField(
   // field - mutable
   let mutable = false;
   const fieldMutable = browser.peek();
-  if (fieldMutable.str === "const") {
+  if (fieldMutable.str === 'const') {
     mutable = false;
     browser.consume();
-  } else if (fieldMutable.str === "mutable") {
+  } else if (fieldMutable.str === 'mutable') {
     mutable = true;
     browser.consume();
   }
   // field - name
   const fieldName = browser.peek();
-  if (fieldName.kind !== TokenKind.Text) {
-    return browser.impasse("TypeObject.Field.Name");
+  if (!tokenIsText(fieldName)) {
+    return browser.impasse('TypeObject.Field.Name');
   }
   browser.consume();
   const name = fieldName.str;
   // field - type
   const fieldAnnotation = browser.recurse(parseAnnotationType);
   if (fieldAnnotation instanceof TokenImpasse) {
-    return browser.impasse("TypeObject.Field.Annotation", [
+    return browser.impasse('TypeObject.Field.Annotation', [
       fieldAnnotation,
     ]);
   }
   if (fieldAnnotation.type === undefined) {
-    return browser.impasse("TypeObject.Field.Type");
+    return browser.impasse('TypeObject.Field.Type');
   }
   // field - hash
   const hash = hashObjectKey(name);
@@ -65,7 +62,7 @@ export function parseTypeObject(
     parseTypeObjectField,
   );
   if (fields instanceof TokenImpasse) {
-    return browser.impasse("TypeObject.Fields", [fields]);
+    return browser.impasse('TypeObject.Fields', [fields]);
   }
   // done, ast
   return {

@@ -1,5 +1,5 @@
 import { UnitModule } from '../../data/unit/UnitModule.ts';
-import { ensure } from '../../lib/errors/ensure.ts';
+import { ensure } from '../../passes/errors/ensure.ts';
 import { compileCommand } from '../../lib/io/compileCommand.ts';
 
 export async function passFilesToObject(unit: UnitModule) {

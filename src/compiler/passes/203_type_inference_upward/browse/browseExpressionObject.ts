@@ -1,10 +1,10 @@
-import { AstExpressionObject } from "../../../data/ast/AstExpressionObject.ts";
-import { AstTypeObjectField } from "../../../data/ast/AstTypeObject.ts";
-import { ensure } from "../../../lib/errors/ensure.ts";
-import { makeTypeObject } from "../../../lib/typing/makeTypeObject.ts";
-import { makeTypePrimitiveUnknown } from "../../../lib/typing/makeTypePrimitiveUnknown.ts";
-import { computeResolvedClosureType } from "../util/computeResolvedClosureType.ts";
-import { Tracker } from "../util/Tracker.ts";
+import { AstExpressionObject } from '../../../data/ast/AstExpressionObject.ts';
+import { AstTypeObjectField } from '../../../data/ast/AstTypeObject.ts';
+import { ensure } from '../../../passes/errors/ensure.ts';
+import { makeTypeObject } from '../../../lib/typing/makeTypeObject.ts';
+import { makeTypePrimitiveUnknown } from '../../../lib/typing/makeTypePrimitiveUnknown.ts';
+import { utilTypeForReferenceValueClosure } from '../util/utilTypeForReferenceValueClosure.ts';
+import { Tracker } from '../util/Tracker.ts';
 
 export function browseExpressionObject(
   next: () => void,
@@ -12,11 +12,11 @@ export function browseExpressionObject(
   tracker: Tracker,
 ) {
   // Asserts
-  const resolvedClosures = ensure(ast.resolvedClosures);
+  const referenceValueClosures = ensure(ast.referenceValueClosures);
 
   // Resolve closures types
-  for (const closure of resolvedClosures) {
-    closure.resolvedType = computeResolvedClosureType(closure);
+  for (const referenceValueClosure of referenceValueClosures) {
+    referenceValueClosure.resolvedType = utilTypeForReferenceValueClosure(referenceValueClosure);
   }
 
   // Prep type before recursion

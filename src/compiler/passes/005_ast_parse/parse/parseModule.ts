@@ -1,5 +1,5 @@
 import { AstModule } from '../../../data/ast/AstModule.ts';
-import { ensure } from '../../../lib/errors/ensure.ts';
+import { ensure } from '../../../passes/errors/ensure.ts';
 import { Browser } from '../util/Browser.ts';
 import { TokenImpasse } from '../util/TokenImpasse.ts';
 import { parseBlock } from './parseBlock.ts';

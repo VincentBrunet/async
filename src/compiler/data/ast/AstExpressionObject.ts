@@ -1,8 +1,8 @@
-import { Ast } from "./Ast.ts";
-import { AstAnnotationType } from "./AstAnnotationType.ts";
-import { AstExpression } from "./AstExpression.ts";
-import { AstResolvedClosure } from "./AstResolvedClosure.ts";
-import { AstType } from "./AstType.ts";
+import { Ast } from './Ast.ts';
+import { AstAnnotationType } from './AstAnnotationType.ts';
+import { AstExpression } from './AstExpression.ts';
+import { AstReferenceValueClosure } from './AstReferenceValueClosure.ts';
+import { AstType } from './AstType.ts';
 
 export interface AstExpressionObjectField extends Ast {
   mutable: boolean;
@@ -17,5 +17,6 @@ export interface AstExpressionObject extends Ast {
   fields: Array<AstExpressionObjectField>;
 
   resolvedType?: AstType;
-  resolvedClosures?: Array<AstResolvedClosure>;
+
+  referenceValueClosures?: Array<AstReferenceValueClosure>;
 }

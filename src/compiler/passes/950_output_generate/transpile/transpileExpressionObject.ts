@@ -1,9 +1,11 @@
 import { AstExpressionObject, AstExpressionObjectField } from '../../../data/ast/AstExpressionObject.ts';
-import { ensure } from '../../../lib/errors/ensure.ts';
-import { hashGlobalSymbol } from '../../../lib/hash/hashGlobalSymbol.ts';
+import { ensure } from '../../../passes/errors/ensure.ts';
+import { hashGlobalSymbol } from '../../../passes/hash/hashGlobalSymbol.ts';
+import { hashLocalSymbol } from '../../hash/hashLocalSymbol.ts';
 import { RecursorPass } from '../../util/RecursorPass.ts';
 import { Transpiler } from '../util/Transpiler.ts';
-import { utilTranspileResolvedClosure } from '../util/utilTranspileResolvedClosure.ts';
+import { utilTranspileReferenceValueClosure } from '../util/utilTranspileReferenceValueClosure.ts';
+import { utilTranspileType } from '../util/utilTranspileType.ts';
 
 export function transpileExpressionObject(
   pass: RecursorPass,
@@ -11,7 +13,7 @@ export function transpileExpressionObject(
   transpiler: Transpiler,
 ) {
   // Assert
-  const resolvedClosures = ensure(ast.resolvedClosures);
+  const referenceValueClosures = ensure(ast.referenceValueClosures);
 
   // Generate a stable unique name
   const name = hashGlobalSymbol(
@@ -21,8 +23,8 @@ export function transpileExpressionObject(
   );
 
   // Simply call the object factory in the expression
-  const objectCallLength = resolvedClosures.length.toString();
-  const objectCallVariadic = resolvedClosures.length > 9;
+  const objectCallLength = referenceValueClosures.length.toString();
+  const objectCallVariadic = referenceValueClosures.length > 9;
   transpiler.pushStatementPart('object_call_');
   if (objectCallVariadic) {
     transpiler.pushStatementPart('x');
@@ -36,14 +38,15 @@ export function transpileExpressionObject(
     transpiler.pushStatementPart(', ');
     transpiler.pushStatementPart(objectCallLength);
   }
-  for (const astClosure of resolvedClosures) {
+  for (const referenceValueClosure of referenceValueClosures) {
     transpiler.pushStatementPart(', ');
-    utilTranspileResolvedClosure(astClosure, transpiler);
+    utilTranspileReferenceValueClosure(referenceValueClosure, transpiler);
   }
   transpiler.pushStatementPart(')');
 
   // New scope
-  transpiler.pushFunction('t_value *', name, [{ type: 't_closure', name: 'closure' }]);
+  const transpiledType = utilTranspileType(ensure(ast.resolvedType), false);
+  transpiler.pushFunction(transpiledType, name, [{ type: 't_closure', name: 'closure' }]);
 
   // Fields
   const unsortedFields = ast.fields;
@@ -60,42 +63,50 @@ export function transpileExpressionObject(
   );
 
   // Create the module object containing all declared fields
-  const objectMakeLength = sortedFields.length.toString();
-  const objectMakeVariadic = sortedFields.length > 9;
+  const fieldLength = sortedFields.length.toString();
+  const fieldLocal = hashLocalSymbol('fields', 'object');
+
+  const objectFieldsParts = [];
+  objectFieldsParts.push('static t_u64');
+  objectFieldsParts.push(' ');
+  objectFieldsParts.push(fieldLocal);
+  objectFieldsParts.push('[');
+  objectFieldsParts.push(fieldLength);
+  objectFieldsParts.push(']');
+  objectFieldsParts.push(' = ');
+  objectFieldsParts.push('{');
+  objectFieldsParts.push(' ');
+  objectFieldsParts.push(sortedFields.map((field) => field.hash).join(', '));
+  objectFieldsParts.push(' ');
+  objectFieldsParts.push('}');
+  transpiler.pushStatement(objectFieldsParts);
+
   const objectMakeParts = [];
-  objectMakeParts.push('t_value *object = object_make_');
-  if (objectMakeVariadic) {
-    objectMakeParts.push('x');
-  } else {
-    objectMakeParts.push(objectMakeLength);
-  }
+  objectMakeParts.push('t_object object = object_make');
   objectMakeParts.push('(');
   objectMakeParts.push('type_object'); // TODO
-  if (objectMakeVariadic) {
-    objectMakeParts.push(', ');
-    objectMakeParts.push(objectMakeLength);
-  }
-  for (const field of sortedFields) {
-    objectMakeParts.push(', ');
-    objectMakeParts.push(field.hash);
-  }
+  objectMakeParts.push(', ');
+  objectMakeParts.push(fieldLength);
+  objectMakeParts.push(', ');
+  objectMakeParts.push(fieldLocal);
   objectMakeParts.push(')');
   transpiler.pushStatement(objectMakeParts);
 
   // Read a variable field pointer
   if (sortedFields.length) {
-    transpiler.pushStatement(['t_field *fields = object->data.object.fields']);
+    transpiler.pushStatement(['t_field fields = object->data.object.fields']);
   }
 
   // Make local references to created fields
   for (let i = 0; i < sortedFields.length; i++) {
     const sortedField = sortedFields[i];
     transpiler.pushStatement([
-      't_ref *',
+      't_field',
+      ' ',
       '_field_',
       sortedField.name,
       ' = ',
-      '(t_ref *)&(fields[',
+      '(t_field)&(fields[',
       i.toString(),
       '])',
     ]);

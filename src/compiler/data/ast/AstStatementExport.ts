@@ -1,12 +1,8 @@
-import { Ast } from "./Ast.ts";
-import { AstStatement } from "./AstStatement.ts";
-import { AstStatementTypedef } from "./AstStatementTypedef.ts";
-import { AstStatementVariable } from "./AstStatementVariable.ts";
+import { Ast } from './Ast.ts';
+import { AstStatement } from './AstStatement.ts';
 
 export interface AstStatementExport extends Ast {
   statement: AstStatement;
 
-  resolvedStatementVariable?: AstStatementVariable;
-  resolvedStatementTypedef?: AstStatementTypedef;
   resolvedName?: string;
 }

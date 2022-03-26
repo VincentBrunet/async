@@ -1,5 +1,5 @@
 import { AstExpressionFunction } from '../../../data/ast/AstExpressionFunction.ts';
-import { ensure } from '../../../lib/errors/ensure.ts';
+import { ensure } from '../../../passes/errors/ensure.ts';
 import { Scope } from '../util/Scope.ts';
 
 export function browseExpressionFunction(
@@ -7,25 +7,25 @@ export function browseExpressionFunction(
   scope: Scope,
 ) {
   // Asserts
-  const resolvedClosures = ensure(ast.resolvedClosures);
+  const referenceValueClosures = ensure(ast.referenceValueClosures);
 
-  // Closures (resolve and declare)
-  for (const astClosure of resolvedClosures) {
-    astClosure.resolvedReference = scope.findReference(astClosure.name);
+  // ValueClosures (resolve and declare)
+  for (const referenceValueClosure of referenceValueClosures) {
+    referenceValueClosure.resolvedReferenceValue = scope.findReferenceValue(referenceValueClosure.name);
   }
-  for (const astClosure of resolvedClosures) {
-    scope.pushClosure(astClosure);
+  for (const referenceValueClosure of referenceValueClosures) {
+    scope.pushReferenceValueClosure(referenceValueClosure);
   }
 
   // Template params
   for (const param of ast.template.params) {
-    scope.pushTemplateParam(param);
+    scope.pushAnnotationTemplateParam(param);
   }
 
   // Function params
   for (const astParam of ast.params) {
     if (astParam.name) {
-      scope.pushFunctionParam(astParam);
+      scope.pushExpressionFunctionParam(astParam);
     }
   }
 }

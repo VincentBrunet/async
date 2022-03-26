@@ -7,5 +7,5 @@ export function browseExpressionObject(
   scope: Scope,
 ) {
   next();
-  ast.resolvedClosures = scope.readClosures();
+  ast.referenceValueClosures = scope.readValueClosures();
 }

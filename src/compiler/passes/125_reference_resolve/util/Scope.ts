@@ -1,86 +1,107 @@
-import { AstAnnotationTemplateParam } from "../../../data/ast/AstAnnotationTemplate.ts";
-import { AstExpressionFunctionParam } from "../../../data/ast/AstExpressionFunction.ts";
-import { AstResolvedClosure } from "../../../data/ast/AstResolvedClosure.ts";
-import {
-  AstResolvedReference,
-  AstResolvedReferenceKind,
-} from "../../../data/ast/AstResolvedReference.ts";
-import { AstStatementImportSlot } from "../../../data/ast/AstStatementImport.ts";
-import { AstStatementTypedef } from "../../../data/ast/AstStatementTypedef.ts";
-import { AstStatementVariable } from "../../../data/ast/AstStatementVariable.ts";
-import { ensure } from "../../../lib/errors/ensure.ts";
+import { AstAnnotationTemplateParam } from '../../../data/ast/AstAnnotationTemplate.ts';
+import { AstExpressionFunctionParam } from '../../../data/ast/AstExpressionFunction.ts';
+import { AstReferenceValueClosure } from '../../../data/ast/AstReferenceValueClosure.ts';
+import { AstReferenceType, AstReferenceTypeKind } from '../../../data/ast/AstReferenceType.ts';
+import { AstReferenceValue, AstReferenceValueKind } from '../../../data/ast/AstReferenceValue.ts';
+import { AstStatementImportSlot } from '../../../data/ast/AstStatementImport.ts';
+import { AstStatementTypedef } from '../../../data/ast/AstStatementTypedef.ts';
+import { AstStatementVariable } from '../../../data/ast/AstStatementVariable.ts';
+import { ensure } from '../../../passes/errors/ensure.ts';
 
 export class Scope {
   public parent?: Scope;
 
-  private references = new Map<string, AstResolvedReference>();
+  private referenceTypes = new Map<string, AstReferenceType>();
+  private referenceValues = new Map<string, AstReferenceValue>();
 
   constructor(parent?: Scope) {
     this.parent = parent;
   }
 
-  pushTemplateParam(template: AstAnnotationTemplateParam) {
-    this.pushReference(template.name, {
-      kind: AstResolvedReferenceKind.TemplateParam,
+  pushAnnotationTemplateParam(template: AstAnnotationTemplateParam): void {
+    this.pushReferenceType(template.name, {
+      kind: AstReferenceTypeKind.AnnotationTemplateParam,
       data: template,
     });
   }
 
-  pushTypedef(typedef: AstStatementTypedef) {
+  pushStatementTypedef(typedef: AstStatementTypedef): void {
     const name = typedef.name;
-    this.pushReference(name, {
-      kind: AstResolvedReferenceKind.StatementTypedef,
+    this.pushReferenceType(name, {
+      kind: AstReferenceTypeKind.StatementTypedef,
       data: typedef,
     });
   }
 
-  pushVariable(statementVariable: AstStatementVariable) {
-    const name = statementVariable.name;
-    this.pushReference(name, {
-      kind: AstResolvedReferenceKind.StatementVariable,
-      data: statementVariable,
-    });
-  }
-
-  pushImportSlot(statementImportSlot: AstStatementImportSlot) {
+  pushStatementImportSlot(statementImportSlot: AstStatementImportSlot) {
     const name = statementImportSlot.name;
-    this.pushReference(name, {
-      kind: AstResolvedReferenceKind.StatementImportSlot,
+    this.pushReferenceType(name, {
+      kind: AstReferenceTypeKind.StatementImportSlot,
+      data: statementImportSlot,
+    });
+    this.pushReferenceValue(name, {
+      kind: AstReferenceValueKind.StatementImportSlot,
       data: statementImportSlot,
     });
   }
 
-  pushFunctionParam(expressionFunctionParam: AstExpressionFunctionParam) {
+  pushStatementVariable(statementVariable: AstStatementVariable) {
+    const name = statementVariable.name;
+    this.pushReferenceValue(name, {
+      kind: AstReferenceValueKind.StatementVariable,
+      data: statementVariable,
+    });
+  }
+
+  pushExpressionFunctionParam(expressionFunctionParam: AstExpressionFunctionParam) {
     const name = ensure(expressionFunctionParam.name);
-    this.pushReference(name, {
-      kind: AstResolvedReferenceKind.ExpressionFunctionParam,
+    this.pushReferenceValue(name, {
+      kind: AstReferenceValueKind.ExpressionFunctionParam,
       data: expressionFunctionParam,
     });
   }
 
-  pushClosure(resolvedClosure: AstResolvedClosure) {
+  pushReferenceValueClosure(resolvedClosure: AstReferenceValueClosure) {
     const name = resolvedClosure.name;
-    this.pushReference(name, {
-      kind: AstResolvedReferenceKind.ResolvedClosure,
+    this.pushReferenceValue(name, {
+      kind: AstReferenceValueKind.ReferenceValueClosure,
       data: resolvedClosure,
     });
   }
 
-  private pushReference(name: string, reference: AstResolvedReference) {
-    if (this.references.get(name)) {
+  private pushReferenceType(name: string, referenceType: AstReferenceType) {
+    if (this.referenceTypes.get(name)) {
       throw new Error(
-        "Already defined: " + (this.references.get(name)) +
-          " + " + (reference.data.name),
+        'Already defined type: ' + (this.referenceTypes.get(name)) +
+          ' + ' + (referenceType.data.name),
       );
     }
-    this.references.set(name, reference);
+    this.referenceTypes.set(name, referenceType);
   }
 
-  findReference(name: string): AstResolvedReference | undefined {
-    const reference = this.references.get(name);
+  private pushReferenceValue(name: string, reference: AstReferenceValue) {
+    if (this.referenceValues.get(name)) {
+      throw new Error(
+        'Already defined value: ' + (this.referenceValues.get(name)) +
+          ' + ' + (reference.data.name),
+      );
+    }
+    this.referenceValues.set(name, reference);
+  }
+
+  findReferenceType(name: string): AstReferenceType | undefined {
+    const reference = this.referenceTypes.get(name);
     if (reference) {
       return reference;
     }
-    return this.parent?.findReference(name);
+    return this.parent?.findReferenceType(name);
+  }
+
+  findReferenceValue(name: string): AstReferenceValue | undefined {
+    const reference = this.referenceValues.get(name);
+    if (reference) {
+      return reference;
+    }
+    return this.parent?.findReferenceValue(name);
   }
 }

@@ -1,10 +1,10 @@
-import { Ast } from "./Ast.ts";
-import { AstResolvedReference } from "./AstResolvedReference.ts";
-import { AstType } from "./AstType.ts";
+import { Ast } from './Ast.ts';
+import { AstReferenceValue } from './AstReferenceValue.ts';
+import { AstType } from './AstType.ts';
 
 export interface AstExpressionIdentifier extends Ast {
   name: string;
 
   resolvedType?: AstType;
-  resolvedReference?: AstResolvedReference;
+  resolvedReferenceValue?: AstReferenceValue;
 }

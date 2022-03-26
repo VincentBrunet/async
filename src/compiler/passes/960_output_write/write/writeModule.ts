@@ -1,5 +1,5 @@
 import { UnitModule } from '../../../data/unit/UnitModule.ts';
-import { ensure } from '../../../lib/errors/ensure.ts';
+import { ensure } from '../../../passes/errors/ensure.ts';
 import { Writer } from '../util/Writer.ts';
 import { writeFunction } from './writeFunction.ts';
 import { writeInclude } from './writeInclude.ts';

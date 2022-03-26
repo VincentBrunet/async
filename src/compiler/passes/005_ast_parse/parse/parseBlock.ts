@@ -35,7 +35,6 @@ export function parseBlock(
     // parse statement
     const astStatement = browser.recurse(parseStatement);
     if (astStatement instanceof TokenImpasse) {
-      console.log('Block.Previous', JSON.stringify(statements, null, 4));
       return browser.impasse('Block.Statement', [astStatement]);
     }
     statements.push(astStatement);

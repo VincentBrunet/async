@@ -1,5 +1,5 @@
 import { AstStatementVariable } from '../../../data/ast/AstStatementVariable.ts';
-import { ensure } from '../../../lib/errors/ensure.ts';
+import { ensure } from '../../../passes/errors/ensure.ts';
 import { Scope } from '../util/Scope.ts';
 
 export function browseStatementVariable(
@@ -10,5 +10,5 @@ export function browseStatementVariable(
   const parent = ensure(scope.parent);
 
   // Variable in parent scope
-  parent.pushVariable(ast);
+  parent.pushStatementVariable(ast);
 }

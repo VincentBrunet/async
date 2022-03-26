@@ -1,7 +1,7 @@
-import { Ast } from "./Ast.ts";
-import { AstAnnotationType } from "./AstAnnotationType.ts";
-import { AstExpression } from "./AstExpression.ts";
-import { AstType } from "./AstType.ts";
+import { Ast } from './Ast.ts';
+import { AstAnnotationType } from './AstAnnotationType.ts';
+import { AstExpression } from './AstExpression.ts';
+import { AstType } from './AstType.ts';
 
 export interface AstStatementVariable extends Ast {
   mutable: boolean;
@@ -10,4 +10,5 @@ export interface AstStatementVariable extends Ast {
   value?: AstExpression;
 
   resolvedType?: AstType;
+  resolvedDynamic?: boolean;
 }

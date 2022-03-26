@@ -65,8 +65,8 @@ function makeFromNaive<Scope, Ast>(
   return (ast: Ast) => {
     if (naive) {
       const child = stack.push();
-      naive(ast, child);
       passStandard(ast);
+      naive(ast, child);
       stack.pop();
     } else {
       passStandard(ast);
@@ -74,56 +74,56 @@ function makeFromNaive<Scope, Ast>(
   };
 }
 
-export function makeRecursorPassNaive<Scope>(
+export function makeRecursorPassDfs<Scope>(
   naives: RecursorNaive<Scope>,
   scoper?: (parent: Scope) => Scope,
 ): (scope: Scope) => RecursorPass {
   return (scope: Scope) => {
     const stack = new RecursorStack(scope, scoper ?? ((v) => v));
 
-    const passNaive: RecursorPassHolder = {};
+    const passDfs: RecursorPassHolder = {};
 
-    const standardModule = makeFromStandard(passNaive, recurseModule);
-    const standardBlock = makeFromStandard(passNaive, recurseBlock);
+    const standardModule = makeFromStandard(passDfs, recurseModule);
+    const standardBlock = makeFromStandard(passDfs, recurseBlock);
 
-    const standardExpression = makeFromStandard(passNaive, recurseExpression);
-    const standardExpressionCall = makeFromStandard(passNaive, recurseExpressionCall);
-    const standardExpressionIdentifier = makeFromStandard(passNaive, recurseExpressionIdentifier);
-    const standardExpressionFunction = makeFromStandard(passNaive, recurseExpressionFunction);
-    const standardExpressionObject = makeFromStandard(passNaive, recurseExpressionObject);
-    const standardExpressionRun = makeFromStandard(passNaive, recurseExpressionRun);
-    const standardExpressionLookup = makeFromStandard(passNaive, recurseExpressionLookup);
-    const standardExpressionLiteral = makeFromStandard(passNaive, recurseExpressionLiteral);
-    const standardExpressionUnary = makeFromStandard(passNaive, recurseExpressionUnary);
-    const standardExpressionBinary = makeFromStandard(passNaive, recurseExpressionBinary);
-    const standardExpressionTyping = makeFromStandard(passNaive, recurseExpressionTyping);
-    const standardExpressionParenthesis = makeFromStandard(passNaive, recurseExpressionParenthesis);
+    const standardExpression = makeFromStandard(passDfs, recurseExpression);
+    const standardExpressionCall = makeFromStandard(passDfs, recurseExpressionCall);
+    const standardExpressionIdentifier = makeFromStandard(passDfs, recurseExpressionIdentifier);
+    const standardExpressionFunction = makeFromStandard(passDfs, recurseExpressionFunction);
+    const standardExpressionObject = makeFromStandard(passDfs, recurseExpressionObject);
+    const standardExpressionRun = makeFromStandard(passDfs, recurseExpressionRun);
+    const standardExpressionLookup = makeFromStandard(passDfs, recurseExpressionLookup);
+    const standardExpressionLiteral = makeFromStandard(passDfs, recurseExpressionLiteral);
+    const standardExpressionUnary = makeFromStandard(passDfs, recurseExpressionUnary);
+    const standardExpressionBinary = makeFromStandard(passDfs, recurseExpressionBinary);
+    const standardExpressionTyping = makeFromStandard(passDfs, recurseExpressionTyping);
+    const standardExpressionParenthesis = makeFromStandard(passDfs, recurseExpressionParenthesis);
 
-    const standardAnnotationType = makeFromStandard(passNaive, recurseAnnotationType);
-    const standardAnnotationTemplate = makeFromStandard(passNaive, recurseAnnotationTemplate);
+    const standardAnnotationType = makeFromStandard(passDfs, recurseAnnotationType);
+    const standardAnnotationTemplate = makeFromStandard(passDfs, recurseAnnotationTemplate);
 
-    const standardType = makeFromStandard(passNaive, recurseType);
-    const standardTypeParenthesis = makeFromStandard(passNaive, recurseTypeParenthesis);
-    const standardTypeIdentifier = makeFromStandard(passNaive, recurseTypeIdentifier);
-    const standardTypePrimitive = makeFromStandard(passNaive, recurseTypePrimitive);
-    const standardTypeBinary = makeFromStandard(passNaive, recurseTypeBinary);
-    const standardTypeFunction = makeFromStandard(passNaive, recurseTypeFunction);
-    const standardTypeObject = makeFromStandard(passNaive, recurseTypeObject);
+    const standardType = makeFromStandard(passDfs, recurseType);
+    const standardTypeParenthesis = makeFromStandard(passDfs, recurseTypeParenthesis);
+    const standardTypeIdentifier = makeFromStandard(passDfs, recurseTypeIdentifier);
+    const standardTypePrimitive = makeFromStandard(passDfs, recurseTypePrimitive);
+    const standardTypeBinary = makeFromStandard(passDfs, recurseTypeBinary);
+    const standardTypeFunction = makeFromStandard(passDfs, recurseTypeFunction);
+    const standardTypeObject = makeFromStandard(passDfs, recurseTypeObject);
 
-    const standardStatement = makeFromStandard(passNaive, recurseStatement);
-    const standardStatementImport = makeFromStandard(passNaive, recurseStatementImport);
-    const standardStatementExport = makeFromStandard(passNaive, recurseStatementExport);
-    const standardStatementVariable = makeFromStandard(passNaive, recurseStatementVariable);
-    const standardStatementTypedef = makeFromStandard(passNaive, recurseStatementTypedef);
-    const standardStatementBlock = makeFromStandard(passNaive, recurseStatementBlock);
-    const standardStatementWhile = makeFromStandard(passNaive, recurseStatementWhile);
-    const standardStatementCondition = makeFromStandard(passNaive, recurseStatementCondition);
-    const standardStatementReturn = makeFromStandard(passNaive, recurseStatementReturn);
-    const standardStatementUnsafe = makeFromStandard(passNaive, recurseStatementUnsafe);
-    const standardStatementExpression = makeFromStandard(passNaive, recurseStatementExpression);
-    const standardStatementEmpty = makeFromStandard(passNaive, recurseStatementEmpty);
+    const standardStatement = makeFromStandard(passDfs, recurseStatement);
+    const standardStatementImport = makeFromStandard(passDfs, recurseStatementImport);
+    const standardStatementExport = makeFromStandard(passDfs, recurseStatementExport);
+    const standardStatementVariable = makeFromStandard(passDfs, recurseStatementVariable);
+    const standardStatementTypedef = makeFromStandard(passDfs, recurseStatementTypedef);
+    const standardStatementBlock = makeFromStandard(passDfs, recurseStatementBlock);
+    const standardStatementWhile = makeFromStandard(passDfs, recurseStatementWhile);
+    const standardStatementCondition = makeFromStandard(passDfs, recurseStatementCondition);
+    const standardStatementReturn = makeFromStandard(passDfs, recurseStatementReturn);
+    const standardStatementUnsafe = makeFromStandard(passDfs, recurseStatementUnsafe);
+    const standardStatementExpression = makeFromStandard(passDfs, recurseStatementExpression);
+    const standardStatementEmpty = makeFromStandard(passDfs, recurseStatementEmpty);
 
-    passNaive.value = {
+    passDfs.value = {
       recurseModule: makeFromNaive(stack, standardModule, naives.recurseModule),
       recurseBlock: makeFromNaive(stack, standardBlock, naives.recurseBlock),
 
@@ -165,6 +165,6 @@ export function makeRecursorPassNaive<Scope>(
       recurseStatementEmpty: makeFromNaive(stack, standardStatementEmpty, naives.recurseStatementEmpty),
     };
 
-    return passNaive.value;
+    return passDfs.value;
   };
 }

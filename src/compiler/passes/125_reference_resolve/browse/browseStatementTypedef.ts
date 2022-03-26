@@ -1,5 +1,5 @@
 import { AstStatementTypedef } from '../../../data/ast/AstStatementTypedef.ts';
-import { ensure } from '../../../lib/errors/ensure.ts';
+import { ensure } from '../../../passes/errors/ensure.ts';
 import { Scope } from '../util/Scope.ts';
 
 export function browseStatementTypedef(
@@ -10,10 +10,10 @@ export function browseStatementTypedef(
   const parent = ensure(scope.parent);
 
   // Typedef in parent scope
-  parent.pushTypedef(ast);
+  parent.pushStatementTypedef(ast);
 
   // Params in child scope
   for (const param of ast.template.params) {
-    scope.pushTemplateParam(param);
+    scope.pushAnnotationTemplateParam(param);
   }
 }

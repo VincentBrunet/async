@@ -1,6 +1,6 @@
 import { AstBlock } from '../../../data/ast/AstBlock.ts';
-import { ensure } from '../../../lib/errors/ensure.ts';
-import { hashLocalSymbol } from '../../../lib/hash/hashLocalSymbol.ts';
+import { ensure } from '../../../passes/errors/ensure.ts';
+import { hashLocalSymbol } from '../../../passes/hash/hashLocalSymbol.ts';
 import { RecursorPass } from '../../util/RecursorPass.ts';
 import { Transpiler } from '../util/Transpiler.ts';
 import { utilTranspileType } from '../util/utilTranspileType.ts';
@@ -17,11 +17,11 @@ export function transpileBlock(
   transpiler.pushBlock();
 
   // Setup local variables
-  for (const variable of resolvedVariables) {
+  for (const resolvedVariable of resolvedVariables) {
     transpiler.pushStatement([
-      utilTranspileType(ensure(variable.resolvedType)),
+      utilTranspileType(ensure(resolvedVariable.resolvedType), resolvedVariable.mutable),
       ' ',
-      hashLocalSymbol('variable', variable.name),
+      hashLocalSymbol('variable', resolvedVariable.name),
       ' = ',
       'ref_make(NULL)',
     ]);

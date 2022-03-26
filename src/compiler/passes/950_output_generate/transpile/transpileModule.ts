@@ -1,79 +1,75 @@
-import { AstModule } from "../../../data/ast/AstModule.ts";
-import { ensure } from "../../../lib/errors/ensure.ts";
-import { hashGlobalSymbol } from "../../../lib/hash/hashGlobalSymbol.ts";
-import { hashLocalSymbol } from "../../../lib/hash/hashLocalSymbol.ts";
-import { cacheFileFromHash } from "../../../lib/io/cacheFileFromHash.ts";
-import { RecursorPass } from "../../util/RecursorPass.ts";
-import { Transpiler } from "../util/Transpiler.ts";
+import { AstModule } from '../../../data/ast/AstModule.ts';
+import { ensure } from '../../../passes/errors/ensure.ts';
+import { hashGlobalSymbol } from '../../../passes/hash/hashGlobalSymbol.ts';
+import { hashLocalSymbol } from '../../../passes/hash/hashLocalSymbol.ts';
+import { cacheFileFromHash } from '../../../lib/io/cacheFileFromHash.ts';
+import { RecursorPass } from '../../util/RecursorPass.ts';
+import { Transpiler } from '../util/Transpiler.ts';
+import { OutputStructField } from '../../../data/output/OutputStructs.ts';
+import { utilTranspileType } from '../util/utilTranspileType.ts';
+import { astStatementAsTypedef, astStatementAsVariable } from '../../../data/ast/AstStatement.ts';
 
 export function transpileModule(
   pass: RecursorPass,
   ast: AstModule,
   transpiler: Transpiler,
 ) {
-  // Asserts
-  const resolvedExports = ensure(ast.resolvedExports);
-
-  // Name
+  // Names
   const hash = ast.hash;
-  const name = hashGlobalSymbol(hash, ast, "module");
+  const nameStruct = hashGlobalSymbol(hash, ast, 'module');
+  const nameFactory = hashGlobalSymbol(hash, ast, 'factory');
 
   // Include
-  transpiler.pushInclude(cacheFileFromHash(hash, "output.h"));
+  transpiler.pushInclude(cacheFileFromHash(hash, 'output.h'));
 
-  // New Function
-  transpiler.pushFunction("t_ref **", name, []);
-
-  // Setup local exports
-  const resolvedExportNames = [...resolvedExports.keys()];
-  for (const resolvedExportName of resolvedExportNames) {
-    transpiler.pushStatement([
-      "t_ref *",
-      hashLocalSymbol("export", resolvedExportName),
-      " = ",
-      "NULL",
-    ]);
+  // Definition of module struct
+  const fields: OutputStructField[] = [];
+  for (const resolvedExport of ensure(ast.resolvedExports).values()) {
+    const variable = astStatementAsVariable(resolvedExport.statement);
+    if (variable) {
+      fields.push({
+        name: variable.name,
+        type: utilTranspileType(ensure(variable.resolvedType), variable.resolvedDynamic),
+      });
+    }
+    const typedef = astStatementAsTypedef(resolvedExport.statement);
+    if (typedef) {
+      fields.push({
+        name: typedef.name,
+        type: 'TYPE',
+      });
+    }
   }
+  transpiler.pushStruct(nameStruct, fields);
+
+  // New module Factory function
+  transpiler.pushFunction(nameStruct + '*', nameFactory, []);
+  transpiler.pushStatement([
+    'static',
+    ' ',
+    nameStruct + '*',
+    ' ',
+    'module',
+    ' = ',
+    '0;',
+  ]);
+  transpiler.pushStatement([
+    'if (module != 0)',
+  ]);
+  transpiler.pushBlock();
+  transpiler.pushStatement([
+    'return module',
+  ]);
+  transpiler.popBlock();
+  transpiler.pushStatement([
+    'module = malloc(sizeof(',
+    nameStruct,
+    '))',
+  ]);
 
   // Recurse in module content
-  transpiler.pushStatement(["/* module block */"]);
+  transpiler.pushStatement(['/* module block */']);
   pass.recurseBlock(ast.block);
 
-  // We simply return the module
-  const moduleMakeLength = resolvedExportNames.length.toString();
-  const moduleMakeVariadic = resolvedExportNames.length > 9;
-  const moduleMakeParts = [];
-  moduleMakeParts.push("return ");
-  moduleMakeParts.push("module_make_");
-  if (moduleMakeVariadic) {
-    moduleMakeParts.push("x");
-  } else {
-    moduleMakeParts.push(moduleMakeLength);
-  }
-  moduleMakeParts.push("(");
-  if (moduleMakeVariadic) {
-    moduleMakeParts.push(moduleMakeLength);
-    moduleMakeParts.push(", ");
-  }
-  for (let i = 0; i < resolvedExportNames.length; i++) {
-    if (i != 0) {
-      moduleMakeParts.push(", ");
-    }
-    moduleMakeParts.push(hashLocalSymbol("export", resolvedExportNames[i]));
-  }
-  moduleMakeParts.push(")");
-  transpiler.pushStatement(moduleMakeParts);
-
-  // New Function (getter)
-  transpiler.pushFunction(
-    "t_ref **",
-    hashGlobalSymbol(hash, ast, "getter"),
-    [],
-  );
-  transpiler.pushStatement(["static t_ref **exports = NULL"]);
-  transpiler.pushStatement(["if (exports == NULL)"]);
-  transpiler.pushBlock();
-  transpiler.pushStatement(["exports = ", name, "()"]);
-  transpiler.popBlock();
-  transpiler.pushStatement(["return exports"]);
+  transpiler.pushStatement(['return module']);
 }

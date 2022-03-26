@@ -1,12 +1,9 @@
-import {
-  AstExpressionBinary,
-  AstExpressionBinaryOperator,
-} from "../../../data/ast/AstExpressionBinary.ts";
-import { AstTypePrimitiveNative } from "../../../data/ast/AstTypePrimitive.ts";
-import { ensure } from "../../../lib/errors/ensure.ts";
-import { isTypePrimitive } from "../../../lib/typing/isTypePrimitive.ts";
-import { RecursorPass } from "../../util/RecursorPass.ts";
-import { Transpiler } from "../util/Transpiler.ts";
+import { AstExpressionBinary, AstExpressionBinaryOperator } from '../../../data/ast/AstExpressionBinary.ts';
+import { AstTypePrimitiveNative } from '../../../data/ast/AstTypePrimitive.ts';
+import { ensure } from '../../../passes/errors/ensure.ts';
+import { isTypePrimitive } from '../../../lib/typing/isTypePrimitive.ts';
+import { RecursorPass } from '../../util/RecursorPass.ts';
+import { Transpiler } from '../util/Transpiler.ts';
 
 export function transpileExpressionBinary(
   pass: RecursorPass,
@@ -19,7 +16,7 @@ export function transpileExpressionBinary(
 
   if (ast.operator === AstExpressionBinaryOperator.Assign) {
     pass.recurseExpression(ast.expression1);
-    transpiler.pushStatementPart(" = ");
+    transpiler.pushStatementPart(' = ');
     pass.recurseExpression(ast.expression2);
     return;
   }
@@ -33,20 +30,20 @@ export function transpileExpressionBinary(
     isTypePrimitive(type2, i32)
   ) {
     if (ast.operator === AstExpressionBinaryOperator.Addition) {
-      callName = "i32_addition";
+      callName = 'i32_addition';
     }
     if (ast.operator === AstExpressionBinaryOperator.Substraction) {
-      callName = "i32_substraction";
+      callName = 'i32_substraction';
     }
     if (ast.operator === AstExpressionBinaryOperator.Multiplication) {
-      callName = "i32_multiplication";
+      callName = 'i32_multiplication';
     }
   }
 
   transpiler.pushStatementPart(callName);
-  transpiler.pushStatementPart("(");
+  transpiler.pushStatementPart('(');
   pass.recurseExpression(ast.expression1);
-  transpiler.pushStatementPart(", ");
+  transpiler.pushStatementPart(', ');
   pass.recurseExpression(ast.expression2);
-  transpiler.pushStatementPart(")");
+  transpiler.pushStatementPart(')');
 }

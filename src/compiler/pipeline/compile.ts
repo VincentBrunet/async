@@ -13,7 +13,7 @@ import { passAstToOutput } from '../passes/950_output_generate/passAstToOutput.t
 import { passObjectToBinary } from '../passes/990_compile_binary/passObjectToBinary.ts';
 import { passImportLink } from '../passes/102_import_link/passImportLink.ts';
 import { UnitModule } from '../data/unit/UnitModule.ts';
-import { hashModuleId } from '../lib/hash/hashModuleId.ts';
+import { hashModuleId } from '../passes/hash/hashModuleId.ts';
 import { passOutputToFiles } from '../passes/960_output_write/passOutputToFiles.ts';
 import { passFilesToObject } from '../passes/980_compile_output/passFilesToObject.ts';
 import { passObjectFields } from '../passes/115_object_fields/passObjectFields.ts';

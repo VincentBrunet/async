@@ -12,5 +12,5 @@ export function browseExpressionFunction(
     }
   }
   next();
-  ast.resolvedClosures = scope.readClosures();
+  ast.referenceValueClosures = scope.readValueClosures();
 }

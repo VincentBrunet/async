@@ -1,5 +1,5 @@
-import { AstExpressionRun } from "../../../data/ast/AstExpressionRun.ts";
-import { Scope } from "../util/Scope.ts";
+import { AstExpressionRun } from '../../../data/ast/AstExpressionRun.ts';
+import { Scope } from '../util/Scope.ts';
 
 export function browseExpressionRun(
   next: () => void,
@@ -7,5 +7,5 @@ export function browseExpressionRun(
   scope: Scope,
 ) {
   next();
-  ast.resolvedClosures = scope.readClosures();
+  ast.referenceValueClosures = scope.readValueClosures();
 }
