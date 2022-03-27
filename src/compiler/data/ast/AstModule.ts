@@ -13,6 +13,6 @@ export interface AstModule extends Ast {
   resolvedExports?: Map<string, AstStatementExport>;
 
   symbolGlobalFactoryPointer?: string;
-  symbolGlobalGetterPointer?: string;
-  symbolGlobalModuleStruct?: string;
+  symbolGlobalExportStruct?: string;
+  symbolLocalModuleValue?: string;
 }

@@ -1,4 +1,4 @@
-export interface OutputGlobal {
+export interface OutputStatic {
   type: string;
   name: string;
   value: string;

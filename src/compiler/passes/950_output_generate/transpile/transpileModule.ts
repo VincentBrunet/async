@@ -1,6 +1,5 @@
 import { AstModule } from '../../../data/ast/AstModule.ts';
 import { ensure } from '../../../passes/errors/ensure.ts';
-import { cacheFileFromHash } from '../../../lib/io/cacheFileFromHash.ts';
 import { RecursorPass } from '../../util/RecursorPass.ts';
 import { Transpiler } from '../util/Transpiler.ts';
 import { OutputStructField } from '../../../data/output/OutputStructs.ts';
@@ -14,8 +13,8 @@ export function transpileModule(
 ): void {
   // Names
   const symbolGlobalFactoryPointer = ensure(astModule.symbolGlobalFactoryPointer);
-  const symbolGlobalGetterPointer = ensure(astModule.symbolGlobalGetterPointer);
-  const symbolGlobalModuleStruct = ensure(astModule.symbolGlobalModuleStruct);
+  const symbolGlobalExportStruct = ensure(astModule.symbolGlobalExportStruct);
+  const symbolLocalModuleValue = ensure(astModule.symbolLocalModuleValue);
 
   // Definition of module struct
   const fields: OutputStructField[] = [];
@@ -35,18 +34,18 @@ export function transpileModule(
       });
     }
   }
-  transpiler.pushStruct(symbolGlobalModuleStruct, fields);
+  transpiler.pushStruct(symbolGlobalExportStruct, fields);
 
   // New module Factory function
-  transpiler.pushFunction(symbolGlobalModuleStruct + '*', symbolGlobalFactoryPointer, []);
+  transpiler.pushFunction(symbolGlobalExportStruct + '*', symbolGlobalFactoryPointer, []);
   transpiler.pushStatement([
     'static',
     ' ',
-    symbolGlobalModuleStruct + '*',
+    symbolGlobalExportStruct + '*',
     ' ',
-    'module',
+    symbolLocalModuleValue,
     ' = ',
-    '0;',
+    'NULL',
   ]);
   transpiler.pushStatement([
     'if (module != 0)',
@@ -57,8 +56,9 @@ export function transpileModule(
   ]);
   transpiler.popBlock();
   transpiler.pushStatement([
-    'module = malloc(sizeof(',
-    symbolGlobalModuleStruct,
+    symbolLocalModuleValue,
+    ' = malloc(sizeof(',
+    symbolGlobalExportStruct,
     '))',
   ]);
 

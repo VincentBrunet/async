@@ -14,6 +14,6 @@ export function browseExpressionRun(
   astExpressionRun.symbolGlobalCallableFunction = hashGlobalSymbol(
     astModule.hash,
     astExpressionRun,
-    'callable',
+    'run_callable',
   );
 }

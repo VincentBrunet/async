@@ -56,8 +56,8 @@ export function transpileExpressionObject(
   // Create the module object containing all declared fields
   const fieldLength = sortedFields.length.toString();
 
-  transpiler.pushGlobal(
-    'static t_u64[]',
+  transpiler.pushStatic(
+    't_u64[]',
     symbolGlobalFieldsGlobal,
     [
       '{',

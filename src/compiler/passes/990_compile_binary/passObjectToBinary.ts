@@ -30,7 +30,7 @@ export async function passObjectToBinary(
   mainContent.push('\n');
   mainContent.push('\n');
   mainContent.push('t_module (*entry_module)() = ');
-  mainContent.push(ensure(unit.ast.symbolGlobalGetterPointer));
+  mainContent.push(ensure(unit.ast.symbolGlobalFactoryPointer));
   mainContent.push(';');
   mainContent.push('\n');
 

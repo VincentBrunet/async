@@ -30,7 +30,7 @@ export function transpileStatementImport(
       't_ref *',
       ensure(slot.symbolLocalValue),
       ' = ',
-      ensure(resolvedModule.symbolGlobalGetterPointer),
+      ensure(resolvedModule.symbolGlobalFactoryPointer),
       '()',
       '[',
       resolvedExportKeys.indexOf(slot.name).toString(),

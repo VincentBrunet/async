@@ -17,11 +17,11 @@ export function browseExpressionObject(
   astExpressionObject.symbolGlobalCallableFunction = hashGlobalSymbol(
     astModule.hash,
     astExpressionObject,
-    'callable',
+    'obj_callable',
   );
   astExpressionObject.symbolGlobalFieldsGlobal = hashGlobalSymbol(
     astModule.hash,
     astExpressionObject,
-    'fields',
+    'obj_fields',
   );
 }

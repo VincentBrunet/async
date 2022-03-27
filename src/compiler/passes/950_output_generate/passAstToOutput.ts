@@ -50,7 +50,7 @@ const pass = makeRecursorPassAdvanced({
 });
 
 export function passAstToOutput(unit: UnitModule) {
-  const transpiler = new Transpiler(unit);
+  const transpiler = new Transpiler();
   pass(transpiler).recurseModule(unit.ast);
   unit.output = transpiler.getOutput();
 }

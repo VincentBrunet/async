@@ -3,29 +3,21 @@ import { OutputFunctionParam } from '../../../data/output/OutputFunction.ts';
 import { OutputModule } from '../../../data/output/OutputModule.ts';
 import { OutputStatement } from '../../../data/output/OutputStatement.ts';
 import { OutputStructField } from '../../../data/output/OutputStructs.ts';
-import { UnitModule } from '../../../data/unit/UnitModule.ts';
 import { Stack } from '../../../lib/core/data/Stack.ts';
 
 export class Transpiler {
-  private currentUnit: UnitModule;
-
   private currentOutput: OutputModule;
   private currentStatement?: OutputStatement;
 
   private stackBlock = new Stack<OutputBlock>();
 
-  constructor(unit: UnitModule) {
-    this.currentUnit = unit;
+  constructor() {
     this.currentOutput = {
       includes: [],
       functions: [],
       structs: [],
-      globals: [],
+      statics: [],
     };
-  }
-
-  getUnit() {
-    return this.currentUnit;
   }
 
   getOutput() {
@@ -38,8 +30,8 @@ export class Transpiler {
     });
   }
 
-  pushGlobal(type: string, name: string, value: string) {
-    this.currentOutput.globals.push({
+  pushStatic(type: string, name: string, value: string) {
+    this.currentOutput.statics.push({
       type: type,
       name: name,
       value: value,

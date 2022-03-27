@@ -20,11 +20,16 @@ export function browseExpressionFunction(
   astExpressionFunction.symbolGlobalCallableFunction = hashGlobalSymbol(
     astModule.hash,
     astExpressionFunction,
-    'callable',
+    'fn_callable',
+  );
+  astExpressionFunction.symbolGlobalFactoryFunction = hashGlobalSymbol(
+    astModule.hash,
+    astExpressionFunction,
+    'fn_factory',
   );
   astExpressionFunction.symbolGlobalClosureStruct = hashGlobalSymbol(
     astModule.hash,
     astExpressionFunction,
-    'closure',
+    'fn_closure',
   );
 }

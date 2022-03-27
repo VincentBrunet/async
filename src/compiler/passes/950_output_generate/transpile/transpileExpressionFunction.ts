@@ -15,9 +15,21 @@ export function transpileExpressionFunction(
   const referenceValueClosures = ensure(astExpressionFunction.referenceValueClosures);
 
   const symbolGlobalCallableFunction = ensure(astExpressionFunction.symbolGlobalCallableFunction);
+  const symbolGlobalFactoryFunction = ensure(astExpressionFunction.symbolGlobalFactoryFunction);
   const symbolGlobalClosureStruct = ensure(astExpressionFunction.symbolGlobalClosureStruct);
 
-  // Make the struct for the
+  // Make the expression by just calling the factory
+  transpiler.pushStatementPart(symbolGlobalFactoryFunction);
+  transpiler.pushStatementPart('(');
+  for (const referenceValueClosure of referenceValueClosures) {
+    if (referenceValueClosure.idx !== 0) {
+      transpiler.pushStatementPart(', ');
+    }
+    utilTranspileReferenceValueClosure(referenceValueClosure, transpiler);
+  }
+  transpiler.pushStatementPart(')');
+
+  // Make the closure struct
   const closureParts: OutputStructField[] = [];
   for (const referenceValueClosure of referenceValueClosures) {
     closureParts.push({
@@ -27,31 +39,53 @@ export function transpileExpressionFunction(
   }
   transpiler.pushStruct(symbolGlobalClosureStruct, closureParts);
 
-  // Simply call the function factory
-  const functionMakeLength = referenceValueClosures.length.toString();
-  const functionMakeVariadic = referenceValueClosures.length > 9;
-  transpiler.pushStatementPart('function_make_');
-  if (functionMakeVariadic) {
-    transpiler.pushStatementPart('x');
-  } else {
-    transpiler.pushStatementPart(functionMakeLength);
-  }
-  transpiler.pushStatementPart('(');
-  transpiler.pushStatementPart('type_function'); // TODO,
-  transpiler.pushStatementPart(', ');
-  transpiler.pushStatementPart('(void*)&');
-  transpiler.pushStatementPart(symbolGlobalCallableFunction);
-  if (functionMakeVariadic) {
-    transpiler.pushStatementPart(', ');
-    transpiler.pushStatementPart(functionMakeLength);
-  }
+  // Make the factory function
+  const transpiledType = utilTranspileTypeAnnotation(ensure(astExpressionFunction.resolvedType));
+  transpiler.pushFunction(
+    transpiledType,
+    symbolGlobalFactoryFunction,
+    referenceValueClosures.map((referenceValueClosure) => {
+      return {
+        type: utilTranspileTypeAnnotation(ensure(referenceValueClosure.resolvedType)),
+        name: referenceValueClosure.name,
+      };
+    }),
+  );
+  transpiler.pushStatement([
+    transpiledType,
+    ' ',
+    'fn = malloc(sizeof(',
+    transpiledType,
+    '))',
+  ]);
+  transpiler.pushStatement([
+    symbolGlobalClosureStruct,
+    ' ',
+    'closure = malloc(sizeof(',
+    symbolGlobalClosureStruct,
+    '))',
+  ]);
   for (const referenceValueClosure of referenceValueClosures) {
-    transpiler.pushStatementPart(', ');
-    utilTranspileReferenceValueClosure(referenceValueClosure, transpiler);
+    transpiler.pushStatement([
+      'closure.',
+      referenceValueClosure.name,
+      ' = ',
+      referenceValueClosure.name,
+    ]);
   }
-  transpiler.pushStatementPart(')');
+  transpiler.pushStatement([
+    'fn.callable = ',
+    symbolGlobalCallableFunction,
+  ]);
+  transpiler.pushStatement([
+    'fn.closure = closure',
+  ]);
+  transpiler.pushStatement([
+    'return fn',
+  ]);
+  transpiler.popFunction();
 
-  // New function
+  // Make the callable function
   const params: OutputFunctionParam[] = [];
   params.push({
     type: symbolGlobalClosureStruct,
