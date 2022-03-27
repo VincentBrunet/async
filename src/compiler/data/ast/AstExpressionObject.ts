@@ -10,6 +10,8 @@ export interface AstExpressionObjectField extends Ast {
   hash: string;
   annotation: AstAnnotationType;
   expression: AstExpression;
+
+  symbolLocalValue?: string;
 }
 
 export interface AstExpressionObject extends Ast {
@@ -20,6 +22,7 @@ export interface AstExpressionObject extends Ast {
 
   referenceValueClosures?: Array<AstReferenceValueClosure>;
 
-  symbolGlobalCallablePointer?: string;
-  symbolGlobalClosureType?: string;
+  symbolGlobalCallableFunction?: string;
+  symbolGlobalFieldsGlobal?: string;
+  symbolLocalFieldsValue?: string;
 }

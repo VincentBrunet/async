@@ -2,22 +2,27 @@ import { AstExpressionFunction } from '../../../data/ast/AstExpressionFunction.t
 import { hashGlobalSymbol } from '../util/hashGlobalSymbol.ts';
 import { hashLocalSymbol } from '../util/hashLocalSymbol.ts';
 import { AstModule } from '../../../data/ast/AstModule.ts';
+import { ensure } from '../../errors/ensure.ts';
 
 export function browseExpressionFunction(
   astExpressionFunction: AstExpressionFunction,
   astModule: AstModule,
 ): void {
-  for (const param of astExpressionFunction.params) {
-    if (param.name) {
-      param.symbolLocalValue = hashLocalSymbol('param', param.name);
+  astExpressionFunction.symbolLocalClosureValue = hashLocalSymbol('closure', '');
+  for (const astReferenceValueClosure of ensure(astExpressionFunction.referenceValueClosures)) {
+    astReferenceValueClosure.symbolLocalValue = astExpressionFunction.symbolLocalClosureValue + '->' + astReferenceValueClosure.name;
+  }
+  for (const astExpressionFunctionParam of astExpressionFunction.params) {
+    if (astExpressionFunctionParam.name) {
+      astExpressionFunctionParam.symbolLocalValue = hashLocalSymbol('param', astExpressionFunctionParam.name);
     }
   }
-  astExpressionFunction.symbolGlobalCallablePointer = hashGlobalSymbol(
+  astExpressionFunction.symbolGlobalCallableFunction = hashGlobalSymbol(
     astModule.hash,
     astExpressionFunction,
     'callable',
   );
-  astExpressionFunction.symbolGlobalClosureType = hashGlobalSymbol(
+  astExpressionFunction.symbolGlobalClosureStruct = hashGlobalSymbol(
     astModule.hash,
     astExpressionFunction,
     'closure',

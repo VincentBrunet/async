@@ -13,37 +13,31 @@ export function transpileExpressionObject(
   // Assert
   const referenceValueClosures = ensure(astExpressionObject.referenceValueClosures);
 
-  const symbolGlobalCallablePointer = ensure(astExpressionObject.symbolGlobalCallablePointer);
-  const symbolGlobalClosureType = ensure(astExpressionObject.symbolGlobalClosureType);
+  const symbolGlobalCallableFunction = ensure(astExpressionObject.symbolGlobalCallableFunction);
+  const symbolGlobalFieldsGlobal = ensure(astExpressionObject.symbolGlobalFieldsGlobal);
 
-  // Simply call the object factory in the expression
-  const objectCallLength = referenceValueClosures.length.toString();
-  const objectCallVariadic = referenceValueClosures.length > 9;
-  transpiler.pushStatementPart('object_call_');
-  if (objectCallVariadic) {
-    transpiler.pushStatementPart('x');
-  } else {
-    transpiler.pushStatementPart(objectCallLength);
-  }
+  transpiler.pushStatementPart(symbolGlobalCallableFunction);
   transpiler.pushStatementPart('(');
-  transpiler.pushStatementPart('&');
-  transpiler.pushStatementPart(symbolGlobalCallablePointer);
-  if (objectCallVariadic) {
-    transpiler.pushStatementPart(', ');
-    transpiler.pushStatementPart(objectCallLength);
-  }
   for (const referenceValueClosure of referenceValueClosures) {
-    transpiler.pushStatementPart(', ');
+    if (referenceValueClosure.idx !== 0) {
+      transpiler.pushStatementPart(', ');
+    }
     utilTranspileReferenceValueClosure(referenceValueClosure, transpiler);
   }
   transpiler.pushStatementPart(')');
 
   // New scope
   const transpiledType = utilTranspileTypeAnnotation(ensure(astExpressionObject.resolvedType));
-  transpiler.pushFunction(transpiledType, symbolGlobalCallablePointer, [{
-    type: symbolGlobalClosureType,
-    name: 'closure',
-  }]);
+  transpiler.pushFunction(
+    transpiledType,
+    symbolGlobalCallableFunction,
+    referenceValueClosures.map((referenceValueClosure) => {
+      return {
+        type: utilTranspileTypeAnnotation(ensure(referenceValueClosure.resolvedType)),
+        name: ensure(referenceValueClosure.symbolLocalValue),
+      };
+    }),
+  );
 
   // Fields
   const unsortedFields = astExpressionObject.fields;
@@ -61,23 +55,16 @@ export function transpileExpressionObject(
 
   // Create the module object containing all declared fields
   const fieldLength = sortedFields.length.toString();
-  //const fieldLocal = hashLocalSymbol('fields', 'object');
-  const fieldLocal = '/* ?? symbolLocalFields ?? */';
 
-  const objectFieldsParts = [];
-  objectFieldsParts.push('static t_u64');
-  objectFieldsParts.push(' ');
-  objectFieldsParts.push(fieldLocal);
-  objectFieldsParts.push('[');
-  objectFieldsParts.push(fieldLength);
-  objectFieldsParts.push(']');
-  objectFieldsParts.push(' = ');
-  objectFieldsParts.push('{');
-  objectFieldsParts.push(' ');
-  objectFieldsParts.push(sortedFields.map((field) => field.hash).join(', '));
-  objectFieldsParts.push(' ');
-  objectFieldsParts.push('}');
-  transpiler.pushStatement(objectFieldsParts);
+  transpiler.pushGlobal(
+    'static t_u64[]',
+    symbolGlobalFieldsGlobal,
+    [
+      '{',
+      sortedFields.map((field) => field.hash).join(', '),
+      '}',
+    ].join(' '),
+  );
 
   const objectMakeParts = [];
   objectMakeParts.push('t_object object = object_make');
@@ -86,7 +73,7 @@ export function transpileExpressionObject(
   objectMakeParts.push(', ');
   objectMakeParts.push(fieldLength);
   objectMakeParts.push(', ');
-  objectMakeParts.push(fieldLocal);
+  objectMakeParts.push(symbolGlobalFieldsGlobal);
   objectMakeParts.push(')');
   transpiler.pushStatement(objectMakeParts);
 
@@ -101,8 +88,7 @@ export function transpileExpressionObject(
     transpiler.pushStatement([
       't_field',
       ' ',
-      '_field_',
-      sortedField.name,
+      ensure(sortedField.symbolLocalValue),
       ' = ',
       '(t_field)&(fields[',
       i.toString(),
@@ -113,8 +99,7 @@ export function transpileExpressionObject(
   // Do the assignation in the code's order (not the hash order)
   for (const unsortedField of unsortedFields) {
     transpiler.pushStatement([
-      '_field_',
-      unsortedField.name,
+      ensure(unsortedField.symbolLocalValue),
       '->value',
       ' = ',
     ]);

@@ -11,13 +11,15 @@ const lala = obj {
 }
 
 const dudu = expr {
-  return 42
+  return 42 + numHex
 }
+
+mutable ttt = fn (a, b, c) {}
 
 const hello = fn (num) {
 
   const f = fn (num2) {
-    //hello(num, num2, c3)
+    ttt(num, num2, c3)
   }
 
   f(num)

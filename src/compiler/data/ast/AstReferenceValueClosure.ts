@@ -8,4 +8,6 @@ export interface AstReferenceValueClosure extends Ast {
 
   resolvedType?: AstType;
   resolvedReferenceValue?: AstReferenceValue;
+
+  symbolLocalValue?: string;
 }

@@ -3,6 +3,7 @@ import { ensure } from '../../../passes/errors/ensure.ts';
 import { Writer } from '../util/Writer.ts';
 import { writeFunctionDefinition } from './writeFunctionDefinition.ts';
 import { writeFunctionImplementation } from './writeFunctionImplementation.ts';
+import { writeGlobal } from './writeGlobal.ts';
 import { writeInclude } from './writeInclude.ts';
 import { writeStruct } from './writeStruct.ts';
 
@@ -41,6 +42,13 @@ export function writeModule(writer: Writer, unit: UnitModule) {
   if (outputModule.structs.length) {
     for (const outputStruct of outputModule.structs) {
       writeStruct(writer, outputStruct);
+    }
+    writer.pushToBoth('\n');
+  }
+  // Globals
+  if (outputModule.globals.length) {
+    for (const outputGlobal of outputModule.globals) {
+      writeGlobal(writer, outputGlobal);
     }
     writer.pushToBoth('\n');
   }

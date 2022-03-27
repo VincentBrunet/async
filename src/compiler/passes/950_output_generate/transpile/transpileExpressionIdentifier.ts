@@ -5,6 +5,7 @@ import { Transpiler } from '../util/Transpiler.ts';
 import {
   astReferenceValueAsExpressionFunctionParam,
   astReferenceValueAsReferenceValueClosure,
+  astReferenceValueAsStatementImportSlot,
   astReferenceValueAsStatementVariable,
 } from '../../../data/ast/AstReferenceValue.ts';
 
@@ -16,33 +17,31 @@ export function transpileExpressionIdentifier(
   // Assert
   const resolvedReferenceValue = ensure(astIdentifier.resolvedReferenceValue);
 
-  // Closure case
-  const referenceValueClosure = astReferenceValueAsReferenceValueClosure(resolvedReferenceValue);
-  if (referenceValueClosure) {
-    transpiler.pushStatementPart('closure[');
-    transpiler.pushStatementPart(referenceValueClosure.idx.toString());
-    transpiler.pushStatementPart(']->value');
+  // Local variable case
+  const statementVariable = astReferenceValueAsStatementVariable(resolvedReferenceValue);
+  if (statementVariable) {
+    transpiler.pushStatementPart(ensure(statementVariable.symbolLocalValue));
+    return;
+  }
+
+  // Imported variable case
+  const statementImportSlot = astReferenceValueAsStatementImportSlot(resolvedReferenceValue);
+  if (statementImportSlot) {
+    transpiler.pushStatementPart(ensure(statementImportSlot.symbolLocalValue));
+    return;
   }
 
   // Function param case
   const expressionFunctionParam = astReferenceValueAsExpressionFunctionParam(resolvedReferenceValue);
   if (expressionFunctionParam) {
     transpiler.pushStatementPart(ensure(expressionFunctionParam.symbolLocalValue));
-  }
-
-  // Local variable case
-  const statementVariable = astReferenceValueAsStatementVariable(resolvedReferenceValue);
-  if (statementVariable) {
-    transpiler.pushStatementPart(ensure(statementVariable.symbolLocalValue));
-    transpiler.pushStatementPart('->value');
     return;
   }
 
-  // Imported variable case
-  const statementImportSlot = astReferenceValueAsStatementVariable(resolvedReferenceValue);
-  if (statementImportSlot) {
-    transpiler.pushStatementPart(ensure(statementImportSlot.symbolLocalValue));
-    transpiler.pushStatementPart('->value');
+  // Closure case
+  const referenceValueClosure = astReferenceValueAsReferenceValueClosure(resolvedReferenceValue);
+  if (referenceValueClosure) {
+    transpiler.pushStatementPart(ensure(referenceValueClosure.symbolLocalValue));
     return;
   }
 }

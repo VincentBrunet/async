@@ -27,6 +27,7 @@ export interface AstExpressionFunction extends Ast {
 
   referenceValueClosures?: Array<AstReferenceValueClosure>;
 
-  symbolGlobalCallablePointer?: string;
-  symbolGlobalClosureType?: string;
+  symbolGlobalCallableFunction?: string;
+  symbolGlobalClosureStruct?: string;
+  symbolLocalClosureValue?: string;
 }

@@ -1,7 +1,7 @@
-import { AstExpressionLiteral } from "../../../data/ast/AstExpressionLiteral.ts";
-import { AstTypePrimitiveNative } from "../../../data/ast/AstTypePrimitive.ts";
-import { RecursorPass } from "../../util/RecursorPass.ts";
-import { Transpiler } from "../util/Transpiler.ts";
+import { AstExpressionLiteral } from '../../../data/ast/AstExpressionLiteral.ts';
+import { AstTypePrimitiveNative } from '../../../data/ast/AstTypePrimitive.ts';
+import { RecursorPass } from '../../util/RecursorPass.ts';
+import { Transpiler } from '../util/Transpiler.ts';
 
 export function transpileExpressionLiteral(
   pass: RecursorPass,
@@ -11,23 +11,23 @@ export function transpileExpressionLiteral(
   switch (ast.native) {
     // Bool
     case AstTypePrimitiveNative.Boolean:
-      if (ast.value === "false") {
-        transpiler.pushStatementPart("boolean_make(FALSE)");
+      if (ast.value === 'false') {
+        transpiler.pushStatementPart('boolean_make(FALSE)');
       } else {
-        transpiler.pushStatementPart("boolean_make(TRUE)");
+        transpiler.pushStatementPart('boolean_make(TRUE)');
       }
       break;
     // Null
     case AstTypePrimitiveNative.Null:
-      transpiler.pushStatementPart("null_make()");
+      transpiler.pushStatementPart('null_make()');
       break;
     // String
     case AstTypePrimitiveNative.String:
-      transpiler.pushStatementPart("str_make(");
+      transpiler.pushStatementPart('str_make(');
       transpiler.pushStatementPart('"');
       transpiler.pushStatementPart(ast.value);
       transpiler.pushStatementPart('"');
-      transpiler.pushStatementPart(")");
+      transpiler.pushStatementPart(')');
       break;
     // Number
     case AstTypePrimitiveNative.Integer8:
@@ -40,9 +40,9 @@ export function transpileExpressionLiteral(
     case AstTypePrimitiveNative.Unsigned64:
     case AstTypePrimitiveNative.Float32:
     case AstTypePrimitiveNative.Float64:
-      transpiler.pushStatementPart("i32_make(");
+      transpiler.pushStatementPart('i32_make(');
       transpiler.pushStatementPart(ast.value);
-      transpiler.pushStatementPart(")");
+      transpiler.pushStatementPart(')');
       break;
   }
 }

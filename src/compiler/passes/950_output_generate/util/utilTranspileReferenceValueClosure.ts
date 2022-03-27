@@ -37,8 +37,6 @@ export function utilTranspileReferenceValueClosure(
 
   const referenceValueClosure = astReferenceValueAsReferenceValueClosure(resolvedReferenceValue);
   if (referenceValueClosure) {
-    transpiler.pushStatementPart('closure[');
-    transpiler.pushStatementPart(referenceValueClosure.idx.toString());
-    transpiler.pushStatementPart(']');
+    transpiler.pushStatementPart(ensure(referenceValueClosure.symbolLocalValue));
   }
 }

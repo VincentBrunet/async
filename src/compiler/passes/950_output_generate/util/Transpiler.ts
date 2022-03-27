@@ -20,6 +20,7 @@ export class Transpiler {
       includes: [],
       functions: [],
       structs: [],
+      globals: [],
     };
   }
 
@@ -34,6 +35,14 @@ export class Transpiler {
   pushInclude(path: string) {
     this.currentOutput.includes.push({
       path: path,
+    });
+  }
+
+  pushGlobal(type: string, name: string, value: string) {
+    this.currentOutput.globals.push({
+      type: type,
+      name: name,
+      value: value,
     });
   }
 

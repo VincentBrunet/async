@@ -14,19 +14,18 @@ export function transpileExpressionFunction(
 ) {
   const referenceValueClosures = ensure(astExpressionFunction.referenceValueClosures);
 
-  const symbolGlobalCallablePointer = ensure(astExpressionFunction.symbolGlobalCallablePointer);
-  const symbolGlobalClosureType = ensure(astExpressionFunction.symbolGlobalClosureType);
+  const symbolGlobalCallableFunction = ensure(astExpressionFunction.symbolGlobalCallableFunction);
+  const symbolGlobalClosureStruct = ensure(astExpressionFunction.symbolGlobalClosureStruct);
 
   // Make the struct for the
   const closureParts: OutputStructField[] = [];
   for (const referenceValueClosure of referenceValueClosures) {
     closureParts.push({
       name: referenceValueClosure.name,
-      type: 'int', // TODO
-      //type: JSON.stringify(referenceValueClosure.resolvedType),
+      type: utilTranspileTypeAnnotation(ensure(referenceValueClosure.resolvedType)),
     });
   }
-  transpiler.pushStruct(symbolGlobalClosureType, closureParts);
+  transpiler.pushStruct(symbolGlobalClosureStruct, closureParts);
 
   // Simply call the function factory
   const functionMakeLength = referenceValueClosures.length.toString();
@@ -41,7 +40,7 @@ export function transpileExpressionFunction(
   transpiler.pushStatementPart('type_function'); // TODO,
   transpiler.pushStatementPart(', ');
   transpiler.pushStatementPart('(void*)&');
-  transpiler.pushStatementPart(symbolGlobalCallablePointer);
+  transpiler.pushStatementPart(symbolGlobalCallableFunction);
   if (functionMakeVariadic) {
     transpiler.pushStatementPart(', ');
     transpiler.pushStatementPart(functionMakeLength);
@@ -55,7 +54,7 @@ export function transpileExpressionFunction(
   // New function
   const params: OutputFunctionParam[] = [];
   params.push({
-    type: symbolGlobalClosureType,
+    type: symbolGlobalClosureStruct,
     name: 'closure',
   });
   for (let i = 0; i < astExpressionFunction.params.length; i++) {
@@ -75,7 +74,7 @@ export function transpileExpressionFunction(
   }
 
   const returnType = utilTranspileTypeAnnotation(ensure(astExpressionFunction.resolvedTypeRet));
-  transpiler.pushFunction(returnType, symbolGlobalCallablePointer, params);
+  transpiler.pushFunction(returnType, symbolGlobalCallableFunction, params);
 
   // Push block statements
   transpiler.pushStatement(['/* function block */']);
