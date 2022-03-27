@@ -43,14 +43,14 @@ export interface AstStatement extends Ast {
   data: AstStatementData;
 }
 
-export function astStatementAsVariable(astStatement: AstStatement): AstStatementVariable | undefined {
+export function astStatementAsStatementVariable(astStatement: AstStatement): AstStatementVariable | undefined {
   if (astStatement.kind === AstStatementKind.Variable) {
     return astStatement.data as AstStatementVariable;
   }
   return undefined;
 }
 
-export function astStatementAsTypedef(astStatement: AstStatement): AstStatementTypedef | undefined {
+export function astStatementAsStatementTypedef(astStatement: AstStatement): AstStatementTypedef | undefined {
   if (astStatement.kind === AstStatementKind.Typedef) {
     return astStatement.data as AstStatementTypedef;
   }

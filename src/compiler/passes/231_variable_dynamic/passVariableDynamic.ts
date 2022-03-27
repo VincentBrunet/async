@@ -1,11 +1,15 @@
 import { UnitModule } from '../../data/unit/UnitModule.ts';
 import { makeRecursorPassBfs } from '../util/makeRecursorPassBfs.ts';
 import { browseExpressionFunction } from './browse/browseExpressionFunction.ts';
+import { browseExpressionObject } from './browse/browseExpressionObject.ts';
+import { browseExpressionRun } from './browse/browseExpressionRun.ts';
 import { browseStatementExport } from './browse/browseStatementExport.ts';
 
 const pass = makeRecursorPassBfs({
   recurseStatementExport: browseStatementExport,
   recurseExpressionFunction: browseExpressionFunction,
+  recurseExpressionObject: browseExpressionObject,
+  recurseExpressionRun: browseExpressionRun,
 });
 
 export function passVariableDynamic(unit: UnitModule) {

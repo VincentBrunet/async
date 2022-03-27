@@ -1,4 +1,4 @@
-import { AstExpression, astExpressionAsBinary, astExpressionMakeBinary } from '../../../data/ast/AstExpression.ts';
+import { AstExpression, astExpressionAsExpressionBinary, astExpressionMakeBinary } from '../../../data/ast/AstExpression.ts';
 import { AstExpressionBinary, AstExpressionBinaryOperator } from '../../../data/ast/AstExpressionBinary.ts';
 
 /**
@@ -34,13 +34,13 @@ function listBinaryLeafs(
   binary: AstExpressionBinary,
   leafs: Array<AstExpression>,
 ) {
-  const left = astExpressionAsBinary(binary.expression1);
+  const left = astExpressionAsExpressionBinary(binary.expression1);
   if (left) {
     listBinaryLeafs(left, leafs);
   } else {
     leafs.push(binary.expression1);
   }
-  const right = astExpressionAsBinary(binary.expression2);
+  const right = astExpressionAsExpressionBinary(binary.expression2);
   if (right) {
     listBinaryLeafs(right, leafs);
   } else {
@@ -51,12 +51,12 @@ function listBinaryNodes(
   binary: AstExpressionBinary,
   nodes: Array<AstExpressionBinary>,
 ) {
-  const left = astExpressionAsBinary(binary.expression1);
+  const left = astExpressionAsExpressionBinary(binary.expression1);
   if (left) {
     listBinaryNodes(left, nodes);
   }
   nodes.push(binary);
-  const right = astExpressionAsBinary(binary.expression2);
+  const right = astExpressionAsExpressionBinary(binary.expression2);
   if (right) {
     listBinaryNodes(right, nodes);
   }
@@ -124,7 +124,7 @@ export function browseExpressionBinary(
   if (expression === undefined) {
     throw new Error('Could not build the binary graph');
   }
-  const binary = astExpressionAsBinary(expression);
+  const binary = astExpressionAsExpressionBinary(expression);
   if (binary === undefined) {
     throw new Error('binary graph result was not binary');
   }

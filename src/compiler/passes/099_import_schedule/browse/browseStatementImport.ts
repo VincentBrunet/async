@@ -1,4 +1,4 @@
-import { astExpressionAsLiteral } from '../../../data/ast/AstExpression.ts';
+import { astExpressionAsExpressionLiteral } from '../../../data/ast/AstExpression.ts';
 import { AstModule } from '../../../data/ast/AstModule.ts';
 import { AstStatementImport } from '../../../data/ast/AstStatementImport.ts';
 import { AstTypePrimitiveNative } from '../../../data/ast/AstTypePrimitive.ts';
@@ -9,7 +9,7 @@ export function browseStatementImport(
   ast: AstStatementImport,
   currentUrl: URL,
 ) {
-  const literal = astExpressionAsLiteral(ast.url);
+  const literal = astExpressionAsExpressionLiteral(ast.url);
   if (!literal) {
     throw new Error('Unknown import non literal:' + ast.url.kind);
   }

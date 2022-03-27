@@ -19,7 +19,7 @@ export function transpileBlock(
     const transpiledType = utilTranspileTypeAnnotation(resolvedType);
     const symbolLocalValue = ensure(resolvedVariable.symbolLocalValue);
 
-    if (resolvedVariable.resolvedDynamic) {
+    if (resolvedVariable.resolvedHeapized) {
       transpiler.pushStatement([
         transpiledType,
         '*',
@@ -30,6 +30,21 @@ export function transpileBlock(
         transpiledType,
         '))',
       ]);
+    } else if (resolvedVariable.mutable) {
+      transpiler.pushStatement([
+        transpiledType,
+        ' ',
+        '_' + symbolLocalValue,
+      ]);
+      transpiler.pushStatement([
+        transpiledType,
+        '*',
+        ' ',
+        symbolLocalValue,
+        ' = ',
+        '&',
+        '_' + symbolLocalValue,
+      ]);
     } else {
       transpiler.pushStatement([
         transpiledType,
@@ -38,6 +53,8 @@ export function transpileBlock(
       ]);
     }
   }
+
+  transpiler.pushStatement([]);
 
   // Recurse on statements
   for (const statement of ast.statements) {

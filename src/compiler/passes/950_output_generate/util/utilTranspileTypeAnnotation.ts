@@ -1,10 +1,10 @@
 import {
   AstType,
-  astTypeAsBinary,
-  astTypeAsFunction,
-  astTypeAsIdentifier,
-  astTypeAsObject,
-  astTypeAsPrimitive,
+  astTypeAsTypeBinary,
+  astTypeAsTypeFunction,
+  astTypeAsTypeIdentifier,
+  astTypeAsTypeObject,
+  astTypeAsTypePrimitive,
 } from '../../../data/ast/AstType.ts';
 import { AstTypePrimitiveNative } from '../../../data/ast/AstTypePrimitive.ts';
 import { never } from '../../../passes/errors/never.ts';
@@ -26,28 +26,36 @@ nativeToTranspiled.set(AstTypePrimitiveNative.Null, 't_null');
 nativeToTranspiled.set(AstTypePrimitiveNative.String, 't_string');
 nativeToTranspiled.set(AstTypePrimitiveNative.Any, 't_any');
 
-export function utilTranspileTypeAnnotation(type: AstType): string {
-  const typePrimitive = astTypeAsPrimitive(type);
+export function utilTranspileTypeAnnotation(type: AstType, mutable?: boolean): string {
+  const transpiledType = utilTranspileTypeAnnotationBase(type);
+  if (mutable) {
+    return transpiledType + '*';
+  }
+  return transpiledType;
+}
+
+export function utilTranspileTypeAnnotationBase(type: AstType): string {
+  const typePrimitive = astTypeAsTypePrimitive(type);
   if (typePrimitive) {
     return nativeToTranspiled.get(typePrimitive.native) ?? 't_unknown';
   }
 
-  const typeFunction = astTypeAsFunction(type);
+  const typeFunction = astTypeAsTypeFunction(type);
   if (typeFunction) {
     return 't_function';
   }
 
-  const typeObject = astTypeAsObject(type);
+  const typeObject = astTypeAsTypeObject(type);
   if (typeObject) {
     return 't_object';
   }
 
-  const typeBinary = astTypeAsBinary(type);
+  const typeBinary = astTypeAsTypeBinary(type);
   if (typeBinary) {
     return 't_union';
   }
 
-  const typeIdentifier = astTypeAsIdentifier(type);
+  const typeIdentifier = astTypeAsTypeIdentifier(type);
   if (typeIdentifier) {
     //return utilTranspileTypeAnnotation(typeIdentifier.resolvedReferenceType?.data.resolvedType);
     never();

@@ -62,7 +62,7 @@ function astExpressionRecurseParenthesis(astExpression: AstExpression): AstExpre
   }
 }
 
-export function astExpressionAsLiteral(astExpression: AstExpression): AstExpressionLiteral | undefined {
+export function astExpressionAsExpressionLiteral(astExpression: AstExpression): AstExpressionLiteral | undefined {
   astExpression = astExpressionRecurseParenthesis(astExpression);
   if (astExpression.kind === AstExpressionKind.Literal) {
     return astExpression.data as AstExpressionLiteral;
@@ -70,7 +70,7 @@ export function astExpressionAsLiteral(astExpression: AstExpression): AstExpress
   return undefined;
 }
 
-export function astExpressionAsBinary(astExpression: AstExpression): AstExpressionBinary | undefined {
+export function astExpressionAsExpressionBinary(astExpression: AstExpression): AstExpressionBinary | undefined {
   astExpression = astExpressionRecurseParenthesis(astExpression);
   if (astExpression.kind === AstExpressionKind.Binary) {
     return astExpression.data as AstExpressionBinary;

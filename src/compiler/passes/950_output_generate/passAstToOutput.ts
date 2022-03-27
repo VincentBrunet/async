@@ -15,6 +15,7 @@ import { transpileExpressionUnary } from './transpile/transpileExpressionUnary.t
 import { transpileModule } from './transpile/transpileModule.ts';
 import { transpileStatementBlock } from './transpile/transpileStatementBlock.ts';
 import { transpileStatementCondition } from './transpile/transpileStatementCondition.ts';
+import { transpileStatementEmpty } from './transpile/transpileStatementEmpty.ts';
 import { transpileStatementExport } from './transpile/transpileStatementExport.ts';
 import { transpileStatementExpression } from './transpile/transpileStatementExpression.ts';
 import { transpileStatementImport } from './transpile/transpileStatementImport.ts';
@@ -47,6 +48,7 @@ const pass = makeRecursorPassAdvanced({
   recurseStatementUnsafe: transpileStatementUnsafe,
   recurseStatementVariable: transpileStatementVariable,
   recurseStatementWhile: transpileStatementWhile,
+  recurseStatementEmpty: transpileStatementEmpty,
 });
 
 export function passAstToOutput(unit: UnitModule) {

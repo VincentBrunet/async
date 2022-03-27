@@ -10,7 +10,7 @@ export interface AstStatementVariable extends Ast {
   value?: AstExpression;
 
   resolvedType?: AstType;
-  resolvedDynamic?: boolean;
+  resolvedHeapized?: boolean;
 
   symbolLocalValue?: string;
 }

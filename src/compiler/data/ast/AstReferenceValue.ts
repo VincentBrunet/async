@@ -1,3 +1,4 @@
+import { ensure } from '../../passes/errors/ensure.ts';
 import { Ast } from './Ast.ts';
 import { AstExpressionFunctionParam } from './AstExpressionFunction.ts';
 import { AstReferenceValueClosure } from './AstReferenceValueClosure.ts';

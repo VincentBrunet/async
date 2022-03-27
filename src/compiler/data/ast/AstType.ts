@@ -68,7 +68,7 @@ function astTypeRecurseParenthesis(astType: AstType): AstType {
   }
 }
 
-export function astTypeAsIdentifier(astType: AstType): AstTypeIdentifier | undefined {
+export function astTypeAsTypeIdentifier(astType: AstType): AstTypeIdentifier | undefined {
   astType = astTypeRecurseParenthesis(astType);
   if (astType.kind === AstTypeKind.Identifier) {
     return astType.data as AstTypeIdentifier;
@@ -76,7 +76,7 @@ export function astTypeAsIdentifier(astType: AstType): AstTypeIdentifier | undef
   return undefined;
 }
 
-export function astTypeAsPrimitive(astType: AstType): AstTypePrimitive | undefined {
+export function astTypeAsTypePrimitive(astType: AstType): AstTypePrimitive | undefined {
   astType = astTypeRecurseParenthesis(astType);
   if (astType.kind === AstTypeKind.Primitive) {
     return astType.data as AstTypePrimitive;
@@ -84,7 +84,7 @@ export function astTypeAsPrimitive(astType: AstType): AstTypePrimitive | undefin
   return undefined;
 }
 
-export function astTypeAsFunction(astType: AstType): AstTypeFunction | undefined {
+export function astTypeAsTypeFunction(astType: AstType): AstTypeFunction | undefined {
   astType = astTypeRecurseParenthesis(astType);
   if (astType.kind === AstTypeKind.Function) {
     return astType.data as AstTypeFunction;
@@ -92,7 +92,7 @@ export function astTypeAsFunction(astType: AstType): AstTypeFunction | undefined
   return undefined;
 }
 
-export function astTypeAsObject(astType: AstType): AstTypeObject | undefined {
+export function astTypeAsTypeObject(astType: AstType): AstTypeObject | undefined {
   astType = astTypeRecurseParenthesis(astType);
   if (astType.kind === AstTypeKind.Object) {
     return astType.data as AstTypeObject;
@@ -100,7 +100,7 @@ export function astTypeAsObject(astType: AstType): AstTypeObject | undefined {
   return undefined;
 }
 
-export function astTypeAsBinary(astType: AstType): AstTypeBinary | undefined {
+export function astTypeAsTypeBinary(astType: AstType): AstTypeBinary | undefined {
   astType = astTypeRecurseParenthesis(astType);
   if (astType.kind === AstTypeKind.Binary) {
     return astType.data as AstTypeBinary;

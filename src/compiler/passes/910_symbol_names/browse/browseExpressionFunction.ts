@@ -8,7 +8,7 @@ export function browseExpressionFunction(
   astExpressionFunction: AstExpressionFunction,
   astModule: AstModule,
 ): void {
-  astExpressionFunction.symbolLocalClosureValue = hashLocalSymbol('closure', '');
+  astExpressionFunction.symbolLocalClosureValue = hashLocalSymbol('closure', 'struct');
   for (const astReferenceValueClosure of ensure(astExpressionFunction.referenceValueClosures)) {
     astReferenceValueClosure.symbolLocalValue = astExpressionFunction.symbolLocalClosureValue + '->' + astReferenceValueClosure.name;
   }

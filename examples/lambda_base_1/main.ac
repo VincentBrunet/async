@@ -1,34 +1,37 @@
 
-const numHex = 0xff
+const vConstHex = 0xff
 
-const c1 = true
-const c2 = false
-const c3 = null
+const vConstTrue = true
+mutable vMutableFalse = false
+const vConstNull = null
+mutable VMutableRed ="red";
 
-const lala = obj {
-  const dudu = 32;
-  const lol = c3
+const vConstObj = obj {
+  const objFieldConst32 = 32;
+  mutable objFieldMutableRConstNull = vConstNull
 }
 
-const dudu = expr {
-  return 42 + numHex
+const vConstExprI32 = expr {
+  return 42 + vConstHex
 }
 
-mutable ttt = fn (a, b, c) {}
+mutable vMutableFun = fn (a, b, c, d) {}
 
-const hello = fn (num) {
+const vConstFun = fn (pOuter1) {
 
-  const f = fn (num2) {
-    ttt(num, num2, c3)
+  const vConstInnerFun = fn (pInner1) {
+    vMutableFun(pOuter1, pInner1, vMutableFalse, vConstNull)
   }
 
-  f(num)
+  vConstInnerFun(pOuter1)
 }
 
-export const world = hello
+export const vExportConstRConstFun = vConstFun
+export const vExportConstRMutableFun = vMutableFun
 
-world(32)
+vExportConstRConstFun(32)
 
-export mutable rofl = hello
+export mutable vExportMutableRConstFun = vConstFun
+export mutable vExportMutableRMutableFun = vMutableFun
 
-rofl(11)
+vExportMutableRMutableFun(1, 2, true, null)

@@ -29,9 +29,7 @@ export function utilTranspileReferenceValueClosure(
 
   const expressionFunctionParam = astReferenceValueAsExpressionFunctionParam(resolvedReferenceValue);
   if (expressionFunctionParam) {
-    transpiler.pushStatementPart('ref_make(');
     transpiler.pushStatementPart(ensure(expressionFunctionParam.symbolLocalValue));
-    transpiler.pushStatementPart(')');
     return;
   }
 

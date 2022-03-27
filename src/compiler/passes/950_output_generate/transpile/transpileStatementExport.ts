@@ -1,4 +1,4 @@
-import { astStatementAsVariable } from '../../../data/ast/AstStatement.ts';
+import { astStatementAsStatementVariable } from '../../../data/ast/AstStatement.ts';
 import { AstStatementExport } from '../../../data/ast/AstStatementExport.ts';
 import { ensure } from '../../errors/ensure.ts';
 import { RecursorPass } from '../../util/RecursorPass.ts';
@@ -9,7 +9,7 @@ export function transpileStatementExport(
   astStatementExport: AstStatementExport,
   transpiler: Transpiler,
 ) {
-  const variable = astStatementAsVariable(astStatementExport.statement);
+  const variable = astStatementAsStatementVariable(astStatementExport.statement);
   if (variable) {
     transpiler.pushStatement([
       ensure(astStatementExport.symbolLocalValue),

@@ -1,5 +1,5 @@
 import { AstExpressionLookup } from '../../../data/ast/AstExpressionLookup.ts';
-import { astTypeAsObject } from '../../../data/ast/AstType.ts';
+import { astTypeAsTypeObject } from '../../../data/ast/AstType.ts';
 import { ensure } from '../../../passes/errors/ensure.ts';
 import { makeTypePrimitiveUnknown } from '../../../lib/typing/makeTypePrimitiveUnknown.ts';
 import { Tracker } from '../util/Tracker.ts';
@@ -11,7 +11,7 @@ export function browseExpressionLookup(
 ) {
   next();
 
-  const objectType = astTypeAsObject(ensure(ast.expression.resolvedType));
+  const objectType = astTypeAsTypeObject(ensure(ast.expression.resolvedType));
   if (!objectType) {
     //throw new Error("Cannot do a lookup on a value that is not an object");
     ast.resolvedType = makeTypePrimitiveUnknown(ast.expression);

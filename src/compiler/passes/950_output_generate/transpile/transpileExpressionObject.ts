@@ -33,8 +33,11 @@ export function transpileExpressionObject(
     symbolGlobalCallableFunction,
     referenceValueClosures.map((referenceValueClosure) => {
       return {
-        type: utilTranspileTypeAnnotation(ensure(referenceValueClosure.resolvedType)),
         name: ensure(referenceValueClosure.symbolLocalValue),
+        type: utilTranspileTypeAnnotation(
+          ensure(referenceValueClosure.resolvedType),
+          referenceValueClosure.resolvedMutable,
+        ),
       };
     }),
   );
