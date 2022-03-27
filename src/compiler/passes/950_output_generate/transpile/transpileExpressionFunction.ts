@@ -2,25 +2,20 @@ import { AstExpressionFunction } from '../../../data/ast/AstExpressionFunction.t
 import { OutputFunctionParam } from '../../../data/output/OutputFunction.ts';
 import { OutputStructField } from '../../../data/output/OutputStructs.ts';
 import { ensure } from '../../../passes/errors/ensure.ts';
-import { hashGlobalSymbol } from '../../../passes/hash/hashGlobalSymbol.ts';
 import { RecursorPass } from '../../util/RecursorPass.ts';
 import { Transpiler } from '../util/Transpiler.ts';
 import { utilTranspileReferenceValueClosure } from '../util/utilTranspileReferenceValueClosure.ts';
-import { utilTranspileType } from '../util/utilTranspileType.ts';
+import { utilTranspileTypeAnnotation } from '../util/utilTranspileTypeAnnotation.ts';
 
 export function transpileExpressionFunction(
   pass: RecursorPass,
-  ast: AstExpressionFunction,
+  astExpressionFunction: AstExpressionFunction,
   transpiler: Transpiler,
 ) {
-  const referenceValueClosures = ensure(ast.referenceValueClosures);
+  const referenceValueClosures = ensure(astExpressionFunction.referenceValueClosures);
 
-  // Generate a stable unique name
-  const name = hashGlobalSymbol(
-    transpiler.getUnit().ast.hash,
-    ast,
-    'function',
-  );
+  const symbolGlobalCallablePointer = ensure(astExpressionFunction.symbolGlobalCallablePointer);
+  const symbolGlobalClosureType = ensure(astExpressionFunction.symbolGlobalClosureType);
 
   // Make the struct for the
   const closureParts: OutputStructField[] = [];
@@ -31,7 +26,7 @@ export function transpileExpressionFunction(
       //type: JSON.stringify(referenceValueClosure.resolvedType),
     });
   }
-  transpiler.pushStruct('closure_' + name, closureParts);
+  transpiler.pushStruct(symbolGlobalClosureType, closureParts);
 
   // Simply call the function factory
   const functionMakeLength = referenceValueClosures.length.toString();
@@ -46,7 +41,7 @@ export function transpileExpressionFunction(
   transpiler.pushStatementPart('type_function'); // TODO,
   transpiler.pushStatementPart(', ');
   transpiler.pushStatementPart('(void*)&');
-  transpiler.pushStatementPart(name);
+  transpiler.pushStatementPart(symbolGlobalCallablePointer);
   if (functionMakeVariadic) {
     transpiler.pushStatementPart(', ');
     transpiler.pushStatementPart(functionMakeLength);
@@ -60,12 +55,12 @@ export function transpileExpressionFunction(
   // New function
   const params: OutputFunctionParam[] = [];
   params.push({
-    type: 't_closure',
+    type: symbolGlobalClosureType,
     name: 'closure',
   });
-  for (let i = 0; i < ast.params.length; i++) {
-    const astParam = ast.params[i];
-    const astParamType = utilTranspileType(ensure(astParam.resolvedType), false);
+  for (let i = 0; i < astExpressionFunction.params.length; i++) {
+    const astParam = astExpressionFunction.params[i];
+    const astParamType = utilTranspileTypeAnnotation(ensure(astParam.resolvedType));
     if (astParam.name) {
       params.push({
         type: astParamType,
@@ -79,12 +74,12 @@ export function transpileExpressionFunction(
     }
   }
 
-  const returnType = utilTranspileType(ensure(ast.resolvedTypeRet), false);
-  transpiler.pushFunction(returnType, name, params);
+  const returnType = utilTranspileTypeAnnotation(ensure(astExpressionFunction.resolvedTypeRet));
+  transpiler.pushFunction(returnType, symbolGlobalCallablePointer, params);
 
   // Push block statements
   transpiler.pushStatement(['/* function block */']);
-  pass.recurseBlock(ast.block);
+  pass.recurseBlock(astExpressionFunction.block);
 
   // Backup return
   transpiler.pushStatement(['return', ' ', 'null_make()']);

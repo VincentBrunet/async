@@ -1,26 +1,20 @@
 import { AstExpressionObject, AstExpressionObjectField } from '../../../data/ast/AstExpressionObject.ts';
 import { ensure } from '../../../passes/errors/ensure.ts';
-import { hashGlobalSymbol } from '../../../passes/hash/hashGlobalSymbol.ts';
-import { hashLocalSymbol } from '../../hash/hashLocalSymbol.ts';
 import { RecursorPass } from '../../util/RecursorPass.ts';
 import { Transpiler } from '../util/Transpiler.ts';
 import { utilTranspileReferenceValueClosure } from '../util/utilTranspileReferenceValueClosure.ts';
-import { utilTranspileType } from '../util/utilTranspileType.ts';
+import { utilTranspileTypeAnnotation } from '../util/utilTranspileTypeAnnotation.ts';
 
 export function transpileExpressionObject(
   pass: RecursorPass,
-  ast: AstExpressionObject,
+  astExpressionObject: AstExpressionObject,
   transpiler: Transpiler,
 ) {
   // Assert
-  const referenceValueClosures = ensure(ast.referenceValueClosures);
+  const referenceValueClosures = ensure(astExpressionObject.referenceValueClosures);
 
-  // Generate a stable unique name
-  const name = hashGlobalSymbol(
-    transpiler.getUnit().ast.hash,
-    ast,
-    'object',
-  );
+  const symbolGlobalCallablePointer = ensure(astExpressionObject.symbolGlobalCallablePointer);
+  const symbolGlobalClosureType = ensure(astExpressionObject.symbolGlobalClosureType);
 
   // Simply call the object factory in the expression
   const objectCallLength = referenceValueClosures.length.toString();
@@ -33,7 +27,7 @@ export function transpileExpressionObject(
   }
   transpiler.pushStatementPart('(');
   transpiler.pushStatementPart('&');
-  transpiler.pushStatementPart(name);
+  transpiler.pushStatementPart(symbolGlobalCallablePointer);
   if (objectCallVariadic) {
     transpiler.pushStatementPart(', ');
     transpiler.pushStatementPart(objectCallLength);
@@ -45,11 +39,14 @@ export function transpileExpressionObject(
   transpiler.pushStatementPart(')');
 
   // New scope
-  const transpiledType = utilTranspileType(ensure(ast.resolvedType), false);
-  transpiler.pushFunction(transpiledType, name, [{ type: 't_closure', name: 'closure' }]);
+  const transpiledType = utilTranspileTypeAnnotation(ensure(astExpressionObject.resolvedType));
+  transpiler.pushFunction(transpiledType, symbolGlobalCallablePointer, [{
+    type: symbolGlobalClosureType,
+    name: 'closure',
+  }]);
 
   // Fields
-  const unsortedFields = ast.fields;
+  const unsortedFields = astExpressionObject.fields;
   const sortedFields = [...unsortedFields].sort(
     (a: AstExpressionObjectField, b: AstExpressionObjectField) => {
       if (a.hash < b.hash) {
@@ -64,7 +61,8 @@ export function transpileExpressionObject(
 
   // Create the module object containing all declared fields
   const fieldLength = sortedFields.length.toString();
-  const fieldLocal = hashLocalSymbol('fields', 'object');
+  //const fieldLocal = hashLocalSymbol('fields', 'object');
+  const fieldLocal = '/* ?? symbolLocalFields ?? */';
 
   const objectFieldsParts = [];
   objectFieldsParts.push('static t_u64');

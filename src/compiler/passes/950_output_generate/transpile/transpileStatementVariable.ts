@@ -1,5 +1,5 @@
 import { AstStatementVariable } from '../../../data/ast/AstStatementVariable.ts';
-import { hashLocalSymbol } from '../../../passes/hash/hashLocalSymbol.ts';
+import { ensure } from '../../errors/ensure.ts';
 import { RecursorPass } from '../../util/RecursorPass.ts';
 import { Transpiler } from '../util/Transpiler.ts';
 
@@ -10,8 +10,8 @@ export function transpileStatementVariable(
 ) {
   if (ast.value) {
     transpiler.pushStatement([
-      hashLocalSymbol('variable', ast.name),
-      '->value',
+      ast.resolvedDynamic ? '*' : '',
+      ensure(ast.symbolLocalValue),
       ' = ',
     ]);
     pass.recurseExpression(ast.value);

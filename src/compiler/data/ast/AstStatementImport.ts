@@ -7,6 +7,8 @@ export interface AstStatementImportSlot extends Ast {
   name: string;
 
   resolvedExport?: AstStatementExport;
+
+  symbolLocalValue?: string;
 }
 
 export interface AstStatementImport extends Ast {

@@ -1,4 +1,3 @@
-import { AstModule } from '../../../data/ast/AstModule.ts';
 import { OutputBlock } from '../../../data/output/OutputBlock.ts';
 import { OutputFunctionParam } from '../../../data/output/OutputFunction.ts';
 import { OutputModule } from '../../../data/output/OutputModule.ts';

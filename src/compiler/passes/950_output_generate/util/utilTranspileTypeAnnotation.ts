@@ -26,15 +26,7 @@ nativeToTranspiled.set(AstTypePrimitiveNative.Null, 't_null');
 nativeToTranspiled.set(AstTypePrimitiveNative.String, 't_string');
 nativeToTranspiled.set(AstTypePrimitiveNative.Any, 't_any');
 
-export function utilTranspileType(type: AstType, dynamic?: boolean): string {
-  const transpiledType = utilTranspileTypeBase(type);
-  if (dynamic) {
-    return transpiledType + '*';
-  }
-  return transpiledType;
-}
-
-export function utilTranspileTypeBase(type: AstType): string {
+export function utilTranspileTypeAnnotation(type: AstType): string {
   const typePrimitive = astTypeAsPrimitive(type);
   if (typePrimitive) {
     return nativeToTranspiled.get(typePrimitive.native) ?? 't_unknown';
@@ -57,13 +49,13 @@ export function utilTranspileTypeBase(type: AstType): string {
 
   const typeIdentifier = astTypeAsIdentifier(type);
   if (typeIdentifier) {
-    //return utilTranspileTypeBase(typeIdentifier.resolvedReferenceType?.data.resolvedType);
+    //return utilTranspileTypeAnnotation(typeIdentifier.resolvedReferenceType?.data.resolvedType);
     never();
     /*
     const typedef =  = ensure(typeIdentifier.resolvedReferenceType);
     assert(dataReference.kind === AstReferenceKind.StatementTypedef);
     const dataTypedef = (dataReference.data as AstStatementTypedef).type;
-    return utilTranspileTypeBase(dataTypedef);
+    return utilTranspileTypeAnnotation(dataTypedef);
     */
   }
 

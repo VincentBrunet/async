@@ -13,4 +13,7 @@ export interface AstExpressionRun extends Ast {
   resolvedReturns?: Array<AstStatementReturn>;
 
   referenceValueClosures?: Array<AstReferenceValueClosure>;
+
+  symbolGlobalCallablePointer?: string;
+  symbolGlobalClosureType?: string;
 }

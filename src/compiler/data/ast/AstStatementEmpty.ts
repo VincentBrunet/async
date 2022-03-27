@@ -1,3 +1,5 @@
-import { Ast } from "./Ast.ts";
+import { Ast } from './Ast.ts';
 
-export interface AstStatementEmpty extends Ast {}
+// deno-lint-ignore no-empty-interface
+export interface AstStatementEmpty extends Ast {
+}

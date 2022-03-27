@@ -1,7 +1,8 @@
 import { UnitModule } from '../../../data/unit/UnitModule.ts';
 import { ensure } from '../../../passes/errors/ensure.ts';
 import { Writer } from '../util/Writer.ts';
-import { writeFunction } from './writeFunction.ts';
+import { writeFunctionDefinition } from './writeFunctionDefinition.ts';
+import { writeFunctionImplementation } from './writeFunctionImplementation.ts';
 import { writeInclude } from './writeInclude.ts';
 import { writeStruct } from './writeStruct.ts';
 
@@ -10,11 +11,11 @@ export function writeModule(writer: Writer, unit: UnitModule) {
   const url = unit.url;
   const outputModule = ensure(unit.output);
   // Quick recap of url on top
-  writer.pushBoth('//');
-  writer.pushBoth(' ');
-  writer.pushBoth(url.href);
-  writer.pushBoth('\n');
-  writer.pushBoth('\n');
+  writer.pushToBoth('//');
+  writer.pushToBoth(' ');
+  writer.pushToBoth(url.href);
+  writer.pushToBoth('\n');
+  writer.pushToBoth('\n');
   // Anti-reimport
   writer.pushToHeader('#ifndef __');
   writer.pushToHeader(hash);
@@ -26,26 +27,36 @@ export function writeModule(writer: Writer, unit: UnitModule) {
   writer.pushToHeader('\n');
   writer.pushToHeader('\n');
   // Quick recap on top
-  writer.pushBoth('#include <runtime.h>');
-  writer.pushBoth('\n');
-  writer.pushBoth('\n');
+  writer.pushToBoth('#include <runtime.h>');
+  writer.pushToBoth('\n');
+  writer.pushToBoth('\n');
   // Includes
   if (outputModule.includes.length) {
     for (const outputInclude of outputModule.includes) {
       writeInclude(writer, outputInclude);
     }
-    writer.pushBoth('\n');
+    writer.pushToBoth('\n');
   }
   // Structs
   if (outputModule.structs.length) {
     for (const outputStruct of outputModule.structs) {
       writeStruct(writer, outputStruct);
     }
-    writer.pushToHeader('\n');
+    writer.pushToBoth('\n');
   }
-  // Functions
-  for (const outputFunction of outputModule.functions) {
-    writeFunction(writer, outputFunction);
+  // Functions definitions
+  if (outputModule.functions.length) {
+    for (const outputFunction of outputModule.functions) {
+      writeFunctionDefinition(writer, outputFunction);
+    }
+    writer.pushToBoth('\n');
+  }
+  // Functions implementations
+  if (outputModule.functions.length) {
+    for (const outputFunction of outputModule.functions) {
+      writeFunctionImplementation(writer, outputFunction);
+    }
+    writer.pushToSource('\n');
   }
   // Anti-reimport
   writer.pushToHeader('#endif');

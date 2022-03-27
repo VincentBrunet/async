@@ -1,9 +1,5 @@
-import { AstExpressionFunctionParam } from '../../../data/ast/AstExpressionFunction.ts';
 import { AstReferenceValueClosure } from '../../../data/ast/AstReferenceValueClosure.ts';
-import { AstStatementImportSlot } from '../../../data/ast/AstStatementImport.ts';
-import { AstStatementVariable } from '../../../data/ast/AstStatementVariable.ts';
 import { ensure } from '../../../passes/errors/ensure.ts';
-import { hashLocalSymbol } from '../../../passes/hash/hashLocalSymbol.ts';
 import { Transpiler } from '../util/Transpiler.ts';
 import {
   astReferenceValueAsExpressionFunctionParam,
@@ -21,26 +17,20 @@ export function utilTranspileReferenceValueClosure(
 
   const statementVariable = astReferenceValueAsStatementVariable(resolvedReferenceValue);
   if (statementVariable) {
-    transpiler.pushStatementPart(
-      hashLocalSymbol('variable', statementVariable.name),
-    );
+    transpiler.pushStatementPart(ensure(statementVariable.symbolLocalValue));
     return;
   }
 
   const statementImportSlot = astReferenceValueAsStatementImportSlot(resolvedReferenceValue);
   if (statementImportSlot) {
-    transpiler.pushStatementPart(
-      hashLocalSymbol('import', statementImportSlot.name),
-    );
+    transpiler.pushStatementPart(ensure(statementImportSlot.symbolLocalValue));
     return;
   }
 
   const expressionFunctionParam = astReferenceValueAsExpressionFunctionParam(resolvedReferenceValue);
   if (expressionFunctionParam) {
     transpiler.pushStatementPart('ref_make(');
-    transpiler.pushStatementPart(
-      hashLocalSymbol('param', ensure(expressionFunctionParam.name)),
-    );
+    transpiler.pushStatementPart(ensure(expressionFunctionParam.symbolLocalValue));
     transpiler.pushStatementPart(')');
     return;
   }

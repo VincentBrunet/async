@@ -16,7 +16,7 @@ export class Writer {
   pushToSource(content: string) {
     this.contentSource.push(content);
   }
-  pushBoth(content: string) {
+  pushToBoth(content: string) {
     this.pushToHeader(content);
     this.pushToSource(content);
   }

@@ -1,7 +1,6 @@
 import { expandGlob } from 'https://deno.land/std@0.63.0/fs/mod.ts';
 import { UnitModule } from '../../data/unit/UnitModule.ts';
 import { ensure } from '../../passes/errors/ensure.ts';
-import { hashGlobalSymbol } from '../../passes/hash/hashGlobalSymbol.ts';
 import { cacheFileFromHash } from '../../lib/io/cacheFileFromHash.ts';
 import { compileCommand } from '../../lib/io/compileCommand.ts';
 
@@ -31,7 +30,7 @@ export async function passObjectToBinary(
   mainContent.push('\n');
   mainContent.push('\n');
   mainContent.push('t_module (*entry_module)() = ');
-  mainContent.push(hashGlobalSymbol(hash, unit.ast, 'module'));
+  mainContent.push(ensure(unit.ast.symbolGlobalGetterPointer));
   mainContent.push(';');
   mainContent.push('\n');
 

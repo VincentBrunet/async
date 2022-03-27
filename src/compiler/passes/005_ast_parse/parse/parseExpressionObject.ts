@@ -1,6 +1,6 @@
 import { AstExpressionObject, AstExpressionObjectField } from '../../../data/ast/AstExpressionObject.ts';
 import { tokenIsText } from '../../../data/token/Token.ts';
-import { hashObjectKey } from '../../../passes/hash/hashObjectKey.ts';
+import { hashObjectFieldName } from '../util/hashObjectFieldName.ts';
 import { Browser } from '../util/Browser.ts';
 import { TokenImpasse } from '../util/TokenImpasse.ts';
 import { parseAnnotationType } from './parseAnnotationType.ts';
@@ -46,7 +46,7 @@ function parseExpressionObjectField(
     return browser.impasse('ExpressionObject.Field.Expression', [expression]);
   }
   // field - hash
-  const hash = hashObjectKey(name.str);
+  const hash = hashObjectFieldName(name.str);
   // field - validated
   return {
     mutable: mutable,

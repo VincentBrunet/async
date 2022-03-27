@@ -11,6 +11,8 @@ export interface AstExpressionFunctionParam extends Ast {
   annotation: AstAnnotationType;
 
   resolvedType?: AstType;
+
+  symbolLocalValue?: string;
 }
 
 export interface AstExpressionFunction extends Ast {
@@ -24,4 +26,7 @@ export interface AstExpressionFunction extends Ast {
   resolvedReturns?: Array<AstStatementReturn>;
 
   referenceValueClosures?: Array<AstReferenceValueClosure>;
+
+  symbolGlobalCallablePointer?: string;
+  symbolGlobalClosureType?: string;
 }

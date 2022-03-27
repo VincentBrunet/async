@@ -5,4 +5,6 @@ export interface AstStatementExport extends Ast {
   statement: AstStatement;
 
   resolvedName?: string;
+
+  symbolLocalValue?: string;
 }

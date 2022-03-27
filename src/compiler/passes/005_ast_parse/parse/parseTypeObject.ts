@@ -1,6 +1,6 @@
 import { AstTypeObject, AstTypeObjectField } from '../../../data/ast/AstTypeObject.ts';
 import { tokenIsText } from '../../../data/token/Token.ts';
-import { hashObjectKey } from '../../../passes/hash/hashObjectKey.ts';
+import { hashObjectFieldName } from '../util/hashObjectFieldName.ts';
 import { Browser } from '../util/Browser.ts';
 import { TokenImpasse } from '../util/TokenImpasse.ts';
 import { parseAnnotationType } from './parseAnnotationType.ts';
@@ -40,7 +40,7 @@ function parseTypeObjectField(
     return browser.impasse('TypeObject.Field.Type');
   }
   // field - hash
-  const hash = hashObjectKey(name);
+  const hash = hashObjectFieldName(name);
   // done
   return {
     mutable: mutable,

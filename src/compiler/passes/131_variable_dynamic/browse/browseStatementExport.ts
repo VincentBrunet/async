@@ -1,11 +1,11 @@
 import { astStatementAsVariable } from '../../../data/ast/AstStatement.ts';
 import { AstStatementExport } from '../../../data/ast/AstStatementExport.ts';
 
-export function browseStatementExport(
-  ast: AstStatementExport,
-) {
+export function browseStatementExport(ast: AstStatementExport) {
   const variable = astStatementAsVariable(ast.statement);
   if (variable) {
-    variable.resolvedDynamic = true;
+    if (variable.mutable) {
+      variable.resolvedDynamic = true;
+    }
   }
 }

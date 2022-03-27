@@ -1,7 +1,5 @@
 import { AstStatementImport } from '../../../data/ast/AstStatementImport.ts';
 import { ensure } from '../../../passes/errors/ensure.ts';
-import { hashGlobalSymbol } from '../../../passes/hash/hashGlobalSymbol.ts';
-import { hashLocalSymbol } from '../../../passes/hash/hashLocalSymbol.ts';
 import { cacheFileFromHash } from '../../../lib/io/cacheFileFromHash.ts';
 import { RecursorPass } from '../../util/RecursorPass.ts';
 import { Transpiler } from '../util/Transpiler.ts';
@@ -30,9 +28,9 @@ export function transpileStatementImport(
   for (const slot of ast.slots) {
     transpiler.pushStatement([
       't_ref *',
-      hashLocalSymbol('import', slot.name),
+      ensure(slot.symbolLocalValue),
       ' = ',
-      hashGlobalSymbol(resolvedModule.hash, resolvedModule, 'getter'),
+      ensure(resolvedModule.symbolGlobalGetterPointer),
       '()',
       '[',
       resolvedExportKeys.indexOf(slot.name).toString(),

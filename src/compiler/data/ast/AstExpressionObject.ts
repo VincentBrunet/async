@@ -19,4 +19,7 @@ export interface AstExpressionObject extends Ast {
   resolvedType?: AstType;
 
   referenceValueClosures?: Array<AstReferenceValueClosure>;
+
+  symbolGlobalCallablePointer?: string;
+  symbolGlobalClosureType?: string;
 }

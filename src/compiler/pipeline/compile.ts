@@ -13,10 +13,12 @@ import { passAstToOutput } from '../passes/950_output_generate/passAstToOutput.t
 import { passObjectToBinary } from '../passes/990_compile_binary/passObjectToBinary.ts';
 import { passImportLink } from '../passes/102_import_link/passImportLink.ts';
 import { UnitModule } from '../data/unit/UnitModule.ts';
-import { hashModuleId } from '../passes/hash/hashModuleId.ts';
+import { hashModuleId } from './hashModuleId.ts';
 import { passOutputToFiles } from '../passes/960_output_write/passOutputToFiles.ts';
 import { passFilesToObject } from '../passes/980_compile_output/passFilesToObject.ts';
 import { passObjectFields } from '../passes/115_object_fields/passObjectFields.ts';
+import { passVariableDynamic } from '../passes/131_variable_dynamic/passVariableDynamic.ts';
+import { passSymbolNames } from '../passes/910_symbol_names/passSymbolNames.ts';
 
 export async function initialResolve(url: URL): Promise<UnitModule> {
   const code = await passUrlToCode(url);
@@ -52,8 +54,10 @@ const passes: Pass[] = [
   { name: '115', run: runSync(passObjectFields) },
   { name: '123', run: runSync(passClosureResolve) },
   { name: '125', run: runSync(passReferenceResolve) },
+  { name: '131', run: runSync(passVariableDynamic) },
   { name: '203.A', run: runSync(passTypeInferenceUpward) },
   { name: '203.B', run: runSync(passTypeInferenceUpward) },
+  { name: '910', run: runSync(passSymbolNames) },
   { name: '950', run: runSync(passAstToOutput) },
   { name: '960', run: passOutputToFiles },
   { name: '980', run: passFilesToObject },

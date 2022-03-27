@@ -1,30 +1,42 @@
 import { AstBlock } from '../../../data/ast/AstBlock.ts';
 import { ensure } from '../../../passes/errors/ensure.ts';
-import { hashLocalSymbol } from '../../../passes/hash/hashLocalSymbol.ts';
 import { RecursorPass } from '../../util/RecursorPass.ts';
 import { Transpiler } from '../util/Transpiler.ts';
-import { utilTranspileType } from '../util/utilTranspileType.ts';
+import { utilTranspileTypeAnnotation } from '../util/utilTranspileTypeAnnotation.ts';
 
 export function transpileBlock(
   pass: RecursorPass,
   ast: AstBlock,
   transpiler: Transpiler,
 ) {
-  // Asserts
-  const resolvedVariables = ensure(ast.resolvedVariables);
-
   // Open block
   transpiler.pushBlock();
 
   // Setup local variables
+  const resolvedVariables = ensure(ast.resolvedVariables);
   for (const resolvedVariable of resolvedVariables) {
-    transpiler.pushStatement([
-      utilTranspileType(ensure(resolvedVariable.resolvedType), resolvedVariable.mutable),
-      ' ',
-      hashLocalSymbol('variable', resolvedVariable.name),
-      ' = ',
-      'ref_make(NULL)',
-    ]);
+    const resolvedType = ensure(resolvedVariable.resolvedType);
+    const transpiledType = utilTranspileTypeAnnotation(resolvedType);
+    const symbolLocalValue = ensure(resolvedVariable.symbolLocalValue);
+
+    if (resolvedVariable.resolvedDynamic) {
+      transpiler.pushStatement([
+        transpiledType,
+        '*',
+        ' ',
+        symbolLocalValue,
+        ' = ',
+        'malloc(sizeof(',
+        transpiledType,
+        '))',
+      ]);
+    } else {
+      transpiler.pushStatement([
+        transpiledType,
+        ' ',
+        symbolLocalValue,
+      ]);
+    }
   }
 
   // Recurse on statements

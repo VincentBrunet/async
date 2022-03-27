@@ -1,22 +1,21 @@
 import { astStatementAsVariable } from '../../../data/ast/AstStatement.ts';
 import { AstStatementExport } from '../../../data/ast/AstStatementExport.ts';
-import { hashLocalSymbol } from '../../../passes/hash/hashLocalSymbol.ts';
+import { ensure } from '../../errors/ensure.ts';
 import { RecursorPass } from '../../util/RecursorPass.ts';
 import { Transpiler } from '../util/Transpiler.ts';
 
 export function transpileStatementExport(
   pass: RecursorPass,
-  ast: AstStatementExport,
+  astStatementExport: AstStatementExport,
   transpiler: Transpiler,
 ) {
-  const variable = astStatementAsVariable(ast.statement);
+  const variable = astStatementAsVariable(astStatementExport.statement);
   if (variable) {
     transpiler.pushStatement([
-      hashLocalSymbol('export', variable.name),
+      ensure(astStatementExport.symbolLocalValue),
       ' = ',
-      hashLocalSymbol('variable', variable.name),
+      ensure(variable.symbolLocalValue),
     ]);
   }
-
-  pass.recurseStatement(ast.statement);
+  pass.recurseStatement(astStatementExport.statement);
 }
