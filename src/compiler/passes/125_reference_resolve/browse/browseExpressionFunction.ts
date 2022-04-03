@@ -13,9 +13,6 @@ export function browseExpressionFunction(
   for (const referenceValueClosure of referenceValueClosures) {
     referenceValueClosure.resolvedReferenceValue = scope.findReferenceValue(referenceValueClosure.name);
   }
-  for (const referenceValueClosure of referenceValueClosures) {
-    scope.pushReferenceValueClosure(referenceValueClosure);
-  }
 
   // Template params
   for (const param of ast.template.params) {

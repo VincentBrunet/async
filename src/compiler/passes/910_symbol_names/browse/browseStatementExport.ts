@@ -1,12 +1,13 @@
+import { AstModule } from '../../../data/ast/AstModule.ts';
 import { astStatementAsStatementVariable } from '../../../data/ast/AstStatement.ts';
 import { AstStatementExport } from '../../../data/ast/AstStatementExport.ts';
-import { hashLocalSymbol } from '../util/hashLocalSymbol.ts';
 
 export function browseStatementExport(
   astStatementExport: AstStatementExport,
+  astModule: AstModule,
 ): void {
   const statementVariable = astStatementAsStatementVariable(astStatementExport.statement);
   if (statementVariable) {
-    astStatementExport.symbolLocalValue = hashLocalSymbol('export', statementVariable.name);
+    astStatementExport.symbolLocalValue = astModule.symbolLocalModuleValue + '->' + statementVariable.name;
   }
 }

@@ -36,7 +36,7 @@ export function writeModule(writer: Writer, unit: UnitModule) {
   writer.pushToHeader('\n');
   writer.pushToHeader('\n');
   // Quick recap on top
-  writer.pushToBoth('#include <runtime.h>');
+  writer.pushToBoth('#include "runtime.hpp"');
   writer.pushToBoth('\n');
   writer.pushToBoth('\n');
   // Includes

@@ -3,7 +3,7 @@ import { ensure } from '../../../passes/errors/ensure.ts';
 import { RecursorPass } from '../../util/RecursorPass.ts';
 import { Transpiler } from '../util/Transpiler.ts';
 import { OutputStructField } from '../../../data/output/OutputStructs.ts';
-import { utilTranspileTypeAnnotation } from '../util/utilTranspileTypeAnnotation.ts';
+import { utilTranspileTypeToAnnotation } from '../util/utilTranspileTypeToAnnotation.ts';
 import { astStatementAsStatementTypedef, astStatementAsStatementVariable } from '../../../data/ast/AstStatement.ts';
 
 export function transpileModule(
@@ -23,9 +23,9 @@ export function transpileModule(
     if (statementVariable) {
       fields.push({
         name: statementVariable.name,
-        type: utilTranspileTypeAnnotation(
+        type: utilTranspileTypeToAnnotation(
           ensure(statementVariable.resolvedType),
-          statementVariable.mutable,
+          statementVariable.resolvedHeapized,
         ),
       });
     }
@@ -41,33 +41,15 @@ export function transpileModule(
 
   // New module Factory function
   transpiler.pushFunction(symbolGlobalExportStruct + '*', symbolGlobalFactoryPointer, []);
-  transpiler.pushStatement([
-    'static',
-    ' ',
-    symbolGlobalExportStruct + '*',
-    ' ',
-    symbolLocalModuleValue,
-    ' = ',
-    'NULL',
-  ]);
-  transpiler.pushStatement([
-    'if (module != 0)',
-  ]);
+  transpiler.pushStatement(['static ', symbolGlobalExportStruct, '* ', symbolLocalModuleValue, ' = NULL']);
+  transpiler.pushStatement(['if (', symbolLocalModuleValue, ' != NULL)']);
   transpiler.pushBlock();
-  transpiler.pushStatement([
-    'return module',
-  ]);
+  transpiler.pushStatement(['return ', symbolLocalModuleValue]);
   transpiler.popBlock();
-  transpiler.pushStatement([
-    symbolLocalModuleValue,
-    ' = malloc(sizeof(',
-    symbolGlobalExportStruct,
-    '))',
-  ]);
+  transpiler.pushStatement([symbolLocalModuleValue, ' = malloc(sizeof(', symbolGlobalExportStruct, '))']);
 
   // Recurse in module content
   transpiler.pushStatement(['/* module block */']);
   pass.recurseBlock(astModule.block);
-
-  transpiler.pushStatement(['return module']);
+  transpiler.pushStatement(['return ', symbolLocalModuleValue]);
 }

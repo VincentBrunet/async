@@ -61,14 +61,6 @@ export class Scope {
     });
   }
 
-  pushReferenceValueClosure(resolvedClosure: AstReferenceValueClosure) {
-    const name = resolvedClosure.name;
-    this.pushReferenceValue(name, {
-      kind: AstReferenceValueKind.ReferenceValueClosure,
-      data: resolvedClosure,
-    });
-  }
-
   private pushReferenceType(name: string, referenceType: AstReferenceType) {
     if (this.referenceTypes.get(name)) {
       throw new Error(

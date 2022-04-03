@@ -10,8 +10,8 @@ import { UnitModule } from '../../data/unit/UnitModule.ts';
 export async function passOutputToFiles(unit: UnitModule) {
   const hash = unit.ast.hash;
   const files: FilesModule = {
-    header: cacheFileFromHash(hash, 'output.h'),
-    source: cacheFileFromHash(hash, 'output.c'),
+    source: cacheFileFromHash(hash, 'output.cpp'),
+    header: cacheFileFromHash(hash, 'output.hpp'),
     object: cacheFileFromHash(hash, 'output.o'),
     debug: cacheFileFromHash(hash, 'output.json'),
     code: cacheFileFromHash(hash, 'output.ac'),

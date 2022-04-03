@@ -6,7 +6,6 @@ export function browseStatementExport(statementExport: AstStatementExport) {
   if (statementVariable) {
     if (statementVariable.mutable) {
       statementVariable.resolvedHeapized = true;
-      statementExport.resolvedMutable = true;
     }
   }
 }

@@ -10,7 +10,7 @@ export function transpileStatementVariable(
 ) {
   if (ast.value) {
     transpiler.pushStatement([
-      ast.mutable ? '*' : '',
+      ast.resolvedHeapized ? '*' : '',
       ensure(ast.symbolLocalValue),
       ' = ',
     ]);

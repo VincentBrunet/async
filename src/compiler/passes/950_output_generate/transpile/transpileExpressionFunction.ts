@@ -4,8 +4,9 @@ import { OutputStructField } from '../../../data/output/OutputStructs.ts';
 import { ensure } from '../../../passes/errors/ensure.ts';
 import { RecursorPass } from '../../util/RecursorPass.ts';
 import { Transpiler } from '../util/Transpiler.ts';
-import { utilTranspileReferenceValueClosure } from '../util/utilTranspileReferenceValueClosure.ts';
-import { utilTranspileTypeAnnotation } from '../util/utilTranspileTypeAnnotation.ts';
+import { utilTranspileReferenceValueClosureToAnnotation } from '../util/utilTranspileReferenceValueClosureToAnnotation.ts';
+import { utilTranspileReferenceValueClosureToExpression } from '../util/utilTranspileReferenceValueClosureToExpression.ts';
+import { utilTranspileTypeToAnnotation } from '../util/utilTranspileTypeToAnnotation.ts';
 
 export function transpileExpressionFunction(
   pass: RecursorPass,
@@ -25,7 +26,7 @@ export function transpileExpressionFunction(
     if (referenceValueClosure.idx !== 0) {
       transpiler.pushStatementPart(', ');
     }
-    utilTranspileReferenceValueClosure(referenceValueClosure, transpiler);
+    transpiler.pushStatementPart(utilTranspileReferenceValueClosureToExpression(referenceValueClosure));
   }
   transpiler.pushStatementPart(')');
 
@@ -34,26 +35,20 @@ export function transpileExpressionFunction(
   for (const referenceValueClosure of referenceValueClosures) {
     closureParts.push({
       name: referenceValueClosure.name,
-      type: utilTranspileTypeAnnotation(
-        ensure(referenceValueClosure.resolvedType),
-        referenceValueClosure.resolvedMutable,
-      ),
+      type: utilTranspileReferenceValueClosureToAnnotation(referenceValueClosure),
     });
   }
   transpiler.pushStruct(symbolGlobalClosureStruct, closureParts);
 
   // Make the factory function
-  const transpiledType = utilTranspileTypeAnnotation(ensure(astExpressionFunction.resolvedType));
+  const transpiledType = utilTranspileTypeToAnnotation(ensure(astExpressionFunction.resolvedType), false);
   transpiler.pushFunction(
     transpiledType,
     symbolGlobalFactoryFunction,
     referenceValueClosures.map((referenceValueClosure) => {
       return {
         name: referenceValueClosure.name,
-        type: utilTranspileTypeAnnotation(
-          ensure(referenceValueClosure.resolvedType),
-          referenceValueClosure.resolvedMutable,
-        ),
+        type: utilTranspileReferenceValueClosureToAnnotation(referenceValueClosure),
       };
     }),
   );
@@ -75,7 +70,7 @@ export function transpileExpressionFunction(
   });
   for (let i = 0; i < astExpressionFunction.params.length; i++) {
     const astParam = astExpressionFunction.params[i];
-    const astParamType = utilTranspileTypeAnnotation(ensure(astParam.resolvedType));
+    const astParamType = utilTranspileTypeToAnnotation(ensure(astParam.resolvedType), false);
     if (astParam.name) {
       params.push({
         type: astParamType,
@@ -89,7 +84,7 @@ export function transpileExpressionFunction(
     }
   }
 
-  const returnType = utilTranspileTypeAnnotation(ensure(astExpressionFunction.resolvedTypeRet));
+  const returnType = utilTranspileTypeToAnnotation(ensure(astExpressionFunction.resolvedTypeRet), false);
   transpiler.pushFunction(returnType, symbolGlobalCallableFunction, params);
 
   // Push block statements

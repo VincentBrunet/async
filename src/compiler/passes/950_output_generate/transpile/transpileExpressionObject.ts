@@ -2,8 +2,9 @@ import { AstExpressionObject, AstExpressionObjectField } from '../../../data/ast
 import { ensure } from '../../../passes/errors/ensure.ts';
 import { RecursorPass } from '../../util/RecursorPass.ts';
 import { Transpiler } from '../util/Transpiler.ts';
-import { utilTranspileReferenceValueClosure } from '../util/utilTranspileReferenceValueClosure.ts';
-import { utilTranspileTypeAnnotation } from '../util/utilTranspileTypeAnnotation.ts';
+import { utilTranspileReferenceValueClosureToAnnotation } from '../util/utilTranspileReferenceValueClosureToAnnotation.ts';
+import { utilTranspileReferenceValueClosureToExpression } from '../util/utilTranspileReferenceValueClosureToExpression.ts';
+import { utilTranspileTypeToAnnotation } from '../util/utilTranspileTypeToAnnotation.ts';
 
 export function transpileExpressionObject(
   pass: RecursorPass,
@@ -22,22 +23,19 @@ export function transpileExpressionObject(
     if (referenceValueClosure.idx !== 0) {
       transpiler.pushStatementPart(', ');
     }
-    utilTranspileReferenceValueClosure(referenceValueClosure, transpiler);
+    transpiler.pushStatementPart(utilTranspileReferenceValueClosureToExpression(referenceValueClosure));
   }
   transpiler.pushStatementPart(')');
 
   // New scope
-  const transpiledType = utilTranspileTypeAnnotation(ensure(astExpressionObject.resolvedType));
+  const transpiledType = utilTranspileTypeToAnnotation(ensure(astExpressionObject.resolvedType), false);
   transpiler.pushFunction(
     transpiledType,
     symbolGlobalCallableFunction,
     referenceValueClosures.map((referenceValueClosure) => {
       return {
         name: ensure(referenceValueClosure.symbolLocalValue),
-        type: utilTranspileTypeAnnotation(
-          ensure(referenceValueClosure.resolvedType),
-          referenceValueClosure.resolvedMutable,
-        ),
+        type: utilTranspileReferenceValueClosureToAnnotation(referenceValueClosure) + '&',
       };
     }),
   );
@@ -60,8 +58,8 @@ export function transpileExpressionObject(
   const fieldLength = sortedFields.length.toString();
 
   transpiler.pushStatic(
-    't_u64[]',
-    symbolGlobalFieldsGlobal,
+    'ac::u64',
+    symbolGlobalFieldsGlobal + '[]',
     [
       '{',
       sortedFields.map((field) => field.hash).join(', '),

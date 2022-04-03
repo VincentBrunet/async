@@ -21,15 +21,15 @@ async function readToString(reader: Deno.Reader) {
 export async function compileCommand(command: Array<string>) {
   const process = Deno.run({
     cmd: [
-      "cc",
+      'cc',
       ...command,
     ],
-    stdin: "piped",
-    stdout: "piped",
-    stderr: "piped",
+    stdin: 'piped',
+    stdout: 'piped',
+    stderr: 'piped',
   });
 
-  //console.log("compileCommand.command", command);
+  //console.log('compileCommand.command', command);
 
   const status = await process.status();
   const stdout = await readToString(process.stdout);

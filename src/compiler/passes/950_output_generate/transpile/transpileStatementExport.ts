@@ -9,6 +9,7 @@ export function transpileStatementExport(
   astStatementExport: AstStatementExport,
   transpiler: Transpiler,
 ) {
+  pass.recurseStatement(astStatementExport.statement);
   const variable = astStatementAsStatementVariable(astStatementExport.statement);
   if (variable) {
     transpiler.pushStatement([
@@ -17,5 +18,4 @@ export function transpileStatementExport(
       ensure(variable.symbolLocalValue),
     ]);
   }
-  pass.recurseStatement(astStatementExport.statement);
 }

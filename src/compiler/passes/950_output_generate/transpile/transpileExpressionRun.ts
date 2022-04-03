@@ -2,8 +2,9 @@ import { AstExpressionRun } from '../../../data/ast/AstExpressionRun.ts';
 import { ensure } from '../../../passes/errors/ensure.ts';
 import { RecursorPass } from '../../util/RecursorPass.ts';
 import { Transpiler } from '../util/Transpiler.ts';
-import { utilTranspileReferenceValueClosure } from '../util/utilTranspileReferenceValueClosure.ts';
-import { utilTranspileTypeAnnotation } from '../util/utilTranspileTypeAnnotation.ts';
+import { utilTranspileReferenceValueClosureToAnnotation } from '../util/utilTranspileReferenceValueClosureToAnnotation.ts';
+import { utilTranspileReferenceValueClosureToExpression } from '../util/utilTranspileReferenceValueClosureToExpression.ts';
+import { utilTranspileTypeToAnnotation } from '../util/utilTranspileTypeToAnnotation.ts';
 
 export function transpileExpressionRun(
   pass: RecursorPass,
@@ -20,22 +21,19 @@ export function transpileExpressionRun(
     if (referenceValueClosure.idx !== 0) {
       transpiler.pushStatementPart(', ');
     }
-    utilTranspileReferenceValueClosure(referenceValueClosure, transpiler);
+    transpiler.pushStatementPart(utilTranspileReferenceValueClosureToExpression(referenceValueClosure));
   }
   transpiler.pushStatementPart(')');
 
   // New scope
-  const transpiledType = utilTranspileTypeAnnotation(ensure(astExpressionRun.resolvedType));
+  const transpiledType = utilTranspileTypeToAnnotation(ensure(astExpressionRun.resolvedType), false);
   transpiler.pushFunction(
     transpiledType,
     symbolGlobalCallableFunction,
     referenceValueClosures.map((referenceValueClosure) => {
       return {
         name: ensure(referenceValueClosure.symbolLocalValue),
-        type: utilTranspileTypeAnnotation(
-          ensure(referenceValueClosure.resolvedType),
-          referenceValueClosure.resolvedMutable,
-        ),
+        type: utilTranspileReferenceValueClosureToAnnotation(referenceValueClosure) + '&',
       };
     }),
   );

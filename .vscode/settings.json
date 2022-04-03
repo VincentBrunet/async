@@ -34,5 +34,6 @@
   "editor.wordWrapColumn": 100,
   "deno.suggest.completeFunctionCalls": true,
   "deno.config": "",
-  "deno.path": "/Users/vincent/.deno/bin/deno"
+  "deno.path": "/Users/vincent/.deno/bin/deno",
+  "C_Cpp.errorSquiggles": "Enabled"
 }

@@ -17,7 +17,7 @@ export function transpileStatementImport(
   transpiler.pushInclude(
     cacheFileFromHash(
       resolvedModule.hash,
-      'output.h',
+      'output.hpp',
     ),
   );
 
