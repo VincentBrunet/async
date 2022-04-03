@@ -2,42 +2,46 @@ import { ensure } from '../../../passes/errors/ensure.ts';
 import {
   AstReferenceValue,
   astReferenceValueAsExpressionFunctionParam,
+  astReferenceValueAsReferenceClosure,
   astReferenceValueAsStatementImportSlot,
   astReferenceValueAsStatementVariable,
 } from '../../../data/ast/AstReferenceValue.ts';
 import { astStatementAsStatementVariable } from '../../../data/ast/AstStatement.ts';
 import { never } from '../../errors/never.ts';
 
+function utilTranspileReferenceValueToExpressionIsHeapized(astReferenceValue: AstReferenceValue): boolean | undefined {
+  const statementVariable = astReferenceValueAsStatementVariable(astReferenceValue);
+  if (statementVariable) {
+    return statementVariable.resolvedHeapized;
+  }
+  const statementImportSlot = astReferenceValueAsStatementImportSlot(astReferenceValue);
+  if (statementImportSlot) {
+    const statementExportVariable = ensure(astStatementAsStatementVariable(
+      ensure(statementImportSlot.resolvedExport).statement,
+    ));
+    return statementExportVariable.resolvedHeapized;
+  }
+  const expressionFunctionParam = astReferenceValueAsExpressionFunctionParam(astReferenceValue);
+  if (expressionFunctionParam) {
+    return false;
+  }
+  const referenceClosure = astReferenceValueAsReferenceClosure(astReferenceValue);
+  if (referenceClosure) {
+    const resolvedReferenceClosure = ensure(referenceClosure.resolvedReferenceValue);
+    return utilTranspileReferenceValueToExpressionIsHeapized(resolvedReferenceClosure);
+  }
+  never();
+}
+
 export function utilTranspileReferenceValueToExpression(
   astReferenceValue: AstReferenceValue,
   evaluate: boolean,
 ): string {
-  const statementVariable = astReferenceValueAsStatementVariable(astReferenceValue);
-  if (statementVariable) {
-    if (evaluate) {
-      if (statementVariable.resolvedHeapized) {
-        return '*' + ensure(statementVariable.symbolLocalValue);
-      }
-    }
-    return ensure(statementVariable.symbolLocalValue);
-  }
-
-  const statementImportSlot = astReferenceValueAsStatementImportSlot(astReferenceValue);
-  if (statementImportSlot) {
-    if (evaluate) {
-      const statementExportVariable = ensure(astStatementAsStatementVariable(
-        ensure(statementImportSlot.resolvedExport).statement,
-      ));
-      if (statementExportVariable.resolvedHeapized) {
-        return '*' + ensure(statementImportSlot.symbolLocalValue);
-      }
+  const symbolLocalValue = ensure(astReferenceValue.data.symbolLocalValue);
+  if (evaluate) {
+    if (utilTranspileReferenceValueToExpressionIsHeapized(astReferenceValue)) {
+      return '(*' + symbolLocalValue + ')';
     }
   }
-
-  const expressionFunctionParam = astReferenceValueAsExpressionFunctionParam(astReferenceValue);
-  if (expressionFunctionParam) {
-    return ensure(expressionFunctionParam.symbolLocalValue);
-  }
-
-  never();
+  return symbolLocalValue;
 }

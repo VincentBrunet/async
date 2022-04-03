@@ -10,8 +10,9 @@ export function transpileStatementVariable(
 ) {
   if (ast.value) {
     transpiler.pushStatement([
-      ast.resolvedHeapized ? '*' : '',
+      ast.resolvedHeapized ? '(*' : '',
       ensure(ast.symbolLocalValue),
+      ast.resolvedHeapized ? ')' : '',
       ' = ',
     ]);
     pass.recurseExpression(ast.value);

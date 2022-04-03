@@ -1,7 +1,7 @@
 import { AstExpressionRun } from '../../../data/ast/AstExpressionRun.ts';
 import { ensure } from '../../../passes/errors/ensure.ts';
 import { makeTypeOrFromArray } from '../../../lib/typing/makeTypeOrFromArray.ts';
-import { utilTypeForReferenceValueClosure } from '../util/utilTypeForReferenceValueClosure.ts';
+import { utilTypeForReferenceClosure } from '../util/utilTypeForReferenceClosure.ts';
 import { Tracker } from '../util/Tracker.ts';
 
 export function browseExpressionRun(
@@ -10,12 +10,12 @@ export function browseExpressionRun(
   tracker: Tracker,
 ) {
   // Asserts
-  const referenceValueClosures = ensure(ast.referenceValueClosures);
+  const referenceClosures = ensure(ast.referenceClosures);
   const resolvedReturns = ensure(ast.resolvedReturns);
 
   // Resolve closure types
-  for (const referenceValueClosure of referenceValueClosures) {
-    referenceValueClosure.resolvedType = utilTypeForReferenceValueClosure(referenceValueClosure);
+  for (const referenceClosure of referenceClosures) {
+    referenceClosure.resolvedType = utilTypeForReferenceClosure(referenceClosure);
   }
 
   // Prep type before recursion

@@ -21,9 +21,10 @@ export function transpileExpressionBinary(
     return;
   }
 
-  let callName = ast.operator.toString();
+  //let callName = ast.operator.toString();
 
   // i32
+  /*
   const i32 = AstTypePrimitiveNative.Integer32;
   if (
     isTypePrimitive(type1, i32) &&
@@ -39,11 +40,19 @@ export function transpileExpressionBinary(
       callName = 'i32_multiplication';
     }
   }
+  */
 
-  transpiler.pushStatementPart(callName);
+  const operatorToOperator = new Map<AstExpressionBinaryOperator, string>();
+  operatorToOperator.set(AstExpressionBinaryOperator.Addition, '+');
+  operatorToOperator.set(AstExpressionBinaryOperator.Substraction, '-');
+  operatorToOperator.set(AstExpressionBinaryOperator.Multiplication, '*');
+
+  //transpiler.pushStatementPart(callName);
   transpiler.pushStatementPart('(');
   pass.recurseExpression(ast.expression1);
-  transpiler.pushStatementPart(', ');
+  transpiler.pushStatementPart(' ');
+  transpiler.pushStatementPart(operatorToOperator.get(ast.operator) ?? '??');
+  transpiler.pushStatementPart(' ');
   pass.recurseExpression(ast.expression2);
   transpiler.pushStatementPart(')');
 }

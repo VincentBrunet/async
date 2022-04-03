@@ -3,7 +3,7 @@ import { AstTypeObjectField } from '../../../data/ast/AstTypeObject.ts';
 import { ensure } from '../../../passes/errors/ensure.ts';
 import { makeTypeObject } from '../../../lib/typing/makeTypeObject.ts';
 import { makeTypePrimitiveUnknown } from '../../../lib/typing/makeTypePrimitiveUnknown.ts';
-import { utilTypeForReferenceValueClosure } from '../util/utilTypeForReferenceValueClosure.ts';
+import { utilTypeForReferenceClosure } from '../util/utilTypeForReferenceClosure.ts';
 import { Tracker } from '../util/Tracker.ts';
 
 export function browseExpressionObject(
@@ -12,11 +12,11 @@ export function browseExpressionObject(
   tracker: Tracker,
 ) {
   // Asserts
-  const referenceValueClosures = ensure(ast.referenceValueClosures);
+  const referenceClosures = ensure(ast.referenceClosures);
 
   // Resolve closures types
-  for (const referenceValueClosure of referenceValueClosures) {
-    referenceValueClosure.resolvedType = utilTypeForReferenceValueClosure(referenceValueClosure);
+  for (const referenceClosure of referenceClosures) {
+    referenceClosure.resolvedType = utilTypeForReferenceClosure(referenceClosure);
   }
 
   // Prep type before recursion

@@ -3,14 +3,15 @@ import { hashGlobalSymbol } from '../util/hashGlobalSymbol.ts';
 import { hashLocalSymbol } from '../util/hashLocalSymbol.ts';
 import { AstModule } from '../../../data/ast/AstModule.ts';
 import { ensure } from '../../errors/ensure.ts';
+import { hashFileSymbol } from '../util/hashFileSymbol.ts';
 
 export function browseExpressionFunction(
   astExpressionFunction: AstExpressionFunction,
   astModule: AstModule,
 ): void {
   astExpressionFunction.symbolLocalClosureValue = hashLocalSymbol('closure', 'struct');
-  for (const astReferenceValueClosure of ensure(astExpressionFunction.referenceValueClosures)) {
-    astReferenceValueClosure.symbolLocalValue = astExpressionFunction.symbolLocalClosureValue + '->' + astReferenceValueClosure.name;
+  for (const astReferenceClosure of ensure(astExpressionFunction.referenceClosures)) {
+    astReferenceClosure.symbolLocalValue = astExpressionFunction.symbolLocalClosureValue + '->' + astReferenceClosure.name;
   }
   for (const astExpressionFunctionParam of astExpressionFunction.params) {
     if (astExpressionFunctionParam.name) {
@@ -27,8 +28,7 @@ export function browseExpressionFunction(
     astExpressionFunction,
     'fn_factory',
   );
-  astExpressionFunction.symbolGlobalClosureStruct = hashGlobalSymbol(
-    astModule.hash,
+  astExpressionFunction.symbolFileClosureStruct = hashFileSymbol(
     astExpressionFunction,
     'fn_closure',
   );

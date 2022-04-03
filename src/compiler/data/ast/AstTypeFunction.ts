@@ -1,5 +1,5 @@
-import { Ast } from "./Ast.ts";
-import { AstType } from "./AstType.ts";
+import { Ast } from './Ast.ts';
+import { AstType } from './AstType.ts';
 
 export interface AstTypeFunctionParam extends Ast {
   name?: string;

@@ -1,6 +1,6 @@
 import { AstAnnotationTemplateParam } from '../../../data/ast/AstAnnotationTemplate.ts';
 import { AstExpressionFunctionParam } from '../../../data/ast/AstExpressionFunction.ts';
-import { AstReferenceValueClosure } from '../../../data/ast/AstReferenceValueClosure.ts';
+import { AstReferenceClosure } from '../../../data/ast/AstReferenceClosure.ts';
 import { AstReferenceType, AstReferenceTypeKind } from '../../../data/ast/AstReferenceType.ts';
 import { AstReferenceValue, AstReferenceValueKind } from '../../../data/ast/AstReferenceValue.ts';
 import { AstStatementImportSlot } from '../../../data/ast/AstStatementImport.ts';
@@ -58,6 +58,14 @@ export class Scope {
     this.pushReferenceValue(name, {
       kind: AstReferenceValueKind.ExpressionFunctionParam,
       data: expressionFunctionParam,
+    });
+  }
+
+  pushReferenceClosure(resolvedClosure: AstReferenceClosure) {
+    const name = resolvedClosure.name;
+    this.pushReferenceValue(name, {
+      kind: AstReferenceValueKind.ReferenceClosure,
+      data: resolvedClosure,
     });
   }
 

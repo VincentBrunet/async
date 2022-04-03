@@ -2,17 +2,20 @@ import { Ast } from './Ast.ts';
 import { AstExpressionFunctionParam } from './AstExpressionFunction.ts';
 import { AstStatementImportSlot } from './AstStatementImport.ts';
 import { AstStatementVariable } from './AstStatementVariable.ts';
+import { AstReferenceClosure } from './AstReferenceClosure.ts';
 
 export enum AstReferenceValueKind {
   StatementVariable = 'StatementVariable',
   StatementImportSlot = 'StatementImportSlot',
   ExpressionFunctionParam = 'ExpressionFunctionParam',
+  ReferenceClosure = 'ReferenceClosure',
 }
 
 export type AstReferenceValueData =
   | AstStatementVariable
   | AstStatementImportSlot
-  | AstExpressionFunctionParam;
+  | AstExpressionFunctionParam
+  | AstReferenceClosure;
 
 export interface AstReferenceValue extends Ast {
   kind: AstReferenceValueKind;
@@ -42,6 +45,15 @@ export function astReferenceValueAsExpressionFunctionParam(
 ): AstExpressionFunctionParam | undefined {
   if (astReferenceValue.kind === AstReferenceValueKind.ExpressionFunctionParam) {
     return astReferenceValue.data as AstExpressionFunctionParam;
+  }
+  return undefined;
+}
+
+export function astReferenceValueAsReferenceClosure(
+  astReferenceValue: AstReferenceValue,
+): AstReferenceClosure | undefined {
+  if (astReferenceValue.kind === AstReferenceValueKind.ReferenceClosure) {
+    return astReferenceValue.data as AstReferenceClosure;
   }
   return undefined;
 }

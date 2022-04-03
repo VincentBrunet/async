@@ -2,8 +2,8 @@ import { AstExpressionRun } from '../../../data/ast/AstExpressionRun.ts';
 import { ensure } from '../../../passes/errors/ensure.ts';
 import { RecursorPass } from '../../util/RecursorPass.ts';
 import { Transpiler } from '../util/Transpiler.ts';
-import { utilTranspileReferenceValueClosureToAnnotation } from '../util/utilTranspileReferenceValueClosureToAnnotation.ts';
-import { utilTranspileReferenceValueClosureToExpression } from '../util/utilTranspileReferenceValueClosureToExpression.ts';
+import { utilTranspileReferenceClosureToAnnotation } from '../util/utilTranspileReferenceClosureToAnnotation.ts';
+import { utilTranspileReferenceClosureToExpression } from '../util/utilTranspileReferenceClosureToExpression.ts';
 import { utilTranspileTypeToAnnotation } from '../util/utilTranspileTypeToAnnotation.ts';
 
 export function transpileExpressionRun(
@@ -11,18 +11,18 @@ export function transpileExpressionRun(
   astExpressionRun: AstExpressionRun,
   transpiler: Transpiler,
 ) {
-  const referenceValueClosures = ensure(astExpressionRun.referenceValueClosures);
+  const referenceClosures = ensure(astExpressionRun.referenceClosures);
 
   const symbolGlobalCallableFunction = ensure(astExpressionRun.symbolGlobalCallableFunction);
 
   transpiler.pushStatementPart(symbolGlobalCallableFunction);
   transpiler.pushStatementPart('(');
-  for (const referenceValueClosure of referenceValueClosures) {
-    if (referenceValueClosure.idx !== 0) {
+  referenceClosures.forEach((referenceClosure, index) => {
+    if (index !== 0) {
       transpiler.pushStatementPart(', ');
     }
-    transpiler.pushStatementPart(utilTranspileReferenceValueClosureToExpression(referenceValueClosure));
-  }
+    transpiler.pushStatementPart(utilTranspileReferenceClosureToExpression(referenceClosure));
+  });
   transpiler.pushStatementPart(')');
 
   // New scope
@@ -30,10 +30,10 @@ export function transpileExpressionRun(
   transpiler.pushFunction(
     transpiledType,
     symbolGlobalCallableFunction,
-    referenceValueClosures.map((referenceValueClosure) => {
+    referenceClosures.map((referenceClosure) => {
       return {
-        name: ensure(referenceValueClosure.symbolLocalValue),
-        type: utilTranspileReferenceValueClosureToAnnotation(referenceValueClosure) + '&',
+        name: ensure(referenceClosure.symbolLocalValue),
+        type: utilTranspileReferenceClosureToAnnotation(referenceClosure) + '&',
       };
     }),
   );
@@ -41,9 +41,6 @@ export function transpileExpressionRun(
   // Run the recursive writing
   transpiler.pushStatement(['/* run block */']);
   pass.recurseBlock(astExpressionRun.block);
-
-  // Backup return
-  transpiler.pushStatement(['return', ' ', 'null_make()']);
 
   // Done
   transpiler.popFunction();

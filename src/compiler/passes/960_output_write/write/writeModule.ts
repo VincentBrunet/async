@@ -45,7 +45,6 @@ export function writeModule(writer: Writer, unit: UnitModule) {
     for (const outputInclude of outputModule.includes) {
       writeInclude(writer, outputInclude);
     }
-    writer.pushToBoth('\n');
   }
   // Structs
   if (outputModule.structs.length) {
@@ -53,7 +52,6 @@ export function writeModule(writer: Writer, unit: UnitModule) {
     for (const outputStruct of outputModule.structs) {
       writeStruct(writer, outputStruct);
     }
-    writer.pushToBoth('\n');
   }
   // Statics
   if (outputModule.statics.length) {
@@ -61,7 +59,6 @@ export function writeModule(writer: Writer, unit: UnitModule) {
     for (const ouputStatic of outputModule.statics) {
       writeStatic(writer, ouputStatic);
     }
-    writer.pushToSource('\n');
   }
   // Functions definitions
   if (outputModule.functions.length) {
@@ -69,7 +66,6 @@ export function writeModule(writer: Writer, unit: UnitModule) {
     for (const outputFunction of outputModule.functions) {
       writeFunctionDefinition(writer, outputFunction);
     }
-    writer.pushToBoth('\n');
   }
   // Functions implementations
   if (outputModule.functions.length) {
@@ -77,7 +73,6 @@ export function writeModule(writer: Writer, unit: UnitModule) {
     for (const outputFunction of outputModule.functions) {
       writeFunctionImplementation(writer, outputFunction);
     }
-    writer.pushToSource('\n');
   }
   // Anti-reimport
   writer.pushToHeader('#endif');

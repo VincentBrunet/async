@@ -2,6 +2,7 @@ import { ensure } from '../../../passes/errors/ensure.ts';
 import {
   AstReferenceValue,
   astReferenceValueAsExpressionFunctionParam,
+  astReferenceValueAsReferenceClosure,
   astReferenceValueAsStatementImportSlot,
   astReferenceValueAsStatementVariable,
 } from '../../../data/ast/AstReferenceValue.ts';
@@ -36,6 +37,13 @@ export function utilTranspileReferenceValueToAnnotation(
     return utilTranspileTypeToAnnotation(
       ensure(expressionFunctionParam.resolvedType),
       false,
+    );
+  }
+
+  const referenceClosure = astReferenceValueAsReferenceClosure(astReferenceValue);
+  if (referenceClosure) {
+    return utilTranspileReferenceValueToAnnotation(
+      ensure(referenceClosure.resolvedReferenceValue),
     );
   }
 

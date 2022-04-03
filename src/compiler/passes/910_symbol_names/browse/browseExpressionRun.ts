@@ -8,8 +8,8 @@ export function browseExpressionRun(
   astExpressionRun: AstExpressionRun,
   astModule: AstModule,
 ): void {
-  for (const astReferenceValueClosure of ensure(astExpressionRun.referenceValueClosures)) {
-    astReferenceValueClosure.symbolLocalValue = hashLocalSymbol('closure', astReferenceValueClosure.name);
+  for (const astReferenceClosure of ensure(astExpressionRun.referenceClosures)) {
+    astReferenceClosure.symbolLocalValue = hashLocalSymbol('closure', astReferenceClosure.name);
   }
   astExpressionRun.symbolGlobalCallableFunction = hashGlobalSymbol(
     astModule.hash,

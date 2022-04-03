@@ -42,7 +42,12 @@ export function utilTranspileTypeToAnnotationBase(type: AstType): string {
 
   const typeFunction = astTypeAsTypeFunction(type);
   if (typeFunction) {
-    return 'ac::function';
+    const length = typeFunction.params.length.toString();
+    const ret = utilTranspileTypeToAnnotationBase(typeFunction.ret);
+    const params = typeFunction.params.map((param) => {
+      return utilTranspileTypeToAnnotationBase(param.type);
+    });
+    return ' ac::function' + length + '<' + ret + ', ' + params.join(', ') + '> ';
   }
 
   const typeObject = astTypeAsTypeObject(type);

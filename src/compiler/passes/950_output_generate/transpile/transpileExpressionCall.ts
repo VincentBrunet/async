@@ -1,19 +1,19 @@
-import { AstExpressionCall } from "../../../data/ast/AstExpressionCall.ts";
-import { RecursorPass } from "../../util/RecursorPass.ts";
-import { Transpiler } from "../util/Transpiler.ts";
+import { AstExpressionCall } from '../../../data/ast/AstExpressionCall.ts';
+import { RecursorPass } from '../../util/RecursorPass.ts';
+import { Transpiler } from '../util/Transpiler.ts';
 
 export function transpileExpressionCall(
   pass: RecursorPass,
-  ast: AstExpressionCall,
+  expressionCall: AstExpressionCall,
   transpiler: Transpiler,
 ) {
-  transpiler.pushStatementPart("function_call_");
-  transpiler.pushStatementPart(ast.params.length.toString());
-  transpiler.pushStatementPart("(");
-  pass.recurseExpression(ast.callee);
-  for (const param of ast.params) {
-    transpiler.pushStatementPart(", ");
+  pass.recurseExpression(expressionCall.callee);
+  transpiler.pushStatementPart('->call(');
+  expressionCall.params.forEach((param, index) => {
+    if (index > 0) {
+      transpiler.pushStatementPart(', ');
+    }
     pass.recurseExpression(param);
-  }
-  transpiler.pushStatementPart(")");
+  });
+  transpiler.pushStatementPart(')');
 }

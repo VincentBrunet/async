@@ -1,7 +1,7 @@
 import { Ast } from './Ast.ts';
 import { AstAnnotationType } from './AstAnnotationType.ts';
 import { AstExpression } from './AstExpression.ts';
-import { AstReferenceValueClosure } from './AstReferenceValueClosure.ts';
+import { AstReferenceClosure } from './AstReferenceClosure.ts';
 import { AstType } from './AstType.ts';
 
 export interface AstExpressionObjectField extends Ast {
@@ -20,9 +20,9 @@ export interface AstExpressionObject extends Ast {
 
   resolvedType?: AstType;
 
-  referenceValueClosures?: Array<AstReferenceValueClosure>;
+  referenceClosures?: Array<AstReferenceClosure>;
 
   symbolGlobalCallableFunction?: string;
-  symbolGlobalFieldsGlobal?: string;
+  symbolFileFieldsStatic?: string;
   symbolLocalFieldsValue?: string;
 }

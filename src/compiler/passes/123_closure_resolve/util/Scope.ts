@@ -1,11 +1,11 @@
-import { AstReferenceValueClosure } from '../../../data/ast/AstReferenceValueClosure.ts';
+import { AstReferenceClosure } from '../../../data/ast/AstReferenceClosure.ts';
 
 export class Scope {
   public parent?: Scope;
 
   private names = new Set<string>();
 
-  private referenceValueClosures = new Set<string>();
+  private referenceClosures = new Set<string>();
 
   constructor(parent?: Scope) {
     this.parent = parent;
@@ -25,18 +25,18 @@ export class Scope {
     if (this.parent) {
       this.parent.propagateName(name);
     }
-    this.referenceValueClosures.add(name);
+    this.referenceClosures.add(name);
   }
 
-  readValueClosures(): Array<AstReferenceValueClosure> {
-    const referenceValueClosures = [...this.referenceValueClosures];
-    const astValueClosures = new Array<AstReferenceValueClosure>();
-    for (let idx = 0; idx < referenceValueClosures.length; idx++) {
-      astValueClosures.push({
+  readClosures(): Array<AstReferenceClosure> {
+    const referenceClosures = [...this.referenceClosures];
+    const astClosures = new Array<AstReferenceClosure>();
+    for (let idx = 0; idx < referenceClosures.length; idx++) {
+      astClosures.push({
         idx: idx,
-        name: referenceValueClosures[idx],
+        name: referenceClosures[idx],
       });
     }
-    return astValueClosures;
+    return astClosures;
   }
 }

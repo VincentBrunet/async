@@ -20,14 +20,11 @@ export function transpileBlock(
     const symbolLocalValue = ensure(resolvedVariable.symbolLocalValue);
 
     if (resolvedVariable.resolvedHeapized) {
-      const transpiledTypeInner = utilTranspileTypeToAnnotation(resolvedType, false);
       transpiler.pushStatement([
         transpiledType,
         ' ',
         symbolLocalValue,
-        '(new ',
-        transpiledTypeInner,
-        '())',
+        '',
       ]);
     } else {
       transpiler.pushStatement([

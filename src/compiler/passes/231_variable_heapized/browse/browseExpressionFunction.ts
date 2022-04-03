@@ -3,9 +3,9 @@ import { astReferenceValueAsStatementVariable } from '../../../data/ast/AstRefer
 import { ensure } from '../../../passes/errors/ensure.ts';
 
 export function browseExpressionFunction(astExpressionFunction: AstExpressionFunction) {
-  const referenceValueClosures = ensure(astExpressionFunction.referenceValueClosures);
-  for (const referenceValueClosure of referenceValueClosures) {
-    const referenceValue = ensure(referenceValueClosure.resolvedReferenceValue);
+  const referenceClosures = ensure(astExpressionFunction.referenceClosures);
+  for (const referenceClosure of referenceClosures) {
+    const referenceValue = ensure(referenceClosure.resolvedReferenceValue);
     const statementVariable = astReferenceValueAsStatementVariable(referenceValue);
     if (statementVariable) {
       if (statementVariable.mutable) {

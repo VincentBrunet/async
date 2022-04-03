@@ -7,11 +7,14 @@ export function browseExpressionFunction(
   scope: Scope,
 ) {
   // Asserts
-  const referenceValueClosures = ensure(ast.referenceValueClosures);
+  const referenceClosures = ensure(ast.referenceClosures);
 
-  // ValueClosures (resolve and declare)
-  for (const referenceValueClosure of referenceValueClosures) {
-    referenceValueClosure.resolvedReferenceValue = scope.findReferenceValue(referenceValueClosure.name);
+  // Closures (resolve and declare)
+  for (const referenceClosure of referenceClosures) {
+    referenceClosure.resolvedReferenceValue = scope.findReferenceValue(referenceClosure.name);
+  }
+  for (const referenceClosure of referenceClosures) {
+    scope.pushReferenceClosure(referenceClosure);
   }
 
   // Template params

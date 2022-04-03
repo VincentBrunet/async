@@ -2,8 +2,8 @@ import { AstExpressionObject, AstExpressionObjectField } from '../../../data/ast
 import { ensure } from '../../../passes/errors/ensure.ts';
 import { RecursorPass } from '../../util/RecursorPass.ts';
 import { Transpiler } from '../util/Transpiler.ts';
-import { utilTranspileReferenceValueClosureToAnnotation } from '../util/utilTranspileReferenceValueClosureToAnnotation.ts';
-import { utilTranspileReferenceValueClosureToExpression } from '../util/utilTranspileReferenceValueClosureToExpression.ts';
+import { utilTranspileReferenceClosureToAnnotation } from '../util/utilTranspileReferenceClosureToAnnotation.ts';
+import { utilTranspileReferenceClosureToExpression } from '../util/utilTranspileReferenceClosureToExpression.ts';
 import { utilTranspileTypeToAnnotation } from '../util/utilTranspileTypeToAnnotation.ts';
 
 export function transpileExpressionObject(
@@ -12,18 +12,18 @@ export function transpileExpressionObject(
   transpiler: Transpiler,
 ) {
   // Assert
-  const referenceValueClosures = ensure(astExpressionObject.referenceValueClosures);
+  const referenceClosures = ensure(astExpressionObject.referenceClosures);
 
   const symbolGlobalCallableFunction = ensure(astExpressionObject.symbolGlobalCallableFunction);
-  const symbolGlobalFieldsGlobal = ensure(astExpressionObject.symbolGlobalFieldsGlobal);
+  const symbolFileFieldsStatic = ensure(astExpressionObject.symbolFileFieldsStatic);
 
   transpiler.pushStatementPart(symbolGlobalCallableFunction);
   transpiler.pushStatementPart('(');
-  for (const referenceValueClosure of referenceValueClosures) {
-    if (referenceValueClosure.idx !== 0) {
+  for (const referenceClosure of referenceClosures) {
+    if (referenceClosure.idx !== 0) {
       transpiler.pushStatementPart(', ');
     }
-    transpiler.pushStatementPart(utilTranspileReferenceValueClosureToExpression(referenceValueClosure));
+    transpiler.pushStatementPart(utilTranspileReferenceClosureToExpression(referenceClosure));
   }
   transpiler.pushStatementPart(')');
 
@@ -32,10 +32,10 @@ export function transpileExpressionObject(
   transpiler.pushFunction(
     transpiledType,
     symbolGlobalCallableFunction,
-    referenceValueClosures.map((referenceValueClosure) => {
+    referenceClosures.map((referenceClosure) => {
       return {
-        name: ensure(referenceValueClosure.symbolLocalValue),
-        type: utilTranspileReferenceValueClosureToAnnotation(referenceValueClosure) + '&',
+        name: ensure(referenceClosure.symbolLocalValue),
+        type: utilTranspileReferenceClosureToAnnotation(referenceClosure) + '&',
       };
     }),
   );
@@ -59,7 +59,7 @@ export function transpileExpressionObject(
 
   transpiler.pushStatic(
     'ac::u64',
-    symbolGlobalFieldsGlobal + '[]',
+    symbolFileFieldsStatic + '[]',
     [
       '{',
       sortedFields.map((field) => field.hash).join(', '),
@@ -68,30 +68,30 @@ export function transpileExpressionObject(
   );
 
   const objectMakeParts = [];
-  objectMakeParts.push('t_object object = object_make');
+  objectMakeParts.push('ac::object object = object_make');
   objectMakeParts.push('(');
   objectMakeParts.push('type_object'); // TODO
   objectMakeParts.push(', ');
   objectMakeParts.push(fieldLength);
   objectMakeParts.push(', ');
-  objectMakeParts.push(symbolGlobalFieldsGlobal);
+  objectMakeParts.push(symbolFileFieldsStatic);
   objectMakeParts.push(')');
   transpiler.pushStatement(objectMakeParts);
 
   // Read a variable field pointer
-  if (sortedFields.length) {
-    transpiler.pushStatement(['t_field fields = object->data.object.fields']);
-  }
+  //if (sortedFields.length) {
+  //transpiler.pushStatement(['ac::field fields = object->data.object.fields']);
+  //}
 
   // Make local references to created fields
   for (let i = 0; i < sortedFields.length; i++) {
     const sortedField = sortedFields[i];
     transpiler.pushStatement([
-      't_field',
+      'ac::field',
       ' ',
       ensure(sortedField.symbolLocalValue),
       ' = ',
-      '(t_field)&(fields[',
+      '(ac::field)&(fields[',
       i.toString(),
       '])',
     ]);
