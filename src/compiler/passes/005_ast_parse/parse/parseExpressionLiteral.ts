@@ -1,19 +1,19 @@
-import { AstExpressionLiteral } from "../../../data/ast/AstExpressionLiteral.ts";
-import { AstTypePrimitiveNative } from "../../../data/ast/AstTypePrimitive.ts";
-import { Browser } from "../util/Browser.ts";
-import { TokenImpasse } from "../util/TokenImpasse.ts";
+import { AstExpressionLiteral } from '../../../data/ast/AstExpressionLiteral.ts';
+import { AstTypePrimitiveNative } from '../../../data/ast/AstTypePrimitive.ts';
+import { Browser } from '../util/Browser.ts';
+import { TokenImpasse } from '../util/TokenImpasse.ts';
 
 const digits = new Set<string>();
-digits.add("0");
-digits.add("1");
-digits.add("2");
-digits.add("3");
-digits.add("4");
-digits.add("5");
-digits.add("6");
-digits.add("7");
-digits.add("8");
-digits.add("9");
+digits.add('0');
+digits.add('1');
+digits.add('2');
+digits.add('3');
+digits.add('4');
+digits.add('5');
+digits.add('6');
+digits.add('7');
+digits.add('8');
+digits.add('9');
 
 function makeLiteral(
   browser: Browser,
@@ -35,7 +35,7 @@ function makeStringUntil(
   let escaped = false;
   while (true) {
     if (browser.ended()) {
-      throw new Error("Unclosed string literal");
+      throw new Error('Unclosed string literal');
     }
     const str = browser.peek().str;
     browser.increment();
@@ -43,23 +43,23 @@ function makeStringUntil(
       const char = str.charAt(i);
       if (escaped) {
         switch (char) {
-          case "n":
-            parts.push("\n");
+          case 'n':
+            parts.push('\n');
             break;
-          case "r":
-            parts.push("\r");
+          case 'r':
+            parts.push('\r');
             break;
-          case "t":
-            parts.push("\t");
+          case 't':
+            parts.push('\t');
             break;
-          case "a":
-            parts.push("\a");
+          case 'a':
+            parts.push('\a');
             break;
-          case "b":
-            parts.push("\b");
+          case 'b':
+            parts.push('\b');
             break;
-          case "'":
-            parts.push("'");
+          case '\'':
+            parts.push('\'');
             break;
           case '"':
             parts.push('"');
@@ -75,9 +75,9 @@ function makeStringUntil(
             return makeLiteral(
               browser,
               AstTypePrimitiveNative.String,
-              parts.join(""),
+              parts.join(''),
             );
-          case "\\":
+          case '\\':
             escaped = true;
             break;
           default:
@@ -97,32 +97,32 @@ export function parseExpressionLiteral(
 
   let value = token.str;
 
-  if (value === "true") {
-    return makeLiteral(browser, AstTypePrimitiveNative.Boolean, "true");
+  if (value === 'true') {
+    return makeLiteral(browser, AstTypePrimitiveNative.Boolean, 'true');
   }
-  if (value === "false") {
-    return makeLiteral(browser, AstTypePrimitiveNative.Boolean, "false");
+  if (value === 'false') {
+    return makeLiteral(browser, AstTypePrimitiveNative.Boolean, 'false');
   }
-  if (value === "null") {
-    return makeLiteral(browser, AstTypePrimitiveNative.Null, "null");
+  if (value === 'null') {
+    return makeLiteral(browser, AstTypePrimitiveNative.Null, 'null');
   }
 
   if (value.startsWith('"')) {
     return makeStringUntil(browser, '"');
   }
-  if (value.startsWith("'")) {
-    return makeStringUntil(browser, "'");
+  if (value.startsWith('\'')) {
+    return makeStringUntil(browser, '\'');
   }
 
-  if (value.startsWith("0x")) {
+  if (value.startsWith('0x')) {
     value = parseInt(value.slice(2), 16).toString(10);
   }
-  if (value.startsWith("0b")) {
+  if (value.startsWith('0b')) {
     value = parseInt(value.slice(2), 2).toString(10);
   }
   if (digits.has(value[0])) {
     return makeLiteral(browser, AstTypePrimitiveNative.Integer32, value);
   }
 
-  return browser.impasse("Literal");
+  return browser.impasseLeaf('Value', ['true', 'false', 'null', 'a string', 'a number']);
 }

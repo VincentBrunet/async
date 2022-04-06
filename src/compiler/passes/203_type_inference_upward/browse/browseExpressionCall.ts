@@ -18,5 +18,5 @@ export function browseExpressionCall(
     return;
   }
 
-  ast.resolvedType = typeFunction.ret;
+  ast.resolvedType = typeFunction.ret.annotation.type;
 }

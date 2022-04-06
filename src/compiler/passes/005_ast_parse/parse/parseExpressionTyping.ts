@@ -1,19 +1,18 @@
-import { AstExpression } from "../../../data/ast/AstExpression.ts";
-import {
-  AstExpressionTyping,
-  AstExpressionTypingOperator,
-} from "../../../data/ast/AstExpressionTyping.ts";
-import { Browser } from "../util/Browser.ts";
-import { TokenImpasse } from "../util/TokenImpasse.ts";
-import { parseType } from "./parseType.ts";
+import { AstExpression } from '../../../data/ast/AstExpression.ts';
+import { AstExpressionTyping, AstExpressionTypingOperator } from '../../../data/ast/AstExpressionTyping.ts';
+import { Browser } from '../util/Browser.ts';
+import { TokenImpasse } from '../util/TokenImpasse.ts';
+import { parseType } from './parseType.ts';
 
 /**
  * Support operator symbols
  */
 const symbolMap = new Map<string, AstExpressionTypingOperator>();
 
-symbolMap.set("is", AstExpressionTypingOperator.Is);
-symbolMap.set("as", AstExpressionTypingOperator.As);
+symbolMap.set('is', AstExpressionTypingOperator.Is);
+symbolMap.set('as', AstExpressionTypingOperator.As);
+
+const symbolSet = new Set(symbolMap.keys());
 
 /**
  * Do the parsing using an already-parsed left handside
@@ -32,15 +31,15 @@ export function parseExpressionTyping(
     consumed = 1;
   }
   if (operator === undefined) {
-    return browser.impasse("ExpressionTyping.Expression");
+    return browser.impasseLeaf('Operator', symbolSet);
   }
   for (let i = 0; i < consumed; i++) {
     browser.consume();
   }
   // type
-  const type = browser.recurse(parseType);
+  const type = browser.recurse('Type', parseType);
   if (type instanceof TokenImpasse) {
-    return browser.impasse("ExpressionTyping.Type", [type]);
+    return browser.impasseNode(type);
   }
   // done
   return {

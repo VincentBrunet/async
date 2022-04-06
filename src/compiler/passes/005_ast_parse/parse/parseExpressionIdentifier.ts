@@ -23,12 +23,12 @@ export function parseExpressionIdentifier(
   // Read text
   const token = browser.peek();
   if (!tokenIsText(token)) {
-    return browser.impasse('ExpressionIdentifier.Text');
+    return browser.impasseLeaf('Name', 'expression identifier');
   }
   browser.consume();
   // Check if reserved keyword
   if (forbidden.has(token.str)) {
-    return browser.impasse('ExpressionIdentifier.Forbidden');
+    return browser.impasseLeaf('Forbidden keyword', []);
   }
   // done
   return {

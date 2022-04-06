@@ -1,11 +1,11 @@
-import { Ast } from "./Ast.ts";
-import { AstType } from "./AstType.ts";
+import { Ast } from './Ast.ts';
+import { AstAnnotationType } from './AstAnnotationType.ts';
 
 export interface AstTypeObjectField extends Ast {
   mutable: boolean;
   name: string;
   hash: string;
-  type: AstType;
+  annotation: AstAnnotationType;
 }
 
 export interface AstTypeObject extends Ast {

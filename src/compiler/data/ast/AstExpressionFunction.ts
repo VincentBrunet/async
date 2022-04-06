@@ -15,14 +15,19 @@ export interface AstExpressionFunctionParam extends Ast {
   symbolLocalValue?: string;
 }
 
+export interface AstExpressionFunctionReturn extends Ast {
+  annotation: AstAnnotationType;
+
+  resolvedType?: AstType;
+}
+
 export interface AstExpressionFunction extends Ast {
   template: AstAnnotationTemplate;
   params: Array<AstExpressionFunctionParam>;
-  ret: AstAnnotationType;
+  ret: AstExpressionFunctionReturn;
   block: AstBlock;
 
   resolvedType?: AstType;
-  resolvedTypeRet?: AstType;
   resolvedReturns?: Array<AstStatementReturn>;
 
   referenceClosures?: Array<AstReferenceClosure>;

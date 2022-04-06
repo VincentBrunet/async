@@ -1,4 +1,4 @@
-import { AstExpressionFunction, AstExpressionFunctionParam } from '../../../data/ast/AstExpressionFunction.ts';
+import { AstExpressionFunction, AstExpressionFunctionParam, AstExpressionFunctionReturn } from '../../../data/ast/AstExpressionFunction.ts';
 import { tokenIsText } from '../../../data/token/Token.ts';
 import { Browser } from '../util/Browser.ts';
 import { TokenImpasse } from '../util/TokenImpasse.ts';
@@ -21,14 +21,26 @@ export function parseExpressionFunctionParam(
     name = paramName.str;
   }
   // param - type annotation
-  const paramAnnotation = browser.recurse(parseAnnotationType);
+  const paramAnnotation = browser.recurse('AnnotationType', parseAnnotationType);
   if (paramAnnotation instanceof TokenImpasse) {
-    return browser.impasse('Function.Param.Annotation', [paramAnnotation]);
+    return browser.impasseNode(paramAnnotation);
   }
   // param - validated
   return {
     name: name,
     annotation: paramAnnotation,
+  };
+}
+
+export function parseExpressionFunctionReturn(
+  browser: Browser,
+): AstExpressionFunctionReturn | TokenImpasse {
+  const returnAnnotation = browser.recurse('AnnotationType', parseAnnotationType);
+  if (returnAnnotation instanceof TokenImpasse) {
+    return browser.impasseNode(returnAnnotation);
+  }
+  return {
+    annotation: returnAnnotation,
   };
 }
 
@@ -38,16 +50,17 @@ export function parseExpressionFunction(
   // keyword (required)
   const keyword = browser.peek();
   if (keyword.str !== 'fn') {
-    return browser.impasse('ExpressionFunction.Keyword');
+    return browser.impasseLeaf('Keyword', 'fn');
   }
   browser.consume();
   // template annotation
-  const astTemplate = browser.recurse(parseAnnotationTemplate);
+  const astTemplate = browser.recurse('AnnotationTemplate', parseAnnotationTemplate);
   if (astTemplate instanceof TokenImpasse) {
-    return browser.impasse('ExpressionFunction.Templates', [astTemplate]);
+    return browser.impasseNode(astTemplate);
   }
   // param
   const astParams = browser.recurseArray(
+    'Param',
     false,
     paramOpen,
     paramClose,
@@ -55,17 +68,17 @@ export function parseExpressionFunction(
     parseExpressionFunctionParam,
   );
   if (astParams instanceof TokenImpasse) {
-    return browser.impasse('ExpressionFunction.Params', [astParams]);
+    return browser.impasseNode(astParams);
   }
-  // return type annotation
-  const astReturn = browser.recurse(parseAnnotationType);
+  // return type
+  const astReturn = browser.recurse('Return', parseExpressionFunctionReturn);
   if (astReturn instanceof TokenImpasse) {
-    return browser.impasse('ExpressionFunction.Return', [astReturn]);
+    return browser.impasseNode(astReturn);
   }
   // block (optional)
-  const astBlock = browser.recurse(parseBlock);
+  const astBlock = browser.recurse('Block', parseBlock);
   if (astBlock instanceof TokenImpasse) {
-    return browser.impasse('ExpressionFunction.Block', [astBlock]);
+    return browser.impasseNode(astBlock);
   }
   // done, create ast
   return {

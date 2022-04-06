@@ -25,19 +25,14 @@ function parseTypeObjectField(
   // field - name
   const fieldName = browser.peek();
   if (!tokenIsText(fieldName)) {
-    return browser.impasse('TypeObject.Field.Name');
+    return browser.impasseLeaf('Name', 'field name');
   }
   browser.consume();
   const name = fieldName.str;
   // field - type
-  const fieldAnnotation = browser.recurse(parseAnnotationType);
+  const fieldAnnotation = browser.recurse('AnnotationType', parseAnnotationType);
   if (fieldAnnotation instanceof TokenImpasse) {
-    return browser.impasse('TypeObject.Field.Annotation', [
-      fieldAnnotation,
-    ]);
-  }
-  if (fieldAnnotation.type === undefined) {
-    return browser.impasse('TypeObject.Field.Type');
+    return browser.impasseNode(fieldAnnotation);
   }
   // field - hash
   const hash = hashObjectFieldName(name);
@@ -46,7 +41,7 @@ function parseTypeObjectField(
     mutable: mutable,
     name: name,
     hash: hash,
-    type: fieldAnnotation.type,
+    annotation: fieldAnnotation,
   };
 }
 
@@ -55,6 +50,7 @@ export function parseTypeObject(
 ): AstTypeObject | TokenImpasse {
   // items
   const fields = browser.recurseArray(
+    'Field',
     true,
     fieldOpen,
     fieldClose,
@@ -62,7 +58,7 @@ export function parseTypeObject(
     parseTypeObjectField,
   );
   if (fields instanceof TokenImpasse) {
-    return browser.impasse('TypeObject.Fields', [fields]);
+    return browser.impasseNode(fields);
   }
   // done, ast
   return {

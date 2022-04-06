@@ -31,7 +31,7 @@ export function parseType(
   const astImpasses = new Array<TokenImpasse>();
   let astLeft: AstType | undefined;
   for (const leaf of leafs) {
-    const astResult = browser.recurse(leaf[1]);
+    const astResult = browser.recurse(leaf[0], leaf[1]);
     if (astResult instanceof TokenImpasse) {
       astImpasses.push(astResult);
     } else {
@@ -43,7 +43,7 @@ export function parseType(
     }
   }
   if (astLeft === undefined) {
-    return browser.impasse('Type', astImpasses);
+    return browser.impasseNode(astImpasses);
   }
 
   // Then do a right recursion
@@ -53,6 +53,7 @@ export function parseType(
     keepRecursing = false;
     for (const recursor of recursors) {
       const astResult = browser.recurseWithParam(
+        recursor[0],
         recursor[1],
         astCurrent,
       );

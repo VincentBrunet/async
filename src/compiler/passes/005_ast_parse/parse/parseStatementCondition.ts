@@ -1,27 +1,27 @@
-import { AstStatementCondition } from "../../../data/ast/AstStatementCondition.ts";
-import { Browser } from "../util/Browser.ts";
-import { TokenImpasse } from "../util/TokenImpasse.ts";
-import { parseBlock } from "./parseBlock.ts";
-import { parseExpression } from "./parseExpression.ts";
+import { AstStatementCondition } from '../../../data/ast/AstStatementCondition.ts';
+import { Browser } from '../util/Browser.ts';
+import { TokenImpasse } from '../util/TokenImpasse.ts';
+import { parseBlock } from './parseBlock.ts';
+import { parseExpression } from './parseExpression.ts';
 
 export function parseStatementCondition(
   browser: Browser,
 ): AstStatementCondition | TokenImpasse {
   // keyword (required)
   const keyword = browser.peek();
-  if (keyword.str !== "if") {
-    return browser.impasse("Condition.Keyword");
+  if (keyword.str !== 'if') {
+    return browser.impasseLeaf('Keyword', 'if');
   }
   browser.consume();
   // expression
-  const astCondition = browser.recurse(parseExpression);
+  const astCondition = browser.recurse('Expression', parseExpression);
   if (astCondition instanceof TokenImpasse) {
-    return browser.impasse("Condition.Condition", [astCondition]);
+    return browser.impasseNode(astCondition);
   }
   // block
-  const astBlock = browser.recurse(parseBlock);
+  const astBlock = browser.recurse('Block', parseBlock);
   if (astBlock instanceof TokenImpasse) {
-    return browser.impasse("Condition.Block", [astBlock]);
+    return browser.impasseNode(astBlock);
   }
   // done
   return {

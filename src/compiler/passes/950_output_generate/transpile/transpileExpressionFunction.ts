@@ -87,7 +87,7 @@ export function transpileExpressionFunction(
   });
 
   const returnType = utilTranspileTypeToAnnotation(
-    ensure(astExpressionFunction.resolvedTypeRet),
+    ensure(astExpressionFunction.ret.resolvedType),
     false,
   );
   transpiler.pushFunction(returnType, symbolGlobalCallableFunction, params);

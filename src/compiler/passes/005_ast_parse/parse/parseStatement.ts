@@ -1,114 +1,55 @@
-import {
-  AstStatement,
-  AstStatementData,
-  AstStatementKind,
-} from "../../../data/ast/AstStatement.ts";
-import { Browser } from "../util/Browser.ts";
-import { TokenImpasse } from "../util/TokenImpasse.ts";
-import { parseStatementBlock } from "./parseStatementBlock.ts";
-import { parseStatementCondition } from "./parseStatementCondition.ts";
-import { parseStatementEmpty } from "./parseStatementEmpty.ts";
-import { parseStatementExport } from "./parseStatementExport.ts";
-import { parseStatementExpression } from "./parseStatementExpression.ts";
-import { parseStatementImport } from "./parseStatementImport.ts";
-import { parseStatementReturn } from "./parseStatementReturn.ts";
-import { parseStatementTypedef } from "./parseStatementTypedef.ts";
-import { parseStatementUnsafe } from "./parseStatementUnsafe.ts";
-import { parseStatementVariable } from "./parseStatementVariable.ts";
-import { parseStatementWhile } from "./parseStatementWhile.ts";
+import { AstStatement, AstStatementData, AstStatementKind } from '../../../data/ast/AstStatement.ts';
+import { Browser } from '../util/Browser.ts';
+import { TokenImpasse } from '../util/TokenImpasse.ts';
+import { parseStatementBlock } from './parseStatementBlock.ts';
+import { parseStatementCondition } from './parseStatementCondition.ts';
+import { parseStatementEmpty } from './parseStatementEmpty.ts';
+import { parseStatementExport } from './parseStatementExport.ts';
+import { parseStatementExpression } from './parseStatementExpression.ts';
+import { parseStatementImport } from './parseStatementImport.ts';
+import { parseStatementReturn } from './parseStatementReturn.ts';
+import { parseStatementTypedef } from './parseStatementTypedef.ts';
+import { parseStatementUnsafe } from './parseStatementUnsafe.ts';
+import { parseStatementVariable } from './parseStatementVariable.ts';
+import { parseStatementWhile } from './parseStatementWhile.ts';
 
-function consumeEnd(browser: Browser) {
-  const next = browser.peek();
-  if (next.str === ";") {
-    browser.consume();
-  }
-}
-
-function finishStatement(
-  kind: AstStatementKind,
-  data: AstStatementData,
-) {
+function makeStatement(kind: AstStatementKind, data: AstStatementData) {
   return { kind: kind, data: data };
 }
+
+const possibilities = new Array<[AstStatementKind, (b: Browser) => AstStatementData | TokenImpasse]>();
+possibilities.push([AstStatementKind.Empty, parseStatementEmpty]);
+possibilities.push([AstStatementKind.Import, parseStatementImport]);
+possibilities.push([AstStatementKind.Export, parseStatementExport]);
+possibilities.push([AstStatementKind.Variable, parseStatementVariable]);
+possibilities.push([AstStatementKind.Typedef, parseStatementTypedef]);
+possibilities.push([AstStatementKind.Block, parseStatementBlock]);
+possibilities.push([AstStatementKind.While, parseStatementWhile]);
+possibilities.push([AstStatementKind.Condition, parseStatementCondition]);
+possibilities.push([AstStatementKind.Return, parseStatementReturn]);
+possibilities.push([AstStatementKind.Unsafe, parseStatementUnsafe]);
+possibilities.push([AstStatementKind.Expression, parseStatementExpression]);
 
 export function parseStatement(
   browser: Browser,
 ): AstStatement | TokenImpasse {
-  // empty ;
-  const astStatementEmpty = browser.recurse(parseStatementEmpty);
-  if (!(astStatementEmpty instanceof TokenImpasse)) {
-    consumeEnd(browser);
-    return finishStatement(AstStatementKind.Empty, astStatementEmpty);
+  const tokenImpasses = new Array<TokenImpasse>();
+  let astStatement: AstStatement | undefined;
+  for (const possibility of possibilities) {
+    const result = browser.recurse(possibility[0], possibility[1]);
+    if (result instanceof TokenImpasse) {
+      tokenImpasses.push(result);
+    } else {
+      astStatement = makeStatement(possibility[0], result);
+      const next = browser.peek();
+      if (next.str === ';') {
+        browser.consume();
+      }
+      break;
+    }
   }
-  // import ;
-  const astStatementImport = browser.recurse(parseStatementImport);
-  if (!(astStatementImport instanceof TokenImpasse)) {
-    consumeEnd(browser);
-    return finishStatement(AstStatementKind.Import, astStatementImport);
+  if (astStatement === undefined) {
+    return browser.impasseNode(tokenImpasses);
   }
-  // export statement
-  const astStatementExport = browser.recurse(parseStatementExport);
-  if (!(astStatementExport instanceof TokenImpasse)) {
-    consumeEnd(browser);
-    return finishStatement(AstStatementKind.Export, astStatementExport);
-  }
-  // const hello = expresion
-  const astStatementVariable = browser.recurse(parseStatementVariable);
-  if (!(astStatementVariable instanceof TokenImpasse)) {
-    consumeEnd(browser);
-    return finishStatement(AstStatementKind.Variable, astStatementVariable);
-  }
-  // typedef Hello = type
-  const astStatementTypedef = browser.recurse(parseStatementTypedef);
-  if (!(astStatementTypedef instanceof TokenImpasse)) {
-    consumeEnd(browser);
-    return finishStatement(AstStatementKind.Typedef, astStatementTypedef);
-  }
-  // { statements }
-  const astStatementBlock = browser.recurse(parseStatementBlock);
-  if (!(astStatementBlock instanceof TokenImpasse)) {
-    consumeEnd(browser);
-    return finishStatement(AstStatementKind.Block, astStatementBlock);
-  }
-  // while (expression)
-  const astStatementWhile = browser.recurse(parseStatementWhile);
-  if (!(astStatementWhile instanceof TokenImpasse)) {
-    consumeEnd(browser);
-    return finishStatement(AstStatementKind.While, astStatementWhile);
-  }
-  // if (expression) {} else if (expression) {}
-  const astStatementCondition = browser.recurse(parseStatementCondition);
-  if (!(astStatementCondition instanceof TokenImpasse)) {
-    consumeEnd(browser);
-    return finishStatement(AstStatementKind.Condition, astStatementCondition);
-  }
-  // return (expression)
-  const astStatementReturn = browser.recurse(parseStatementReturn);
-  if (!(astStatementReturn instanceof TokenImpasse)) {
-    consumeEnd(browser);
-    return finishStatement(AstStatementKind.Return, astStatementReturn);
-  }
-  // unsafe { c }
-  const astStatementUnsafe = browser.recurse(parseStatementUnsafe);
-  if (!(astStatementUnsafe instanceof TokenImpasse)) {
-    consumeEnd(browser);
-    return finishStatement(AstStatementKind.Unsafe, astStatementUnsafe);
-  }
-  // expression
-  const astStatementExpression = browser.recurse(parseStatementExpression);
-  if (!(astStatementExpression instanceof TokenImpasse)) {
-    consumeEnd(browser);
-    return finishStatement(AstStatementKind.Expression, astStatementExpression);
-  }
-  // unknown
-  return browser.impasse("Statement", [
-    astStatementEmpty,
-    astStatementVariable,
-    astStatementTypedef,
-    astStatementWhile,
-    astStatementCondition,
-    astStatementReturn,
-    astStatementUnsafe,
-    astStatementExpression,
-  ]);
+  return astStatement;
 }

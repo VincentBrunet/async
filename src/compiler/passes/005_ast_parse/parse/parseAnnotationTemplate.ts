@@ -14,18 +14,18 @@ function parseAnnotationTemplateParam(
   // template - name
   const templateName = browser.peek();
   if (!tokenIsText(templateName)) {
-    return browser.impasse('AnnotationTemplate.Param.Name', []);
+    return browser.impasseLeaf('Name', 'Type local name');
   }
   browser.consume();
   // template - annotation
-  const astAnnotation = browser.recurse(parseAnnotationType);
-  if (astAnnotation instanceof TokenImpasse) {
-    return browser.impasse('AnnoationTemplate.Param.Annotation');
+  const astAnnotationType = browser.recurse('AnnotationType', parseAnnotationType);
+  if (astAnnotationType instanceof TokenImpasse) {
+    return browser.impasseNode(astAnnotationType);
   }
   // ast
   return {
     name: templateName.str,
-    annotation: astAnnotation,
+    annotation: astAnnotationType,
   };
 }
 
@@ -33,18 +33,19 @@ export function parseAnnotationTemplate(
   browser: Browser,
 ): AstAnnotationTemplate | TokenImpasse {
   // items
-  const astTemplates = browser.recurseArray(
+  const astAnnotationTemplateParams = browser.recurseArray(
+    'Param',
     false,
     templateOpen,
     templateClose,
     templateDelim,
     parseAnnotationTemplateParam,
   );
-  if (astTemplates instanceof TokenImpasse) {
-    return browser.impasse('AnnotationTemplate', [astTemplates]);
+  if (astAnnotationTemplateParams instanceof TokenImpasse) {
+    return browser.impasseNode(astAnnotationTemplateParams);
   }
   // done
   return {
-    params: astTemplates,
+    params: astAnnotationTemplateParams,
   };
 }

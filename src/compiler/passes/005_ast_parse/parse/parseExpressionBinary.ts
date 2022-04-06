@@ -1,36 +1,35 @@
-import { AstExpression } from "../../../data/ast/AstExpression.ts";
-import {
-  AstExpressionBinary,
-  AstExpressionBinaryOperator,
-} from "../../../data/ast/AstExpressionBinary.ts";
-import { Browser } from "../util/Browser.ts";
-import { TokenImpasse } from "../util/TokenImpasse.ts";
-import { parseExpression } from "./parseExpression.ts";
+import { AstExpression } from '../../../data/ast/AstExpression.ts';
+import { AstExpressionBinary, AstExpressionBinaryOperator } from '../../../data/ast/AstExpressionBinary.ts';
+import { Browser } from '../util/Browser.ts';
+import { TokenImpasse } from '../util/TokenImpasse.ts';
+import { parseExpression } from './parseExpression.ts';
 
 /**
  * Support operator symbols
  */
 const symbolMap = new Map<string, AstExpressionBinaryOperator>();
 
-symbolMap.set("*", AstExpressionBinaryOperator.Multiplication);
-symbolMap.set("/", AstExpressionBinaryOperator.Division);
-symbolMap.set("%", AstExpressionBinaryOperator.Modulo);
+symbolMap.set('*', AstExpressionBinaryOperator.Multiplication);
+symbolMap.set('/', AstExpressionBinaryOperator.Division);
+symbolMap.set('%', AstExpressionBinaryOperator.Modulo);
 
-symbolMap.set("+", AstExpressionBinaryOperator.Addition);
-symbolMap.set("-", AstExpressionBinaryOperator.Substraction);
+symbolMap.set('+', AstExpressionBinaryOperator.Addition);
+symbolMap.set('-', AstExpressionBinaryOperator.Substraction);
 
-symbolMap.set("==", AstExpressionBinaryOperator.Equal);
-symbolMap.set("!=", AstExpressionBinaryOperator.NotEqual);
+symbolMap.set('==', AstExpressionBinaryOperator.Equal);
+symbolMap.set('!=', AstExpressionBinaryOperator.NotEqual);
 
-symbolMap.set("<", AstExpressionBinaryOperator.Less);
-symbolMap.set("<=", AstExpressionBinaryOperator.LessOrEqual);
-symbolMap.set(">", AstExpressionBinaryOperator.More);
-symbolMap.set(">=", AstExpressionBinaryOperator.MoreOrEqual);
+symbolMap.set('<', AstExpressionBinaryOperator.Less);
+symbolMap.set('<=', AstExpressionBinaryOperator.LessOrEqual);
+symbolMap.set('>', AstExpressionBinaryOperator.More);
+symbolMap.set('>=', AstExpressionBinaryOperator.MoreOrEqual);
 
-symbolMap.set("&&", AstExpressionBinaryOperator.And);
-symbolMap.set("||", AstExpressionBinaryOperator.Or);
+symbolMap.set('&&', AstExpressionBinaryOperator.And);
+symbolMap.set('||', AstExpressionBinaryOperator.Or);
 
-symbolMap.set("=", AstExpressionBinaryOperator.Assign);
+symbolMap.set('=', AstExpressionBinaryOperator.Assign);
+
+const symbolSet = new Set(symbolMap.keys());
 
 /**
  * Do the parsing using an already-parsed left handside
@@ -49,15 +48,15 @@ export function parseExpressionBinary(
     consumed = 1;
   }
   if (operator === undefined) {
-    return browser.impasse("Binary.Operator");
+    return browser.impasseLeaf('Operator', symbolSet);
   }
   for (let i = 0; i < consumed; i++) {
     browser.consume();
   }
   // right
-  const right = browser.recurse(parseExpression);
+  const right = browser.recurse('Expression', parseExpression);
   if (right instanceof TokenImpasse) {
-    return browser.impasse("Binary.Right", [right]);
+    return browser.impasseNode(right);
   }
   // done
   return {

@@ -8,6 +8,8 @@ symbolMap.set('+', AstExpressionUnaryOperator.Positive);
 symbolMap.set('-', AstExpressionUnaryOperator.Negative);
 symbolMap.set('!', AstExpressionUnaryOperator.Not);
 
+const symbolSet = new Set(symbolMap.keys());
+
 export function parseExpressionUnary(
   browser: Browser,
 ): AstExpressionUnary | TokenImpasse {
@@ -16,12 +18,12 @@ export function parseExpressionUnary(
   if (operator !== undefined) {
     browser.consume();
   } else {
-    return browser.impasse('Unary.Operator');
+    return browser.impasseLeaf('Operator', symbolSet);
   }
   // Expression
-  const expression = browser.recurseWithParam(parseExpression, true);
+  const expression = browser.recurseWithParam('Expression', parseExpression, true);
   if (expression instanceof TokenImpasse) {
-    return browser.impasse('Unary.Expression', [expression]);
+    return browser.impasseNode(expression);
   }
   // done
   return {

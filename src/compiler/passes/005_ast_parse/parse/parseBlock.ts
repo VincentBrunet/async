@@ -12,7 +12,7 @@ export function parseBlock(
   if (!bracketsOptional) {
     const bracketOpen = browser.peek();
     if (bracketOpen.str !== '{') {
-      return browser.impasse('Block.Open');
+      return browser.impasseLeaf('Open', '{');
     }
     browser.consume();
   }
@@ -33,9 +33,9 @@ export function parseBlock(
       }
     }
     // parse statement
-    const astStatement = browser.recurse(parseStatement);
+    const astStatement = browser.recurse('Statement', parseStatement);
     if (astStatement instanceof TokenImpasse) {
-      return browser.impasse('Block.Statement', [astStatement]);
+      return browser.impasseNode(astStatement);
     }
     statements.push(astStatement);
   }

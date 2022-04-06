@@ -12,13 +12,13 @@ export function parseExpressionLookup(
   // dot (required)
   const delim = browser.peek();
   if (delim.str !== '.') {
-    return browser.impasse('Lookup.Dot');
+    return browser.impasseLeaf('Dot', '.');
   }
   browser.consume();
   // name (required)
   const key = browser.peek();
   if (!tokenIsText(key)) {
-    return browser.impasse('Lookup.Key');
+    return browser.impasseLeaf('Key', 'a field name');
   }
   browser.consume();
   const name = key.str;

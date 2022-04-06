@@ -7,30 +7,32 @@ import { makeTypePrimitiveAny } from '../../../lib/typing/makeTypePrimitiveAny.t
 import { makeTypePrimitiveUnknown } from '../../../lib/typing/makeTypePrimitiveUnknown.ts';
 import { utilTypeForReferenceClosure } from '../util/utilTypeForReferenceClosure.ts';
 import { Tracker } from '../util/Tracker.ts';
+import { makeAnnotationType } from '../../../lib/typing/makeAnnotationType.ts';
 
 export function browseExpressionFunction(
   next: () => void,
-  ast: AstExpressionFunction,
+  expressionFunction: AstExpressionFunction,
   tracker: Tracker,
 ) {
   // Asserts
-  const referenceClosures = ensure(ast.referenceClosures);
-  const resolvedReturns = ensure(ast.resolvedReturns);
+  const referenceClosures = ensure(expressionFunction.referenceClosures);
+  const resolvedReturns = ensure(expressionFunction.resolvedReturns);
 
   // Prepare a simple original annotation-based type
-  for (const param of ast.params) {
+  for (const param of expressionFunction.params) {
     param.resolvedType = param.annotation.type ??
       makeTypePrimitiveAny(param);
   }
-  const typeParams: AstTypeFunctionParam[] = ast.params.map((param) => {
+  const typeParams: AstTypeFunctionParam[] = expressionFunction.params.map((param) => {
     return {
       name: param.name,
-      type: param.resolvedType ?? makeTypePrimitiveUnknown(param),
+      annotation: makeAnnotationType(param.resolvedType),
     };
   });
-  if (ast.ret.type) {
-    ast.resolvedType = makeTypeFunction(typeParams, ast.ret.type, ast);
-    ast.resolvedTypeRet = ast.ret.type;
+
+  const returnAnnotationType = expressionFunction.ret.annotation.type;
+  if (returnAnnotationType) {
+    expressionFunction.ret.resolvedType = returnAnnotationType;
   }
 
   // Resolve closures types
@@ -38,20 +40,22 @@ export function browseExpressionFunction(
     referenceClosure.resolvedType = utilTypeForReferenceClosure(referenceClosure);
   }
 
-  // Recurse in function statements
+  // Recurse in function statements (to compute returns statements)
   next();
 
-  // Find all return types
-  const returns = makeTypeOrFromArray(
+  // Compute the final return type by finding all returns
+  const returnResolvedType = makeTypeOrFromArray(
     resolvedReturns.map((resolvedReturn) => ensure(resolvedReturn.resolvedType)),
-    ast,
+    expressionFunction,
   );
-  console.log('returns', returns);
-  const typeReturn = ast.ret.type ?? returns ??
-    makeTypePrimitiveUnknown(ast.ret);
+  expressionFunction.ret.resolvedType = expressionFunction.ret.resolvedType ?? returnResolvedType;
 
-  console.log('returnType', typeReturn);
-
-  ast.resolvedType = makeTypeFunction(typeParams, typeReturn, ast);
-  ast.resolvedTypeRet = typeReturn;
+  // Compute the final function type based on params and return type
+  expressionFunction.resolvedType = makeTypeFunction(
+    typeParams,
+    {
+      annotation: makeAnnotationType(ensure(expressionFunction.ret.resolvedType)),
+    },
+    expressionFunction,
+  );
 }

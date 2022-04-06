@@ -53,25 +53,33 @@ struct callable4 {
 };
 
 template <typename TR>
-struct function0 : std::shared_ptr<callable0<TR> > {
+struct function0 : ref<callable0<TR> > {
 };
 template <typename TR, typename TP1>
-struct function1 : std::shared_ptr<callable1<TR, TP1> > {
+struct function1 : ref<callable1<TR, TP1> > {
 };
 template <typename TR, typename TP1, typename TP2>
-struct function2 : std::shared_ptr<callable2<TR, TP1, TP2> > {
+struct function2 : ref<callable2<TR, TP1, TP2> > {
 };
 template <typename TR, typename TP1, typename TP2, typename TP3>
-struct function3 : std::shared_ptr<callable3<TR, TP1, TP2, TP3> > {
+struct function3 : ref<callable3<TR, TP1, TP2, TP3> > {
 };
 template <typename TR, typename TP1, typename TP2, typename TP3, typename TP4>
-struct function4 : std::shared_ptr<callable4<TR, TP1, TP2, TP3, TP4> > {
+struct function4 : ref<callable4<TR, TP1, TP2, TP3, TP4> > {
+};
+
+struct object_type {
 };
 
 struct object_data {
 };
 
-using object = std::shared_ptr<object_data>;
+struct object_mem {
+  object_type *type;
+  object_data *data;
+};
+
+using object = ref<object_mem>;
 
 struct field {
 };

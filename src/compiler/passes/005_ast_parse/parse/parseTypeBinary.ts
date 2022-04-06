@@ -12,6 +12,8 @@ const symbolMap = new Map<string, AstTypeBinaryOperator>();
 symbolMap.set('&', AstTypeBinaryOperator.And);
 symbolMap.set('|', AstTypeBinaryOperator.Or);
 
+const symbolSet = new Set(symbolMap.keys());
+
 /**
  * Do the parsing using an already-parsed left handside
  */
@@ -29,15 +31,15 @@ export function parseTypeBinary(
     consumed = 1;
   }
   if (operator === undefined) {
-    return browser.impasse('TypeBinary.Operator');
+    return browser.impasseLeaf('Operator', symbolSet);
   }
   for (let i = 0; i < consumed; i++) {
     browser.consume();
   }
   // right
-  const right = browser.recurse(parseType);
+  const right = browser.recurse('Type', parseType);
   if (right instanceof TokenImpasse) {
-    return browser.impasse('TypeBinary.Right', [right]);
+    return browser.impasseNode(right);
   }
   // done
   return {

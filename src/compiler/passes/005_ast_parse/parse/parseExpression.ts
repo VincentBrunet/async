@@ -18,9 +18,7 @@ function makeExpression(kind: AstExpressionKind, data: AstExpressionData) {
 }
 
 // Leaf expression can consume tokens right away
-const leafs = new Array<
-  [AstExpressionKind, (b: Browser) => AstExpressionData | TokenImpasse]
->();
+const leafs = new Array<[AstExpressionKind, (b: Browser) => AstExpressionData | TokenImpasse]>();
 leafs.push([AstExpressionKind.Unary, parseExpressionUnary]);
 leafs.push([AstExpressionKind.Parenthesis, parseExpressionParenthesis]);
 leafs.push([AstExpressionKind.Function, parseExpressionFunction]);
@@ -47,19 +45,19 @@ export function parseExpression(
   leafOnly?: boolean,
 ): AstExpression | TokenImpasse {
   // Start with a simple leaf expression
-  const astImpasses = new Array<TokenImpasse>();
+  const tokenImpasses = new Array<TokenImpasse>();
   let astLeft: AstExpression | undefined;
   for (const leaf of leafs) {
-    const astResult = browser.recurse(leaf[1]);
-    if (astResult instanceof TokenImpasse) {
-      astImpasses.push(astResult);
+    const result = browser.recurse(leaf[0], leaf[1]);
+    if (result instanceof TokenImpasse) {
+      tokenImpasses.push(result);
     } else {
-      astLeft = makeExpression(leaf[0], astResult);
+      astLeft = makeExpression(leaf[0], result);
       break;
     }
   }
   if (astLeft === undefined) {
-    return browser.impasse('Expression', astImpasses);
+    return browser.impasseNode(tokenImpasses);
   }
   // Then do a right recursion
   let astCurrent = astLeft;
@@ -68,6 +66,7 @@ export function parseExpression(
     keepRecursing = false;
     for (const recursor of recursors) {
       const astResult = browser.recurseWithParam(
+        recursor[0],
         recursor[1],
         astCurrent,
       );

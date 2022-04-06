@@ -26,24 +26,24 @@ function parseExpressionObjectField(
   // field - name
   const name = browser.peek();
   if (!tokenIsText(name)) {
-    return browser.impasse('ExpressionObject.Field.Name');
+    return browser.impasseLeaf('Name', 'a field name');
   }
   browser.consume();
   // field - annotation
-  const annotation = browser.recurse(parseAnnotationType);
+  const annotation = browser.recurse('AnnotationType', parseAnnotationType);
   if (annotation instanceof TokenImpasse) {
-    return browser.impasse('ExpressionObject.Field.Annotation', [annotation]);
+    return browser.impasseNode(annotation);
   }
   // field - equal
   const equal = browser.peek();
   if (equal.str !== '=') {
-    return browser.impasse('ExpressionObject.Field.Equal');
+    return browser.impasseLeaf('Equal', '=');
   }
   browser.consume();
   // field - expression
-  const expression = browser.recurse(parseExpression);
+  const expression = browser.recurse('Expression', parseExpression);
   if (expression instanceof TokenImpasse) {
-    return browser.impasse('ExpressionObject.Field.Expression', [expression]);
+    return browser.impasseNode(expression);
   }
   // field - hash
   const hash = hashObjectFieldName(name.str);
@@ -63,16 +63,17 @@ export function parseExpressionObject(
   // keyword (required)
   const keyword = browser.peek();
   if (keyword.str !== 'obj') {
-    return browser.impasse('ExpressionObject.Keyword');
+    return browser.impasseLeaf('Keyword', 'obj');
   }
   browser.consume();
   // annotation
-  const annotation = browser.recurse(parseAnnotationType);
+  const annotation = browser.recurse('AnnotationType', parseAnnotationType);
   if (annotation instanceof TokenImpasse) {
-    return browser.impasse('ExpressionObject.Annotation', [annotation]);
+    return browser.impasseNode(annotation);
   }
   // fields
   const fields = browser.recurseArray(
+    'Field',
     true,
     objectOpen,
     objectClose,
@@ -80,7 +81,7 @@ export function parseExpressionObject(
     parseExpressionObjectField,
   );
   if (fields instanceof TokenImpasse) {
-    return browser.impasse('ExpressionObject.Fields', [fields]);
+    return browser.impasseNode(fields);
   }
   // done, ast
   return {

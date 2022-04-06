@@ -9,18 +9,18 @@ export function parseTypeParenthesis(
   // Open
   const open = browser.peek();
   if (open.str !== '(') {
-    return browser.impasse('TypeParenthesis.Opening');
+    return browser.impasseLeaf('Open', '(');
   }
   browser.consume();
   // Type
-  const type = browser.recurse(parseType);
+  const type = browser.recurse('Type', parseType);
   if (type instanceof TokenImpasse) {
-    return browser.impasse('TypeParenthesis.Type', [type]);
+    return browser.impasseNode(type);
   }
   // Close
   const close = browser.peek();
   if (close.str !== ')') {
-    return browser.impasse('TypeParenthesis.Closing');
+    return browser.impasseLeaf('Close', ')');
   }
   browser.consume();
   // Done

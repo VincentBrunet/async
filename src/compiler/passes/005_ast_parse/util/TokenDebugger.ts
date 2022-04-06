@@ -1,23 +1,28 @@
-import { Token } from "../../../data/token/Token.ts";
-import { clamp } from "../../../lib/core/numbers/clamp.ts";
-import { repeat } from "../../../lib/core/strings/repeat.ts";
-import { TokenImpasse } from "./TokenImpasse.ts";
+import { Token } from '../../../data/token/Token.ts';
+import { clamp } from '../../../lib/core/numbers/clamp.ts';
+import { repeat } from '../../../lib/core/strings/repeat.ts';
+import { TokenImpasse } from './TokenImpasse.ts';
 
 export class TokenDebugger {
   constructor(private readonly tokens: Array<Token>) {}
 
   error(impasse: TokenImpasse) {
-    console.log("impasse");
+    console.log('impasse');
     this.errorRec(impasse, 0);
   }
 
   private errorRec(impasse: TokenImpasse, depth: number) {
-    const indent = repeat("  ", depth);
-    console.log(indent, impasse.message, "->", this.smallContext(impasse));
+    const indent = repeat('  ', depth);
+    console.log(indent, impasse.breadcrumb, '->', this.smallContext(impasse));
 
-    if (impasse.children) {
-      for (const child of impasse.children) {
-        this.errorRec(child, depth + 1);
+    const children = impasse.children;
+    if (children) {
+      if (children instanceof TokenImpasse) {
+        this.errorRec(children, depth + 1);
+      } else {
+        for (const child of children) {
+          this.errorRec(child, depth + 1);
+        }
       }
     }
   }
@@ -25,19 +30,19 @@ export class TokenDebugger {
   private smallContext(impasse: TokenImpasse) {
     const idx = impasse.index;
 
-    const before = this.tokenString(this.slice(idx - 10, idx));
+    //const before = this.tokenString(this.slice(idx - 10, idx));
     const middle = this.tokenString(this.slice(idx, idx + 1));
-    const after = this.tokenString(this.slice(idx + 1, idx + 10));
+    //const after = this.tokenString(this.slice(idx + 1, idx + 10));
 
     return [
-      before,
+      //before,
       middle,
-      after,
+      //after,
     ];
   }
 
   private tokenString(tokens: Array<Token>) {
-    return tokens.map((token) => token.str).join("");
+    return tokens.map((token) => token.str).join('');
   }
 
   private slice(start: number, end: number) {

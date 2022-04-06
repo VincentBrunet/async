@@ -17,28 +17,28 @@ export function parseStatementVariable(
   } else if (modifier.str === 'mutable') {
     mutable = true;
   } else {
-    return browser.impasse('Variable.modifier');
+    return browser.impasseLeaf('Modifier', ['const', 'mutable']);
   }
   browser.consume();
   // name
   const tokenName = browser.peek();
   if (!tokenIsText(tokenName)) {
-    return browser.impasse('Variable.Name');
+    return browser.impasseLeaf('Name', 'a variable name');
   }
   browser.consume();
   // type annotation
-  const astAnnotation = browser.recurse(parseAnnotationType);
+  const astAnnotation = browser.recurse('AnnotationType', parseAnnotationType);
   if (astAnnotation instanceof TokenImpasse) {
-    return browser.impasse('Variable.Annotation', [astAnnotation]);
+    return browser.impasseNode(astAnnotation);
   }
   // value (optional)
   let value: AstExpression | undefined;
   const tokenEqual = browser.peek();
   if (tokenEqual.str === '=') {
     browser.consume();
-    const astValue = browser.recurse(parseExpression);
+    const astValue = browser.recurse('Expression', parseExpression);
     if (astValue instanceof TokenImpasse) {
-      return browser.impasse('Variable.Expression', [astValue]);
+      return browser.impasseNode(astValue);
     }
     value = astValue;
   }

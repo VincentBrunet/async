@@ -14,11 +14,12 @@ export function parseTypeIdentifier(
   // read native
   const name = browser.peek();
   if (!tokenIsText(name)) {
-    return browser.impasse('TypeIdentifier.Name');
+    return browser.impasseLeaf('Name', 'an identifier');
   }
   browser.consume();
   // param
   const params = browser.recurseArray(
+    'Type',
     false,
     templateOpen,
     templateClose,
@@ -26,9 +27,7 @@ export function parseTypeIdentifier(
     parseType,
   );
   if (params instanceof TokenImpasse) {
-    return browser.impasse('TypeIdentifier.Template', [
-      params,
-    ]);
+    return browser.impasseNode(params);
   }
   // done
   return {

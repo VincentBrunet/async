@@ -11,9 +11,9 @@ export function parseModule(
   // Asserts
   const hash = ensure(moduleHash);
   // Content
-  const block = browser.recurseWithParam(parseBlock, true);
+  const block = browser.recurseWithParam('Block', parseBlock, true);
   if (block instanceof TokenImpasse) {
-    return browser.impasse('Module.Block', [block]);
+    return browser.impasseNode(block);
   }
   // done
   return {

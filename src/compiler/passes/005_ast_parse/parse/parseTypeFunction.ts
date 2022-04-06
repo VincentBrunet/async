@@ -1,4 +1,4 @@
-import { AstTypeFunction, AstTypeFunctionParam } from '../../../data/ast/AstTypeFunction.ts';
+import { AstTypeFunction, AstTypeFunctionParam, AstTypeFunctionReturn } from '../../../data/ast/AstTypeFunction.ts';
 import { tokenIsText } from '../../../data/token/Token.ts';
 import { Browser } from '../util/Browser.ts';
 import { TokenImpasse } from '../util/TokenImpasse.ts';
@@ -19,19 +19,26 @@ function parseTypeFunctionParam(
     name = paramName.str;
   }
   // type
-  const paramAnnotation = browser.recurse(parseAnnotationType);
+  const paramAnnotation = browser.recurse('AnnotationType', parseAnnotationType);
   if (paramAnnotation instanceof TokenImpasse) {
-    return browser.impasse('TypeFunction.Param.Annotation', [
-      paramAnnotation,
-    ]);
-  }
-  if (paramAnnotation.type === undefined) {
-    return browser.impasse('TypeFunction.Param.Type');
+    return browser.impasseNode(paramAnnotation);
   }
   // done
   return {
     name: name ?? '',
-    type: paramAnnotation.type,
+    annotation: paramAnnotation,
+  };
+}
+
+function parseTypeFunctionReturn(
+  browser: Browser,
+): AstTypeFunctionReturn | TokenImpasse {
+  const astTypeAnnotation = browser.recurse('AnnotationType', parseAnnotationType);
+  if (astTypeAnnotation instanceof TokenImpasse) {
+    return browser.impasseNode(astTypeAnnotation);
+  }
+  return {
+    annotation: astTypeAnnotation,
   };
 }
 
@@ -40,6 +47,7 @@ export function parseTypeFunction(
 ): AstTypeFunction | TokenImpasse {
   // params
   const params = browser.recurseArray(
+    'Param',
     true,
     paramOpen,
     paramClose,
@@ -47,23 +55,16 @@ export function parseTypeFunction(
     parseTypeFunctionParam,
   );
   if (params instanceof TokenImpasse) {
-    return browser.impasse('TypeFunction.Params', [
-      params,
-    ]);
+    return browser.impasseNode(params);
   }
   // return
-  const returnAnnotation = browser.recurse(parseAnnotationType);
-  if (returnAnnotation instanceof TokenImpasse) {
-    return browser.impasse('TypeFunction.Return.Annotation', [
-      returnAnnotation,
-    ]);
-  }
-  if (returnAnnotation.type === undefined) {
-    return browser.impasse('TypeFunction.Return.Type');
+  const astRet = browser.recurse('Return', parseTypeFunctionReturn);
+  if (astRet instanceof TokenImpasse) {
+    return browser.impasseNode(astRet);
   }
   // done, ast
   return {
     params: params,
-    ret: returnAnnotation.type,
+    ret: astRet,
   };
 }

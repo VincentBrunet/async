@@ -1,21 +1,21 @@
-import { AstStatementUnsafe } from "../../../data/ast/AstStatementUnsafe.ts";
-import { Browser } from "../util/Browser.ts";
-import { TokenImpasse } from "../util/TokenImpasse.ts";
+import { AstStatementUnsafe } from '../../../data/ast/AstStatementUnsafe.ts';
+import { Browser } from '../util/Browser.ts';
+import { TokenImpasse } from '../util/TokenImpasse.ts';
 
 export function parseStatementUnsafe(
   browser: Browser,
 ): AstStatementUnsafe | TokenImpasse {
   // keyword
   const keyword = browser.peek();
-  if (keyword.str !== "unsafe") {
-    return browser.impasse("Unsafe.keyword");
+  if (keyword.str !== 'unsafe') {
+    return browser.impasseLeaf('Keyword', 'unsafe');
   }
   browser.consume();
 
   // open
   const open = browser.peek();
-  if (open.str !== "{") {
-    return browser.impasse("Unsafe.open");
+  if (open.str !== '{') {
+    return browser.impasseLeaf('Open', '{');
   }
   browser.increment();
 
@@ -24,16 +24,16 @@ export function parseStatementUnsafe(
   let deep = 1;
   while (true) {
     if (browser.ended()) {
-      return browser.impasse("Unsafe.unlimited");
+      return browser.impasseLeaf('EOF', '}');
     }
 
     const current = browser.peek();
     browser.increment();
 
-    if (current.str === "{") {
+    if (current.str === '{') {
       deep++;
     }
-    if (current.str === "}") {
+    if (current.str === '}') {
       deep--;
     }
 
@@ -47,6 +47,6 @@ export function parseStatementUnsafe(
   // Done
   browser.forward();
   return {
-    content: parts.join(""),
+    content: parts.join(''),
   };
 }

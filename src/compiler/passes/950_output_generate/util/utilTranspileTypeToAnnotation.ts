@@ -27,25 +27,29 @@ nativeToTranspiled.set(AstTypePrimitiveNative.String, 'ac::string');
 nativeToTranspiled.set(AstTypePrimitiveNative.Any, 'ac::any');
 
 export function utilTranspileTypeToAnnotation(type: AstType, heapized: boolean | undefined): string {
-  const transpiledType = utilTranspileTypeToAnnotationBase(type);
+  const transpiledType = utilTranspileTypeToAnnotationBase(type) ?? 'ac::unknown';
   if (heapized) {
     return 'ac::ref<' + transpiledType + '>';
   }
   return transpiledType;
 }
 
-export function utilTranspileTypeToAnnotationBase(type: AstType): string {
+function utilTranspileTypeToAnnotationBase(type?: AstType): string | undefined {
+  if (type === undefined) {
+    return undefined;
+  }
+
   const typePrimitive = astTypeAsTypePrimitive(type);
   if (typePrimitive) {
-    return nativeToTranspiled.get(typePrimitive.native) ?? 'ac::unknown';
+    return nativeToTranspiled.get(typePrimitive.native);
   }
 
   const typeFunction = astTypeAsTypeFunction(type);
   if (typeFunction) {
     const length = typeFunction.params.length.toString();
-    const ret = utilTranspileTypeToAnnotationBase(typeFunction.ret);
+    const ret = utilTranspileTypeToAnnotationBase(typeFunction.ret.annotation.type);
     const params = typeFunction.params.map((param) => {
-      return utilTranspileTypeToAnnotationBase(param.type);
+      return utilTranspileTypeToAnnotationBase(param.annotation.type);
     });
     return ' ac::function' + length + '<' + ret + ', ' + params.join(', ') + '> ';
   }

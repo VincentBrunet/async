@@ -14,7 +14,7 @@ function parseStatementImportSlot(
   // name
   const slotName = browser.peek();
   if (!tokenIsText(slotName)) {
-    return browser.impasse('StatementImport.Slot.Name');
+    return browser.impasseLeaf('Name', 'an identifier');
   }
   browser.consume();
   // ast
@@ -29,11 +29,12 @@ export function parseStatementImport(
   // keyword - import
   const keywordImport = browser.peek();
   if (keywordImport.str !== 'import') {
-    return browser.impasse('StatementImport.KeywordImport');
+    return browser.impasseLeaf('Keyword', 'import');
   }
   browser.consume();
   // items
   const slots = browser.recurseArray(
+    'Slot',
     true,
     slotOpen,
     slotClose,
@@ -41,18 +42,18 @@ export function parseStatementImport(
     parseStatementImportSlot,
   );
   if (slots instanceof TokenImpasse) {
-    return browser.impasse('StatementImport.Slots', [slots]);
+    return browser.impasseNode(slots);
   }
   // keyword - from
   const keywordFrom = browser.peek();
   if (keywordFrom.str !== 'from') {
-    return browser.impasse('StatementImport.KeywordFrom');
+    return browser.impasseLeaf('Keyword', 'from');
   }
   browser.consume();
   // source url
-  const url = browser.recurse(parseExpression);
+  const url = browser.recurse('Expression', parseExpression);
   if (url instanceof TokenImpasse) {
-    return browser.impasse('StatementImport.Url', [url]);
+    return browser.impasseNode(url);
   }
   // done
   return {

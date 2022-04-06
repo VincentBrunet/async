@@ -5,6 +5,7 @@ import { makeTypeObject } from '../../../lib/typing/makeTypeObject.ts';
 import { makeTypePrimitiveUnknown } from '../../../lib/typing/makeTypePrimitiveUnknown.ts';
 import { utilTypeForReferenceClosure } from '../util/utilTypeForReferenceClosure.ts';
 import { Tracker } from '../util/Tracker.ts';
+import { makeAnnotationType } from '../../../lib/typing/makeAnnotationType.ts';
 
 export function browseExpressionObject(
   next: () => void,
@@ -32,8 +33,7 @@ export function browseExpressionObject(
       mutable: field.mutable,
       name: field.name,
       hash: field.hash,
-      type: field.annotation.type ?? field.expression.resolvedType ??
-        makeTypePrimitiveUnknown(field),
+      annotation: makeAnnotationType(field.annotation.type ?? field.expression.resolvedType),
       token: field.token,
     });
   }

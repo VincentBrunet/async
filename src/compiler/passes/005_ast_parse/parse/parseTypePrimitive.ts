@@ -19,6 +19,8 @@ strToNative.set('f32', AstTypePrimitiveNative.Float32);
 strToNative.set('f64', AstTypePrimitiveNative.Float64);
 strToNative.set('ptr', AstTypePrimitiveNative.Pointer);
 
+const nativeSet = new Set(strToNative.keys());
+
 export function parseTypePrimitive(
   browser: Browser,
 ): AstTypePrimitive | TokenImpasse {
@@ -26,7 +28,7 @@ export function parseTypePrimitive(
   const name = browser.peek();
   const native = strToNative.get(name.str);
   if (native === undefined) {
-    return browser.impasse('TypePrimitive.NativeName');
+    return browser.impasseLeaf('Native', nativeSet);
   }
   browser.consume();
   // done

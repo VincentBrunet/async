@@ -7,7 +7,7 @@ export class Browser {
   private id = 0;
   private depth = 0;
 
-  private log = false;
+  private log = true;
 
   private tokens: Array<Token>;
   private indexes: Array<number>;
@@ -28,12 +28,37 @@ export class Browser {
   }
 
   recurse<T extends Ast>(
+    breadcrumb: string,
     recurse: (stack: Browser) => T | TokenImpasse,
   ): T | TokenImpasse {
-    return this.recurseWithParam(recurse, undefined);
+    return this.recurseWithParam(
+      breadcrumb,
+      recurse,
+      undefined,
+    );
+  }
+
+  recurseArray<T extends Ast, Param>(
+    breadcrumb: string,
+    mandatory: boolean,
+    validOpen: Set<string>,
+    validClose: Set<string>,
+    validDelim: Set<string>,
+    recurseItem: (stack: Browser) => T | TokenImpasse,
+  ): Array<T> | TokenImpasse {
+    return this.recurseArrayWithParam(
+      breadcrumb,
+      mandatory,
+      validOpen,
+      validClose,
+      validDelim,
+      recurseItem,
+      undefined,
+    );
   }
 
   recurseWithParam<T extends Ast, Param>(
+    breadcrumb: string,
     recurser: (stack: Browser, param: Param) => T | TokenImpasse,
     param: Param,
   ): T | TokenImpasse {
@@ -49,23 +74,28 @@ export class Browser {
         this.readToken().str,
       );
     }
-    const ast = recurser(this, param);
+    const result = recurser(this, param);
     // on failure
-    if (ast instanceof TokenImpasse) {
+    if (result instanceof TokenImpasse) {
+      if (result.breadcrumb) {
+        result.breadcrumb = breadcrumb + '.' + result.breadcrumb;
+      } else {
+        result.breadcrumb = breadcrumb;
+      }
       if (this.log) {
         console.log(
           repeat('  ', this.depth),
           '<-',
           recurser.name,
           'FAIL',
-          ast.message,
+          result.breadcrumb,
           this.readToken().str,
         );
       }
       this.indexes.pop();
     }
     // on success
-    if (!(ast instanceof TokenImpasse)) {
+    if (!(result instanceof TokenImpasse)) {
       if (this.log) {
         console.log(
           repeat('  ', this.depth),
@@ -76,7 +106,7 @@ export class Browser {
         );
       }
       const after = this.indexes.pop() ?? Infinity;
-      ast.token = {
+      result.token = {
         begin: before,
         end: after,
       };
@@ -85,21 +115,23 @@ export class Browser {
       }
     }
     this.depth--;
-    return ast;
+    return result;
   }
 
-  recurseArray<T extends Ast>(
+  recurseArrayWithParam<T extends Ast, Param>(
+    breadcrumb: string,
     mandatory: boolean,
     validOpen: Set<string>,
     validClose: Set<string>,
     validDelim: Set<string>,
-    recurseItem: (stack: Browser) => T | TokenImpasse,
+    recurseItem: (stack: Browser, param: Param) => T | TokenImpasse,
+    param: Param,
   ): Array<T> | TokenImpasse {
     // initial open
     const tokenOpen = this.peek();
     if (!validOpen.has(tokenOpen.str)) {
       if (mandatory) {
-        return this.impasse('Array.Open');
+        return this.impasseLeaf(breadcrumb + '.Open', validOpen);
       } else {
         return [];
       }
@@ -110,7 +142,7 @@ export class Browser {
     while (true) {
       // failed
       if (this.ended()) {
-        return this.impasse('Array.EOF');
+        return this.impasseLeaf(breadcrumb + '.EOF', '');
       }
       // initial close
       const tokenClose = this.peek();
@@ -119,7 +151,7 @@ export class Browser {
         break;
       }
       // item
-      const item = this.recurse(recurseItem);
+      const item = this.recurseWithParam(breadcrumb + '[' + items.length + ']', recurseItem, param);
       if (item instanceof TokenImpasse) {
         return item;
       }
@@ -132,7 +164,7 @@ export class Browser {
         this.consume();
         break;
       } else {
-        return this.impasse('Array.Close');
+        return this.impasseLeaf(breadcrumb + '.Close', validClose);
       }
     }
     return items;
@@ -161,8 +193,16 @@ export class Browser {
   }
   */
 
-  impasse(message: string, children?: Array<TokenImpasse>) {
-    return new TokenImpasse(this.getCurrentIndex(), message, children);
+  impasseNode(children: Array<TokenImpasse> | TokenImpasse) {
+    const impasse = new TokenImpasse(this.getCurrentIndex());
+    impasse.children = children;
+    return impasse;
+  }
+  impasseLeaf(breadcrumb: string, expected: Array<string> | Set<string> | string) {
+    const impasse = new TokenImpasse(this.getCurrentIndex());
+    impasse.breadcrumb = breadcrumb;
+    impasse.expected = expected;
+    return impasse;
   }
 
   ended() {

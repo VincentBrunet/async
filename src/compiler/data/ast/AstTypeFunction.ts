@@ -1,12 +1,16 @@
 import { Ast } from './Ast.ts';
-import { AstType } from './AstType.ts';
+import { AstAnnotationType } from './AstAnnotationType.ts';
 
 export interface AstTypeFunctionParam extends Ast {
   name?: string;
-  type: AstType;
+  annotation: AstAnnotationType;
+}
+
+export interface AstTypeFunctionReturn extends Ast {
+  annotation: AstAnnotationType;
 }
 
 export interface AstTypeFunction extends Ast {
   params: Array<AstTypeFunctionParam>;
-  ret: AstType;
+  ret: AstTypeFunctionReturn;
 }

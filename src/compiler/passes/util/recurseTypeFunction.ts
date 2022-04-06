@@ -3,7 +3,7 @@ import { RecursorPass } from './RecursorPass.ts';
 
 export function recurseTypeFunction(r: RecursorPass, ast: AstTypeFunction) {
   for (const param of ast.params) {
-    r.recurseType(param.type);
+    r.recurseAnnotationType(param.annotation);
   }
-  r.recurseType(ast.ret);
+  r.recurseAnnotationType(ast.ret.annotation);
 }

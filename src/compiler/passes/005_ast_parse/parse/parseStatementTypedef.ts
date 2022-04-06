@@ -11,30 +11,30 @@ export function parseStatementTypedef(
   // keyword
   const keyword = browser.peek();
   if (keyword.str !== 'typedef') {
-    return browser.impasse('Typedef.keyword');
+    return browser.impasseLeaf('Keyword', 'typedef');
   }
   browser.consume();
   // name
   const tokenName = browser.peek();
   if (!tokenIsText(tokenName)) {
-    return browser.impasse('Typedef.Name');
+    return browser.impasseLeaf('Name', 'a type name');
   }
   browser.consume();
   // template
-  const astTemplate = browser.recurse(parseAnnotationTemplate);
+  const astTemplate = browser.recurse('AnnotationTemplate', parseAnnotationTemplate);
   if (astTemplate instanceof TokenImpasse) {
-    return browser.impasse('Typedef.Template', [astTemplate]);
+    return browser.impasseNode(astTemplate);
   }
   // equal
   const tokenEqual = browser.peek();
   if (tokenEqual.str !== '=') {
-    return browser.impasse('Typedef.Equal');
+    return browser.impasseLeaf('Equal', '=');
   }
   browser.consume();
   // type
-  const astType = browser.recurse(parseType);
+  const astType = browser.recurse('Type', parseType);
   if (astType instanceof TokenImpasse) {
-    return browser.impasse('Typedef.Expression', [astType]);
+    return browser.impasseNode(astType);
   }
   // done
   return {
