@@ -1,34 +1,35 @@
 import { AstExpressionLiteral } from '../../../data/ast/AstExpressionLiteral.ts';
 import { AstTypePrimitiveNative } from '../../../data/ast/AstTypePrimitive.ts';
+import { never } from '../../errors/never.ts';
 import { RecursorPass } from '../../util/RecursorPass.ts';
 import { Transpiler } from '../util/Transpiler.ts';
 
 export function transpileExpressionLiteral(
   pass: RecursorPass,
-  ast: AstExpressionLiteral,
+  astExpressionLiteral: AstExpressionLiteral,
   transpiler: Transpiler,
 ) {
-  switch (ast.native) {
+  switch (astExpressionLiteral.native) {
     // Bool
     case AstTypePrimitiveNative.Boolean:
-      if (ast.value === 'false') {
+      if (astExpressionLiteral.value === 'false') {
         transpiler.pushStatementPart('false');
       } else {
         transpiler.pushStatementPart('true');
       }
-      break;
+      return;
     // Null
     case AstTypePrimitiveNative.Null:
       transpiler.pushStatementPart('ac::null_make()');
-      break;
+      return;
     // String
     case AstTypePrimitiveNative.String:
       transpiler.pushStatementPart('ac::str_make(');
       transpiler.pushStatementPart('"');
-      transpiler.pushStatementPart(ast.value);
+      transpiler.pushStatementPart(astExpressionLiteral.value);
       transpiler.pushStatementPart('"');
       transpiler.pushStatementPart(')');
-      break;
+      return;
     // Number
     case AstTypePrimitiveNative.Integer8:
     case AstTypePrimitiveNative.Integer16:
@@ -41,8 +42,8 @@ export function transpileExpressionLiteral(
     case AstTypePrimitiveNative.Float32:
     case AstTypePrimitiveNative.Float64:
       //transpiler.pushStatementPart('i32_make(');
-      transpiler.pushStatementPart(ast.value);
+      transpiler.pushStatementPart(astExpressionLiteral.value);
       //transpiler.pushStatementPart(')');
-      break;
+      return;
   }
 }

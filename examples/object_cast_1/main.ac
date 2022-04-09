@@ -1,13 +1,13 @@
 
-export typedef MyObj1 = {
+typedef MyObj1 = {
   const value1: i32 | i64;
 }
 
-export typedef MyObj2 = {
+typedef MyObj2 = {
   const value1: i32;
 }
 
-export typedef MyObj3 = {
+typedef MyObj3 = {
   mutable value1: i64;
 }
 

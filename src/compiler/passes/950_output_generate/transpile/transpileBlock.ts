@@ -13,13 +13,13 @@ export function transpileBlock(
   transpiler.pushBlock();
 
   // Setup local variables
-  const resolvedVariables = ensure(ast.resolvedVariables);
-  for (const resolvedVariable of resolvedVariables) {
-    const resolvedType = ensure(resolvedVariable.resolvedType);
-    const transpiledType = utilTranspileTypeToAnnotation(resolvedType, resolvedVariable.resolvedHeapized);
-    const symbolLocalValue = ensure(resolvedVariable.symbolLocalValue);
+  const collectedVariables = ensure(ast.collectedVariables);
+  for (const collectedVariable of collectedVariables) {
+    const resolvedType = ensure(collectedVariable.resolvedType);
+    const transpiledType = utilTranspileTypeToAnnotation(resolvedType, collectedVariable.resolvedHeapized);
+    const symbolLocalValue = ensure(collectedVariable.symbolLocalValue);
 
-    if (resolvedVariable.resolvedHeapized) {
+    if (collectedVariable.resolvedHeapized) {
       transpiler.pushStatement([
         transpiledType,
         ' ',

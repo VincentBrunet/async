@@ -11,7 +11,7 @@ export function browseExpressionRun(
 ) {
   // Asserts
   const referenceClosures = ensure(ast.referenceClosures);
-  const resolvedReturns = ensure(ast.resolvedReturns);
+  const collectedReturns = ensure(ast.collectedReturns);
 
   // Resolve closure types
   for (const referenceClosure of referenceClosures) {
@@ -26,7 +26,7 @@ export function browseExpressionRun(
 
   // Find all return types
   const returns = makeTypeOrFromArray(
-    resolvedReturns.map((resolvedReturn) => ensure(resolvedReturn.resolvedType)),
+    collectedReturns.map((resolvedReturn) => ensure(resolvedReturn.resolvedType)),
     ast,
   );
 

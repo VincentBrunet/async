@@ -3,7 +3,9 @@ import { Browser } from '../util/Browser.ts';
 import { TokenImpasse } from '../util/TokenImpasse.ts';
 
 const strToNative = new Map<string, AstTypePrimitiveNative>();
-strToNative.set('any', AstTypePrimitiveNative.Any);
+strToNative.set('unknown', AstTypePrimitiveNative.Unknown);
+strToNative.set('void', AstTypePrimitiveNative.Void);
+strToNative.set('never', AstTypePrimitiveNative.Never);
 strToNative.set('str', AstTypePrimitiveNative.String);
 strToNative.set('bool', AstTypePrimitiveNative.Boolean);
 strToNative.set('null', AstTypePrimitiveNative.Null);

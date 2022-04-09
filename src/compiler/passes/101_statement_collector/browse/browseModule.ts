@@ -1,9 +1,11 @@
 import { AstModule } from '../../../data/ast/AstModule.ts';
+import { astStatementAsStatementTypedef, astStatementAsStatementVariable } from '../../../data/ast/AstStatement.ts';
 import { AstStatementExport } from '../../../data/ast/AstStatementExport.ts';
 import { AstStatementImport } from '../../../data/ast/AstStatementImport.ts';
 import { MapArray } from '../../../lib/core/data/MapArray.ts';
 import { assert } from '../../../passes/errors/assert.ts';
 import { ensure } from '../../../passes/errors/ensure.ts';
+import { never } from '../../errors/never.ts';
 import { Scope } from '../util/Scope.ts';
 
 function toMapArray<K, V>(array: Array<V>, keyer: (v: V) => K): MapArray<K, V> {
@@ -22,11 +24,20 @@ function toMap<K, V>(array: Array<V>, keyer: (v: V) => K): Map<K, V> {
   return map;
 }
 
-function importKey(ast: AstStatementImport) {
+function importModuleHash(ast: AstStatementImport) {
   return ensure(ast.resolvedModule).hash;
 }
-function exportKey(ast: AstStatementExport) {
-  return ensure(ast.resolvedName);
+
+function exportName(astStatementExport: AstStatementExport) {
+  const variable = astStatementAsStatementVariable(astStatementExport.statement);
+  if (variable) {
+    return variable.name;
+  }
+  const typedef = astStatementAsStatementTypedef(astStatementExport.statement);
+  if (typedef) {
+    return typedef.name;
+  }
+  never();
 }
 
 export function browseModule(
@@ -41,6 +52,6 @@ export function browseModule(
   next();
 
   assert(scope.getStatementReturns().length === 0);
-  ast.resolvedImports = toMapArray(scope.getStatementImports(), importKey);
-  ast.resolvedExports = toMap(scope.getStatementExports(), exportKey);
+  ast.collectedImportsByModuleHash = toMapArray(scope.getStatementImports(), importModuleHash);
+  ast.collectedExportsByName = toMap(scope.getStatementExports(), exportName);
 }

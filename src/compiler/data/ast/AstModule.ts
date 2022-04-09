@@ -9,8 +9,8 @@ export interface AstModule extends Ast {
 
   block: AstBlock;
 
-  resolvedImports?: MapArray<string, AstStatementImport>;
-  resolvedExports?: Map<string, AstStatementExport>;
+  collectedImportsByModuleHash?: MapArray<string, AstStatementImport>;
+  collectedExportsByName?: Map<string, AstStatementExport>;
 
   symbolGlobalFactoryPointer?: string;
   symbolGlobalExportStruct?: string;

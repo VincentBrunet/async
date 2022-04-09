@@ -10,6 +10,7 @@ import { AstTypePrimitiveNative } from '../../../data/ast/AstTypePrimitive.ts';
 import { never } from '../../../passes/errors/never.ts';
 
 const nativeToTranspiled = new Map<AstTypePrimitiveNative, string>();
+nativeToTranspiled.set(AstTypePrimitiveNative.Unknown, 'ac::unknown');
 nativeToTranspiled.set(AstTypePrimitiveNative.Boolean, 'ac::boolean');
 nativeToTranspiled.set(AstTypePrimitiveNative.Integer8, 'ac::i8');
 nativeToTranspiled.set(AstTypePrimitiveNative.Integer16, 'ac::i16');
@@ -24,7 +25,8 @@ nativeToTranspiled.set(AstTypePrimitiveNative.Float64, 'ac::i64');
 nativeToTranspiled.set(AstTypePrimitiveNative.Pointer, 'ac::pointer');
 nativeToTranspiled.set(AstTypePrimitiveNative.Null, 'ac::null');
 nativeToTranspiled.set(AstTypePrimitiveNative.String, 'ac::string');
-nativeToTranspiled.set(AstTypePrimitiveNative.Any, 'ac::any');
+nativeToTranspiled.set(AstTypePrimitiveNative.Void, 'ac::void');
+nativeToTranspiled.set(AstTypePrimitiveNative.Never, 'ac::never');
 
 export function utilTranspileTypeToAnnotation(type: AstType, heapized: boolean | undefined): string {
   const transpiledType = utilTranspileTypeToAnnotationBase(type) ?? 'ac::unknown';

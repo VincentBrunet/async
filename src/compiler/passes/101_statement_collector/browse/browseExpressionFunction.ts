@@ -8,5 +8,5 @@ export function browseExpressionFunction(
 ) {
   scope.markCollectorStatementReturn();
   next();
-  ast.resolvedReturns = scope.getStatementReturns();
+  ast.collectedReturns = scope.getStatementReturns();
 }

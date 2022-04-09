@@ -1,13 +1,14 @@
 import { Ast } from '../../../data/ast/Ast.ts';
 import { Token, TokenKind } from '../../../data/token/Token.ts';
 import { repeat } from '../../../lib/core/strings/repeat.ts';
+import { parseUtilArray, UtilArrayAst, UtilArraySetup } from './parseUtilArray.ts';
 import { TokenImpasse } from './TokenImpasse.ts';
 
 export class Browser {
   private id = 0;
   private depth = 0;
 
-  private log = true;
+  private log = false;
 
   private tokens: Array<Token>;
   private indexes: Array<number>;
@@ -38,7 +39,7 @@ export class Browser {
     );
   }
 
-  recurseArray<T extends Ast, Param>(
+  recurseArray<T extends Ast>(
     breadcrumb: string,
     mandatory: boolean,
     validOpen: Set<string>,
@@ -75,6 +76,11 @@ export class Browser {
       );
     }
     const result = recurser(this, param);
+    const after = this.indexes.pop() ?? Infinity;
+    result.token = {
+      begin: before,
+      end: after,
+    };
     // on failure
     if (result instanceof TokenImpasse) {
       if (result.breadcrumb) {
@@ -92,7 +98,6 @@ export class Browser {
           this.readToken().str,
         );
       }
-      this.indexes.pop();
     }
     // on success
     if (!(result instanceof TokenImpasse)) {
@@ -105,14 +110,7 @@ export class Browser {
           this.readToken().str,
         );
       }
-      const after = this.indexes.pop() ?? Infinity;
-      result.token = {
-        begin: before,
-        end: after,
-      };
-      if (after !== undefined) {
-        this.indexes[this.getCurrentHeight()] = after;
-      }
+      this.indexes[this.getCurrentHeight()] = after;
     }
     this.depth--;
     return result;
@@ -127,79 +125,34 @@ export class Browser {
     recurseItem: (stack: Browser, param: Param) => T | TokenImpasse,
     param: Param,
   ): Array<T> | TokenImpasse {
-    // initial open
-    const tokenOpen = this.peek();
-    if (!validOpen.has(tokenOpen.str)) {
-      if (mandatory) {
-        return this.impasseLeaf(breadcrumb + '.Open', validOpen);
-      } else {
-        return [];
-      }
+    const result = this.recurseWithParam<UtilArrayAst<T>, UtilArraySetup<T, Param>>(breadcrumb, parseUtilArray, {
+      mandatory: mandatory,
+      validOpen: validOpen,
+      validClose: validClose,
+      validDelim: validDelim,
+      recurseItem: recurseItem,
+      param: param,
+    });
+    if (result instanceof TokenImpasse) {
+      return result;
     }
-    this.consume();
-    // until close
-    const items = new Array<T>();
-    while (true) {
-      // failed
-      if (this.ended()) {
-        return this.impasseLeaf(breadcrumb + '.EOF', '');
-      }
-      // initial close
-      const tokenClose = this.peek();
-      if (validClose.has(tokenClose.str)) {
-        this.consume();
-        break;
-      }
-      // item
-      const item = this.recurseWithParam(breadcrumb + '[' + items.length + ']', recurseItem, param);
-      if (item instanceof TokenImpasse) {
-        return item;
-      }
-      items.push(item);
-      // delim
-      const tokenDelim = this.peek();
-      if (validDelim.has(tokenDelim.str)) {
-        this.consume();
-      } else if (validClose.has(tokenDelim.str)) {
-        this.consume();
-        break;
-      } else {
-        return this.impasseLeaf(breadcrumb + '.Close', validClose);
-      }
-    }
-    return items;
+    return result.items;
   }
-
-  /*
-  error(message: string, origin?: TokenImpasse) {
-    // TODO - remove in favor of impasse?
-    const indexCurrent = this.getCurrentIndex();
-    const indexMin = clamp(indexCurrent - 4, 0, this.tokens.length);
-    const indexMid = clamp(indexCurrent, 0, this.tokens.length);
-    const indexMax = clamp(indexCurrent + 4, 0, this.tokens.length);
-
-    const before = this.tokenString(this.tokens.slice(indexMin, indexMid));
-    const center = this.tokens[indexMid].str;
-    const after = this.tokenString(this.tokens.slice(indexMid + 1, indexMax));
-
-    const lines = [];
-    lines.push(message);
-    lines.push(repeat("-", before.length + center.length + after.length));
-    lines.push(before + center + after);
-    lines.push(repeat(" ", before.length) + "^");
-    lines.push(repeat("-", before.length + center.length + after.length));
-
-    throw new Error(lines.join("\n"));
-  }
-  */
 
   impasseNode(children: Array<TokenImpasse> | TokenImpasse) {
-    const impasse = new TokenImpasse(this.getCurrentIndex());
+    const impasse = new TokenImpasse();
     impasse.children = children;
+    if (children instanceof TokenImpasse) {
+      children.parent = impasse;
+    } else {
+      for (const child of children) {
+        child.parent = impasse;
+      }
+    }
     return impasse;
   }
   impasseLeaf(breadcrumb: string, expected: Array<string> | Set<string> | string) {
-    const impasse = new TokenImpasse(this.getCurrentIndex());
+    const impasse = new TokenImpasse();
     impasse.breadcrumb = breadcrumb;
     impasse.expected = expected;
     return impasse;

@@ -4,7 +4,5 @@ import { AstStatement } from './AstStatement.ts';
 export interface AstStatementExport extends Ast {
   statement: AstStatement;
 
-  resolvedName?: string;
-
   symbolLocalValue?: string;
 }

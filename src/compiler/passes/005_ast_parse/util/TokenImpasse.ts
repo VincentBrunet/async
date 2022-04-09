@@ -1,10 +1,11 @@
+import { Range } from '../../../data/util/Range.ts';
+
 export class TokenImpasse {
-  index: number;
+  token?: Range;
+
   breadcrumb?: string;
   expected?: Array<string> | Set<string> | string;
-  children?: Array<TokenImpasse> | TokenImpasse;
 
-  constructor(index: number) {
-    this.index = index;
-  }
+  parent?: TokenImpasse;
+  children?: Array<TokenImpasse> | TokenImpasse;
 }

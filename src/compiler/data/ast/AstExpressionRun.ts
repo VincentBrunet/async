@@ -10,8 +10,8 @@ export interface AstExpressionRun extends Ast {
   block: AstBlock;
 
   resolvedType?: AstType;
-  resolvedReturns?: Array<AstStatementReturn>;
 
+  collectedReturns?: Array<AstStatementReturn>;
   referenceClosures?: Array<AstReferenceClosure>;
 
   symbolGlobalCallableFunction?: string;

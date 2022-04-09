@@ -3,15 +3,14 @@ import { passUrlToCode } from '../passes/000_code_read/passUrlToCode.ts';
 import { passCodeToToken } from '../passes/001_token_parse/passCodeToToken.ts';
 import { passTokenToAst } from '../passes/005_ast_parse/passTokenToAst.ts';
 import { passImportSchedule } from '../passes/099_import_schedule/passImportSchedule.ts';
-import { passExportRead } from '../passes/101_export_read/passExportRead.ts';
 import { passBinaryPrioritize } from '../passes/113_binary_prioritize/passBinaryPrioritize.ts';
 import { passClosureResolve } from '../passes/123_closure_resolve/passClosureResolve.ts';
 import { passReferenceResolve } from '../passes/125_reference_resolve/passReferenceResolve.ts';
-import { passStatementCollector } from '../passes/106_statement_collector/passStatementCollector.ts';
+import { passStatementCollector } from '../passes/101_statement_collector/passStatementCollector.ts';
 import { passTypeInferenceUpward } from '../passes/203_type_inference_upward/passTypeInferenceUpward.ts';
 import { passAstToOutput } from '../passes/950_output_generate/passAstToOutput.ts';
 import { passObjectToBinary } from '../passes/990_compile_binary/passObjectToBinary.ts';
-import { passImportLink } from '../passes/102_import_link/passImportLink.ts';
+import { passImportLink } from '../passes/104_import_link/passImportLink.ts';
 import { UnitModule } from '../data/unit/UnitModule.ts';
 import { hashModuleId } from './hashModuleId.ts';
 import { passOutputToFiles } from '../passes/960_output_write/passOutputToFiles.ts';
@@ -47,9 +46,8 @@ function runSync(run: (unit: UnitModule) => void) {
 }
 
 const passes: Pass[] = [
-  { name: '101', run: runSync(passExportRead) },
-  { name: '102', run: runSync(passImportLink) },
-  { name: '106', run: runSync(passStatementCollector) },
+  { name: '101', run: runSync(passStatementCollector) },
+  { name: '104', run: runSync(passImportLink) },
   { name: '113', run: runSync(passBinaryPrioritize) },
   { name: '115', run: runSync(passObjectFields) },
   { name: '123', run: runSync(passClosureResolve) },
@@ -98,11 +96,15 @@ export async function runLoop() {
     }
   }
 
+  scheduledCompiles.reverse();
+
   for (const pass of passes) {
     for (const scheduledCompile of scheduledCompiles) {
       await pass.run(scheduledCompile.unit);
     }
   }
+
+  scheduledCompiles.reverse();
 
   await passObjectToBinary(
     scheduledCompiles[0].unit,

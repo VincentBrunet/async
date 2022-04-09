@@ -18,7 +18,7 @@ export function transpileModule(
 
   // Definition of module struct
   const fields: OutputStructField[] = [];
-  for (const resolvedExport of ensure(astModule.resolvedExports).values()) {
+  for (const resolvedExport of ensure(astModule.collectedExportsByName).values()) {
     const statementVariable = astStatementAsStatementVariable(resolvedExport.statement);
     if (statementVariable) {
       fields.push({

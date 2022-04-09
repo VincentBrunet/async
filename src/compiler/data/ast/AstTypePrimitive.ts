@@ -1,7 +1,9 @@
 import { Ast } from './Ast.ts';
 
 export enum AstTypePrimitiveNative {
-  Any = 'any',
+  Unknown = 'unknown',
+  Void = 'void',
+  Never = 'never',
   String = 'str',
   Boolean = 'bool',
   Null = 'null',
@@ -16,7 +18,6 @@ export enum AstTypePrimitiveNative {
   Float32 = 'f32',
   Float64 = 'f64',
   Pointer = 'ptr',
-  Unknown = 'unknown',
 }
 
 export interface AstTypePrimitive extends Ast {

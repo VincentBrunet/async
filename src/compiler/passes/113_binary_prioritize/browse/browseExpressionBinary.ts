@@ -66,20 +66,20 @@ function listBinaryNodes(
  * Build a new binary operation tree by reading the inputs and operators
  */
 export function browseExpressionBinary(
-  ast: AstExpressionBinary,
+  astExpressionBinary: AstExpressionBinary,
 ) {
   // Skip if already resolved prioritization
-  if (ast.resolvedPrioritization) {
+  if (astExpressionBinary.finishedPrioritization) {
     return;
   }
 
   // existing state of ast
   const leafs = new Array<AstExpression>();
   const nodes = new Array<AstExpressionBinary>();
-  listBinaryLeafs(ast, leafs);
-  listBinaryNodes(ast, nodes);
+  listBinaryLeafs(astExpressionBinary, leafs);
+  listBinaryNodes(astExpressionBinary, nodes);
 
-  // find the actual resolvedPrioritization steps
+  // find the actual prioritization steps
   interface Step {
     idx: number;
     priority: number;
@@ -108,7 +108,7 @@ export function browseExpressionBinary(
       operator: node.operator,
       expression1: expression1,
       expression2: expression2,
-      resolvedPrioritization: true,
+      finishedPrioritization: true,
     });
     while (expressions[idx1] === expression1) {
       expressions[idx1] = expression;
@@ -128,7 +128,7 @@ export function browseExpressionBinary(
   if (binary === undefined) {
     throw new Error('binary graph result was not binary');
   }
-  ast.operator = binary.operator;
-  ast.expression1 = binary.expression1;
-  ast.expression2 = binary.expression2;
+  astExpressionBinary.operator = binary.operator;
+  astExpressionBinary.expression1 = binary.expression1;
+  astExpressionBinary.expression2 = binary.expression2;
 }

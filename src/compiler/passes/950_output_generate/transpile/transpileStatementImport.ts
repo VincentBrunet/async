@@ -11,7 +11,7 @@ export function transpileStatementImport(
 ) {
   // Asserts
   const resolvedModule = ensure(ast.resolvedModule);
-  const resolvedExports = ensure(resolvedModule.resolvedExports);
+  const collectedExportsByName = ensure(resolvedModule.collectedExportsByName);
 
   // Include
   transpiler.pushInclude(
@@ -22,7 +22,7 @@ export function transpileStatementImport(
   );
 
   // Which keys can be imported
-  const resolvedExportKeys = [...resolvedExports.keys()];
+  const resolvedExportKeys = [...collectedExportsByName.keys()];
 
   // Imported keys
   for (const slot of ast.slots) {

@@ -3,7 +3,6 @@ import { AstTypeFunctionParam } from '../../../data/ast/AstTypeFunction.ts';
 import { ensure } from '../../../passes/errors/ensure.ts';
 import { makeTypeFunction } from '../../../lib/typing/makeTypeFunction.ts';
 import { makeTypeOrFromArray } from '../../../lib/typing/makeTypeOrFromArray.ts';
-import { makeTypePrimitiveAny } from '../../../lib/typing/makeTypePrimitiveAny.ts';
 import { makeTypePrimitiveUnknown } from '../../../lib/typing/makeTypePrimitiveUnknown.ts';
 import { utilTypeForReferenceClosure } from '../util/utilTypeForReferenceClosure.ts';
 import { Tracker } from '../util/Tracker.ts';
@@ -16,12 +15,12 @@ export function browseExpressionFunction(
 ) {
   // Asserts
   const referenceClosures = ensure(expressionFunction.referenceClosures);
-  const resolvedReturns = ensure(expressionFunction.resolvedReturns);
+  const collectedReturns = ensure(expressionFunction.collectedReturns);
 
   // Prepare a simple original annotation-based type
   for (const param of expressionFunction.params) {
     param.resolvedType = param.annotation.type ??
-      makeTypePrimitiveAny(param);
+      makeTypePrimitiveUnknown(param);
   }
   const typeParams: AstTypeFunctionParam[] = expressionFunction.params.map((param) => {
     return {
@@ -45,7 +44,7 @@ export function browseExpressionFunction(
 
   // Compute the final return type by finding all returns
   const returnResolvedType = makeTypeOrFromArray(
-    resolvedReturns.map((resolvedReturn) => ensure(resolvedReturn.resolvedType)),
+    collectedReturns.map((resolvedReturn) => ensure(resolvedReturn.resolvedType)),
     expressionFunction,
   );
   expressionFunction.ret.resolvedType = expressionFunction.ret.resolvedType ?? returnResolvedType;

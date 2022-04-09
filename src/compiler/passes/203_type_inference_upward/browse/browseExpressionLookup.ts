@@ -19,7 +19,7 @@ export function browseExpressionLookup(
   }
 
   const resolvedFields = ensure(objectType.resolvedFields);
-  ast.resolvedType = resolvedFields.get(ast.name)?.type;
+  ast.resolvedType = resolvedFields.get(ast.name)?.annotation?.type;
 
   if (ast.resolvedType === undefined) {
     //throw new Error("Cannot do a lookup on a value that is not an object");

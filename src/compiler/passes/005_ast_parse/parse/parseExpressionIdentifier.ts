@@ -28,7 +28,7 @@ export function parseExpressionIdentifier(
   browser.consume();
   // Check if reserved keyword
   if (forbidden.has(token.str)) {
-    return browser.impasseLeaf('Forbidden keyword', []);
+    return browser.impasseLeaf('Forbidden', 'not a reserved keyword');
   }
   // done
   return {
