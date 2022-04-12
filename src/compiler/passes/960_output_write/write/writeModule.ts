@@ -77,6 +77,4 @@ export function writeModule(writer: Writer, unit: UnitModule) {
   // Anti-reimport
   writer.pushToHeader('#endif');
   writer.pushToHeader('\n');
-  // Done
-  writer.pushToBoth('\n');
 }

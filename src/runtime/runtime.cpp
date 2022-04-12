@@ -2,8 +2,8 @@
 
 int main() {
   try {
-    if (entry_module != nullptr) {
-      entry_module();
+    if (ac::entry_module != nullptr) {
+      ac::entry_module();
     }
   } catch (...) {
     ///

@@ -112,11 +112,15 @@ struct null {
 };
 
 string str_make(char *str) {
-  return {};
+  string value;
+  return value;
 }
 null null_make() {
-  return {};
+  null value;
+  return value;
 }
+
+extern void *(*entry_module)();
 
 }  // namespace ac
 
