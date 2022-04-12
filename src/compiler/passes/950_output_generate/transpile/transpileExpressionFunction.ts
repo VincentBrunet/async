@@ -63,13 +63,12 @@ export function transpileExpressionFunction(
       };
     }),
   );
-  transpiler.pushStatement([transpiledType, ' ', 'fn']);
   transpiler.pushStatement([symbolFileClosureStruct, '* ', 'closure = new ', symbolFileClosureStruct, '()']);
   transpiler.pushStatement(['closure->ptr = ', symbolFileCallableFunction]);
   for (const referenceClosure of referenceClosures) {
     transpiler.pushStatement(['closure->', '_' + referenceClosure.name, ' = ', referenceClosure.name]);
   }
-  transpiler.pushStatement(['return fn']);
+  transpiler.pushStatement(['return', ' ', transpiledType, '(closure)']);
   transpiler.popFunction();
 
   // Make the callable function

@@ -32,7 +32,7 @@ export async function passObjectToBinary(
   mainContent.push('"');
   mainContent.push('\n');
   mainContent.push('\n');
-  mainContent.push('void *(*entry_module)() = (void *(*)())');
+  mainContent.push('void *(*ac::entry_module)() = (void *(*)())');
   mainContent.push(ensure(unit.ast.symbolGlobalFactoryPointer));
   mainContent.push(';');
   mainContent.push('\n');
@@ -46,6 +46,8 @@ export async function passObjectToBinary(
     [
       '-Wall',
       '-Wpedantic',
+      '-std=c++11',
+      '-lstdc++',
       '-I',
       runtimePath,
       ...units.map((unit) => (ensure(unit.files, unit.toString()).object)),

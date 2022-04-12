@@ -11,9 +11,10 @@ export async function passFilesToObject(unit: UnitModule) {
     [
       '-Wall',
       '-Wpedantic',
-      '-S',
+      '-std=c++11',
       '-I',
       runtimePath,
+      '-c',
       files.source,
       '-o',
       files.object,

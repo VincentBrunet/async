@@ -8,4 +8,5 @@ export function writeInclude(writer: Writer, outputInclude: OutputInclude) {
   writer.pushToBoth(outputInclude.path);
   writer.pushToBoth('>');
   writer.pushToBoth('\n');
+  writer.pushToBoth('\n');
 }
