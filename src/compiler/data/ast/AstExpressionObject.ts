@@ -22,7 +22,7 @@ export interface AstExpressionObject extends Ast {
 
   referenceClosures?: Array<AstReferenceClosure>;
 
-  symbolGlobalCallableFunction?: string;
+  symbolFileCallableFunction?: string;
   symbolFileFieldsStatic?: string;
   symbolLocalFieldsValue?: string;
 }

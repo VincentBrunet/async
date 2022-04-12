@@ -29,24 +29,31 @@ export function transpileModule(
         ),
       });
     }
+
     const typedef = astStatementAsStatementTypedef(resolvedExport.statement);
     if (typedef) {
+      /*
       fields.push({
         name: typedef.name,
         type: 'TYPE',
       });
+      */
     }
   }
-  transpiler.pushStruct(symbolGlobalExportStruct, fields);
+  transpiler.pushStruct(
+    true,
+    symbolGlobalExportStruct,
+    fields,
+  );
 
   // New module Factory function
-  transpiler.pushFunction(symbolGlobalExportStruct + '*', symbolGlobalFactoryPointer, []);
+  transpiler.pushFunction(true, symbolGlobalExportStruct + '*', symbolGlobalFactoryPointer, []);
   transpiler.pushStatement(['static ', symbolGlobalExportStruct, '* ', symbolLocalModuleValue, ' = NULL']);
   transpiler.pushStatement(['if (', symbolLocalModuleValue, ' != NULL)']);
   transpiler.pushBlock();
   transpiler.pushStatement(['return ', symbolLocalModuleValue]);
   transpiler.popBlock();
-  transpiler.pushStatement([symbolLocalModuleValue, ' = malloc(sizeof(', symbolGlobalExportStruct, '))']);
+  transpiler.pushStatement([symbolLocalModuleValue, ' = new ', symbolGlobalExportStruct, '()']);
 
   // Recurse in module content
   transpiler.pushStatement(['/* module block */']);

@@ -28,27 +28,42 @@ using ref = std::shared_ptr<T>;
 
 template <typename TR>
 struct callable0 {
+  TR(*ptr)
+  (void *);
   TR call() {
+    return this->ptr(this);
   }
 };
 template <typename TR, typename TP1>
 struct callable1 {
+  TR(*ptr)
+  (void *, TP1);
   TR call(TP1 p1) {
+    return this->ptr(this, p1);
   }
 };
 template <typename TR, typename TP1, typename TP2>
 struct callable2 {
+  TR(*ptr)
+  (void *, TP1, TP2);
   TR call(TP1 p1, TP2 p2) {
+    return this->ptr(this, p1, p2);
   }
 };
 template <typename TR, typename TP1, typename TP2, typename TP3>
 struct callable3 {
+  TR(*ptr)
+  (void *, TP1, TP2, TP3);
   TR call(TP1 p1, TP2 p2, TP3 p3) {
+    return this->ptr(this, p1, p2, p3);
   }
 };
 template <typename TR, typename TP1, typename TP2, typename TP3, typename TP4>
 struct callable4 {
+  TR(*ptr)
+  (void *, TP1, TP2, TP3, TP4);
   TR call(TP1 p1, TP2 p2, TP3 p3, TP4 p4) {
+    return this->ptr(this, p1, p2, p3, p4);
   }
 };
 

@@ -15,36 +15,47 @@ export function transpileExpressionFunction(
 ) {
   const referenceClosures = ensure(astExpressionFunction.referenceClosures);
 
-  const symbolGlobalCallableFunction = ensure(astExpressionFunction.symbolGlobalCallableFunction);
-  const symbolGlobalFactoryFunction = ensure(astExpressionFunction.symbolGlobalFactoryFunction);
+  const symbolFileCallableFunction = ensure(astExpressionFunction.symbolFileCallableFunction);
+  const symbolFileFactoryFunction = ensure(astExpressionFunction.symbolFileFactoryFunction);
   const symbolFileClosureStruct = ensure(astExpressionFunction.symbolFileClosureStruct);
+  const symbolLocalClosureValue = ensure(astExpressionFunction.symbolLocalClosureValue);
+
+  const transpiledType = utilTranspileTypeToAnnotation(
+    ensure(astExpressionFunction.resolvedType),
+    false,
+  );
 
   // Make the expression by just calling the factory
-  transpiler.pushStatementPart(symbolGlobalFactoryFunction);
+  transpiler.pushStatementPart(symbolFileFactoryFunction);
   transpiler.pushStatementPart('(');
-  for (const referenceClosure of referenceClosures) {
-    if (referenceClosure.idx !== 0) {
+  referenceClosures.forEach((referenceClosure, index) => {
+    if (index !== 0) {
       transpiler.pushStatementPart(', ');
     }
     transpiler.pushStatementPart(utilTranspileReferenceClosureToExpression(referenceClosure));
-  }
+  });
   transpiler.pushStatementPart(')');
 
   // Make the closure struct
   const closureParts: OutputStructField[] = [];
   for (const referenceClosure of referenceClosures) {
     closureParts.push({
-      name: referenceClosure.name,
+      name: '_' + referenceClosure.name,
       type: utilTranspileReferenceClosureToAnnotation(referenceClosure),
     });
   }
-  transpiler.pushStruct(symbolFileClosureStruct, closureParts);
+  transpiler.pushStruct(
+    false,
+    symbolFileClosureStruct,
+    closureParts,
+    transpiledType.replace('ac::function', 'ac::callable'),
+  );
 
   // Make the factory function
-  const transpiledType = utilTranspileTypeToAnnotation(ensure(astExpressionFunction.resolvedType), false);
   transpiler.pushFunction(
+    false,
     transpiledType,
-    symbolGlobalFactoryFunction,
+    symbolFileFactoryFunction,
     referenceClosures.map((referenceClosure) => {
       return {
         name: referenceClosure.name,
@@ -52,21 +63,20 @@ export function transpileExpressionFunction(
       };
     }),
   );
-  transpiler.pushStatement([transpiledType, ' ', 'fn = malloc(sizeof(', transpiledType, '))']);
-  transpiler.pushStatement([symbolFileClosureStruct, ' ', 'closure = new ', symbolFileClosureStruct, '()']);
+  transpiler.pushStatement([transpiledType, ' ', 'fn']);
+  transpiler.pushStatement([symbolFileClosureStruct, '* ', 'closure = new ', symbolFileClosureStruct, '()']);
+  transpiler.pushStatement(['closure->ptr = ', symbolFileCallableFunction]);
   for (const referenceClosure of referenceClosures) {
-    transpiler.pushStatement(['closure.', referenceClosure.name, ' = ', referenceClosure.name]);
+    transpiler.pushStatement(['closure->', '_' + referenceClosure.name, ' = ', referenceClosure.name]);
   }
-  transpiler.pushStatement(['fn.callable = ', symbolGlobalCallableFunction]);
-  transpiler.pushStatement(['fn.closure = closure']);
   transpiler.pushStatement(['return fn']);
   transpiler.popFunction();
 
   // Make the callable function
   const params: OutputFunctionParam[] = [];
   params.push({
-    type: symbolFileClosureStruct + '*',
-    name: ensure(astExpressionFunction.symbolLocalClosureValue),
+    type: 'void *',
+    name: '_' + symbolLocalClosureValue,
   });
   astExpressionFunction.params.forEach((astExpressionFunctionParam, index) => {
     const astExpressionFunctionParamType = utilTranspileTypeToAnnotation(
@@ -85,12 +95,23 @@ export function transpileExpressionFunction(
       });
     }
   });
-
   const returnType = utilTranspileTypeToAnnotation(
     ensure(astExpressionFunction.ret.resolvedType),
     false,
   );
-  transpiler.pushFunction(returnType, symbolGlobalCallableFunction, params);
+  transpiler.pushFunction(false, returnType, symbolFileCallableFunction, params);
+
+  transpiler.pushStatement([
+    symbolFileClosureStruct,
+    '* ',
+    symbolLocalClosureValue,
+    ' = ',
+    '(',
+    symbolFileClosureStruct,
+    '*)',
+    '_',
+    symbolLocalClosureValue,
+  ]);
 
   // Push block statements
   transpiler.pushStatement(['/* function block */']);

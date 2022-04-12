@@ -3,5 +3,5 @@ const closured = 42
 
 export const my_print_i32 = fn (value:i32) {
   const tt = closured;
-  unsafe { printf("Print:%d(%d)\n", _param_value->data.i32, tt->data.i32); }
+  unsafe { printf("Print:%d(%d)\n", _param_value, _variable_tt); }
 }

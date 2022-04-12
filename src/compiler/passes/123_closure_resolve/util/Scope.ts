@@ -31,10 +31,9 @@ export class Scope {
   readClosures(): Array<AstReferenceClosure> {
     const referenceClosures = [...this.referenceClosures];
     const astClosures = new Array<AstReferenceClosure>();
-    for (let idx = 0; idx < referenceClosures.length; idx++) {
+    for (const referenceClosure of referenceClosures) {
       astClosures.push({
-        idx: idx,
-        name: referenceClosures[idx],
+        name: referenceClosure,
       });
     }
     return astClosures;

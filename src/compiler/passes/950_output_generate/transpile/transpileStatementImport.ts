@@ -3,15 +3,16 @@ import { ensure } from '../../../passes/errors/ensure.ts';
 import { cacheFileFromHash } from '../../../lib/io/cacheFileFromHash.ts';
 import { RecursorPass } from '../../util/RecursorPass.ts';
 import { Transpiler } from '../util/Transpiler.ts';
+import { astStatementAsStatementVariable } from '../../../data/ast/AstStatement.ts';
+import { utilTranspileTypeToAnnotation } from '../util/utilTranspileTypeToAnnotation.ts';
 
 export function transpileStatementImport(
   pass: RecursorPass,
-  ast: AstStatementImport,
+  astStatementImport: AstStatementImport,
   transpiler: Transpiler,
 ) {
   // Asserts
-  const resolvedModule = ensure(ast.resolvedModule);
-  const collectedExportsByName = ensure(resolvedModule.collectedExportsByName);
+  const resolvedModule = ensure(astStatementImport.resolvedModule);
 
   // Include
   transpiler.pushInclude(
@@ -21,20 +22,24 @@ export function transpileStatementImport(
     ),
   );
 
-  // Which keys can be imported
-  const resolvedExportKeys = [...collectedExportsByName.keys()];
-
   // Imported keys
-  for (const slot of ast.slots) {
-    transpiler.pushStatement([
-      't_ref *',
-      ensure(slot.symbolLocalValue),
-      ' = ',
-      ensure(resolvedModule.symbolGlobalFactoryPointer),
-      '()',
-      '[',
-      resolvedExportKeys.indexOf(slot.name).toString(),
-      ']',
-    ]);
+  for (const slot of astStatementImport.slots) {
+    const resolvedExport = ensure(slot.resolvedExport);
+    const statementVariable = astStatementAsStatementVariable(resolvedExport.statement);
+    if (statementVariable) {
+      const transpiledType = utilTranspileTypeToAnnotation(
+        ensure(statementVariable.resolvedType),
+        statementVariable.resolvedHeapized,
+      );
+      transpiler.pushStatement([
+        transpiledType,
+        ' ',
+        ensure(slot.symbolLocalValue),
+        ' = ',
+        ensure(resolvedModule.symbolGlobalFactoryPointer),
+        '()->',
+        slot.name,
+      ]);
+    }
   }
 }

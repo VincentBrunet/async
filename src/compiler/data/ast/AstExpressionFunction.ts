@@ -30,10 +30,11 @@ export interface AstExpressionFunction extends Ast {
   resolvedType?: AstType;
 
   collectedReturns?: Array<AstStatementReturn>;
+
   referenceClosures?: Array<AstReferenceClosure>;
 
-  symbolGlobalCallableFunction?: string;
-  symbolGlobalFactoryFunction?: string;
+  symbolFileCallableFunction?: string;
+  symbolFileFactoryFunction?: string;
   symbolFileClosureStruct?: string;
   symbolLocalClosureValue?: string;
 }

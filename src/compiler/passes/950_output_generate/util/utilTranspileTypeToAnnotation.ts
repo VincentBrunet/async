@@ -11,6 +11,8 @@ import { never } from '../../../passes/errors/never.ts';
 
 const nativeToTranspiled = new Map<AstTypePrimitiveNative, string>();
 nativeToTranspiled.set(AstTypePrimitiveNative.Unknown, 'ac::unknown');
+nativeToTranspiled.set(AstTypePrimitiveNative.Void, 'void');
+nativeToTranspiled.set(AstTypePrimitiveNative.Never, 'ac::never');
 nativeToTranspiled.set(AstTypePrimitiveNative.Boolean, 'ac::boolean');
 nativeToTranspiled.set(AstTypePrimitiveNative.Integer8, 'ac::i8');
 nativeToTranspiled.set(AstTypePrimitiveNative.Integer16, 'ac::i16');
@@ -25,15 +27,13 @@ nativeToTranspiled.set(AstTypePrimitiveNative.Float64, 'ac::i64');
 nativeToTranspiled.set(AstTypePrimitiveNative.Pointer, 'ac::pointer');
 nativeToTranspiled.set(AstTypePrimitiveNative.Null, 'ac::null');
 nativeToTranspiled.set(AstTypePrimitiveNative.String, 'ac::string');
-nativeToTranspiled.set(AstTypePrimitiveNative.Void, 'ac::void');
-nativeToTranspiled.set(AstTypePrimitiveNative.Never, 'ac::never');
 
 export function utilTranspileTypeToAnnotation(type: AstType, heapized: boolean | undefined): string {
   const transpiledType = utilTranspileTypeToAnnotationBase(type) ?? 'ac::unknown';
   if (heapized) {
     return 'ac::ref<' + transpiledType + '>';
   }
-  return transpiledType;
+  return transpiledType.trim();
 }
 
 function utilTranspileTypeToAnnotationBase(type?: AstType): string | undefined {
@@ -50,10 +50,11 @@ function utilTranspileTypeToAnnotationBase(type?: AstType): string | undefined {
   if (typeFunction) {
     const length = typeFunction.params.length.toString();
     const ret = utilTranspileTypeToAnnotationBase(typeFunction.ret.annotation.type);
-    const params = typeFunction.params.map((param) => {
+    const templates = typeFunction.params.map((param) => {
       return utilTranspileTypeToAnnotationBase(param.annotation.type);
     });
-    return ' ac::function' + length + '<' + ret + ', ' + params.join(', ') + '> ';
+    templates.unshift(ret);
+    return ' ac::function' + length + '<' + templates.join(', ') + '> ';
   }
 
   const typeObject = astTypeAsTypeObject(type);

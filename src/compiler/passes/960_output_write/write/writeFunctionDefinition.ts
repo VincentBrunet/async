@@ -1,22 +1,34 @@
 import { OutputFunction } from '../../../data/output/OutputFunction.ts';
 import { Writer } from '../util/Writer.ts';
 
-export function writeFunctionDefinition(writer: Writer, outputFunction: OutputFunction) {
-  writer.pushToBoth(outputFunction.type);
-  writer.pushToBoth(' ');
-  writer.pushToBoth(outputFunction.name);
-  writer.pushToBoth('(');
+function writeFunctionDefinitionParts(outputFunction: OutputFunction, write: (part: string) => void) {
+  write(outputFunction.type);
+  write(' ');
+  write(outputFunction.name);
+  write('(');
   for (let i = 0; i < outputFunction.params.length; i++) {
     const param = outputFunction.params[i];
-    if (i != 0) {
-      writer.pushToBoth(', ');
+    if (i !== 0) {
+      write(', ');
     }
-    writer.pushToBoth(param.type);
-    writer.pushToBoth(' ');
-    writer.pushToBoth(param.name);
+    write(param.type);
+    write(' ');
+    write(param.name);
   }
-  writer.pushToBoth(')');
-  writer.pushToBoth(';');
-  writer.pushToBoth('\n');
-  writer.pushToBoth('\n');
+  write(')');
+  write(';');
+  write('\n');
+  write('\n');
+}
+
+export function writeFunctionDefinition(writer: Writer, outputFunction: OutputFunction) {
+  if (outputFunction.exported) {
+    writeFunctionDefinitionParts(outputFunction, (part: string) => {
+      writer.pushToBoth(part);
+    });
+  } else {
+    writeFunctionDefinitionParts(outputFunction, (part: string) => {
+      writer.pushToSource(part);
+    });
+  }
 }

@@ -14,24 +14,28 @@ export function transpileExpressionObject(
   // Assert
   const referenceClosures = ensure(astExpressionObject.referenceClosures);
 
-  const symbolGlobalCallableFunction = ensure(astExpressionObject.symbolGlobalCallableFunction);
+  const symbolFileCallableFunction = ensure(astExpressionObject.symbolFileCallableFunction);
   const symbolFileFieldsStatic = ensure(astExpressionObject.symbolFileFieldsStatic);
 
-  transpiler.pushStatementPart(symbolGlobalCallableFunction);
+  transpiler.pushStatementPart(symbolFileCallableFunction);
   transpiler.pushStatementPart('(');
-  for (const referenceClosure of referenceClosures) {
-    if (referenceClosure.idx !== 0) {
+  referenceClosures.forEach((referenceClosure, index) => {
+    if (index !== 0) {
       transpiler.pushStatementPart(', ');
     }
     transpiler.pushStatementPart(utilTranspileReferenceClosureToExpression(referenceClosure));
-  }
+  });
   transpiler.pushStatementPart(')');
 
   // New scope
-  const transpiledType = utilTranspileTypeToAnnotation(ensure(astExpressionObject.resolvedType), false);
+  const transpiledType = utilTranspileTypeToAnnotation(
+    ensure(astExpressionObject.resolvedType),
+    false,
+  );
   transpiler.pushFunction(
+    false,
     transpiledType,
-    symbolGlobalCallableFunction,
+    symbolFileCallableFunction,
     referenceClosures.map((referenceClosure) => {
       return {
         name: ensure(referenceClosure.symbolLocalValue),

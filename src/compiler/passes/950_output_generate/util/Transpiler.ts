@@ -38,18 +38,21 @@ export class Transpiler {
     });
   }
 
-  pushStruct(name: string, fields: OutputStructField[]) {
+  pushStruct(exported: boolean, name: string, fields: OutputStructField[], inherit?: string) {
     this.currentOutput.structs.push({
+      exported: exported,
       name: name,
+      inherit: inherit,
       fields: fields,
     });
   }
 
-  pushFunction(type: string, name: string, params: OutputFunctionParam[]) {
+  pushFunction(exported: boolean, type: string, name: string, params: OutputFunctionParam[]) {
     const outputBlock = {
       statements: [],
     };
     const outputFunction = {
+      exported: exported,
       type: type,
       name: name,
       params: params,

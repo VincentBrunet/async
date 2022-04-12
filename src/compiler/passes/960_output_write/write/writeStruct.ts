@@ -1,22 +1,40 @@
 import { OutputStruct } from '../../../data/output/OutputStructs.ts';
 import { Writer } from '../util/Writer.ts';
 
-export function writeStruct(writer: Writer, outputStruct: OutputStruct) {
-  writer.pushToBoth('struct ');
-  writer.pushToBoth(outputStruct.name);
-  writer.pushToBoth(' ');
-  writer.pushToBoth('{');
-  writer.pushToBoth('\n');
-  for (const field of outputStruct.fields) {
-    writer.pushToBoth('  ');
-    writer.pushToBoth(field.type);
-    writer.pushToBoth(' ');
-    writer.pushToBoth(field.name);
-    writer.pushToBoth(';');
-    writer.pushToBoth('\n');
+function writeStructParts(outputStruct: OutputStruct, write: (part: string) => void) {
+  write('struct ');
+  write(outputStruct.name);
+  if (outputStruct.inherit) {
+    write(' ');
+    write(':');
+    write(' ');
+    write(outputStruct.inherit);
   }
-  writer.pushToBoth('}');
-  writer.pushToBoth(';');
-  writer.pushToBoth('\n');
-  writer.pushToBoth('\n');
+  write(' ');
+  write('{');
+  write('\n');
+  for (const field of outputStruct.fields) {
+    write('  ');
+    write(field.type);
+    write(' ');
+    write(field.name);
+    write(';');
+    write('\n');
+  }
+  write('}');
+  write(';');
+  write('\n');
+  write('\n');
+}
+
+export function writeStruct(writer: Writer, outputStruct: OutputStruct) {
+  if (outputStruct.exported) {
+    writeStructParts(outputStruct, (part: string) => {
+      writer.pushToBoth(part);
+    });
+  } else {
+    writeStructParts(outputStruct, (part: string) => {
+      writer.pushToSource(part);
+    });
+  }
 }

@@ -4,6 +4,8 @@ export interface OutputStructField {
 }
 
 export interface OutputStruct {
+  exported: boolean;
+  inherit?: string;
   name: string;
   fields: Array<OutputStructField>;
 }

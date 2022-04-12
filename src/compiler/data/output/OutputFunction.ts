@@ -6,6 +6,7 @@ export interface OutputFunctionParam {
 }
 
 export interface OutputFunction {
+  exported: boolean;
   type: string;
   name: string;
   params: Array<OutputFunctionParam>;
