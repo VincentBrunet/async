@@ -36,7 +36,7 @@ export function transpileStatementImport(
         ' ',
         ensure(slot.symbolLocalValue),
         ' = ',
-        ensure(resolvedModule.symbolGlobalFactoryPointer),
+        ensure(resolvedModule.symbolGlobalGetterFunction),
         '()->',
         slot.name,
       ]);

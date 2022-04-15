@@ -12,7 +12,8 @@ export interface AstModule extends Ast {
   collectedImportsByModuleHash?: MapArray<string, AstStatementImport>;
   collectedExportsByName?: Map<string, AstStatementExport>;
 
-  symbolGlobalFactoryPointer?: string;
+  symbolGlobalGetterFunction?: string;
   symbolGlobalExportStruct?: string;
+  symbolFileFactoryFunction?: string;
   symbolLocalModuleValue?: string;
 }

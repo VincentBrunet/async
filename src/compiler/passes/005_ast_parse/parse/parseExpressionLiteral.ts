@@ -103,8 +103,8 @@ export function parseExpressionLiteral(
   if (value === 'false') {
     return makeLiteral(browser, AstTypePrimitiveNative.Boolean, 'false');
   }
-  if (value === 'null') {
-    return makeLiteral(browser, AstTypePrimitiveNative.Null, 'null');
+  if (value === 'nothing') {
+    return makeLiteral(browser, AstTypePrimitiveNative.Nothing, 'nothing');
   }
 
   if (value.startsWith('"')) {

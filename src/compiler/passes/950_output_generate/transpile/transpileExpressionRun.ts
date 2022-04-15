@@ -13,9 +13,9 @@ export function transpileExpressionRun(
 ) {
   const referenceClosures = ensure(astExpressionRun.referenceClosures);
 
-  const symbolFileCallableFunction = ensure(astExpressionRun.symbolFileCallableFunction);
+  const symbolFileImplementationFunction = ensure(astExpressionRun.symbolFileImplementationFunction);
 
-  transpiler.pushStatementPart(symbolFileCallableFunction);
+  transpiler.pushStatementPart(symbolFileImplementationFunction);
   transpiler.pushStatementPart('(');
   referenceClosures.forEach((referenceClosure, index) => {
     if (index !== 0) {
@@ -33,10 +33,10 @@ export function transpileExpressionRun(
   transpiler.pushFunction(
     false,
     transpiledType,
-    symbolFileCallableFunction,
+    symbolFileImplementationFunction,
     referenceClosures.map((referenceClosure) => {
       return {
-        name: ensure(referenceClosure.symbolLocalValue),
+        name: ensure(referenceClosure.symbolLocalParam),
         type: utilTranspileReferenceClosureToAnnotation(referenceClosure) + '&',
       };
     }),

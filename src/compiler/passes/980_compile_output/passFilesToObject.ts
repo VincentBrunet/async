@@ -7,19 +7,17 @@ const runtimePath = join(Deno.cwd(), './src/runtime');
 
 export async function passFilesToObject(unit: UnitModule) {
   const files = ensure(unit.files);
-  const compileObject = await compileCommand(
-    [
-      '-Wall',
-      '-Wpedantic',
-      '-std=c++11',
-      '-I',
-      runtimePath,
-      '-c',
-      files.source,
-      '-o',
-      files.object,
-    ],
-  );
+  const compileObject = await compileCommand([
+    '-Wall',
+    '-Wpedantic',
+    '-std=c++11',
+    '-I',
+    runtimePath,
+    '-c',
+    files.source,
+    '-o',
+    files.object,
+  ]);
   if (compileObject.stdout) {
     console.log(compileObject.stdout);
   }

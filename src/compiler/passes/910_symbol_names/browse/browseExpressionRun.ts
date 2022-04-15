@@ -7,7 +7,8 @@ export function browseExpressionRun(
   astExpressionRun: AstExpressionRun,
 ): void {
   for (const astReferenceClosure of ensure(astExpressionRun.referenceClosures)) {
-    astReferenceClosure.symbolLocalValue = hashLocalSymbol('closure', astReferenceClosure.name);
+    astReferenceClosure.symbolLocalParam = hashLocalSymbol('closure', astReferenceClosure.name);
+    astReferenceClosure.symbolLocalValue = astReferenceClosure.symbolLocalParam;
   }
-  astExpressionRun.symbolFileCallableFunction = hashFileSymbol(astExpressionRun, 'run_callable');
+  astExpressionRun.symbolFileImplementationFunction = hashFileSymbol(astExpressionRun, 'run_implementation');
 }

@@ -15,5 +15,5 @@ export interface AstExpressionRun extends Ast {
 
   referenceClosures?: Array<AstReferenceClosure>;
 
-  symbolFileCallableFunction?: string;
+  symbolFileImplementationFunction?: string;
 }

@@ -1,11 +1,13 @@
 import { AstModule } from '../../../data/ast/AstModule.ts';
+import { hashFileSymbol } from '../util/hashFileSymbol.ts';
 import { hashGlobalSymbol } from '../util/hashGlobalSymbol.ts';
 import { hashLocalSymbol } from '../util/hashLocalSymbol.ts';
 
 export function browseModule(
   astModule: AstModule,
 ): void {
-  astModule.symbolGlobalFactoryPointer = hashGlobalSymbol(astModule.hash, astModule, 'module_factory');
+  astModule.symbolGlobalGetterFunction = hashGlobalSymbol(astModule.hash, astModule, 'module_getter');
   astModule.symbolGlobalExportStruct = hashGlobalSymbol(astModule.hash, astModule, 'module_export');
-  astModule.symbolLocalModuleValue = hashLocalSymbol('module', '');
+  astModule.symbolFileFactoryFunction = hashFileSymbol(astModule, 'module_factory');
+  astModule.symbolLocalModuleValue = hashLocalSymbol('module', 'export');
 }

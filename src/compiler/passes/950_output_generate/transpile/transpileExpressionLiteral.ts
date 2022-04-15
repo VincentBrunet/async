@@ -18,13 +18,13 @@ export function transpileExpressionLiteral(
         transpiler.pushStatementPart('true');
       }
       return;
-    // Null
-    case AstTypePrimitiveNative.Null:
-      transpiler.pushStatementPart('ac::null_make()');
+    // nothing
+    case AstTypePrimitiveNative.Nothing:
+      transpiler.pushStatementPart('ac::nothing_make()');
       return;
     // String
     case AstTypePrimitiveNative.String:
-      transpiler.pushStatementPart('ac::str_make(');
+      transpiler.pushStatementPart('ac::string_make(');
       transpiler.pushStatementPart('"');
       transpiler.pushStatementPart(astExpressionLiteral.value);
       transpiler.pushStatementPart('"');

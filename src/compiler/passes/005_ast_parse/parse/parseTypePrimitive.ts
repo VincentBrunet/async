@@ -4,11 +4,10 @@ import { TokenImpasse } from '../util/TokenImpasse.ts';
 
 const strToNative = new Map<string, AstTypePrimitiveNative>();
 strToNative.set('unknown', AstTypePrimitiveNative.Unknown);
-strToNative.set('void', AstTypePrimitiveNative.Void);
+strToNative.set('nothing', AstTypePrimitiveNative.Nothing);
 strToNative.set('never', AstTypePrimitiveNative.Never);
 strToNative.set('str', AstTypePrimitiveNative.String);
 strToNative.set('bool', AstTypePrimitiveNative.Boolean);
-strToNative.set('null', AstTypePrimitiveNative.Null);
 strToNative.set('i8', AstTypePrimitiveNative.Integer8);
 strToNative.set('i16', AstTypePrimitiveNative.Integer16);
 strToNative.set('i32', AstTypePrimitiveNative.Integer32);

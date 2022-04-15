@@ -27,7 +27,7 @@ function writeStructParts(outputStruct: OutputStruct, write: (part: string) => v
   write('\n');
 }
 
-export function writeStruct(writer: Writer, outputStruct: OutputStruct) {
+export function writeStructImplementation(writer: Writer, outputStruct: OutputStruct) {
   if (outputStruct.exported) {
     writeStructParts(outputStruct, (part: string) => {
       writer.pushToBoth(part);

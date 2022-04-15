@@ -12,8 +12,9 @@ export function transpileModule(
   transpiler: Transpiler,
 ): void {
   // Names
-  const symbolGlobalFactoryPointer = ensure(astModule.symbolGlobalFactoryPointer);
+  const symbolGlobalGetterFunction = ensure(astModule.symbolGlobalGetterFunction);
   const symbolGlobalExportStruct = ensure(astModule.symbolGlobalExportStruct);
+  const symbolFileFactoryFunction = ensure(astModule.symbolFileFactoryFunction);
   const symbolLocalModuleValue = ensure(astModule.symbolLocalModuleValue);
 
   // Definition of module struct
@@ -46,17 +47,25 @@ export function transpileModule(
     fields,
   );
 
-  // New module Factory function
-  transpiler.pushFunction(true, symbolGlobalExportStruct + '*', symbolGlobalFactoryPointer, []);
-  transpiler.pushStatement(['static ', symbolGlobalExportStruct, '* ', symbolLocalModuleValue, ' = NULL']);
-  transpiler.pushStatement(['if (', symbolLocalModuleValue, ' != NULL)']);
-  transpiler.pushBlock();
-  transpiler.pushStatement(['return ', symbolLocalModuleValue]);
-  transpiler.popBlock();
-  transpiler.pushStatement([symbolLocalModuleValue, ' = new ', symbolGlobalExportStruct, '()']);
-
-  // Recurse in module content
+  // New module factory function
+  transpiler.pushFunction(false, symbolGlobalExportStruct + '*', symbolFileFactoryFunction, []);
+  transpiler.pushStatement([symbolGlobalExportStruct, '* ', symbolLocalModuleValue, ' = new ', symbolGlobalExportStruct, '()']);
   transpiler.pushStatement(['/* module block */']);
   pass.recurseBlock(astModule.block);
   transpiler.pushStatement(['return ', symbolLocalModuleValue]);
+  transpiler.popFunction();
+
+  // New module getter function
+  transpiler.pushFunction(true, symbolGlobalExportStruct + '*', symbolGlobalGetterFunction, []);
+  transpiler.pushStatement([
+    'static ',
+    symbolGlobalExportStruct,
+    '* ',
+    symbolLocalModuleValue,
+    ' = ',
+    symbolFileFactoryFunction,
+    '()',
+  ]);
+  transpiler.pushStatement(['return ', symbolLocalModuleValue]);
+  transpiler.popFunction();
 }

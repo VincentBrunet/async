@@ -5,7 +5,8 @@ import { writeFunctionDefinition } from './writeFunctionDefinition.ts';
 import { writeFunctionImplementation } from './writeFunctionImplementation.ts';
 import { writeStatic } from './writeStatic.ts';
 import { writeInclude } from './writeInclude.ts';
-import { writeStruct } from './writeStruct.ts';
+import { writeStructDefinition } from './writeStructDefinition.ts';
+import { writeStructImplementation } from './writeStructImplementation.ts';
 
 function sectionComment(title: string) {
   return [
@@ -46,11 +47,18 @@ export function writeModule(writer: Writer, unit: UnitModule) {
       writeInclude(writer, outputInclude);
     }
   }
-  // Structs
+  // Structs definitions
   if (outputModule.structs.length) {
-    writer.pushToBoth(sectionComment('structs'));
+    writer.pushToBoth(sectionComment('structs definitions'));
     for (const outputStruct of outputModule.structs) {
-      writeStruct(writer, outputStruct);
+      writeStructDefinition(writer, outputStruct);
+    }
+  }
+  // Functions definitions
+  if (outputModule.functions.length) {
+    writer.pushToBoth(sectionComment('functions definitions'));
+    for (const outputFunction of outputModule.functions) {
+      writeFunctionDefinition(writer, outputFunction);
     }
   }
   // Statics
@@ -60,11 +68,11 @@ export function writeModule(writer: Writer, unit: UnitModule) {
       writeStatic(writer, ouputStatic);
     }
   }
-  // Functions definitions
-  if (outputModule.functions.length) {
-    writer.pushToBoth(sectionComment('functions definitions'));
-    for (const outputFunction of outputModule.functions) {
-      writeFunctionDefinition(writer, outputFunction);
+  // Structs implementations
+  if (outputModule.structs.length) {
+    writer.pushToBoth(sectionComment('structs implementations'));
+    for (const outputStruct of outputModule.structs) {
+      writeStructImplementation(writer, outputStruct);
     }
   }
   // Functions implementations

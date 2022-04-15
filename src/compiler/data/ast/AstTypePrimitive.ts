@@ -2,11 +2,10 @@ import { Ast } from './Ast.ts';
 
 export enum AstTypePrimitiveNative {
   Unknown = 'unknown',
-  Void = 'void',
+  Nothing = 'nothing',
   Never = 'never',
   String = 'str',
   Boolean = 'bool',
-  Null = 'null',
   Integer8 = 'i8',
   Integer16 = 'i16',
   Integer32 = 'i32',
