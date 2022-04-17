@@ -12,7 +12,7 @@ export interface AstExpressionFunctionParam extends Ast {
 
   resolvedType?: AstType;
 
-  symbolLocalValue?: string;
+  symbolLocalVariable?: string;
 }
 
 export interface AstExpressionFunctionReturn extends Ast {
@@ -37,6 +37,6 @@ export interface AstExpressionFunction extends Ast {
   symbolFileFactoryFunction?: string;
   symbolFileClosureStruct?: string;
   symbolFileCallableStruct?: string;
-  symbolLocalClosureValue?: string;
-  symbolLocalCallableValue?: string;
+  symbolLocalClosureVariable?: string;
+  symbolLocalCallableVariable?: string;
 }

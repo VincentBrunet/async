@@ -3,6 +3,9 @@ import { Writer } from '../util/Writer.ts';
 import { writeBlock } from './writeBlock.ts';
 
 export function writeFunctionImplementation(writer: Writer, outputFunction: OutputFunction) {
+  if (!outputFunction.exported) {
+    writer.pushToSource('static ');
+  }
   writer.pushToSource(outputFunction.type);
   writer.pushToSource(' ');
   writer.pushToSource(outputFunction.name);

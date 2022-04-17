@@ -38,7 +38,7 @@ export function transpileExpressionObject(
     symbolFileImplementationFunction,
     referenceClosures.map((referenceClosure) => {
       return {
-        name: ensure(referenceClosure.symbolLocalParam),
+        name: ensure(referenceClosure.symbolLocalVariable),
         type: utilTranspileReferenceClosureToAnnotation(referenceClosure) + '&',
       };
     }),
@@ -93,7 +93,7 @@ export function transpileExpressionObject(
     transpiler.pushStatement([
       'ac::field',
       ' ',
-      ensure(sortedField.symbolLocalValue),
+      ensure(sortedField.symbolLocalVariable),
       ' = ',
       '(ac::field)&(fields[',
       i.toString(),
@@ -104,7 +104,7 @@ export function transpileExpressionObject(
   // Do the assignation in the code's order (not the hash order)
   for (const unsortedField of unsortedFields) {
     transpiler.pushStatement([
-      ensure(unsortedField.symbolLocalValue),
+      ensure(unsortedField.symbolLocalVariable),
       '->value',
       ' = ',
     ]);

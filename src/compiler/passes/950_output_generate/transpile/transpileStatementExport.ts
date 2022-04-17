@@ -9,13 +9,13 @@ export function transpileStatementExport(
   astStatementExport: AstStatementExport,
   transpiler: Transpiler,
 ) {
+  const statementVariable = astStatementAsStatementVariable(astStatementExport.statement);
   pass.recurseStatement(astStatementExport.statement);
-  const variable = astStatementAsStatementVariable(astStatementExport.statement);
-  if (variable) {
+  if (statementVariable) {
     transpiler.pushStatement([
-      ensure(astStatementExport.symbolLocalValue),
+      ensure(astStatementExport.symbolLocalVariable),
       ' = ',
-      ensure(variable.symbolLocalValue),
+      ensure(statementVariable.symbolLocalVariable),
     ]);
   }
 }

@@ -36,7 +36,7 @@ export function transpileExpressionRun(
     symbolFileImplementationFunction,
     referenceClosures.map((referenceClosure) => {
       return {
-        name: ensure(referenceClosure.symbolLocalParam),
+        name: ensure(referenceClosure.symbolLocalVariable),
         type: utilTranspileReferenceClosureToAnnotation(referenceClosure) + '&',
       };
     }),

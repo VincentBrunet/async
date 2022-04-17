@@ -34,7 +34,7 @@ export function transpileStatementImport(
       transpiler.pushStatement([
         transpiledType,
         ' ',
-        ensure(slot.symbolLocalValue),
+        ensure(slot.symbolLocalVariable),
         ' = ',
         ensure(resolvedModule.symbolGlobalGetterFunction),
         '()->',

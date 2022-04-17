@@ -10,18 +10,17 @@ export function browseExpressionFunction(
   astExpressionFunction.symbolFileFactoryFunction = hashFileSymbol(astExpressionFunction, 'fn_factory');
   astExpressionFunction.symbolFileClosureStruct = hashFileSymbol(astExpressionFunction, 'fn_closure');
   astExpressionFunction.symbolFileCallableStruct = hashFileSymbol(astExpressionFunction, 'fn_callable');
-  astExpressionFunction.symbolLocalClosureValue = hashLocalSymbol('closure', 'struct');
-  astExpressionFunction.symbolLocalCallableValue = hashLocalSymbol('callable', 'struct');
+  astExpressionFunction.symbolLocalClosureVariable = hashLocalSymbol('closure', 'struct');
+  astExpressionFunction.symbolLocalCallableVariable = hashLocalSymbol('callable', 'struct');
 
   for (const astReferenceClosure of ensure(astExpressionFunction.referenceClosures)) {
-    astReferenceClosure.symbolLocalParam = hashLocalSymbol('closure', astReferenceClosure.name);
-    astReferenceClosure.symbolLocalValue = astExpressionFunction.symbolLocalClosureValue + '.' + astReferenceClosure.name;
+    astReferenceClosure.symbolLocalVariable = hashLocalSymbol('closure', astReferenceClosure.name);
   }
   astExpressionFunction.params.forEach((astExpressionFunctionParam, index) => {
     if (astExpressionFunctionParam.name) {
-      astExpressionFunctionParam.symbolLocalValue = hashLocalSymbol('param', astExpressionFunctionParam.name);
+      astExpressionFunctionParam.symbolLocalVariable = hashLocalSymbol('param', astExpressionFunctionParam.name);
     } else {
-      astExpressionFunctionParam.symbolLocalValue = hashLocalSymbol('param', index.toString());
+      astExpressionFunctionParam.symbolLocalVariable = hashLocalSymbol('param', index.toString());
     }
   });
 }

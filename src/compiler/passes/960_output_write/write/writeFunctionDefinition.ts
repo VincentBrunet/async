@@ -2,6 +2,9 @@ import { OutputFunction } from '../../../data/output/OutputFunction.ts';
 import { Writer } from '../util/Writer.ts';
 
 function writeFunctionDefinitionParts(outputFunction: OutputFunction, write: (part: string) => void) {
+  if (!outputFunction.exported) {
+    write('static ');
+  }
   write(outputFunction.type);
   write(' ');
   write(outputFunction.name);

@@ -29,11 +29,11 @@ export function writeModule(writer: Writer, unit: UnitModule) {
   // Anti-reimport
   writer.pushToHeader('#ifndef __');
   writer.pushToHeader(hash);
-  writer.pushToHeader('_H');
+  writer.pushToHeader('_HPP');
   writer.pushToHeader('\n');
   writer.pushToHeader('#define __');
   writer.pushToHeader(hash);
-  writer.pushToHeader('_H');
+  writer.pushToHeader('_HPP');
   writer.pushToHeader('\n');
   writer.pushToHeader('\n');
   // Quick recap on top

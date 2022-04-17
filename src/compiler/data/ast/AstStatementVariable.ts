@@ -12,5 +12,5 @@ export interface AstStatementVariable extends Ast {
   resolvedType?: AstType;
   resolvedHeapized?: boolean;
 
-  symbolLocalValue?: string;
+  symbolLocalVariable?: string;
 }

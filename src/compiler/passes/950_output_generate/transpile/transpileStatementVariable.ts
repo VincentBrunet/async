@@ -9,7 +9,7 @@ export function transpileStatementVariable(
   astStatementVariable: AstStatementVariable,
   transpiler: Transpiler,
 ) {
-  const symbolLocalValue = ensure(astStatementVariable.symbolLocalValue);
+  const symbolLocalVariable = ensure(astStatementVariable.symbolLocalVariable);
 
   const transpiledType = utilTranspileTypeToAnnotation(
     ensure(astStatementVariable.resolvedType),
@@ -20,7 +20,7 @@ export function transpileStatementVariable(
     transpiler.pushStatement([
       transpiledType,
       ' ',
-      symbolLocalValue,
+      symbolLocalVariable,
       ' = ',
     ]);
     if (astStatementVariable.value) {
@@ -30,7 +30,7 @@ export function transpileStatementVariable(
     transpiler.pushStatement([
       transpiledType,
       ' ',
-      symbolLocalValue,
+      symbolLocalVariable,
       ' = ',
     ]);
     if (astStatementVariable.value) {
@@ -41,7 +41,7 @@ export function transpileStatementVariable(
   if (astStatementVariable.value) {
     transpiler.pushStatement([
       astStatementVariable.resolvedHeapized ? '(*' : '',
-      ensure(astStatementVariable.symbolLocalValue),
+      ensure(astStatementVariable.symbolLocalVariable),
       astStatementVariable.resolvedHeapized ? ')' : '',
       ' = ',
     ]);

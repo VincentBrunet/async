@@ -24,6 +24,9 @@ export class MapArray<K, V> {
   public keys() {
     return [...this.map.keys()];
   }
+  public values() {
+    return this.map.values();
+  }
 
   public list(key: K) {
     return this.map.get(key);

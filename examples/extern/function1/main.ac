@@ -19,4 +19,9 @@ fn (a:i32) {
   my_print_i32(5)
 }
 
+expr {
+  import [ my_print_u32 ] from "./my_print_i32.ac"
+  my_print_u32(99)
+}
+
 export typedef MyType = ({} | {})

@@ -11,7 +11,7 @@ export interface AstExpressionObjectField extends Ast {
   annotation: AstAnnotationType;
   expression: AstExpression;
 
-  symbolLocalValue?: string;
+  symbolLocalVariable?: string;
 }
 
 export interface AstExpressionObject extends Ast {

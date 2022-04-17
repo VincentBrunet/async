@@ -1,7 +1,15 @@
 
-const closured = 42
+const closured1:i32 = 41
+const closured2:i32 = 42
 
 export const my_print_i32 = fn (value:i32) {
-  const tt = closured;
-  unsafe { printf("Print:%d(%d)\n", _param_value, _variable_tt); }
+  const tt1 = closured1;
+  const tt2 = closured2;
+  unsafe { printf("Print:%d(%d)\n", _param_value, _variable_tt1); }
+}
+
+export const my_print_u32 = fn (value:u32) {
+  const tt1 = closured1;
+  const tt2 = closured2;
+  unsafe { printf("Print:%ud(%d)\n", _param_value, _variable_tt1); }
 }

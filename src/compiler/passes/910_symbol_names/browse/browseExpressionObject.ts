@@ -7,11 +7,10 @@ export function browseExpressionObject(
   astExpressionObject: AstExpressionObject,
 ): void {
   for (const astReferenceClosure of ensure(astExpressionObject.referenceClosures)) {
-    astReferenceClosure.symbolLocalParam = hashLocalSymbol('closure', astReferenceClosure.name);
-    astReferenceClosure.symbolLocalValue = astReferenceClosure.symbolLocalParam;
+    astReferenceClosure.symbolLocalVariable = hashLocalSymbol('closure', astReferenceClosure.name);
   }
   for (const astExpressionObjectField of astExpressionObject.fields) {
-    astExpressionObjectField.symbolLocalValue = hashLocalSymbol('field', astExpressionObjectField.name);
+    astExpressionObjectField.symbolLocalVariable = hashLocalSymbol('field', astExpressionObjectField.name);
   }
   astExpressionObject.symbolFileImplementationFunction = hashFileSymbol(astExpressionObject, 'obj_implementation');
   astExpressionObject.symbolFileFieldsStatic = hashFileSymbol(astExpressionObject, 'obj_fields');

@@ -15,5 +15,5 @@ export interface AstModule extends Ast {
   symbolGlobalGetterFunction?: string;
   symbolGlobalExportStruct?: string;
   symbolFileFactoryFunction?: string;
-  symbolLocalModuleValue?: string;
+  symbolLocalModuleVariable?: string;
 }

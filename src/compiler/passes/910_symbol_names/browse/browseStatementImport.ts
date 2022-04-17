@@ -5,6 +5,6 @@ export function browseStatementImport(
   astStatementImport: AstStatementImport,
 ): void {
   for (const astStatementImportSlot of astStatementImport.slots) {
-    astStatementImportSlot.symbolLocalValue = hashLocalSymbol('import', astStatementImportSlot.name);
+    astStatementImportSlot.symbolLocalVariable = hashLocalSymbol('import', astStatementImportSlot.name);
   }
 }

@@ -79,19 +79,27 @@ export function scheduleImport(url: URL, completion: (ast: AstModule) => void) {
 
 export async function runLoop() {
   const unitByUrl = new Map<URL, UnitModule>();
+  const unitByHash = new Map<string, UnitModule>();
 
   while (scheduledImports.length > 0) {
     const scheduledImport = scheduledImports.shift();
     if (scheduledImport) {
       const url = scheduledImport.url;
-      const unitCached = unitByUrl.get(url);
-      if (unitCached) {
-        scheduledImport.completion(unitCached.ast);
+      const unitCachedByUrl = unitByUrl.get(url);
+      if (unitCachedByUrl) {
+        scheduledImport.completion(unitCachedByUrl.ast);
       } else {
         const unitResolved = await initialResolve(url);
-        scheduledImport.completion(unitResolved.ast);
-        scheduledCompiles.push({ unit: unitResolved });
-        unitByUrl.set(url, unitResolved);
+        const hash = unitResolved.ast.hash;
+        const unitCachedByHash = unitByHash.get(hash);
+        if (unitCachedByHash) {
+          scheduledImport.completion(unitCachedByHash.ast);
+        } else {
+          scheduledImport.completion(unitResolved.ast);
+          scheduledCompiles.push({ unit: unitResolved });
+          unitByUrl.set(url, unitResolved);
+          unitByHash.set(hash, unitResolved);
+        }
       }
     }
   }

@@ -37,11 +37,11 @@ export function utilTranspileReferenceValueToExpression(
   astReferenceValue: AstReferenceValue,
   evaluate: boolean,
 ): string {
-  const symbolLocalValue = ensure(astReferenceValue.data.symbolLocalValue);
+  const symbolLocalVariable = ensure(astReferenceValue.data.symbolLocalVariable);
   if (evaluate) {
     if (utilTranspileReferenceValueToExpressionIsHeapized(astReferenceValue)) {
-      return '(*' + symbolLocalValue + ')';
+      return '(*' + symbolLocalVariable + ')';
     }
   }
-  return symbolLocalValue;
+  return symbolLocalVariable;
 }

@@ -15,12 +15,14 @@ export function transpileModule(
   const symbolGlobalGetterFunction = ensure(astModule.symbolGlobalGetterFunction);
   const symbolGlobalExportStruct = ensure(astModule.symbolGlobalExportStruct);
   const symbolFileFactoryFunction = ensure(astModule.symbolFileFactoryFunction);
-  const symbolLocalModuleValue = ensure(astModule.symbolLocalModuleValue);
+  const symbolLocalModuleVariable = ensure(astModule.symbolLocalModuleVariable);
+
+  const collectedExportsByName = ensure(astModule.collectedExportsByName);
 
   // Definition of module struct
   const fields: OutputStructField[] = [];
-  for (const resolvedExport of ensure(astModule.collectedExportsByName).values()) {
-    const statementVariable = astStatementAsStatementVariable(resolvedExport.statement);
+  for (const collectedExport of collectedExportsByName.values()) {
+    const statementVariable = astStatementAsStatementVariable(collectedExport.statement);
     if (statementVariable) {
       fields.push({
         name: statementVariable.name,
@@ -31,7 +33,7 @@ export function transpileModule(
       });
     }
 
-    const typedef = astStatementAsStatementTypedef(resolvedExport.statement);
+    const typedef = astStatementAsStatementTypedef(collectedExport.statement);
     if (typedef) {
       /*
       fields.push({
@@ -49,10 +51,30 @@ export function transpileModule(
 
   // New module factory function
   transpiler.pushFunction(false, symbolGlobalExportStruct + '*', symbolFileFactoryFunction, []);
-  transpiler.pushStatement([symbolGlobalExportStruct, '* ', symbolLocalModuleValue, ' = new ', symbolGlobalExportStruct, '()']);
+  transpiler.pushStatement([symbolGlobalExportStruct, '* ', symbolLocalModuleVariable, ' = new ', symbolGlobalExportStruct, '()']);
+
+  for (const collectedExport of collectedExportsByName.values()) {
+    const statementVariable = astStatementAsStatementVariable(collectedExport.statement);
+    if (statementVariable) {
+      transpiler.pushStatement([
+        utilTranspileTypeToAnnotation(
+          ensure(statementVariable.resolvedType),
+          statementVariable.resolvedHeapized,
+        ),
+        '& ',
+        ensure(collectedExport.symbolLocalVariable),
+        ' = ',
+        symbolLocalModuleVariable,
+        '->',
+        statementVariable.name,
+      ]);
+    }
+  }
+
   transpiler.pushStatement(['/* module block */']);
   pass.recurseBlock(astModule.block);
-  transpiler.pushStatement(['return ', symbolLocalModuleValue]);
+
+  transpiler.pushStatement(['return ', symbolLocalModuleVariable]);
   transpiler.popFunction();
 
   // New module getter function
@@ -61,11 +83,11 @@ export function transpileModule(
     'static ',
     symbolGlobalExportStruct,
     '* ',
-    symbolLocalModuleValue,
+    symbolLocalModuleVariable,
     ' = ',
     symbolFileFactoryFunction,
     '()',
   ]);
-  transpiler.pushStatement(['return ', symbolLocalModuleValue]);
+  transpiler.pushStatement(['return ', symbolLocalModuleVariable]);
   transpiler.popFunction();
 }
