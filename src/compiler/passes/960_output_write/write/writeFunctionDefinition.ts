@@ -12,13 +12,15 @@ function writeFunctionDefinitionParts(outputFunction: OutputFunction, write: (pa
   for (let i = 0; i < outputFunction.params.length; i++) {
     const param = outputFunction.params[i];
     if (i !== 0) {
-      write(', ');
+      write(',');
     }
+    write('\n');
+    write('  ');
     write(param.type);
     write(' ');
     write(param.name);
   }
-  write(')');
+  write('\n)');
   write(';');
   write('\n');
   write('\n');

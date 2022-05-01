@@ -19,22 +19,19 @@ export function transpileExpressionObject(
 
   transpiler.pushStatementPart(symbolFileImplementationFunction);
   transpiler.pushStatementPart('(');
-  referenceClosures.forEach((referenceClosure, index) => {
-    if (index !== 0) {
+  for (let i = 0; i < referenceClosures.length; i++) {
+    const referenceClosure = referenceClosures[i];
+    if (i !== 0) {
       transpiler.pushStatementPart(', ');
     }
     transpiler.pushStatementPart(utilTranspileReferenceClosureToExpression(referenceClosure));
-  });
+  }
   transpiler.pushStatementPart(')');
 
   // New scope
-  const transpiledType = utilTranspileTypeToAnnotation(
-    ensure(astExpressionObject.resolvedType),
-    false,
-  );
   transpiler.pushFunction(
     false,
-    transpiledType,
+    utilTranspileTypeToAnnotation(ensure(astExpressionObject.resolvedType), false),
     symbolFileImplementationFunction,
     referenceClosures.map((referenceClosure) => {
       return {

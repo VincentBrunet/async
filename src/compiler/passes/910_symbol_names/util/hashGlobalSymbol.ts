@@ -1,6 +1,8 @@
+import { AstModule } from '../../../data/ast/AstModule.ts';
+
 export function hashGlobalSymbol(
-  hashModule: string,
+  module: AstModule,
   prefix: string,
 ) {
-  return ['_', hashModule, '_', prefix].join('');
+  return ['_', module.hash, '_', prefix].join('');
 }

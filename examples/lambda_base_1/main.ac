@@ -3,26 +3,28 @@ const vConstHex = 0xff
 
 const vConstTrue = true
 mutable vMutableFalse = false
-const vConstNull = null
+const vConstNothing = nothing
 mutable vMutableRed ="red";
 
+/*
 const vConstObj = obj {
   const objFieldConst32 = 32;
-  mutable objFieldMutableRConstNull = vConstNull
+  mutable objFieldMutableRConstNothing = vConstNothing
 }
+*/
 
 const vConstExprI32 = expr {
   return 42 + vConstHex
 }
 
-mutable vMutableFun = fn (a:i32, b:i32, c:bool, d:null): ptr {
+mutable vMutableFun = fn (a:i32, b:i32, c:bool, d:nothing): ptr {
   return 0
 }
 
 const vConstFun = fn (pOuter1:i32) {
 
   const vConstInnerFun = fn (pInner1:i32) {
-    return vMutableFun(pOuter1, pInner1, vMutableFalse, vConstNull)
+    return vMutableFun(pOuter1, pInner1, vMutableFalse, vConstNothing)
   }
 
   return vConstInnerFun(pOuter1)
@@ -36,7 +38,7 @@ vExportConstRConstFun(32)
 export mutable vExportMutableRConstFun = vConstFun
 export mutable vExportMutableRMutableFun = vMutableFun
 
-vExportMutableRMutableFun(1, 2, true, null)
+vExportMutableRMutableFun(1, 2, true, nothing)
 
 vMutableRed = "not-red-anymore"
 

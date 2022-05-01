@@ -17,12 +17,13 @@ export function transpileExpressionRun(
 
   transpiler.pushStatementPart(symbolFileImplementationFunction);
   transpiler.pushStatementPart('(');
-  referenceClosures.forEach((referenceClosure, index) => {
-    if (index !== 0) {
+  for (let i = 0; i < referenceClosures.length; i++) {
+    const referenceClosure = referenceClosures[i];
+    if (i !== 0) {
       transpiler.pushStatementPart(', ');
     }
     transpiler.pushStatementPart(utilTranspileReferenceClosureToExpression(referenceClosure));
-  });
+  }
   transpiler.pushStatementPart(')');
 
   // New scope
@@ -43,7 +44,7 @@ export function transpileExpressionRun(
   );
 
   // Run the recursive writing
-  transpiler.pushStatement(['/* run block */']);
+  transpiler.pushStatement([]);
   pass.recurseBlock(astExpressionRun.block);
 
   // Done

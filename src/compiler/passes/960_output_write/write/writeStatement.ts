@@ -8,16 +8,21 @@ export function writeStatement(
   outputStatement: OutputStatement,
   depth: number,
 ) {
+  //writer.pushToSource(`\nprintf(\"statement:%s\\n\", \"${outputStatement.parts.filter((v) => v !== '"').join('')}\");\n`);
   writer.pushToSource(repeat('  ', depth));
   if (outputStatement.parts.length > 0) {
     writer.pushToSource(outputStatement.parts.join(''));
+    if (outputStatement.inner) {
+      writer.pushToSource(' ');
+    }
   }
   if (outputStatement.inner) {
     writeBlock(writer, outputStatement.inner, depth);
-  } else {
-    if (outputStatement.parts.length > 0) {
+    if (outputStatement.closed) {
       writer.pushToSource(';');
     }
+  } else {
+    writer.pushToSource(';');
   }
   writer.pushToSource('\n');
 }

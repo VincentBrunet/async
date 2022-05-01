@@ -77,9 +77,9 @@ export class Transpiler {
     }
   }
 
-  popBlock() {
+  popBlock(closed?: boolean) {
     this.stackBlock.pop();
-    this.resetCurrentStatement();
+    this.resetCurrentStatement(closed);
   }
 
   pushStatement(parts: Array<string>) {
@@ -93,11 +93,14 @@ export class Transpiler {
     this.currentStatement?.parts?.push(part);
   }
 
-  private resetCurrentStatement() {
+  private resetCurrentStatement(closed?: boolean) {
     this.currentStatement = undefined;
     const statements = this.stackBlock.peek()?.statements;
     if (statements) {
       this.currentStatement = statements[statements.length - 1];
+      if (this.currentStatement) {
+        this.currentStatement.closed = closed;
+      }
     }
   }
 }

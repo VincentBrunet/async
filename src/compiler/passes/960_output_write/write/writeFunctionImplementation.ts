@@ -10,16 +10,23 @@ export function writeFunctionImplementation(writer: Writer, outputFunction: Outp
   writer.pushToSource(' ');
   writer.pushToSource(outputFunction.name);
   writer.pushToSource('(');
-  outputFunction.params.forEach((param: OutputFunctionParam, index: number) => {
-    if (index !== 0) {
-      writer.pushToSource(', ');
+  const params = outputFunction.params;
+  for (let i = 0; i < params.length; i++) {
+    const param: OutputFunctionParam = params[i];
+    if (i !== 0) {
+      writer.pushToSource(',');
     }
+    writer.pushToSource('\n');
+    writer.pushToSource('  ');
     writer.pushToSource(param.type);
     writer.pushToSource(' ');
     writer.pushToSource(param.name);
-  });
-  writer.pushToSource(')');
+  }
+  writer.pushToSource('\n)');
+  writer.pushToSource(' ');
+  //writer.pushToSource(`{\nprintf(\"function start: %s\\n", "${outputFunction.name}");\n`);
   writeBlock(writer, outputFunction.block, 0);
+  //writer.pushToSource(`\nprintf(\"function start: %s\\n", "${outputFunction.name}");\n}`);
   writer.pushToSource('\n');
   writer.pushToSource('\n');
 }

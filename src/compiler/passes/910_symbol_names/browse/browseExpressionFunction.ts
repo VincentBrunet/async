@@ -4,23 +4,21 @@ import { ensure } from '../../errors/ensure.ts';
 import { hashFileSymbol } from '../util/hashFileSymbol.ts';
 
 export function browseExpressionFunction(
-  astExpressionFunction: AstExpressionFunction,
+  expressionFunction: AstExpressionFunction,
 ): void {
-  astExpressionFunction.symbolFileImplementationFunction = hashFileSymbol(astExpressionFunction, 'fn_implementation');
-  astExpressionFunction.symbolFileFactoryFunction = hashFileSymbol(astExpressionFunction, 'fn_factory');
-  astExpressionFunction.symbolFileClosureStruct = hashFileSymbol(astExpressionFunction, 'fn_closure');
-  astExpressionFunction.symbolFileCallableStruct = hashFileSymbol(astExpressionFunction, 'fn_callable');
-  astExpressionFunction.symbolLocalClosureVariable = hashLocalSymbol('closure', 'struct');
-  astExpressionFunction.symbolLocalCallableVariable = hashLocalSymbol('callable', 'struct');
+  expressionFunction.symbolFileFactoryFunction = hashFileSymbol(expressionFunction, 'fn_factory');
 
-  for (const astReferenceClosure of ensure(astExpressionFunction.referenceClosures)) {
+  for (const astReferenceClosure of ensure(expressionFunction.referenceClosures)) {
     astReferenceClosure.symbolLocalVariable = hashLocalSymbol('closure', astReferenceClosure.name);
   }
-  astExpressionFunction.params.forEach((astExpressionFunctionParam, index) => {
-    if (astExpressionFunctionParam.name) {
-      astExpressionFunctionParam.symbolLocalVariable = hashLocalSymbol('param', astExpressionFunctionParam.name);
+
+  const expressionFunctionParams = expressionFunction.params;
+  for (let i = 0; i < expressionFunctionParams.length; i++) {
+    const expressionFunctionParam = expressionFunctionParams[i];
+    if (expressionFunctionParam.name) {
+      expressionFunctionParam.symbolLocalVariable = hashLocalSymbol('param', expressionFunctionParam.name);
     } else {
-      astExpressionFunctionParam.symbolLocalVariable = hashLocalSymbol('param', index.toString());
+      expressionFunctionParam.symbolLocalVariable = hashLocalSymbol('param', i.toString());
     }
-  });
+  }
 }

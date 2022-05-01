@@ -71,7 +71,7 @@ export function transpileModule(
     }
   }
 
-  transpiler.pushStatement(['/* module block */']);
+  transpiler.pushStatement([]);
   pass.recurseBlock(astModule.block);
 
   transpiler.pushStatement(['return ', symbolLocalModuleVariable]);

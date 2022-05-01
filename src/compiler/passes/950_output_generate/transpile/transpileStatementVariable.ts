@@ -6,46 +6,27 @@ import { utilTranspileTypeToAnnotation } from '../util/utilTranspileTypeToAnnota
 
 export function transpileStatementVariable(
   pass: RecursorPass,
-  astStatementVariable: AstStatementVariable,
+  statementVariable: AstStatementVariable,
   transpiler: Transpiler,
 ) {
-  const symbolLocalVariable = ensure(astStatementVariable.symbolLocalVariable);
+  const symbolLocalVariable = ensure(statementVariable.symbolLocalVariable);
 
-  const transpiledType = utilTranspileTypeToAnnotation(
-    ensure(astStatementVariable.resolvedType),
-    astStatementVariable.resolvedHeapized,
-  );
+  const statementVariableType = ensure(statementVariable.resolvedType);
 
-  if (astStatementVariable.resolvedHeapized) {
-    transpiler.pushStatement([
-      transpiledType,
-      ' ',
-      symbolLocalVariable,
-      ' = ',
-    ]);
-    if (astStatementVariable.value) {
-      pass.recurseExpression(astStatementVariable.value);
+  const transpiledType = utilTranspileTypeToAnnotation(statementVariableType, statementVariable.resolvedHeapized);
+
+  if (statementVariable.resolvedHeapized) {
+    const transpiledTypeBase = utilTranspileTypeToAnnotation(statementVariableType, false);
+    transpiler.pushStatement([transpiledType, ' ', symbolLocalVariable, '(new ', transpiledTypeBase, ')']);
+    if (statementVariable.value) {
+      transpiler.pushStatement(['*', symbolLocalVariable, ' = ']);
+      pass.recurseExpression(statementVariable.value);
     }
   } else {
-    transpiler.pushStatement([
-      transpiledType,
-      ' ',
-      symbolLocalVariable,
-      ' = ',
-    ]);
-    if (astStatementVariable.value) {
-      pass.recurseExpression(astStatementVariable.value);
+    transpiler.pushStatement([transpiledType, ' ', symbolLocalVariable]);
+    if (statementVariable.value) {
+      transpiler.pushStatement([symbolLocalVariable, ' = ']);
+      pass.recurseExpression(statementVariable.value);
     }
   }
-  /*
-  if (astStatementVariable.value) {
-    transpiler.pushStatement([
-      astStatementVariable.resolvedHeapized ? '(*' : '',
-      ensure(astStatementVariable.symbolLocalVariable),
-      astStatementVariable.resolvedHeapized ? ')' : '',
-      ' = ',
-    ]);
-    pass.recurseExpression(astStatementVariable.value);
-  }
-  */
 }

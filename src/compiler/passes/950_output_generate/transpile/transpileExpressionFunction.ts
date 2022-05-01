@@ -1,6 +1,4 @@
 import { AstExpressionFunction } from '../../../data/ast/AstExpressionFunction.ts';
-import { OutputFunctionParam } from '../../../data/output/OutputFunction.ts';
-import { OutputStructField } from '../../../data/output/OutputStructs.ts';
 import { ensure } from '../../../passes/errors/ensure.ts';
 import { RecursorPass } from '../../util/RecursorPass.ts';
 import { Transpiler } from '../util/Transpiler.ts';
@@ -12,107 +10,33 @@ import { AstTypePrimitiveNative } from '../../../data/ast/AstTypePrimitive.ts';
 
 export function transpileExpressionFunction(
   pass: RecursorPass,
-  astExpressionFunction: AstExpressionFunction,
+  expressionFunction: AstExpressionFunction,
   transpiler: Transpiler,
 ) {
-  const referenceClosures = ensure(astExpressionFunction.referenceClosures);
+  const referenceClosures = ensure(expressionFunction.referenceClosures);
 
-  const symbolFileImplementationFunction = ensure(astExpressionFunction.symbolFileImplementationFunction);
-  const symbolFileFactoryFunction = ensure(astExpressionFunction.symbolFileFactoryFunction);
-  const symbolFileClosureStruct = ensure(astExpressionFunction.symbolFileClosureStruct);
-  const symbolFileCallableStruct = ensure(astExpressionFunction.symbolFileCallableStruct);
-  const symbolLocalClosureVariable = ensure(astExpressionFunction.symbolLocalClosureVariable);
-  const symbolLocalCallableVariable = ensure(astExpressionFunction.symbolLocalCallableVariable);
+  const symbolFileFactoryFunction = ensure(expressionFunction.symbolFileFactoryFunction);
 
-  const transpiledType = utilTranspileTypeToAnnotation(
-    ensure(astExpressionFunction.resolvedType),
-    false,
-  );
-  const transpiledTypeCallable = transpiledType.replace(
-    'ac::function',
-    'ac::callable',
-  );
+  const expressionFunctionParams = expressionFunction.params;
+
+  const expressionFunctionReturnType = ensure(expressionFunction.ret.resolvedType);
 
   // Make the expression by just calling the factory
   transpiler.pushStatementPart(symbolFileFactoryFunction);
   transpiler.pushStatementPart('(');
-  referenceClosures.forEach((referenceClosure, index) => {
-    if (index !== 0) {
+  for (let i = 0; i < referenceClosures.length; i++) {
+    const referenceClosure = referenceClosures[i];
+    if (i !== 0) {
       transpiler.pushStatementPart(', ');
     }
     transpiler.pushStatementPart(utilTranspileReferenceClosureToExpression(referenceClosure));
-  });
-  transpiler.pushStatementPart(')');
-
-  // Make the closure struct
-  const closureParts: OutputStructField[] = [];
-  for (const referenceClosure of referenceClosures) {
-    closureParts.push({
-      name: referenceClosure.name,
-      type: utilTranspileReferenceClosureToAnnotation(referenceClosure),
-    });
   }
-  transpiler.pushStruct(
-    false,
-    symbolFileClosureStruct,
-    closureParts,
-  );
-
-  // Make the callable struct
-  const callableParts: OutputStructField[] = [];
-  callableParts.push({
-    name: 'closure',
-    type: symbolFileClosureStruct,
-  });
-  callableParts.push({
-    type: '/**/', // TODO - remove hacks
-    name: [
-      'virtual ',
-      utilTranspileTypeToAnnotation(
-        ensure(astExpressionFunction.ret.resolvedType),
-        false,
-      ),
-      ' call',
-      '(',
-      astExpressionFunction.params.map((param, index) => {
-        const type = utilTranspileTypeToAnnotation(ensure(param.resolvedType), false);
-        return type + ' p' + index.toString();
-      }).join(', '),
-      ')',
-      '{ ',
-      'return ',
-      symbolFileImplementationFunction,
-      '(',
-      [
-        'closure',
-        ...astExpressionFunction.params.map((param, index) => {
-          return 'p' + index.toString();
-        }),
-      ].join(', '),
-      ');',
-      ' }',
-    ].join(''),
-  });
-  callableParts.push({
-    type: '/**/', // TODO - remove hacks
-    name: [
-      'virtual ',
-      '~',
-      symbolFileCallableStruct,
-      '() {}',
-    ].join(''),
-  });
-  transpiler.pushStruct(
-    false,
-    symbolFileCallableStruct,
-    callableParts,
-    transpiledTypeCallable,
-  );
+  transpiler.pushStatementPart(')');
 
   // Make the factory function
   transpiler.pushFunction(
     false,
-    transpiledType,
+    utilTranspileTypeToAnnotation(ensure(expressionFunction.resolvedType), false),
     symbolFileFactoryFunction,
     referenceClosures.map((referenceClosure) => {
       return {
@@ -121,62 +45,47 @@ export function transpileExpressionFunction(
       };
     }),
   );
-  transpiler.pushStatement([symbolFileCallableStruct, '* ', symbolLocalCallableVariable, ' = new ', symbolFileCallableStruct, '()']);
-  transpiler.pushStatement([symbolFileClosureStruct, '& ', symbolLocalClosureVariable, ' = ', symbolLocalCallableVariable, '->closure']);
-  for (const referenceClosure of referenceClosures) {
-    transpiler.pushStatement([
-      symbolLocalClosureVariable,
-      '.',
-      referenceClosure.name,
-      ' = ',
-      ensure(referenceClosure.symbolLocalVariable),
-    ]);
+
+  transpiler.pushStatement([]);
+
+  transpiler.pushStatementPart('return');
+  transpiler.pushStatementPart(' ');
+
+  transpiler.pushStatementPart('[');
+  for (let i = 0; i < referenceClosures.length; i++) {
+    const referenceClosure = referenceClosures[i];
+    if (i !== 0) {
+      transpiler.pushStatementPart(', ');
+    }
+    transpiler.pushStatementPart(ensure(referenceClosure.symbolLocalVariable));
   }
-  transpiler.pushStatement(['return', ' ', transpiledType, '(', symbolLocalCallableVariable, ')']);
-  transpiler.popFunction();
+  transpiler.pushStatementPart(']');
 
-  // Make the callable function
-  const params: OutputFunctionParam[] = [];
-  params.push({
-    type: symbolFileClosureStruct + '&',
-    name: symbolLocalClosureVariable,
-  });
-  for (const astExpressionFunctionParam of astExpressionFunction.params) {
-    const astExpressionFunctionParamType = utilTranspileTypeToAnnotation(
-      ensure(astExpressionFunctionParam.resolvedType),
-      false,
-    );
-    params.push({
-      type: astExpressionFunctionParamType,
-      name: ensure(astExpressionFunctionParam.symbolLocalVariable),
-    });
+  transpiler.pushStatementPart('(');
+  for (let i = 0; i < expressionFunctionParams.length; i++) {
+    const expressionFunctionParam = expressionFunctionParams[i];
+    if (i !== 0) {
+      transpiler.pushStatementPart(', ');
+    }
+    transpiler.pushStatementPart(utilTranspileTypeToAnnotation(ensure(expressionFunctionParam.resolvedType), false));
+    transpiler.pushStatementPart(' ');
+    transpiler.pushStatementPart(ensure(expressionFunctionParam.symbolLocalVariable));
   }
-  const returnType = utilTranspileTypeToAnnotation(
-    ensure(astExpressionFunction.ret.resolvedType),
-    false,
-  );
-  transpiler.pushFunction(false, returnType, symbolFileImplementationFunction, params);
+  transpiler.pushStatementPart(')');
 
-  // Localize closure
-  for (const referenceClosure of referenceClosures) {
-    transpiler.pushStatement([
-      utilTranspileReferenceClosureToAnnotation(referenceClosure),
-      ' ',
-      ensure(referenceClosure.symbolLocalVariable),
-      ' = ',
-      symbolLocalClosureVariable,
-      '.',
-      referenceClosure.name,
-    ]);
-  }
+  transpiler.pushStatementPart(' -> ');
+  transpiler.pushStatementPart(utilTranspileTypeToAnnotation(expressionFunctionReturnType, false));
 
-  // Push block statements
-  transpiler.pushStatement(['/* function block */']);
-  pass.recurseBlock(astExpressionFunction.block);
+  transpiler.pushBlock();
 
-  if (isTypePrimitive(ensure(astExpressionFunction.ret.resolvedType), AstTypePrimitiveNative.Nothing)) {
+  transpiler.pushStatement([]);
+  pass.recurseBlock(expressionFunction.block);
+
+  if (isTypePrimitive(expressionFunctionReturnType, AstTypePrimitiveNative.Nothing)) {
     transpiler.pushStatement(['return {}']);
   }
-  // Done
+
+  transpiler.popBlock(true);
+
   transpiler.popFunction();
 }

@@ -5,9 +5,6 @@ export function isTypePrimitive(
   type: AstType,
   native: AstTypePrimitiveNative,
 ) {
-  if (type === undefined) {
-    return false;
-  }
   const primitive = astTypeAsTypePrimitive(type);
   if (primitive) {
     if (primitive.native === native) {

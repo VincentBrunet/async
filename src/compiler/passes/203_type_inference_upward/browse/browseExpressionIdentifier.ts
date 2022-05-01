@@ -5,16 +5,16 @@ import { utilTypeForReferenceValue } from '../util/utilTypeForReferenceValue.ts'
 
 export function browseExpressionIdentifier(
   next: () => void,
-  astExpressionIdentifier: AstExpressionIdentifier,
+  expressionIdentifier: AstExpressionIdentifier,
   tracker: Tracker,
 ) {
   // Asserts
   const resolvedReferenceValue = ensure(
-    astExpressionIdentifier.resolvedReferenceValue,
-    astExpressionIdentifier.name,
+    expressionIdentifier.resolvedReferenceValue,
+    expressionIdentifier.name,
   );
 
   next();
 
-  astExpressionIdentifier.resolvedType = utilTypeForReferenceValue(resolvedReferenceValue);
+  expressionIdentifier.resolvedType = utilTypeForReferenceValue(resolvedReferenceValue);
 }
