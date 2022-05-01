@@ -6,18 +6,14 @@ mutable vMutableFalse = false
 const vConstNothing = nothing
 mutable vMutableRed ="red";
 
-/*
-const vConstObj = obj {
-  const objFieldConst32 = 32;
-  mutable objFieldMutableRConstNothing = vConstNothing
-}
-*/
-
 const vConstExprI32 = expr {
   return 42 + vConstHex
 }
 
 mutable vMutableFun = fn (a:i32, b:i32, c:bool, d:nothing): ptr {
+  unsafe {
+    printf("vMutableFun:%d:%d:%d:%d\n", _param_a, _param_b, _param_c, _param_d);
+  }
   return 0
 }
 

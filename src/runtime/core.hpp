@@ -4,6 +4,7 @@
 #include <cinttypes>
 #include <functional>
 #include <memory>
+#include <string>
 
 namespace ac {
 

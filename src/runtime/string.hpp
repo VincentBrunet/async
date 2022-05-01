@@ -7,7 +7,7 @@ namespace ac {
 
 struct string {};
 
-string string_make(char *str);
+string string_make(std::string str);
 
 }  // namespace ac
 
