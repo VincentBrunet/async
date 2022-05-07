@@ -18,10 +18,8 @@ export function writeStatement(
   }
   if (outputStatement.inner) {
     writeBlock(writer, outputStatement.inner, depth);
-    if (outputStatement.closed) {
-      writer.pushToSource(';');
-    }
-  } else {
+  }
+  if (outputStatement.closed) {
     writer.pushToSource(';');
   }
   writer.pushToSource('\n');

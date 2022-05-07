@@ -78,14 +78,14 @@ export function transpileExpressionFunction(
 
   transpiler.pushBlock();
 
-  transpiler.pushStatement([]);
+  transpiler.pushStatement([], false);
   pass.recurseBlock(expressionFunction.block);
 
   if (isTypePrimitive(expressionFunctionReturnType, AstTypePrimitiveNative.Nothing)) {
     transpiler.pushStatement(['return {}']);
   }
 
-  transpiler.popBlock(true);
+  transpiler.popBlock();
 
   transpiler.popFunction();
 }

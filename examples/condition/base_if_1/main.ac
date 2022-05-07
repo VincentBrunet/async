@@ -1,17 +1,29 @@
+import [ my_print_i32 ] from "../../extern/function1/my_print_i32.ac"
 
-const toto = fn {
-  return true
+const condition = fn {
+  return true || 42
+}
+
+const toto = fn (a: i32) {
+  my_print_i32(a)
 }
 
 if (true) {
-  return 42
+  toto(1)
 }
-
 
 if false {
-
+  toto(2)
 }
 
-if toto() {
+if condition() {
+  toto(3)
+}
 
+if condition() && false {
+  toto(4)
+} else if false {
+  toto(5)
+} else {
+  toto(6)
 }

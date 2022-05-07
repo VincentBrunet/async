@@ -4,15 +4,21 @@ import { Transpiler } from '../util/Transpiler.ts';
 
 export function transpileStatementCondition(
   pass: RecursorPass,
-  ast: AstStatementCondition,
+  astCondition: AstStatementCondition,
   transpiler: Transpiler,
 ) {
-  for (const branch of ast.branches) {
-    // condition
-    transpiler.pushStatement(['if (TO_BOOLEAN(']);
-    pass.recurseExpression(branch.condition);
-    transpiler.pushStatementPart('))');
-    // content
-    pass.recurseBlock(branch.block);
+  const astConditionBranches = astCondition.branches;
+  for (let i = 0; i < astConditionBranches.length; i++) {
+    const astConditionBranch = astConditionBranches[i];
+    if (i === 0) {
+      transpiler.pushStatement(['if ('], false);
+      pass.recurseExpression(astConditionBranch.condition);
+      transpiler.pushStatementPart(')');
+    } else {
+      transpiler.pushStatement(['else if ('], false);
+      pass.recurseExpression(astConditionBranch.condition);
+      transpiler.pushStatementPart(')');
+    }
+    pass.recurseBlock(astConditionBranch.block);
   }
 }

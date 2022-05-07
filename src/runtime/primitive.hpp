@@ -27,6 +27,7 @@ typedef double f64;
 typedef uintptr_t pointer;
 
 nothing nothing_make();
+unknown unknown_make();
 
 }  // namespace ac
 

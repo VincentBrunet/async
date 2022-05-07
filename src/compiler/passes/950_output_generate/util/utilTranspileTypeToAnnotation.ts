@@ -47,13 +47,11 @@ function utilTranspileTypeToAnnotationBase(type?: AstType): string | undefined {
 
   const typeFunction = astTypeAsTypeFunction(type);
   if (typeFunction) {
-    const length = typeFunction.params.length.toString();
     const ret = utilTranspileTypeToAnnotationBase(typeFunction.ret.annotation.type);
-    const templates = typeFunction.params.map((param) => {
+    const params = typeFunction.params.map((param) => {
       return utilTranspileTypeToAnnotationBase(param.annotation.type);
-    });
-    templates.unshift(ret);
-    return ' ac::function' + length + '<' + templates.join(', ') + '> ';
+    }).join(', ');
+    return ` std::function<${ret}(${params})> `;
   }
 
   const typeObject = astTypeAsTypeObject(type);

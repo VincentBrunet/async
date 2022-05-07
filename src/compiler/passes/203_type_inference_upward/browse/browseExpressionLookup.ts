@@ -13,16 +13,17 @@ export function browseExpressionLookup(
 
   const objectType = astTypeAsTypeObject(ensure(ast.expression.resolvedType));
   if (!objectType) {
-    //throw new Error("Cannot do a lookup on a value that is not an object");
-    ast.resolvedType = makeTypePrimitiveUnknown(ast.expression);
-    return;
+    throw new Error('Cannot do a lookup on a value that is not an object');
+    //ast.resolvedType = makeTypePrimitiveUnknown(ast.expression);
+    //return;
   }
 
   const resolvedFields = ensure(objectType.resolvedFields);
   ast.resolvedType = resolvedFields.get(ast.name)?.annotation?.type;
 
   if (ast.resolvedType === undefined) {
-    //throw new Error("Cannot do a lookup on a value that is not an object");
-    ast.resolvedType = makeTypePrimitiveUnknown(ast.expression);
+    throw new Error('Cannot do a lookup on a value that is not an object');
+    //ast.resolvedType = makeTypePrimitiveUnknown(ast.expression);
+    //return;
   }
 }

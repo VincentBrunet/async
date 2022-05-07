@@ -5,6 +5,7 @@
 
 namespace ac {
 
+/*
 template <typename TR>
 using function0 = std::function<TR()>;
 
@@ -22,6 +23,7 @@ using function4 = std::function<TR(TP1, TP2, TP3, TP4)>;
 
 template <typename TR, typename TP1, typename TP2, typename TP3, typename TP4, typename TP5>
 using function5 = std::function<TR(TP1, TP2, TP3, TP4, TP5)>;
+*/
 
 }  // namespace ac
 

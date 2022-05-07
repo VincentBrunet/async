@@ -4,7 +4,7 @@ const vConstHex = 0xff
 const vConstTrue = true
 mutable vMutableFalse = false
 const vConstNothing = nothing
-mutable vMutableRed ="red";
+mutable vMutableRed = "red";
 
 const vConstExprI32 = expr {
   return 42 + vConstHex
@@ -12,7 +12,7 @@ const vConstExprI32 = expr {
 
 mutable vMutableFun = fn (a:i32, b:i32, c:bool, d:nothing): ptr {
   unsafe {
-    printf("vMutableFun:%d:%d:%d:%d\n", _param_a, _param_b, _param_c, _param_d);
+    printf("vMutableFun a:%d b:%d c:%d\n", _param_a, _param_b, _param_c);
   }
   return 0
 }

@@ -125,14 +125,18 @@ export class Browser {
     recurseItem: (stack: Browser, param: Param) => T | TokenImpasse,
     param: Param,
   ): Array<T> | TokenImpasse {
-    const result = this.recurseWithParam<UtilArrayAst<T>, UtilArraySetup<T, Param>>(breadcrumb, parseUtilArray, {
-      mandatory: mandatory,
-      validOpen: validOpen,
-      validClose: validClose,
-      validDelim: validDelim,
-      recurseItem: recurseItem,
-      param: param,
-    });
+    const result = this.recurseWithParam<UtilArrayAst<T>, UtilArraySetup<T, Param>>(
+      breadcrumb,
+      parseUtilArray,
+      {
+        mandatory: mandatory,
+        validOpen: validOpen,
+        validClose: validClose,
+        validDelim: validDelim,
+        recurseItem: recurseItem,
+        param: param,
+      },
+    );
     if (result instanceof TokenImpasse) {
       return result;
     }

@@ -46,34 +46,42 @@ export interface AstExpression extends Ast {
   resolvedType?: AstType;
 }
 
-export function astExpressionMakeBinary(astExpressionBinary: AstExpressionBinary): AstExpression {
+export function astExpressionMakeLiteral(expressionLiteral: AstExpressionLiteral): AstExpression {
   return {
-    kind: AstExpressionKind.Binary,
-    data: astExpressionBinary,
-    token: astExpressionBinary.token,
+    kind: AstExpressionKind.Literal,
+    data: expressionLiteral,
+    token: expressionLiteral.token,
   };
 }
 
-function astExpressionRecurseParenthesis(astExpression: AstExpression): AstExpression {
-  if (astExpression.kind === AstExpressionKind.Parenthesis) {
-    return (astExpression.data as AstExpressionParenthesis).expression;
+export function astExpressionMakeBinary(expressionBinary: AstExpressionBinary): AstExpression {
+  return {
+    kind: AstExpressionKind.Binary,
+    data: expressionBinary,
+    token: expressionBinary.token,
+  };
+}
+
+function astExpressionRecurseParenthesis(expression: AstExpression): AstExpression {
+  if (expression.kind === AstExpressionKind.Parenthesis) {
+    return (expression.data as AstExpressionParenthesis).expression;
   } else {
-    return astExpression;
+    return expression;
   }
 }
 
-export function astExpressionAsExpressionLiteral(astExpression: AstExpression): AstExpressionLiteral | undefined {
-  astExpression = astExpressionRecurseParenthesis(astExpression);
-  if (astExpression.kind === AstExpressionKind.Literal) {
-    return astExpression.data as AstExpressionLiteral;
+export function astExpressionAsExpressionLiteral(expression: AstExpression): AstExpressionLiteral | undefined {
+  expression = astExpressionRecurseParenthesis(expression);
+  if (expression.kind === AstExpressionKind.Literal) {
+    return expression.data as AstExpressionLiteral;
   }
   return undefined;
 }
 
-export function astExpressionAsExpressionBinary(astExpression: AstExpression): AstExpressionBinary | undefined {
-  astExpression = astExpressionRecurseParenthesis(astExpression);
-  if (astExpression.kind === AstExpressionKind.Binary) {
-    return astExpression.data as AstExpressionBinary;
+export function astExpressionAsExpressionBinary(expression: AstExpression): AstExpressionBinary | undefined {
+  expression = astExpressionRecurseParenthesis(expression);
+  if (expression.kind === AstExpressionKind.Binary) {
+    return expression.data as AstExpressionBinary;
   }
   return undefined;
 }

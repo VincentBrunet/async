@@ -77,14 +77,15 @@ export class Transpiler {
     }
   }
 
-  popBlock(closed?: boolean) {
+  popBlock() {
     this.stackBlock.pop();
-    this.resetCurrentStatement(closed);
+    this.resetCurrentStatement();
   }
 
-  pushStatement(parts: Array<string>) {
+  pushStatement(parts: Array<string>, closed?: boolean) {
     this.currentStatement = {
       parts: parts,
+      closed: closed ?? true,
     };
     this.stackBlock.peek()?.statements?.push(this.currentStatement);
   }
@@ -93,14 +94,11 @@ export class Transpiler {
     this.currentStatement?.parts?.push(part);
   }
 
-  private resetCurrentStatement(closed?: boolean) {
+  private resetCurrentStatement() {
     this.currentStatement = undefined;
     const statements = this.stackBlock.peek()?.statements;
     if (statements) {
       this.currentStatement = statements[statements.length - 1];
-      if (this.currentStatement) {
-        this.currentStatement.closed = closed;
-      }
     }
   }
 }

@@ -46,6 +46,8 @@ export function transpileExpressionBinary(
   operatorToOperator.set(AstExpressionBinaryOperator.Addition, '+');
   operatorToOperator.set(AstExpressionBinaryOperator.Substraction, '-');
   operatorToOperator.set(AstExpressionBinaryOperator.Multiplication, '*');
+  operatorToOperator.set(AstExpressionBinaryOperator.Or, '||');
+  operatorToOperator.set(AstExpressionBinaryOperator.And, '&&');
 
   //transpiler.pushStatementPart(callName);
   transpiler.pushStatementPart('(');

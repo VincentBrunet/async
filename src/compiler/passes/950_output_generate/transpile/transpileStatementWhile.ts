@@ -1,6 +1,6 @@
-import { AstStatementWhile } from "../../../data/ast/AstStatementWhile.ts";
-import { RecursorPass } from "../../util/RecursorPass.ts";
-import { Transpiler } from "../util/Transpiler.ts";
+import { AstStatementWhile } from '../../../data/ast/AstStatementWhile.ts';
+import { RecursorPass } from '../../util/RecursorPass.ts';
+import { Transpiler } from '../util/Transpiler.ts';
 
 export function transpileStatementWhile(
   pass: RecursorPass,
@@ -8,9 +8,9 @@ export function transpileStatementWhile(
   transpiler: Transpiler,
 ) {
   // condition
-  transpiler.pushStatement(["while (TO_BOOLEAN("]);
+  transpiler.pushStatement(['while (TO_BOOLEAN('], false);
   pass.recurseExpression(ast.condition);
-  transpiler.pushStatementPart("))");
+  transpiler.pushStatementPart('))');
   // content
   pass.recurseBlock(ast.block);
 }

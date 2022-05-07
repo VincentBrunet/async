@@ -9,8 +9,8 @@ export function transpileStatementUnsafe(
 ) {
   transpiler.pushStatement([]);
   transpiler.pushBlock();
-  transpiler.pushStatement(['// unsafe start']);
-  transpiler.pushStatement([ast.content]);
-  transpiler.pushStatement(['// unsafe end']);
+  transpiler.pushStatement(['// unsafe start'], false);
+  transpiler.pushStatement([ast.content], false);
+  transpiler.pushStatement(['// unsafe end'], false);
   transpiler.popBlock();
 }

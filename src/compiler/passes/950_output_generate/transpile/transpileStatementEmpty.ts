@@ -7,5 +7,5 @@ export function transpileStatementEmpty(
   ast: AstStatementEmpty,
   transpiler: Transpiler,
 ) {
-  transpiler.pushStatement([]);
+  transpiler.pushStatement([], false);
 }
